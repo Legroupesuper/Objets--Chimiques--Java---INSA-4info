@@ -7,6 +7,12 @@ public class Test {
 	 * @param args
 	 */
 	public static void main(String[] args) {
+		//		try {
+		//			System.setOut(new PrintStream(new File("bimbamboum.txt")));
+		//		} catch (FileNotFoundException e1) {
+		//			// TODO Auto-generated catch block
+		//			e1.printStackTrace();
+		//		}
 		// TODO Auto-generated method stub
 		Solution s = new Solution();
 		s.add(new Integer(5));
@@ -25,12 +31,13 @@ public class Test {
 		s.add(7);
 		s.add(8);
 		s.add(9);
-//		s.add("Babar");
-//		s.add(" Le");
-//		s.add(" Gros");
-//		s.add(" Eléphant ");
-//		s.add(new ConcatRR());
+		s.add("Babar");
+		s.add(" Le");
+		s.add(" Gros");
+		s.add(" Eléphant ");
+		s.add(new ConcatRR());
 		s.add(new MaxRR());
+		//	s.add(new TrucRR());
 		System.out.println("AVANT : ");
 		for(Object o : s){
 			System.out.println(o);
@@ -47,10 +54,13 @@ public class Test {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		while(!s.is_innert()){
+
+		}
 		System.out.println("Resultat : ");
 		for(Object o : s){
 			System.out.println(o);
 		}
-		
+
 	}
 }

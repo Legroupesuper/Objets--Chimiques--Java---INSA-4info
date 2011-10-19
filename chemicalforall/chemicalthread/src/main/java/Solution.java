@@ -12,7 +12,13 @@ import java.util.Map;
 
 public class Solution implements Collection<Object>{
 	private Map<String, ArrayList<Object>> _mapElements;
-	private boolean _nouvelElementCree = false;
+	private boolean _innert = false;
+
+	private boolean _continuerReaction = true;
+	private List<Thread> _threadTable = new ArrayList<Thread>();
+
+	private ThreadGroup _threadGroup = new ThreadGroup("Group");
+
 	public Solution() {
 		super();
 		_mapElements = new HashMap<String, ArrayList<Object>>();
@@ -20,14 +26,12 @@ public class Solution implements Collection<Object>{
 	}
 
 	public boolean add(Object arg0) {
-	//	_nouvelElementCree = true;
 		synchronized (_mapElements) {
 			String interfaceS = " ";
 			for(Class s : arg0.getClass().getInterfaces()){
 				interfaceS += s.getName()+" ";
 			}
 			if(!interfaceS.contains(" ReactionRule ")){
-				//System.out.println("Ajout d'un objet de type : "+arg0.getClass().getName()+" | "+interfaceS);
 				if(_mapElements.get(arg0.getClass().getName()) != null){
 					ArrayList<Object> l = _mapElements.get(arg0.getClass().getName());
 					boolean result = l.add(arg0);
@@ -40,14 +44,11 @@ public class Solution implements Collection<Object>{
 					return result;
 				}
 			}else{
-				//System.out.println("Ajout d'un objet de type : "+arg0.getClass().getName()+" | "+interfaceS);
-	
 				Class c = arg0.getClass();
 				String messageErreur = "";
-				//On vérifie que les fields ont leur setter et getter
+				//We check that every field has an appropriate setter
 				boolean classeOK = true;
 				for(Field f : c.getDeclaredFields()){
-				//	System.out.println("Field : "+f.getName());
 					boolean getterOK = false;
 					boolean setterOK = false;
 					for(Method m : c.getDeclaredMethods()){
@@ -71,7 +72,6 @@ public class Solution implements Collection<Object>{
 						throw new ChimiqueException(messageErreur);
 					} catch (ChimiqueException e) {
 						e.printStackTrace();
-						//System.out.println(e.getMessage());
 					}
 				}
 				if(_mapElements.get("ReactionRule") != null){
@@ -85,7 +85,6 @@ public class Solution implements Collection<Object>{
 					_mapElements.put("ReactionRule", l);
 					return result;
 				}
-				
 			}
 		}
 	}
@@ -111,25 +110,172 @@ public class Solution implements Collection<Object>{
 		return _mapElements.values().containsAll(arg0);
 	}
 
+	public synchronized void firstSleep(String s){
+
+	}
+
+	protected synchronized boolean getContinuerReaction() {
+		return _continuerReaction;
+	}
+
+	public boolean is_innert() {
+		synchronized (this) {
+			return _innert;
+		}
+	}
+
 	public boolean isEmpty() {
 		return _mapElements.isEmpty();
 	}
-
 	public Iterator iterator() {
 		return _mapElements.values().iterator();
 	}
+	private void launchThread(ReactionRule r){
+		ChemicalThread t = new ChemicalThread(r, this, _threadGroup);
+		_threadTable.add(t);
+		t.start();
+	}
+
+
+	/*
+	 * When a reaction rule did not find any reactives, it calls this function.
+	 * It checks if this reaction rule's thread is the last standing. If it is,
+	 * it stops all the reaction and declares the solution inert.
+	 */
+	public synchronized void makeSleep(String s){
+		int nbAwake = 0;
+		for(Thread t : _threadTable){
+			if(!t.getState().equals(Thread.State.WAITING)){
+				nbAwake++;
+			}
+		}
+		if(nbAwake>1){
+			try {
+				wait();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}else{
+			synchronized (this) {
+				_continuerReaction = false;
+			}
+			notifyAll();
+			synchronized (this) {
+				_innert = true;
+			}
+		}
+	}
 
 	public boolean remove(Object arg0) {
-		
+
 		return false;
 	}
 
 	public boolean removeAll(Collection arg0) {
 		return false;
 	}
+	/*
+	 * This method is called by every thread-reaction rule to get its reactives.
+	 * It returns true if a set of parameter have been found, else false. The reactives are set directly
+	 * in the reaction rule instance by reflexivity so no need to return them.
+	 * This function is synchronized on the atoms' hash map
+	 */
+	public boolean requestForParameters(ReactionRule r) throws IllegalArgumentException, IllegalAccessException, InvocationTargetException{
+		//Build the type table : the types of the reaction rules reactives
+		Field[] fields = r.getClass().getDeclaredFields();
+		String table[] = new String[fields.length];
+		for(int i=0; i< fields.length; i++){
+			table[i] = fields[i].getType().getName();
+		}
+
+		//The access to the main atom map is restricted to 1 thread at a time
+		synchronized(_mapElements) {
+			//Initialize the index provider to try every possible combination
+			int tabMaxIndex[] = new int[table.length];
+			HashMap<String, List<Integer>> mapIndexProvider = new HashMap<String, List<Integer>>();
+			for(int i = 0; i < table.length; i++){
+				if(mapIndexProvider.containsKey(table[i])){
+					List<Integer> l = mapIndexProvider.get(table[i]);
+					l.add(i);
+					mapIndexProvider.put(table[i], l);
+				}else{
+					List<Integer> l = new ArrayList<Integer>();
+					l.add(i);
+					mapIndexProvider.put(table[i], l);
+				}
+				if(_mapElements.get(table[i])== null)// || _mapElements.get(table[i]).size()==0)
+					return false;
+				tabMaxIndex[i] = _mapElements.get(table[i]).size();
+			}
+			List<List<Integer>> listProvider = new ArrayList<List<Integer>>();
+			for(String s : mapIndexProvider.keySet()){
+				if(mapIndexProvider.get(s).size()>1){
+					listProvider.add(mapIndexProvider.get(s));
+				}
+			}
+			IndexProvider indexPovider = null;
+			try{
+				indexPovider = new IndexProvider(listProvider, tabMaxIndex);
+			}catch(ChimiqueException e){
+				System.out.println("Exception levée et gérée magnifiquement");
+				return false;
+			}
+
+			//Effectively research a valid set of reactives for the reaction rule
+			Object reactives[] = new Object[fields.length];
+			boolean hasMatched = false;
+			boolean b;
+			//Loop until the reactives has been found OR all combination have been tested
+			while(!indexPovider.is_overflowReached()){
+				int i=0;
+				Object obj = null;
+				for(Field f : fields){
+					for(Method m : r.getClass().getDeclaredMethods()){
+						//TODO: Optimiser à ce niveau
+
+						if(m.getName().toLowerCase().equals(("set"+f.getName().toLowerCase()))){
+							//On invoque la méthode
+							obj = _mapElements.get(f.getType().getName()).get(indexPovider.get(i));
+							m.invoke(r, new Object[]{obj});
+
+						}
+					}
+					reactives[i] = obj;
+					i++;
+				}
+				//The right types have been found, now test the selection rule
+				if(r.computeSelect()){
+					//remove the selected reactives from the solution
+					for(Object react : reactives){
+						_mapElements.get(react.getClass().getName()).remove(react);
+					}
+					hasMatched = true;
+					break;
+				}
+				indexPovider.increment();
+			}
+			//All the possibilities have been tested here
+			//Return false if nothing matched
+			if(!hasMatched){
+				return false;
+			}
+		}
+
+		return true;
+	}
 
 	public boolean retainAll(Collection arg0) {
 		return false;
+	}
+
+	void run() throws IllegalArgumentException, IllegalAccessException, InvocationTargetException{
+		synchronized (this) {
+			for(Object r : _mapElements.get("ReactionRule")){//r est une ReactionRule
+				launchThread((ReactionRule)r);
+			}
+			notifyAll();
+		}
 	}
 
 	public int size() {
@@ -143,121 +289,10 @@ public class Solution implements Collection<Object>{
 	public Object[] toArray(Object[] arg0) {
 		return _mapElements.values().toArray(arg0);
 	}
-	
-	void run() throws IllegalArgumentException, IllegalAccessException, InvocationTargetException{
-		for(Object r : _mapElements.get("ReactionRule")){//r est une ReactionRule
-			launchThread((ReactionRule)r);
-		}
-		System.out.println("Fin de réaction");
-	}
-	private boolean _continuerReaction = true;
-	
-	private List<Thread> _threadTable = new ArrayList<Thread>();
-	
-	private void launchThread(ReactionRule r){
-		ChemicalThread t = new ChemicalThread(r, this);
-		_threadTable.add(t);
-		t.start();
-	}
-	
-	protected boolean getContinuerReaction() {
-		// TODO Auto-generated method stub
-		return _continuerReaction;
-	}
-	
-	/* 
-	 * This method is called by every thread-reaction rule to get its reactives.
-	 * It returns true if a set of parameter have been found, else false. The reactives are set directly
-	 * in the reaction rule instance by reflexivity so no need to return them.
-	 * This function is synchronized on the atoms' hash map 
-	 */
-	public boolean requestForParameters(ReactionRule r) throws IllegalArgumentException, IllegalAccessException, InvocationTargetException{
-		//Build the type table : the types of the reaction rules reactives
-		Field[] fields = r.getClass().getDeclaredFields();
-		String table[] = new String[fields.length];
-		for(int i=0; i< fields.length; i++){
-			table[i] = fields[i].getType().getName();
-		}
-		
-		//The access to the main atom map is restricted to 1 thread at a time
-		synchronized(_mapElements) {
-			//Initialize the index provider to try every possible combination
-			int tabMaxIndex[] = new int[table.length]; 
-			
-			for(int i = 0; i < table.length; i++){
-				tabMaxIndex[i] = _mapElements.get(table[i]).size(); 
-			}
-			IndexProvider indexPovider = new IndexProvider(tabMaxIndex);
-			
-			
-			//Effectively research a valid set of reactives for the reaction rule
-			Object reactives[] = new Object[fields.length];
-			boolean hasMatched = false;
-			//Loop until the reactives has been found OR all combination have been tested
-			do{
-				int i=0;
-				Object obj = null;
-				for(Field f : fields){
-					for(Method m : r.getClass().getDeclaredMethods()){
-						//TODO: Optimiser à ce niveau
-						
-						if(m.getName().toLowerCase().equals(("set"+f.getName().toLowerCase()))){
-							//On invoque la méthode
-							obj = _mapElements.get(f.getType().getName()).get(indexPovider.get(i));
-							m.invoke(r, new Object[]{obj});			
-							
-						}
-					}
-					reactives[i] = obj;
-					i++;
-				}
-				
-				//The right types have been found, now test the selection rule
-				if(r.computeSelect()){
-					hasMatched = true;
-					System.out.println("Taille avant : "+_mapElements.size());
-					for(Object obj1 : reactives){
-						System.out.println("reactif : "+obj1);
-						System.out.println(_mapElements.get(obj1.getClass().getName()).remove(obj1));
-					}
-					System.out.println("Taille après : "+_mapElements.size());
-					break;
-				}
-			}while(indexPovider.increment());
-			
-			//All the possibilities have been tested here
-			//Return false if nothing matched
-			if(!hasMatched){
-				return false;
-			}
-		}
-		
-		return true;
-	}
-	
-	/*
-	 * When a reaction rule did not find any reactives, it calls this function.
-	 * It checks if this reaction rule's thread is the last standing. If it is, 
-	 * it stops all the reaction and declares the solution inert.
-	 */
-	public synchronized void makeSleep(){
-		int nbAwake = 0;
-		for(Thread t : _threadTable){
-			if(t.isAlive()){
-				nbAwake++;
-			}
-		}
-		if(nbAwake>1){
-			try {
-				wait();
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}else{
-			_continuerReaction = false;
-			notifyAll();
-		}
+
+	@Override
+	public String toString(){
+		return _mapElements.toString();
 	}
 
 	/*
@@ -266,9 +301,5 @@ public class Solution implements Collection<Object>{
 	 */
 	public synchronized void wakeAll() {
 		notifyAll();
-	}
-	
-	public String toString(){
-		return _mapElements.toString();
 	}
 }

@@ -5,27 +5,27 @@ public class MaxRR implements ReactionRule{
 	public Object[] computeResult() {
 		if(a>b)
 			return new Integer[]{a};
-		
+
 		return new Integer[]{b};
 	}
 
 	public boolean computeSelect() {
 		boolean ok;
-		ok = a!=1 && a != 2 && b !=1 && b !=2; 
-		return true;
+		ok = a!=1 && a != 2 && b !=1 && b !=2;
+		return ok;
 	}
-	
-	
+
+
 	public Integer getA() {
 		return a;
 	}
 
-	public void setA(Integer a) {
-		this.a = a;
-	}
-
 	public Integer getB() {
 		return b;
+	}
+
+	public void setA(Integer a) {
+		this.a = a;
 	}
 
 	public void setB(Integer b) {
