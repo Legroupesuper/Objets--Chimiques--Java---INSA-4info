@@ -3,6 +3,7 @@ package morph;
 //A SimpleTriangle has a horizontal edge from v1 to v2, and
 //v3 is above or below this edge. v1 is to the left (lesser x) of v2.
 
+//C'est toi le triangle
 public class SimpleTriangle {
 	int x1, x2, y;
 	int x3, y3;
