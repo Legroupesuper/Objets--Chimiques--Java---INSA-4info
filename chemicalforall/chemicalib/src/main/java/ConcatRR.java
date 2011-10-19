@@ -2,12 +2,10 @@
 public class ConcatRR implements ReactionRule{
 	private String s;
 	private String t;
-	@Override
 	public Object[] computeResult() {
 		return new String[]{s+t};
 	}
 
-	@Override
 	public boolean computeSelect() {
 		// TODO Auto-generated method stub
 		return true;

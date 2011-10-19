@@ -2,7 +2,6 @@
 public class MaxRR implements ReactionRule{
 	private Integer a;
 	private Integer b;
-	@Override
 	public Object[] computeResult() {
 		if(a>b)
 			return new Integer[]{a};
@@ -10,7 +9,6 @@ public class MaxRR implements ReactionRule{
 		return new Integer[]{b};
 	}
 
-	@Override
 	public boolean computeSelect() {
 		// TODO Auto-generated method stub
 		return true;
