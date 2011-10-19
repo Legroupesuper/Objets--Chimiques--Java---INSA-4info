@@ -9,5 +9,6 @@
   <modules>
   	<module>chemorphing</module>
   	<module>chemicalib</module>
+  	<module>chemicalthread</module>
   </modules>
 </project>
