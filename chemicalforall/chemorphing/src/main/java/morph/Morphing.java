@@ -27,10 +27,7 @@ import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 import java.awt.image.MemoryImageSource;
 import java.awt.image.PixelGrabber;
-import java.io.File;
 import java.io.IOException;
-
-import javax.imageio.ImageIO;
 
 public class Morphing{
 
@@ -61,18 +58,39 @@ public class Morphing{
 		this(srcImg, dstImg, frameNb, new ControlPoint(src1.x, src1.y, dest1.x, dest1.y), new ControlPoint(src2.x, src2.y, dest2.x, dest2.y), new ControlPoint(src3.x, src3.y, dest3.x, dest3.y));
 	}
 
+	private Image resizeImage(Image originalImage, int width, int height){
+		BufferedImage resizedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+		Graphics2D g = resizedImage.createGraphics();
+		g.drawImage(originalImage, 0, 0, width, height, null);
+		g.dispose();
+
+		return resizedImage;
+	}
+
 	public Image[] execute(){
-		int          iw, ih;
+		int          sw, sh, dw, dh, finalWidth, finalHeight;
 		int          from[], to[];
 		PixelGrabber pg;
 
-		iw = imagesrc.getWidth(null);
-		ih = imagesrc.getHeight(null);
+		sw = imagesrc.getWidth(null);
+		sh = imagesrc.getHeight(null);
+		dw = imagedst.getWidth(null);
+		dh = imagedst.getHeight(null);
 
-		from = new int[iw * ih];
-		to   = new int[iw * ih];
+		finalWidth = Math.max(sw,  dw);
+		finalHeight = Math.max(sh,  dh);
 
-		pg = new PixelGrabber(imagesrc, 0, 0, iw, ih, from, 0, iw);
+		if(!(sw==finalWidth && sh==finalHeight)){
+			imagesrc = resizeImage(imagesrc, finalWidth, finalHeight);
+		}
+		if(!(dw==finalWidth && dh==finalHeight)){
+			imagedst = resizeImage(imagedst, finalWidth, finalHeight);
+		}
+		
+		from = new int[finalWidth * finalHeight];
+		to   = new int[finalWidth * finalHeight];
+
+		pg = new PixelGrabber(imagesrc, 0, 0, finalWidth, finalHeight, from, 0, finalWidth);
 		try {
 			pg.grabPixels();
 		} catch (InterruptedException e){
@@ -80,7 +98,7 @@ public class Morphing{
 		}
 		pg = null;
 
-		pg = new PixelGrabber(imagedst, 0, 0, iw, ih, to, 0, iw);
+		pg = new PixelGrabber(imagedst, 0, 0, finalWidth, finalHeight, to, 0, finalWidth);
 		try {
 			pg.grabPixels();
 		} catch (InterruptedException e){
@@ -92,7 +110,7 @@ public class Morphing{
 		frames[0]          = imagesrc;
 		frames[framecnt-1] = imagedst;
 
-		morph(from, to, iw, ih);
+		morph(from, to, finalWidth, finalHeight);
 
 		return frames;
 
@@ -369,82 +387,6 @@ public class Morphing{
 		}
 	}
 
-	public static boolean store(Image image, String fileName, String fileType){
-		BufferedImage bufferedImage = new BufferedImage(image.getWidth(null),
-				image.getHeight(null), BufferedImage.TYPE_INT_RGB);
-		Graphics2D g2 = bufferedImage.createGraphics();
-		g2.drawImage(image, null, null);
-		File imageFile = new File(fileName);
-		try {
-			ImageIO.write(bufferedImage, fileType, imageFile);
-		} catch (IOException e) {
-			return false;
-		}
 
-		return true;
-	}
-
-	
-	
-	public static void main(String[] args){
-		long l1 = System.currentTimeMillis();
-		Morphing momo;
-		
-		String srcAddr = "pouf.png";
-		Image src = null;
-		try {
-			src = ImageIO.read(new File(srcAddr));
-		} catch (IOException e1) {
-			e1.printStackTrace();
-		}
-		Point src1 = new Point(32, 59);
-		Point src2 = new Point(78, 58);
-		Point src3 = new Point(55, 93);
-
-		String destAddr = "lion.png";
-		Image dest = null;
-		try {
-			dest = ImageIO.read(new File(destAddr));
-		} catch (IOException e1) {
-			e1.printStackTrace();
-		}
-		Point dest1 = new Point(24, 56);
-		Point dest2 = new Point(74, 52);
-		Point dest3 = new Point(54, 100);
-		
-		
-		String resultName = srcAddr+"_to_"+destAddr;
-		
-		try {
-			//Create Morphing object
-			momo = new Morphing(src, dest, 20, src1, src2, src3, dest1, dest2, dest3);
-			
-			//Run the effect and get its results
-			Image[] result = momo.execute();
-			
-			//Create a folder to put the results
-			String resultFolderName;
-			File imageDir;
-			do{
-				resultFolderName = resultName+"_"+String.valueOf(System.currentTimeMillis());
-				imageDir = new File(resultFolderName);
-			} while(!imageDir.mkdir());
-			
-			//Store the results in files
-			boolean ok = true;
-			for(int i = 0 ; i < result.length ; i++){
-				ok = ok && store(result[i], resultFolderName+"/"+resultName+"_"+i+".png", "png");
-			}
-			
-			//Print a confirmation message
-			System.out.println("SUCCESS "+(System.currentTimeMillis() - l1)+"ms");
-			
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
-	}
-	
-	
 
 }

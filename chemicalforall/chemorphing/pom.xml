@@ -10,4 +10,20 @@
   <version>0.0.1</version>
   <name>Chemorphing</name>
   <description>Chemical morphing basic app. Example for the Chemical Library.</description>
+  <dependencies>
+  	<dependency>
+  		<groupId>fr.insa-rennes</groupId>
+  		<artifactId>chemicalib</artifactId>
+  		<version>0.0.1</version>
+  		<type>jar</type>
+  		<scope>compile</scope>
+  	</dependency>
+  	<dependency>
+  		<groupId>com.google.code.gson</groupId>
+  		<artifactId>gson</artifactId>
+  		<version>1.7.2</version>
+  		<type>jar</type>
+  		<scope>compile</scope>
+  	</dependency>
+  </dependencies>
 </project>
