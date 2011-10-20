@@ -96,8 +96,8 @@ public class Chemorphing {
 		
 
 		Pool pool = new Pool();
-		pool.add(new MarkedImage(src, src1, src2, src3));
-		pool.add(new MarkedImage(dest, dest1, dest2, dest3));
+		pool.add(new MarkedImage(src, srcAddr, src1, src2, src3));
+		pool.add(new MarkedImage(dest, destAddr, dest1, dest2, dest3));
 		System.out.println(pool.savePool());
 		
 
