@@ -24,7 +24,6 @@ public class Pool {
 
 	public Pool(){
 		super();
-		//		this._pool = new ArrayList<MarkedImage>();
 	}
 	public ArrayList<MarkedImage> get_pool() {
 		return _pool;
