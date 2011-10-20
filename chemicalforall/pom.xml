@@ -10,5 +10,6 @@
   	<module>chemorphing</module>
   	<module>chemicalib</module>
   	<module>chemicalthread</module>
+  	<module>usecases</module>
   </modules>
 </project>
