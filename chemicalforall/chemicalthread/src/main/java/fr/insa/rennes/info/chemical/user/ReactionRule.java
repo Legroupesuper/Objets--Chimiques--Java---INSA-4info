@@ -1,4 +1,4 @@
-package fr.insa.rennes.info.chemical.backend;
+package fr.insa.rennes.info.chemical.user;
 
 /**
  * Interface nécéssaire à l'implémentation d'une réaction rule.

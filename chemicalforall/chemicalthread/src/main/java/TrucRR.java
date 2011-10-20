@@ -1,4 +1,4 @@
-import fr.insa.rennes.info.chemical.backend.ReactionRule;
+import fr.insa.rennes.info.chemical.user.ReactionRule;
 
 
 

@@ -4,6 +4,8 @@ package fr.insa.rennes.info.chemical.backend;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
 
+import fr.insa.rennes.info.chemical.user.ReactionRule;
+
 
 
 

@@ -14,6 +14,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import fr.insa.rennes.info.chemical.user.ReactionRule;
+
 
 /**
  * The solution is a set wich contains reactives and ReactionRules.
@@ -45,7 +47,7 @@ public class Solution implements Collection<Object>{
 				interfaceS += s.getName()+" ";
 			}
 			//System.out.println("AAAAAAAAAAHHH "+interfaceS);
-			if(!interfaceS.contains("backend.ReactionRule ")){
+			if(!interfaceS.contains("user.ReactionRule ")){
 				if(_mapElements.get(arg0.getClass().getName()) != null){
 					ArrayList<Object> l = _mapElements.get(arg0.getClass().getName());
 					boolean result = l.add(arg0);
