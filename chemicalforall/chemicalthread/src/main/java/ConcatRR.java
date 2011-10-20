@@ -1,3 +1,6 @@
+import fr.insa.rennes.info.chemical.backend.ReactionRule;
+
+
 
 public class ConcatRR implements ReactionRule{
 	private String s;
@@ -7,7 +10,6 @@ public class ConcatRR implements ReactionRule{
 	}
 
 	public boolean computeSelect() {
-		// TODO Auto-generated method stub
 		return true;
 	}
 
@@ -15,12 +17,12 @@ public class ConcatRR implements ReactionRule{
 		return s;
 	}
 
-	public void setS(String s) {
-		this.s = s;
-	}
-
 	public String getT() {
 		return t;
+	}
+
+	public void setS(String s) {
+		this.s = s;
 	}
 
 	public void setT(String t) {

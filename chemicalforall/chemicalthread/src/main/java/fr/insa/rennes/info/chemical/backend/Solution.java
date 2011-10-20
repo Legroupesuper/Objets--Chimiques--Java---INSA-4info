@@ -1,3 +1,8 @@
+package fr.insa.rennes.info.chemical.backend;
+
+
+
+
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -10,6 +15,14 @@ import java.util.List;
 import java.util.Map;
 
 
+/**
+ * The solution is a set wich contains reactives and ReactionRules.
+ * A reactive can be any kind of object or primitive type. It can also be an other Solution.
+ * The ReactionRules are objects that implements the interface ReactiveRule.
+ * 
+ * @author
+ *
+ */
 public class Solution implements Collection<Object>{
 	private Map<String, ArrayList<Object>> _mapElements;
 	private boolean _innert = false;
@@ -31,7 +44,8 @@ public class Solution implements Collection<Object>{
 			for(Class s : arg0.getClass().getInterfaces()){
 				interfaceS += s.getName()+" ";
 			}
-			if(!interfaceS.contains(" ReactionRule ")){
+			//System.out.println("AAAAAAAAAAHHH "+interfaceS);
+			if(!interfaceS.contains("backend.ReactionRule ")){
 				if(_mapElements.get(arg0.getClass().getName()) != null){
 					ArrayList<Object> l = _mapElements.get(arg0.getClass().getName());
 					boolean result = l.add(arg0);
@@ -153,7 +167,6 @@ public class Solution implements Collection<Object>{
 			try {
 				wait();
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}else{
@@ -232,8 +245,6 @@ public class Solution implements Collection<Object>{
 				Object obj = null;
 				for(Field f : fields){
 					for(Method m : r.getClass().getDeclaredMethods()){
-						//TODO: Optimiser à ce niveau
-
 						if(m.getName().toLowerCase().equals(("set"+f.getName().toLowerCase()))){
 							//On invoque la méthode
 							obj = _mapElements.get(f.getType().getName()).get(indexPovider.get(i));
@@ -269,7 +280,7 @@ public class Solution implements Collection<Object>{
 		return false;
 	}
 
-	void run() throws IllegalArgumentException, IllegalAccessException, InvocationTargetException{
+	public void run() throws IllegalArgumentException, IllegalAccessException, InvocationTargetException{
 		synchronized (this) {
 			for(Object r : _mapElements.get("ReactionRule")){//r est une ReactionRule
 				launchThread((ReactionRule)r);

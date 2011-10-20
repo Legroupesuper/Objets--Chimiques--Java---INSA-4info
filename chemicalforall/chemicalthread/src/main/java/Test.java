@@ -1,5 +1,8 @@
 import java.lang.reflect.InvocationTargetException;
 
+import fr.insa.rennes.info.chemical.backend.Solution;
+
+
 
 public class Test {
 
@@ -10,10 +13,8 @@ public class Test {
 		//		try {
 		//			System.setOut(new PrintStream(new File("bimbamboum.txt")));
 		//		} catch (FileNotFoundException e1) {
-		//			// TODO Auto-generated catch block
 		//			e1.printStackTrace();
 		//		}
-		// TODO Auto-generated method stub
 		Solution s = new Solution();
 		s.add(new Integer(5));
 		s.add(new Integer(15));
@@ -45,13 +46,10 @@ public class Test {
 		try {
 			s.run();
 		} catch (IllegalArgumentException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (InvocationTargetException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		while(!s.is_innert()){

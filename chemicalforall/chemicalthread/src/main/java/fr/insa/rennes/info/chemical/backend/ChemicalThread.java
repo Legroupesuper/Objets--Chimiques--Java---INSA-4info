@@ -1,5 +1,10 @@
+package fr.insa.rennes.info.chemical.backend;
+
+
 import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
+
+
 
 
 public class ChemicalThread extends Thread {
@@ -34,13 +39,10 @@ public class ChemicalThread extends Thread {
 					_solutionContainer.makeSleep(_reactionRule.getClass().getName());
 				}
 			} catch (IllegalArgumentException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (IllegalAccessException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (InvocationTargetException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}

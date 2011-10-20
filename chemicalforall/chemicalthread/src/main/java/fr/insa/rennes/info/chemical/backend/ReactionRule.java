@@ -1,3 +1,5 @@
+package fr.insa.rennes.info.chemical.backend;
+
 /**
  * Interface nécéssaire à l'implémentation d'une réaction rule.
  * @author cedric

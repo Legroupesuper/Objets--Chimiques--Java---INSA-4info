@@ -1,3 +1,6 @@
+import fr.insa.rennes.info.chemical.backend.ReactionRule;
+
+
 
 public class TrucRR implements ReactionRule {
 	private Integer i;

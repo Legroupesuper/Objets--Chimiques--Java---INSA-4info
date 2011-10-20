@@ -1,3 +1,6 @@
+import fr.insa.rennes.info.chemical.backend.ReactionRule;
+
+
 
 public class MaxRR implements ReactionRule{
 	private Integer a;
