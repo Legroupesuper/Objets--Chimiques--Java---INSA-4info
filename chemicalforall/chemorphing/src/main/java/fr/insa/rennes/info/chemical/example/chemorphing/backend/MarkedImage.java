@@ -10,13 +10,16 @@ public class MarkedImage {
 	private Point _point2;
 	private Point _point3;
 	private String _name;
-	public MarkedImage(Image _image, String name, Point _point1, Point _point2, Point _point3) {
+	public MarkedImage(Image _image, String name) {
 		super();
 		this._image = _image;
+		this.set_name(name);
+	}
+	public MarkedImage(Image _image, String name, Point _point1, Point _point2, Point _point3) {
+		this(_image, name);
 		this._point1 = _point1;
 		this._point2 = _point2;
 		this._point3 = _point3;
-		this.set_name(name);
 	}
 	public Image get_image() {
 		return _image;

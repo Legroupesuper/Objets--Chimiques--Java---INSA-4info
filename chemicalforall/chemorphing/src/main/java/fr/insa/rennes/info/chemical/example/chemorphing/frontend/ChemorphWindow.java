@@ -22,6 +22,11 @@ public class ChemorphWindow extends JFrame {
 	 */
 	private static final long serialVersionUID = -2868970750863786114L;
 	
+	protected TreatmentPanel tp = new TreatmentPanel();
+	protected PoolPanel pp = new PoolPanel();
+	protected ResultPanel rp = new ResultPanel();
+	protected AddPanel ap = new AddPanel();
+	
 	public ChemorphWindow(){
 		super();
 		
@@ -37,13 +42,13 @@ public class ChemorphWindow extends JFrame {
 		
 		JPanel container = new JPanel();
 		container.setLayout(new GridLayout(2, 2));
-		TreatmentPanel tp = new TreatmentPanel();
+		
 		tp.setBorder(BorderFactory.createTitledBorder(Globals.TREATMENT_TITLE));
-		PoolPanel pp = new PoolPanel();
+		
 		pp.setBorder(BorderFactory.createTitledBorder(Globals.POOL_TITLE));
-		ResultPanel rp = new ResultPanel();
+		
 		rp.setBorder(BorderFactory.createTitledBorder(Globals.RESULT_TITLE));
-		AddPanel ap = new AddPanel();
+		
 		ap.setBorder(BorderFactory.createTitledBorder(Globals.ADD_TITLE));
 		
 		// Add panels to the main window : beware ! the order defines how panels are positioned
