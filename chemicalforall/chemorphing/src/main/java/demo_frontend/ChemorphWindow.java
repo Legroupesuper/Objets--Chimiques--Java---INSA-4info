@@ -17,7 +17,9 @@ public class ChemorphWindow extends JFrame {
 	 */
 	private static final long serialVersionUID = -2868970750863786114L;
 	
-	public ChemorphWindow(){
+	private JPanel container;
+	
+	public ChemorphWindow(JPanel jp){
 		super();
 		
 		this.setLocationRelativeTo(null);
@@ -26,7 +28,9 @@ public class ChemorphWindow extends JFrame {
 		
 		this.setTitle("Chemical Image Morpher");
 		
-		JPanel container = new JPanel();
+		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+		
+		this.container = jp;
 		
 		this.getContentPane().add(container);
 	}

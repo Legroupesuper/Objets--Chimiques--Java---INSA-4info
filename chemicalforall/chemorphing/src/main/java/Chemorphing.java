@@ -2,10 +2,14 @@ import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
 
+import javax.swing.SwingUtilities;
+
 import morph.Morphing;
 import demo_backend.MarkedImage;
 import demo_backend.Pool;
 import demo_backend.Tools;
+import demo_frontend.AnimationDisplayPanel;
+import demo_frontend.ChemorphWindow;
 
 /**
  * 
@@ -79,7 +83,8 @@ public class Chemorphing {
 
 		MarkedImage[] tab = pool.selectRandom(12);
 
-		
+		final Image[] imgTab = new Image[tab.length * FRAME_NUMBER];
+		int imgTabIndex = 0;
 
 
 		//Create a folder to put the results
@@ -103,9 +108,14 @@ public class Chemorphing {
 
 
 				//Store the results in files
-				boolean ok = true;
+//				boolean ok = true;
+//				for(int j = 0 ; j < result.length ; j++){
+//					ok = ok && Tools.store(result[j], resultFolderName+"/"+resultName+i+"_"+j+".png", "png");
+//				}
+
+				//Store the results in tab
 				for(int j = 0 ; j < result.length ; j++){
-					ok = ok && Tools.store(result[j], resultFolderName+"/"+resultName+i+"_"+j+".png", "png");
+					imgTab[imgTabIndex++] = result[j];
 				}
 
 				pool.savePool();
@@ -120,14 +130,14 @@ public class Chemorphing {
 
 
 		//TODO wannabe definite main
-		/*
+		
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
-				new ChemorphWindow().setVisible(true);
+				new ChemorphWindow(new AnimationDisplayPanel(imgTab)).setVisible(true);
 			}
 		});
 
-		 */
+		 
 	}
 
 }
