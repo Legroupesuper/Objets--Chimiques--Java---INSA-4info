@@ -31,6 +31,8 @@ public class ChemorphWindow extends JFrame {
 		
 		this.setTitle(Globals.TITLE);
 		
+		this.setResizable(false);
+		
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		
 		JPanel container = new JPanel();
