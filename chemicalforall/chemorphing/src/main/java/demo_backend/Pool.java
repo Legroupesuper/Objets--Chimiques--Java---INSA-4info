@@ -98,6 +98,14 @@ public class Pool {
 		}
 	}
 
+	public MarkedImage[] selectRandom(int nb){
+		MarkedImage[] resulTab = new MarkedImage[this.get_pool().size()];
+		for(int i = 0 ; i < this.get_pool().size() ; i++){
+			resulTab[i] = this.get_pool().get(i);
+		}
+		return resulTab;
+	}
+
 	private class SimpleMarkedImage{
 		private String address;
 		private int x1;
