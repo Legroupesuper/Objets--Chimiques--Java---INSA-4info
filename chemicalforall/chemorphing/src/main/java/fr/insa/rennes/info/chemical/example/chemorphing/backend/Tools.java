@@ -7,6 +7,9 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+import javax.swing.SwingUtilities;
+
+import fr.insa.rennes.info.chemical.example.chemorphing.frontend.ChemorphWindow;
 
 public class Tools {
 
@@ -23,6 +26,25 @@ public class Tools {
 		}
 
 		return true;
+	}
+	
+	public static void init(){
+		initModel();
+		initView();
+	}
+	
+	public static void initModel(){
+		
+	}
+	
+	public static void initView(){
+
+		SwingUtilities.invokeLater(new Runnable() {
+			public void run() {
+				new ChemorphWindow().setVisible(true);
+			}
+		});
+		
 	}
 
 }

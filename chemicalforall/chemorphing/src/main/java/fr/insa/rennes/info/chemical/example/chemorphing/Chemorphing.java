@@ -8,6 +8,7 @@ import javax.swing.SwingUtilities;
 
 import fr.insa.rennes.info.chemical.example.chemorphing.backend.MarkedImage;
 import fr.insa.rennes.info.chemical.example.chemorphing.backend.Pool;
+import fr.insa.rennes.info.chemical.example.chemorphing.backend.Tools;
 import fr.insa.rennes.info.chemical.example.chemorphing.frontend.ChemorphWindow;
 import fr.insa.rennes.info.chemical.example.chemorphing.morph.Morphing;
 
@@ -129,13 +130,8 @@ public class Chemorphing {
 		}
 */
 
-		//TODO wannabe definite main
+		Tools.init();
 		
-		SwingUtilities.invokeLater(new Runnable() {
-			public void run() {
-				new ChemorphWindow().setVisible(true);
-			}
-		});
 
 		 
 	}
