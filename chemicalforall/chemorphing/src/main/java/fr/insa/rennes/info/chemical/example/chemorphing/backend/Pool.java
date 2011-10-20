@@ -32,6 +32,9 @@ public class Pool {
 	public void set_pool(ArrayList<MarkedImage> _pool) {
 		this._pool = _pool;
 	}
+	public int size(){
+		return _pool.size();
+	}
 	public boolean loadPool(){
 		FileInputStream fis = null;
 		SimpleMarkedImage[] smiTab;

@@ -14,6 +14,7 @@ import javax.swing.JSpinner;
 import javax.swing.SpinnerListModel;
 
 import fr.insa.rennes.info.chemical.example.chemorphing.backend.Globals;
+import fr.insa.rennes.info.chemical.example.chemorphing.middleend.PoolManager;
 
 public class TreatmentPanel extends JPanel {
 
@@ -32,10 +33,15 @@ public class TreatmentPanel extends JPanel {
 		jl.setAlignmentX(Component.CENTER_ALIGNMENT);
 		this.add(jl);
 		
-		//TODO tell where the pool is and get its size, then fill tab with consecutive integers
-		Integer[] integers = new Integer[]{2, 3};
+		//get pool size, then fill tab with consecutive integers
+		int poolSize = PoolManager.getPool().size();
+		Integer[] integers = new Integer[poolSize - 1];
+		for(int i=2 ; i<=poolSize ; ++i){
+			integers[i-2] = i;
+		}
+		
 		SpinnerListModel integersModel = new SpinnerListModel(integers);
-		JSpinner spinner = new JSpinner(integersModel);
+		final JSpinner spinner = new JSpinner(integersModel);
 		spinner.setPreferredSize(new Dimension(40, 30));
 		spinner.setMaximumSize(new Dimension(40, 30));
 
@@ -46,13 +52,18 @@ public class TreatmentPanel extends JPanel {
 		JButton jb = new JButton(Globals.MORPH_BUTTON);
 		jb.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// TODO Launch morphing
+				launchMorphing((Integer) spinner.getValue());
 			}
 		});
 		jb.setAlignmentX(Component.CENTER_ALIGNMENT);
 		jb.setPreferredSize(new Dimension(120, 30));
 		jb.setMaximumSize(new Dimension(120, 30));
 		this.add(jb);
+	}
+	
+	public void launchMorphing(int nb){
+		// TODO Launch morphing
+		System.out.println(nb);
 	}
 
 }
