@@ -16,7 +16,7 @@ import fr.insa.rennes.info.chemical.example.chemorphing.morph.Morphing;
  */
 
 /**
- * @author thorthur
+ * @author ArthurTemple
  *
  */
 public class Chemorphing {
