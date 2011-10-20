@@ -8,8 +8,6 @@ import javax.swing.SwingUtilities;
 
 import fr.insa.rennes.info.chemical.example.chemorphing.backend.MarkedImage;
 import fr.insa.rennes.info.chemical.example.chemorphing.backend.Pool;
-import fr.insa.rennes.info.chemical.example.chemorphing.backend.Tools;
-import fr.insa.rennes.info.chemical.example.chemorphing.frontend.AnimationDisplayPanel;
 import fr.insa.rennes.info.chemical.example.chemorphing.frontend.ChemorphWindow;
 import fr.insa.rennes.info.chemical.example.chemorphing.morph.Morphing;
 
@@ -88,7 +86,7 @@ public class Chemorphing {
 		final Image[] imgTab = new Image[tab.length * FRAME_NUMBER];
 		int imgTabIndex = 0;
 
-
+/*
 		//Create a folder to put the results
 		String resultFolderName;
 		File imageDir;
@@ -129,7 +127,7 @@ public class Chemorphing {
 				e.printStackTrace();
 			}
 		}
-
+*/
 
 		//TODO wannabe definite main
 		
