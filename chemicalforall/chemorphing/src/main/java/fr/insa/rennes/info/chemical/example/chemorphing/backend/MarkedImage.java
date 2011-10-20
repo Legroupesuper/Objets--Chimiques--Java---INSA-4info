@@ -45,8 +45,11 @@ public class MarkedImage {
 	public void set_name(String _name) {
 		this._name = _name;
 	}
-	public String get_name() {
+	public String get_address() {
 		return _name;
+	}
+	public String get_name() {
+		return _name.replaceAll(".*/", "").replaceAll("\\..*", "");
 	}
 	
 }
