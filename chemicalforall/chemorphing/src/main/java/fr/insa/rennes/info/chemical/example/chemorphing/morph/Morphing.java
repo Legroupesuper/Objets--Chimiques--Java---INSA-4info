@@ -18,7 +18,7 @@
 //////////////////////////////////////////////////////////////////
 
 
-package morph;
+package fr.insa.rennes.info.chemical.example.chemorphing.morph;
 
 import java.awt.Graphics2D;
 import java.awt.Image;

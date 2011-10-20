@@ -1,4 +1,4 @@
-package demo_backend;
+package fr.insa.rennes.info.chemical.example.chemorphing.backend;
 
 import java.awt.Image;
 import java.awt.Point;

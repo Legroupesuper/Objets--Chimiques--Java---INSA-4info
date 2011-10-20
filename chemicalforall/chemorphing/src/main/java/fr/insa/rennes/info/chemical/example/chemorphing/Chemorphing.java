@@ -1,15 +1,17 @@
+package fr.insa.rennes.info.chemical.example.chemorphing;
+
 import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
 
 import javax.swing.SwingUtilities;
 
-import morph.Morphing;
-import demo_backend.MarkedImage;
-import demo_backend.Pool;
-import demo_backend.Tools;
-import demo_frontend.AnimationDisplayPanel;
-import demo_frontend.ChemorphWindow;
+import fr.insa.rennes.info.chemical.example.chemorphing.backend.MarkedImage;
+import fr.insa.rennes.info.chemical.example.chemorphing.backend.Pool;
+import fr.insa.rennes.info.chemical.example.chemorphing.backend.Tools;
+import fr.insa.rennes.info.chemical.example.chemorphing.frontend.AnimationDisplayPanel;
+import fr.insa.rennes.info.chemical.example.chemorphing.frontend.ChemorphWindow;
+import fr.insa.rennes.info.chemical.example.chemorphing.morph.Morphing;
 
 /**
  * 
@@ -133,7 +135,7 @@ public class Chemorphing {
 		
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
-				new ChemorphWindow(new AnimationDisplayPanel(imgTab)).setVisible(true);
+				new ChemorphWindow().setVisible(true);
 			}
 		});
 

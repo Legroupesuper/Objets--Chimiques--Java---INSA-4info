@@ -1,4 +1,4 @@
-package morph;
+package fr.insa.rennes.info.chemical.example.chemorphing.morph;
 
 
 public class ControlPoint {

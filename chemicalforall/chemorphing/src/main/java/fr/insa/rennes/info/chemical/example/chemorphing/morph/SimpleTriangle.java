@@ -1,4 +1,4 @@
-package morph;
+package fr.insa.rennes.info.chemical.example.chemorphing.morph;
 
 //A SimpleTriangle has a horizontal edge from v1 to v2, and
 //v3 is above or below this edge. v1 is to the left (lesser x) of v2.

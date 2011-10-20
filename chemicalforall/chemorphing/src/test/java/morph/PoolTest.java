@@ -1,5 +1,5 @@
 package morph;
-import demo_backend.Pool;
+import fr.insa.rennes.info.chemical.example.chemorphing.backend.Pool;
 import junit.framework.TestCase;
 
 /**

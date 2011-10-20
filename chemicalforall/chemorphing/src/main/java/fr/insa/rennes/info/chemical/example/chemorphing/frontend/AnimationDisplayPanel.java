@@ -1,4 +1,4 @@
-package demo_frontend;
+package fr.insa.rennes.info.chemical.example.chemorphing.frontend;
 
 import java.awt.Graphics;
 import java.awt.Image;

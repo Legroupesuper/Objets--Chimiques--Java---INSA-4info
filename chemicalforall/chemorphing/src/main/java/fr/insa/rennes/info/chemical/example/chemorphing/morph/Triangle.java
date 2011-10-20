@@ -1,7 +1,7 @@
-package morph;
+package fr.insa.rennes.info.chemical.example.chemorphing.morph;
 
 
-import morph.SimpleTriangle;
+import fr.insa.rennes.info.chemical.example.chemorphing.morph.SimpleTriangle;
 
 public class Triangle {
 	int            x1, y1;
