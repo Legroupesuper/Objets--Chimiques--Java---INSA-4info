@@ -183,8 +183,14 @@ public final class Solution implements Collection<Object>{
 	public boolean isEmpty() {
 		return _mapElements.isEmpty();
 	}
-	public Iterator iterator() {
-		return ((HashMap<?, ?>)((HashMap<?, ?>) _mapElements).clone()).values().iterator();
+	public Iterator<Object> iterator() {
+		List<Object> reactivesCopy = new LinkedList<Object>();
+		
+		for(List<Object> reactiveList : _mapElements.values()) {
+			reactivesCopy.addAll(reactiveList);
+		}
+		
+		return Collections.unmodifiableList(reactivesCopy).iterator();
 	}
 
 	/*
@@ -419,7 +425,13 @@ public final class Solution implements Collection<Object>{
 
 	@Override
 	public String toString(){
-		return _mapElements.toString();
+		String res = "Solution is :\n";
+		
+		for(Map.Entry<String, List<Object>> entry : _mapElements.entrySet()) {
+			res += entry.getKey()+" -> "+entry.getValue()+"\n"; 
+		}
+		
+		return res;
 	}
 
 	/*

@@ -41,9 +41,8 @@ public class Test {
 		//s.add(new RandomNumberRR());
 		//	s.add(new TrucRR());
 		System.out.println("AVANT : ");
-		for(Object o : s){
-			System.out.println(o);
-		}
+		System.out.println(s);
+		
 		try {
 			s.react();
 		} catch (IllegalArgumentException e) {
@@ -53,9 +52,7 @@ public class Test {
 
 		}
 		System.out.println("Resultat : ");
-		for(Object o : s){
-			System.out.println(o);
-		}
+		System.out.println(s);
 
 	}
 }
