@@ -3,6 +3,8 @@ package fr.insa.rennes.info.chemical.backend;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.insa.rennes.info.chemical.backend.Solution.Strategy;
+
 
 
 /**
@@ -14,6 +16,8 @@ import java.util.List;
  *
  */
 public class IndexProvider {
+	
+	
 	/**
 	 * This table represents the maximum values of the indexes
 	 */
@@ -29,16 +33,67 @@ public class IndexProvider {
 	 * This list represents sets of index which can not be equals
 	 */
 	private List<List<Integer>> _dependantIndexes;
-
+	
 	/**
-	 * Default constructor
+	 * This IncrementStrategy represents the strategy used for the choice of reactives (design pattern strategy)
+	 */
+	private IncrementStrategy _incrementStrategy;
+
+//	/**
+//	 * Default constructor
+//	 * @param maxIndex the table that represents the maximum values of the indexes
+//	 * @throws ChimiqueException
+//	 */
+//	public IndexProvider(int[] maxIndex) throws ChimiqueException{
+//		_maxIndex = maxIndex;
+//		_dependantIndexes =  new ArrayList<List<Integer>>();
+//		_index = new int[maxIndex.length];
+//		_incrementStrategy = new RandomIncrementStrategy(_maxIndex);
+//		//_incrementStrategy = new OrderedIncrementStrategy();
+//		for(int i=0; i<_index.length; i++){
+//			if(_maxIndex[i] == 0)
+//				throw new ChimiqueException("Maximum index value is invalid : 0");
+//			_index[i] = 0;
+//		}
+//	}
+//
+//	/**
+//	 * Constructor with constraints
+//	 * @param maxIndex the table that represents the maximum values of the indexes
+//	 * @throws ChimiqueException
+//	 */
+//	public IndexProvider(List<List<Integer>> dependantIndexes, int[] maxIndex) throws ChimiqueException{
+//		_maxIndex = maxIndex;
+//		_index = new int[maxIndex.length];
+//		_dependantIndexes = dependantIndexes;
+//		_incrementStrategy = new RandomIncrementStrategy(_maxIndex);
+//		//_incrementStrategy = new OrderedIncrementStrategy();
+//		for(int i=0; i<_index.length; i++){
+//			if(_maxIndex[i] == 0)
+//				throw new ChimiqueException("Maximum index value is invalid : 0");
+//			_index[i] = 0;
+//		}
+//		while(!checkDuplicate()){
+//			increment();
+//		}
+//	}
+	
+	/**
+	 * Default constructor with strategy choice
 	 * @param maxIndex the table that represents the maximum values of the indexes
+	 * @param s the strategy used for the choice of reactives (random or ordered)
 	 * @throws ChimiqueException
 	 */
-	public IndexProvider(int[] maxIndex) throws ChimiqueException{
+	public IndexProvider(int[] maxIndex, Strategy s) throws ChimiqueException{
 		_maxIndex = maxIndex;
 		_dependantIndexes =  new ArrayList<List<Integer>>();
 		_index = new int[maxIndex.length];
+		if (s==Strategy.RANDOM){
+			_incrementStrategy = new RandomIncrementStrategy(_maxIndex);
+		}
+		else {
+			_incrementStrategy = new OrderedIncrementStrategy();
+		}
 		for(int i=0; i<_index.length; i++){
 			if(_maxIndex[i] == 0)
 				throw new ChimiqueException("Maximum index value is invalid : 0");
@@ -49,12 +104,19 @@ public class IndexProvider {
 	/**
 	 * Constructor with constraints
 	 * @param maxIndex the table that represents the maximum values of the indexes
+	 * @param s the strategy used for the choice of reactives (random or ordered)
 	 * @throws ChimiqueException
 	 */
-	public IndexProvider(List<List<Integer>> dependantIndexes, int[] maxIndex) throws ChimiqueException{
+	public IndexProvider(List<List<Integer>> dependantIndexes, int[] maxIndex, Strategy s) throws ChimiqueException{
 		_maxIndex = maxIndex;
 		_index = new int[maxIndex.length];
 		_dependantIndexes = dependantIndexes;
+		if (s==Strategy.RANDOM){
+			_incrementStrategy = new RandomIncrementStrategy(_maxIndex);
+		}
+		else {
+			_incrementStrategy = new OrderedIncrementStrategy();
+		}
 		for(int i=0; i<_index.length; i++){
 			if(_maxIndex[i] == 0)
 				throw new ChimiqueException("Maximum index value is invalid : 0");
@@ -105,22 +167,14 @@ public class IndexProvider {
 	 * @return Is still in the counter range
 	 */
 	public void increment(){
-		int current = 0;
-
 
 		do{
-			current = 0;
-			_index[0] += 1;
-			while(current<_index.length){
-				if(_index[current]>=_maxIndex[current]){
-					if(current+1>=_index.length){
-						_overflowReached = true;
-						return;
-					}
-					_index[current] = 0;
-					_index[current+1]+=1;
-				}
-				current++;
+			try {
+				_index = _incrementStrategy.increment(_index, _maxIndex);
+			} catch (ChimiqueException e) {
+				// TODO Auto-generated catch block
+				_overflowReached = true;
+				return;
 			}
 		}while(!checkDuplicate());
 	}

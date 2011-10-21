@@ -26,6 +26,7 @@ import fr.insa.rennes.info.chemical.user.ReactionRule;
  *
  */
 public class Solution implements Collection<Object>{
+	public static enum Strategy{RANDOM, ORDERED};
 	private Map<String, ArrayList<Object>> _mapElements;
 	private boolean _innert = false;
 
@@ -33,11 +34,21 @@ public class Solution implements Collection<Object>{
 	private List<Thread> _threadTable = new ArrayList<Thread>();
 
 	private ThreadGroup _threadGroup = new ThreadGroup("Group");
+	
+	private Strategy _strategy;
 
 	public Solution() {
 		super();
 		_mapElements = new HashMap<String, ArrayList<Object>>();
 		_mapElements = Collections.synchronizedMap(_mapElements);
+		_strategy = Strategy.RANDOM;
+	}
+	
+	public Solution(Strategy s) {
+		super();
+		_mapElements = new HashMap<String, ArrayList<Object>>();
+		_mapElements = Collections.synchronizedMap(_mapElements);
+		_strategy = s;
 	}
 
 	public boolean add(Object arg0) {
@@ -231,7 +242,7 @@ public class Solution implements Collection<Object>{
 			}
 			IndexProvider indexPovider = null;
 			try{
-				indexPovider = new IndexProvider(listProvider, tabMaxIndex);
+				indexPovider = new IndexProvider(listProvider, tabMaxIndex, _strategy);
 			}catch(ChimiqueException e){
 				System.out.println("Exception levée et gérée magnifiquement");
 				return false;
@@ -240,7 +251,6 @@ public class Solution implements Collection<Object>{
 			//Effectively research a valid set of reactives for the reaction rule
 			Object reactives[] = new Object[fields.length];
 			boolean hasMatched = false;
-			boolean b;
 			//Loop until the reactives has been found OR all combination have been tested
 			while(!indexPovider.is_overflowReached()){
 				int i=0;
