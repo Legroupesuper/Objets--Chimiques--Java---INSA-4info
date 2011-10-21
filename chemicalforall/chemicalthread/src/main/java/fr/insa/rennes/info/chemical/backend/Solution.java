@@ -29,21 +29,47 @@ import fr.insa.rennes.info.chemical.user.ReactionRule;
 public final class Solution implements Collection<Object>{
 
 	/**
-	 * 
 	 * A list of different strategies available for reactive selection sequence
-	 * @author MamieNova
 	 */
 	public static enum Strategy{RANDOM, ORDERED};
 
-
+	/**
+	 * The map containing all the reactives. The keys of the map are the type (for example java.lang.String)
+	 * and the values are a list of object containing all the reactives of this type.
+	 */
 	private Map<String, List<Object>> _mapElements;
+	
+	/**
+	 * The map that remembers all the reaction rules setters so that we have to search for
+	 * them only once. The keys are the concatenation of the class name and the attribute name, and
+	 * the values are the name of the setter method.
+	 */
+	private Map<String, Integer> _mapReactionRulesSetters;
+	
+	/**
+	 * The boolean that indicates whether or not the solution is inert (can not react anymore)
+	 */
 	private boolean _inert = false;
 
+	/**
+	 * This boolean is useful for the reaction rules threads. If it is set at false,
+	 * all the thread stop.
+	 */
 	private boolean _keepOnReacting = true;
+	
+	/**
+	 * The list containing all the threads of the solution's reactions rules threads
+	 */
 	private List<Thread> _threadTable = new ArrayList<Thread>();
-
+	
+	/**
+	 * The thread group, common to all the threads
+	 */
 	private ThreadGroup _threadGroup = new ThreadGroup("Group");
 
+	/**
+	 * The chosen reactive permutation strategy
+	 */
 	private Strategy _strategy;
 
 	/**
@@ -64,6 +90,7 @@ public final class Solution implements Collection<Object>{
 		super();
 		_mapElements = new HashMap<String, List<Object>>();
 		_mapElements = Collections.synchronizedMap(_mapElements);
+		_mapReactionRulesSetters = new HashMap<String, Integer>();
 		_strategy = s;
 	}
 
@@ -82,13 +109,21 @@ public final class Solution implements Collection<Object>{
 
 				//We check that every field has an appropriate setter
 				boolean classOK = true;
+				int numberOfMethods;
 				for(Field f : clazz.getDeclaredFields()){
 					boolean setterOK = false;
-					for(Method m : clazz.getDeclaredMethods()){
+					numberOfMethods = clazz.getDeclaredMethods().length;
+					
+					for(int  i = 0; i < numberOfMethods; i++){
+						Method m = clazz.getDeclaredMethods()[i];
 						if(m.getName().toLowerCase().equals("set"+f.getName().toLowerCase())){
+							//Remember the setter name by putting it in the reaction rules' setters map
+							_mapReactionRulesSetters.put(clazz.getName()+"."+f.getName(), i);
+							
 							setterOK = true;
 						}
 					}
+					
 					if(!(setterOK)){
 						classOK = false;
 						if(!setterOK)
@@ -273,7 +308,7 @@ public final class Solution implements Collection<Object>{
 	 * in the reaction rule instance by reflexivity so no need to return them.
 	 * This function is synchronized on the atoms' hash map
 	 */
-	public boolean requestForParameters(ReactionRule r) throws IllegalArgumentException, IllegalAccessException, InvocationTargetException{
+	public boolean requestForParameters(ReactionRule r) throws IllegalArgumentException, IllegalAccessException, InvocationTargetException, SecurityException, NoSuchMethodException{
 		//Build the type table : the types of the reaction rules reactives
 		Field[] fields = r.getClass().getDeclaredFields();
 		String table[] = new String[fields.length];
@@ -327,20 +362,22 @@ public final class Solution implements Collection<Object>{
 
 			//Effectively research a valid set of reactives for the reaction rule
 			Object reactives[] = new Object[fields.length];
+			int setterNumber;
+			Method setter;
 			boolean hasMatched = false;
 			//Loop until the reactives has been found OR all combination have been tested
 			while(!indexProvider.is_overflowReached()){
 				int i=0;
 				Object obj = null;
 				for(Field f : fields){
-					for(Method m : r.getClass().getDeclaredMethods()){
-						if(m.getName().toLowerCase().equals(("set"+f.getName().toLowerCase()))){
-							//On invoque la méthode
-							obj = _mapElements.get(f.getType().getName()).get(indexProvider.get(i));
-							m.invoke(r, new Object[]{obj});
-
-						}
-					}
+					//Find the setter for this field
+					setterNumber = _mapReactionRulesSetters.get(r.getClass().getName()+"."+f.getName());
+					setter = r.getClass().getDeclaredMethods()[setterNumber];
+					
+					//and invoke the setter
+					obj = _mapElements.get(f.getType().getName()).get(indexProvider.get(i));
+					setter.invoke(r, new Object[]{obj});
+					
 					reactives[i] = obj;
 					i++;
 				}
