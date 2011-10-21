@@ -45,15 +45,11 @@ public class Test {
 			System.out.println(o);
 		}
 		try {
-			s.run();
+			s.react();
 		} catch (IllegalArgumentException e) {
 			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-		} catch (InvocationTargetException e) {
-			e.printStackTrace();
 		}
-		while(!s.is_innert()){
+		while(!s.is_inert()){
 
 		}
 		System.out.println("Resultat : ");

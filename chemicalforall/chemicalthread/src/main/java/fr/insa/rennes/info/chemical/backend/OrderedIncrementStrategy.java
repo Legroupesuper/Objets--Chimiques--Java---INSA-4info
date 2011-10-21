@@ -14,15 +14,15 @@ class OrderedIncrementStrategy implements IncrementStrategy {
 	 * @param _index The index array: the values of the index
 	 * @param _maxIndex The maximum values of the indexes
 	 * @return A table of integers that is the new value of the indexes
-	 * @throws ChimiqueException
+	 * @throws ChemicalException
 	 */
-	public int[] increment(int[] _index, int[] _maxIndex) throws ChimiqueException{
+	public int[] increment(int[] _index, int[] _maxIndex) throws ChemicalException{
 		int current = 0;
 		_index[0] += 1;
 		while(current<_index.length){
 			if(_index[current]>=_maxIndex[current]){
 				if(current+1>=_index.length){
-					throw new ChimiqueException("Overflow détecté");
+					throw new ChemicalException("Overflow détecté");
 				}
 				_index[current] = 0;
 				_index[current+1]+=1;

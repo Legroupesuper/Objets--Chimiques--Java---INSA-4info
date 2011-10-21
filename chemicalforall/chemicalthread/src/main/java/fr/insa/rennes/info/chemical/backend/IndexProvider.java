@@ -85,9 +85,9 @@ class IndexProvider {
 	 * Default constructor with strategy choice
 	 * @param maxIndex the table that represents the maximum values of the indexes
 	 * @param s the strategy used for the choice of reactives (random or ordered)
-	 * @throws ChimiqueException
+	 * @throws ChemicalException
 	 */
-	public IndexProvider(int[] maxIndex, Strategy s) throws ChimiqueException{
+	public IndexProvider(int[] maxIndex, Strategy s) throws ChemicalException{
 		_maxIndex = maxIndex;
 		_dependantIndexes =  new ArrayList<List<Integer>>();
 		_index = new int[maxIndex.length];
@@ -104,7 +104,7 @@ class IndexProvider {
 		//do anything
 		for(int i=0; i<_index.length; i++){
 			if(_maxIndex[i] == 0)
-				throw new ChimiqueException("Maximum index value is invalid : 0");
+				throw new ChemicalException("Maximum index value is invalid : 0");
 			_index[i] = 0;
 		}
 	}
@@ -113,9 +113,9 @@ class IndexProvider {
 	 * Constructor with constraints
 	 * @param maxIndex the table that represents the maximum values of the indexes
 	 * @param s the strategy used for the choice of reactives (random or ordered)
-	 * @throws ChimiqueException
+	 * @throws ChemicalException
 	 */
-	public IndexProvider(List<List<Integer>> dependantIndexes, int[] maxIndex, Strategy s) throws ChimiqueException{
+	public IndexProvider(List<List<Integer>> dependantIndexes, int[] maxIndex, Strategy s) throws ChemicalException{
 		_maxIndex = maxIndex;
 		_index = new int[maxIndex.length];
 		_dependantIndexes = dependantIndexes;
@@ -132,7 +132,7 @@ class IndexProvider {
 		//do anything
 		for(int i=0; i<_index.length; i++){
 			if(_maxIndex[i] == 0)
-				throw new ChimiqueException("Maximum index value is invalid : 0");
+				throw new ChemicalException("Maximum index value is invalid : 0");
 			_index[i] = 0;
 		}
 		
@@ -188,7 +188,7 @@ class IndexProvider {
 		do{
 			try {
 				_index = _incrementStrategy.increment(_index, _maxIndex);
-			} catch (ChimiqueException e) {
+			} catch (ChemicalException e) {
 				// TODO Auto-generated catch block
 				_overflowReached = true;
 				return;

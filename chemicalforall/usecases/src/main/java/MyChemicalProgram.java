@@ -51,9 +51,9 @@ public class MyChemicalProgram {
 		
 		System.out.println(maSolution.toString());
 		
-		maSolution.run();
+		maSolution.react();
 		
-		while(!maSolution.is_innert())
+		while(!maSolution.is_inert())
 			System.out.println(maSolution.toString());	
 				
 		System.out.println(maSolution.toString());	

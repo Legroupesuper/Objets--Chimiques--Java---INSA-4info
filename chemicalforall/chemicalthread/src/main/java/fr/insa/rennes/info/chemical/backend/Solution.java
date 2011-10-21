@@ -11,6 +11,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -26,23 +27,23 @@ import fr.insa.rennes.info.chemical.user.ReactionRule;
  *
  */
 public final class Solution implements Collection<Object>{
-	
+
 	/**
 	 * 
 	 * A list of different strategies available for reactive selection sequence
 	 * @author MamieNova
 	 */
 	public static enum Strategy{RANDOM, ORDERED};
-	
-	
-	private Map<String, ArrayList<Object>> _mapElements;
-	private boolean _innert = false;
 
-	private boolean _continuerReaction = true;
+
+	private Map<String, List<Object>> _mapElements;
+	private boolean _inert = false;
+
+	private boolean _keepOnReacting = true;
 	private List<Thread> _threadTable = new ArrayList<Thread>();
 
 	private ThreadGroup _threadGroup = new ThreadGroup("Group");
-	
+
 	private Strategy _strategy;
 
 	/**
@@ -53,7 +54,7 @@ public final class Solution implements Collection<Object>{
 	public Solution() {
 		this(Strategy.RANDOM);
 	}
-	
+
 	/**
 	 * Constructor for a Chemical Programming-powered Solution
 	 * @param s the Strategy to use in the solution
@@ -61,116 +62,136 @@ public final class Solution implements Collection<Object>{
 	 */
 	public Solution(Strategy s) {
 		super();
-		_mapElements = new HashMap<String, ArrayList<Object>>();
+		_mapElements = new HashMap<String, List<Object>>();
 		_mapElements = Collections.synchronizedMap(_mapElements);
 		_strategy = s;
 	}
 
-	public boolean add(Object arg0) {
+	public boolean add(Object newReactive) {
+		//The map (container of our elements) must NOT be accessed concurrently
 		synchronized (_mapElements) {
-			String interfaceS = " ";
-			for(Class<?> s : arg0.getClass().getInterfaces()){
-				interfaceS += s.getSimpleName()+" ";
-			}
-			if(!interfaceS.contains(" ReactionRule ")){
-				if(_mapElements.get(arg0.getClass().getName()) != null){
-					ArrayList<Object> l = _mapElements.get(arg0.getClass().getName());
-					boolean result = l.add(arg0);
-					_mapElements.put(arg0.getClass().getName(), l);
-					return result;
-				}else{
-					ArrayList<Object> l =new ArrayList<Object>();
-					boolean result = l.add(arg0);
-					_mapElements.put(arg0.getClass().getName(), l);
-					return result;
-				}
-			}else{
-				Class<?> c = arg0.getClass();
-				String messageErreur = "";
+
+			//At first we determine whether it is a ReactionRule or not
+			String className = getReactiveType(newReactive);
+
+			//It is a ReactionRule, hence special treatment
+			if(className.equals(ReactionRule.class.getSimpleName())){
+
+				Class<? extends Object> clazz = newReactive.getClass();
+				String errorMsg = "";
+
 				//We check that every field has an appropriate setter
-				boolean classeOK = true;
-				for(Field f : c.getDeclaredFields()){
-					boolean getterOK = false;
+				boolean classOK = true;
+				for(Field f : clazz.getDeclaredFields()){
 					boolean setterOK = false;
-					for(Method m : c.getDeclaredMethods()){
-						if(m.getName().toLowerCase().equals("get"+f.getName().toLowerCase())){
-							getterOK = true;
-						}
+					for(Method m : clazz.getDeclaredMethods()){
 						if(m.getName().toLowerCase().equals("set"+f.getName().toLowerCase())){
 							setterOK = true;
 						}
 					}
-					if(!(setterOK && getterOK)){
-						classeOK = false;
+					if(!(setterOK)){
+						classOK = false;
 						if(!setterOK)
-							messageErreur+="Il manque le setter associé à "+f+" dans la classe "+arg0.getClass()+"\n";
-						if(!getterOK)
-							messageErreur+="Il manque le getter associé à "+f+" dans la classe "+arg0.getClass()+"\n";
+							errorMsg+="class "+clazz.getSimpleName()+" lacks a setter for attribute "+f+"\n";
 					}
 				}
-				if(!classeOK){
+				if(!classOK){
 					try {
-						throw new ChimiqueException(messageErreur);
-					} catch (ChimiqueException e) {
+						throw new ChemicalException(errorMsg);
+					} catch (ChemicalException e) {
 						e.printStackTrace();
 					}
 				}
-				if(_mapElements.get("ReactionRule") != null){
-					ArrayList<Object> l = _mapElements.get("ReactionRule");
-					boolean result = l.add(arg0);
-					_mapElements.put("ReactionRule", l);
-					return result;
-				}else{
-					ArrayList<Object> l =new ArrayList<Object>();
-					boolean result = l.add(arg0);
-					_mapElements.put("ReactionRule", l);
-					return result;
-				}
 			}
+
+			//There is already an entry in the map for this reactive, so we just add the element
+			if(_mapElements.get(className) != null){
+				List<Object> l = _mapElements.get(className);
+				boolean result = l.add(newReactive);
+				_mapElements.put(newReactive.getClass().getName(), l);
+				return result;
+				//There is no entry for the moment : we init the list
+			}else{
+				List<Object> l =new ArrayList<Object>();
+				boolean result = l.add(newReactive);
+				_mapElements.put(className, l);
+				return result;
+			}
+
 		}
 	}
 
-	public boolean addAll(Collection arg0) {
+	//Add every element from the collection into the map
+	public boolean addAll(Collection<?> arg0) {
 		synchronized (_mapElements) {
 			for(Object obj : arg0){
 				this.add(obj);
 			}
 		}
-		return false;
+		return true;
 	}
 
 	public void clear() {
 		_mapElements.clear();
 	}
 
-	public boolean contains(Object arg0) {
-		return _mapElements.containsValue(arg0);
-	}
+	public boolean contains(Object reactive) {
+		String reactiveType = getReactiveType(reactive);
 
-	public boolean containsAll(Collection arg0) {
-		return _mapElements.values().containsAll(arg0);
-	}
-
-	public synchronized void firstSleep(String s){
-
-	}
-
-	protected synchronized boolean getContinuerReaction() {
-		return _continuerReaction;
-	}
-
-	public boolean is_innert() {
-		synchronized (this) {
-			return _innert;
+		//If the hash map doesn't even know the type, return false
+		if(_mapElements.get(reactiveType) == null) {
+			return false;
 		}
+
+		return _mapElements.get(reactiveType).contains(reactive);
+	}
+
+	public boolean containsAll(Collection<?> arg0) {
+		for(Object obj : arg0) {
+			if(!this.contains(obj))
+				return false;
+		}
+		return true;
+	}
+
+	//This void synchronised method acts as a lock
+	//	protected synchronized void firstSleep(String s){
+	//
+	//	}
+
+	protected synchronized boolean get_keepOnReacting() {
+		return _keepOnReacting;
+	}
+
+	private String getReactiveType(Object reactive) {
+		String interfaceS = " ";
+		for(Class<?> s : reactive.getClass().getInterfaces()){
+			interfaceS += s.getSimpleName()+" ";
+		}
+
+		if(interfaceS.contains(" "+ReactionRule.class.getSimpleName()+" ")) {
+			return "ReactionRule";
+		} else {
+			return reactive.getClass().getName();
+		}
+	}
+
+	public synchronized boolean is_inert() {
+		return _inert;
 	}
 
 	public boolean isEmpty() {
 		return _mapElements.isEmpty();
 	}
 	public Iterator iterator() {
-		return _mapElements.values().iterator();
+		return ((HashMap<?, ?>)((HashMap<?, ?>) _mapElements).clone()).values().iterator();
 	}
+
+	/*
+	 * Creates and launches a thread that will make the specified reaction rule react.
+	 * All the reaction rules threads will be in the same thread group and have 
+	 * a pointer to the solution (this)
+	 */
 	private void launchThread(ReactionRule r){
 		ChemicalThread t = new ChemicalThread(r, this, _threadGroup);
 		_threadTable.add(t);
@@ -179,42 +200,67 @@ public final class Solution implements Collection<Object>{
 
 
 	/*
-	 * When a reaction rule did not find any reactives, it calls this function.
+	 * When a reaction rule did not find any reactives, it calls this function that will "make" it sleep.
 	 * It checks if this reaction rule's thread is the last standing. If it is,
 	 * it stops all the reaction and declares the solution inert.
+	 * This function is called by the main function of a chemical thread
 	 */
-	public synchronized void makeSleep(String s){
+	protected synchronized void makeSleep(String s){
 		int nbAwake = 0;
+
+		//Count the number of thread that are awaken right now
 		for(Thread t : _threadTable){
 			if(!t.getState().equals(Thread.State.WAITING)){
 				nbAwake++;
 			}
 		}
+
+		//If there is more than one thread alive (including the current one)
+		//it means other reaction rules can react, so just make this thread wait
 		if(nbAwake>1){
 			try {
 				wait();
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
+			//If the current thread is the last one standing, kill all the threads by switching the 
+			//boolean _keepOnReacting to false (all thread are in a loop on this boolean).
 		}else{
-			synchronized (this) {
-				_continuerReaction = false;
-			}
+			_keepOnReacting = false;
+
 			notifyAll();
-			synchronized (this) {
-				_innert = true;
-			}
+			_inert = true;
 		}
 	}
 
-	public boolean remove(Object arg0) {
+	//To remove the object, we have to find its type
+	//and check that it is present in the hash map
+	public boolean remove(Object reactive) {
+		String reactiveType = getReactiveType(reactive);
 
-		return false;
+		//For the same reason as in add, synchronized have to be declared on the hash map
+		synchronized(_mapElements) {
+			//If the hash map doesn't even know the type, return false
+			if(_mapElements.get(reactiveType) == null) {
+				return false;
+			}
+
+			return _mapElements.get(reactiveType).remove(reactive);
+		}
 	}
 
-	public boolean removeAll(Collection arg0) {
-		return false;
+	public boolean removeAll(Collection<? extends Object> arg0) {
+		boolean res = false;
+
+		synchronized (_mapElements) {
+			for(Object obj : arg0) {
+				res = res || this.remove(obj);
+			}
+		}
+
+		return res;
 	}
+
 	/*
 	 * This method is called by every thread-reaction rule to get its reactives.
 	 * It returns true if a set of parameter have been found, else false. The reactives are set directly
@@ -233,7 +279,10 @@ public final class Solution implements Collection<Object>{
 		synchronized(_mapElements) {
 			//Initialize the index provider to try every possible combination
 			int tabMaxIndex[] = new int[table.length];
-			HashMap<String, List<Integer>> mapIndexProvider = new HashMap<String, List<Integer>>();
+
+			//Construct the map of the dependent indexes (two dependent indexes can not have the same value
+			//as they refer to the same element)
+			Map<String, List<Integer>> mapIndexProvider = new HashMap<String, List<Integer>>();
 			for(int i = 0; i < table.length; i++){
 				if(mapIndexProvider.containsKey(table[i])){
 					List<Integer> l = mapIndexProvider.get(table[i]);
@@ -244,20 +293,28 @@ public final class Solution implements Collection<Object>{
 					l.add(i);
 					mapIndexProvider.put(table[i], l);
 				}
-				if(_mapElements.get(table[i])== null)// || _mapElements.get(table[i]).size()==0)
+
+				//If the type isn't even an entry of the hash map, return false (didn't find any reactive)
+				if(_mapElements.get(table[i])== null)
 					return false;
+
 				tabMaxIndex[i] = _mapElements.get(table[i]).size();
 			}
+
+			//We have to provide the IndexProvider a list of a list of int, so 
+			//we need to transform the map of list in a list of list
 			List<List<Integer>> listProvider = new ArrayList<List<Integer>>();
 			for(String s : mapIndexProvider.keySet()){
 				if(mapIndexProvider.get(s).size()>1){
 					listProvider.add(mapIndexProvider.get(s));
 				}
 			}
-			IndexProvider indexPovider = null;
+
+			//Instantiate the IndexProvider object
+			IndexProvider indexProvider = null;
 			try{
-				indexPovider = new IndexProvider(listProvider, tabMaxIndex, _strategy);
-			}catch(ChimiqueException e){
+				indexProvider = new IndexProvider(listProvider, tabMaxIndex, _strategy);
+			}catch(ChemicalException e){
 				System.out.println("Exception levée et gérée magnifiquement");
 				return false;
 			}
@@ -266,14 +323,14 @@ public final class Solution implements Collection<Object>{
 			Object reactives[] = new Object[fields.length];
 			boolean hasMatched = false;
 			//Loop until the reactives has been found OR all combination have been tested
-			while(!indexPovider.is_overflowReached()){
+			while(!indexProvider.is_overflowReached()){
 				int i=0;
 				Object obj = null;
 				for(Field f : fields){
 					for(Method m : r.getClass().getDeclaredMethods()){
 						if(m.getName().toLowerCase().equals(("set"+f.getName().toLowerCase()))){
 							//On invoque la méthode
-							obj = _mapElements.get(f.getType().getName()).get(indexPovider.get(i));
+							obj = _mapElements.get(f.getType().getName()).get(indexProvider.get(i));
 							m.invoke(r, new Object[]{obj});
 
 						}
@@ -290,7 +347,7 @@ public final class Solution implements Collection<Object>{
 					hasMatched = true;
 					break;
 				}
-				indexPovider.increment();
+				indexProvider.increment();
 			}
 			//All the possibilities have been tested here
 			//Return false if nothing matched
@@ -302,11 +359,31 @@ public final class Solution implements Collection<Object>{
 		return true;
 	}
 
-	public boolean retainAll(Collection arg0) {
-		return false;
-	}
+	public boolean retainAll(Collection<?> arg0) {
+		boolean res = false;
+		String reactiveName;
+		
+		//The write/remove operations on the hash map have to be atomic
+		synchronized (_mapElements) {
+			for(Object obj : arg0) {
+				reactiveName = getReactiveType(obj);
+				
+				if(_mapElements.get(reactiveName) == null || !_mapElements.get(reactiveName).contains(obj)) {
+					_mapElements.get(reactiveName).remove(obj);
+					res = true;
+				}
+			}
+		}
 
-	public void run() throws IllegalArgumentException, IllegalAccessException, InvocationTargetException{
+		return res;
+	}
+	
+	/**
+	 * The main function that begins the reaction of the solution. It does not stop until the function
+	 * is_inert sends true.
+	 * Internally, it creates a thread for each reaction rule so that their execution be parallel.
+	 */
+	public void react() {
 		synchronized (this) {
 			for(Object r : _mapElements.get("ReactionRule")){//r est une ReactionRule
 				launchThread((ReactionRule)r);
@@ -316,15 +393,28 @@ public final class Solution implements Collection<Object>{
 	}
 
 	public int size() {
-		return _mapElements.values().size();
+		int res = 0;
+		
+		for(List<Object> reactiveList : _mapElements.values()) {
+			res += reactiveList.size();
+		}
+		
+		return res;
 	}
 
 	public Object[] toArray() {
-		return _mapElements.values().toArray();
+		List<Object> res = new LinkedList<Object>();
+		
+		for(List<Object> reactiveList : _mapElements.values()) {
+			res.addAll(reactiveList);
+			
+		}
+		
+		return res.toArray();
 	}
 
 	public Object[] toArray(Object[] arg0) {
-		return _mapElements.values().toArray(arg0);
+		return this.toArray();
 	}
 
 	@Override

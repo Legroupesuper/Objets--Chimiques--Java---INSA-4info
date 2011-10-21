@@ -8,5 +8,5 @@ package fr.insa.rennes.info.chemical.backend;
  */
 interface IncrementStrategy {
 
-	public int[] increment(int[] _index, int[] _maxIndex) throws ChimiqueException;
+	public int[] increment(int[] _index, int[] _maxIndex) throws ChemicalException;
 }
