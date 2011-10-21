@@ -29,4 +29,11 @@ public class Position {
 	public String toString() {
 		return "("+String.valueOf(x)+", "+String.valueOf(y)+")";
 	}
+	
+	public boolean equals(Object obj){
+		if(!(obj instanceof Position))
+			return false;
+		Position pos = (Position)obj;
+		return pos.x == this.x && pos.y == this.y;
+	}
 }

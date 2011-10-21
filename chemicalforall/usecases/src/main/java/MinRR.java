@@ -1,9 +1,12 @@
+import java.util.Iterator;
+
+import fr.insa.rennes.info.chemical.backend.Solution;
 import fr.insa.rennes.info.chemical.user.ReactionRule;
 
 
 public class MinRR implements ReactionRule {
-	private Position posA;
-	private Position posB;
+	private SubSolutionElement<Position> posA;
+	private SubSolutionElement<Position> posB;
 
 	public Object[] computeResult() {
 		if(posA.calculeNorme()<posB.calculeNorme()) return new Object[]{posA};
@@ -12,6 +15,10 @@ public class MinRR implements ReactionRule {
 
 	public boolean computeSelect() {
 		return true;
+	}
+	
+	public int getShotType() {
+		return 1;
 	}
 	
 	public Position getPosA() {

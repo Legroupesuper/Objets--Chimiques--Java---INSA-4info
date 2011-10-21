@@ -13,7 +13,11 @@ public class MoyenneDesPosRR implements ReactionRule {
 	}
 
 	public boolean computeSelect() {
-		return true;//(posA.getX()%2 == 0);
+		return true;
+	}
+	
+	public int getShotType() {
+		return Solution.N_SHOT;
 	}
 	
 	public Position getPosA() {
