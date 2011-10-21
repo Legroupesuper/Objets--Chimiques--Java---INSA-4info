@@ -9,7 +9,7 @@ import fr.insa.rennes.info.chemical.user.ReactionRule;
 
 
 
-public class ChemicalThread extends Thread {
+class ChemicalThread extends Thread {
 	private ReactionRule _reactionRule;
 	private Solution _solutionContainer;
 

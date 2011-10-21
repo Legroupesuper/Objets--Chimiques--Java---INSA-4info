@@ -13,9 +13,8 @@ import fr.insa.rennes.info.chemical.backend.Solution.Strategy;
  * an index in the _index array corresponds to an index in the main HashMap
  * in the class Solution.
  * @author Cédric Andreolli, Chloé Boulanger, Olivier Cléro, Antoine Guellier, Sébastien Guilloux, Arthur Templé
- *
  */
-public class IndexProvider {
+class IndexProvider {
 	
 	
 	/**
@@ -26,7 +25,11 @@ public class IndexProvider {
 	 * This table represents the current value for the indexes
 	 */
 	private int[] _index;
-
+	
+	/**
+	 * The boolean that indicates that the counter has reached overflow.
+	 * Another way to say it, is that the counter has passed through all the possible permutations 
+	 */
 	private boolean _overflowReached = false;
 
 	/**
@@ -88,12 +91,17 @@ public class IndexProvider {
 		_maxIndex = maxIndex;
 		_dependantIndexes =  new ArrayList<List<Integer>>();
 		_index = new int[maxIndex.length];
+		
+		//Choose the strategy
 		if (s==Strategy.RANDOM){
 			_incrementStrategy = new RandomIncrementStrategy(_maxIndex);
 		}
 		else {
 			_incrementStrategy = new OrderedIncrementStrategy();
 		}
+		
+		//Check all the maximum indexes: if one of them is 0, the class can't 
+		//do anything
 		for(int i=0; i<_index.length; i++){
 			if(_maxIndex[i] == 0)
 				throw new ChimiqueException("Maximum index value is invalid : 0");
@@ -111,24 +119,35 @@ public class IndexProvider {
 		_maxIndex = maxIndex;
 		_index = new int[maxIndex.length];
 		_dependantIndexes = dependantIndexes;
+		
+		//Choose the strategy
 		if (s==Strategy.RANDOM){
 			_incrementStrategy = new RandomIncrementStrategy(_maxIndex);
 		}
 		else {
 			_incrementStrategy = new OrderedIncrementStrategy();
 		}
+		
+		//Check all the maximum indexes: if one of them is 0, the class can't 
+		//do anything
 		for(int i=0; i<_index.length; i++){
 			if(_maxIndex[i] == 0)
 				throw new ChimiqueException("Maximum index value is invalid : 0");
 			_index[i] = 0;
 		}
+		
+		//Already check if the indexes are in conflicts
 		while(!checkDuplicate()){
 			increment();
 		}
 	}
 
 
-
+	/*
+	 * Checks if there is a conflict between two dependant indexes.
+	 * For example if the 1st index and the 3rd index are dependant, they can not
+	 * have the save value. 
+	 */
 	private boolean checkDuplicate(){
 		for(List<Integer> l : _dependantIndexes){
 			List<Integer> valuesIndexProvider = new ArrayList<Integer>();
@@ -161,9 +180,7 @@ public class IndexProvider {
 	}
 
 	/**
-	 * Increment the counter by 1 in a binary way.
-	 * Index 0 is incremented until its max value is reached, then index 1
-	 * is increased and index 0 is reset and etc
+	 * Give the next value of the index table 
 	 * @return Is still in the counter range
 	 */
 	public void increment(){
@@ -184,7 +201,7 @@ public class IndexProvider {
 
 	/**
 	 * 
-	 * @return
+	 * @return A string descrbing the index, more precisely give the values in the index table
 	 */
 	@Override
 	public String toString(){

@@ -18,15 +18,23 @@ import fr.insa.rennes.info.chemical.user.ReactionRule;
 
 
 /**
- * The solution is a set wich contains reactives and ReactionRules.
+ * The solution is a set which contains reactives and ReactionRules.
  * A reactive can be any kind of object or primitive type. It can also be an other Solution.
  * The ReactionRules are objects that implements the interface ReactiveRule.
  * 
  * @author
  *
  */
-public class Solution implements Collection<Object>{
+public final class Solution implements Collection<Object>{
+	
+	/**
+	 * 
+	 * A list of different strategies available for reactive selection sequence
+	 * @author MamieNova
+	 */
 	public static enum Strategy{RANDOM, ORDERED};
+	
+	
 	private Map<String, ArrayList<Object>> _mapElements;
 	private boolean _innert = false;
 
@@ -37,13 +45,20 @@ public class Solution implements Collection<Object>{
 	
 	private Strategy _strategy;
 
+	/**
+	 * Default constructor for a Chemical Programming-powered Solution
+	 * Takes random strategy as default behavior
+	 * @see Solution.Strategy
+	 */
 	public Solution() {
-		super();
-		_mapElements = new HashMap<String, ArrayList<Object>>();
-		_mapElements = Collections.synchronizedMap(_mapElements);
-		_strategy = Strategy.RANDOM;
+		this(Strategy.RANDOM);
 	}
 	
+	/**
+	 * Constructor for a Chemical Programming-powered Solution
+	 * @param s the Strategy to use in the solution
+	 * @see Solution.Strategy
+	 */
 	public Solution(Strategy s) {
 		super();
 		_mapElements = new HashMap<String, ArrayList<Object>>();
@@ -54,11 +69,10 @@ public class Solution implements Collection<Object>{
 	public boolean add(Object arg0) {
 		synchronized (_mapElements) {
 			String interfaceS = " ";
-			for(Class s : arg0.getClass().getInterfaces()){
-				interfaceS += s.getName()+" ";
+			for(Class<?> s : arg0.getClass().getInterfaces()){
+				interfaceS += s.getSimpleName()+" ";
 			}
-			//System.out.println("AAAAAAAAAAHHH "+interfaceS);
-			if(!interfaceS.contains("user.ReactionRule ")){
+			if(!interfaceS.contains(" ReactionRule ")){
 				if(_mapElements.get(arg0.getClass().getName()) != null){
 					ArrayList<Object> l = _mapElements.get(arg0.getClass().getName());
 					boolean result = l.add(arg0);
@@ -71,7 +85,7 @@ public class Solution implements Collection<Object>{
 					return result;
 				}
 			}else{
-				Class c = arg0.getClass();
+				Class<?> c = arg0.getClass();
 				String messageErreur = "";
 				//We check that every field has an appropriate setter
 				boolean classeOK = true;

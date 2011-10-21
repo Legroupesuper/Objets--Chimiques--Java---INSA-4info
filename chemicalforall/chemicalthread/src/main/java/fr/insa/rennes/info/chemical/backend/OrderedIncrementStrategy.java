@@ -1,10 +1,21 @@
 package fr.insa.rennes.info.chemical.backend;
 
-/*
+/**
  * This class implements an ordered strategy (standard "+1" incrementation of the counter)
+ * @author Cédric Andreolli, Chloé Boulanger, Olivier Cléro, Antoine Guellier, Sébastien Guilloux, Arthur Templé
  */
-public class OrderedIncrementStrategy implements IncrementStrategy {
-
+class OrderedIncrementStrategy implements IncrementStrategy {
+	
+	/**
+	 * The increment function is the function of the strategy pattern
+	 * It simply increments the counter by 1 in a binary way.
+	 * Index 0 is incremented until its max value is reached, then index 1
+	 * is increased and index 0 is reset and etc
+	 * @param _index The index array: the values of the index
+	 * @param _maxIndex The maximum values of the indexes
+	 * @return A table of integers that is the new value of the indexes
+	 * @throws ChimiqueException
+	 */
 	public int[] increment(int[] _index, int[] _maxIndex) throws ChimiqueException{
 		int current = 0;
 		_index[0] += 1;

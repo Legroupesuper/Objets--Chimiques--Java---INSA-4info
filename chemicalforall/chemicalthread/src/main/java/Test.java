@@ -1,6 +1,5 @@
 import java.lang.reflect.InvocationTargetException;
 
-import fr.insa.rennes.info.chemical.backend.IndexProvider;
 import fr.insa.rennes.info.chemical.backend.Solution;
 
 
