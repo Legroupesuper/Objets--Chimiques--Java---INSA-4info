@@ -57,6 +57,12 @@ public class Pool {
 				}
 				this.add(new MarkedImage(img, smi.address, new Point(smi.x1, smi.y1), new Point(smi.x2, smi.y2), new Point(smi.x3, smi.y3)));
 			}
+			
+			//Return false if nothing was loaded (very own policy)
+			if(this.size()==0){
+				return false;
+			}
+			
 		} catch (FileNotFoundException e) {
 			return false;
 		} catch (UnsupportedEncodingException e) {
@@ -129,7 +135,7 @@ public class Pool {
 			this.y3 = y3;
 		}
 		public SimpleMarkedImage(MarkedImage im) {
-			this(im.get_name(), im.get_point1().x, im.get_point1().y, im.get_point2().x, im.get_point2().y, im.get_point3().x, im.get_point3().y);
+			this(im.get_address(), im.get_point1().x, im.get_point1().y, im.get_point2().x, im.get_point2().y, im.get_point3().x, im.get_point3().y);
 		}
 	}
 }
