@@ -1,16 +1,5 @@
 package fr.insa.rennes.info.chemical.example.chemorphing;
 
-import java.awt.Image;
-import java.io.File;
-import java.io.IOException;
-
-import javax.swing.SwingUtilities;
-
-import fr.insa.rennes.info.chemical.example.chemorphing.backend.MarkedImage;
-import fr.insa.rennes.info.chemical.example.chemorphing.backend.Pool;
-import fr.insa.rennes.info.chemical.example.chemorphing.backend.Tools;
-import fr.insa.rennes.info.chemical.example.chemorphing.frontend.ChemorphWindow;
-import fr.insa.rennes.info.chemical.example.chemorphing.morph.Morphing;
 
 /**
  * 
@@ -23,7 +12,7 @@ import fr.insa.rennes.info.chemical.example.chemorphing.morph.Morphing;
 public class Chemorphing {
 
 
-
+/*
 	public static void main(String[] args){
 
 
@@ -33,7 +22,8 @@ public class Chemorphing {
 
 		int FRAME_NUMBER = 10;
 
-		/*
+		////////////////////
+		 * 
 		String srcAddr = Globals.POOL_FOLDER+"/pouf.png";
 		Image src = null;
 		try {
@@ -73,7 +63,9 @@ public class Chemorphing {
 		Point dest1 = new Point(24, 56);
 		Point dest2 = new Point(74, 52);
 		Point dest3 = new Point(54, 100);
-		 */
+		 
+
+//////////////////////
 
 		Pool pool = new Pool();
 		pool.loadPool();
@@ -87,7 +79,9 @@ public class Chemorphing {
 		final Image[] imgTab = new Image[tab.length * FRAME_NUMBER];
 		int imgTabIndex = 0;
 
-/*
+
+///////////////////////
+
 		//Create a folder to put the results
 		String resultFolderName;
 		File imageDir;
@@ -128,12 +122,12 @@ public class Chemorphing {
 				e.printStackTrace();
 			}
 		}
-*/
+
 
 		Tools.init();
 		
 
 		 
-	}
+	}*/
 
 }

@@ -13,7 +13,7 @@ public class MarkedImage {
 	public MarkedImage(Image _image, String name) {
 		super();
 		this._image = _image;
-		this.set_name(name);
+		this.set_address(name);
 	}
 	public MarkedImage(Image _image, String name, Point _point1, Point _point2, Point _point3) {
 		this(_image, name);
@@ -45,7 +45,7 @@ public class MarkedImage {
 	public void set_point3(Point _point3) {
 		this._point3 = _point3;
 	}
-	public void set_name(String _name) {
+	public void set_address(String _name) {
 		this._name = _name;
 	}
 	public String get_address() {

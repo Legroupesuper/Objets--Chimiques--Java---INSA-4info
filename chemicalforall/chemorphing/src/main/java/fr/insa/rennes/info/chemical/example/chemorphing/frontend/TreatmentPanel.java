@@ -28,7 +28,7 @@ public class TreatmentPanel extends JPanel {
 		
 		this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 		
-		this.add(Box.createRigidArea(new Dimension(0, 15)));
+		this.add(Box.createRigidArea(new Dimension(0, 50)));
 		JLabel jl = new JLabel(Globals.IMG_NUMBER_PROMPT);
 		jl.setAlignmentX(Component.CENTER_ALIGNMENT);
 		this.add(jl);

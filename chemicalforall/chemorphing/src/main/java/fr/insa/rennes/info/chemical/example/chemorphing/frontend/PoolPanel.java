@@ -9,6 +9,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
+import fr.insa.rennes.info.chemical.example.chemorphing.backend.Globals;
 import fr.insa.rennes.info.chemical.example.chemorphing.backend.MarkedImage;
 import fr.insa.rennes.info.chemical.example.chemorphing.middleend.PoolManager;
 
@@ -24,7 +25,7 @@ public class PoolPanel extends JPanel {
 	public PoolPanel(){
 		super();
 
-		Dimension ppDim = new Dimension(200, 150);
+		Dimension ppDim = new Dimension(Globals.WINDOW_WIDTH *2/5, Globals.WINDOW_HEIGHT *3/8);
 		poolPanel.setPreferredSize(ppDim);
 		poolPanel.setMaximumSize(ppDim);
 		
@@ -32,7 +33,7 @@ public class PoolPanel extends JPanel {
 		
 		JScrollPane jsp = new JScrollPane(poolPanel);
 
-		Dimension jspDim = new Dimension(220, 150);
+		Dimension jspDim = new Dimension(Globals.WINDOW_WIDTH *2/5 +20, Globals.WINDOW_HEIGHT *3/8);
 		jsp.setPreferredSize(jspDim);
 		jsp.setMaximumSize(jspDim);
 		
@@ -44,7 +45,7 @@ public class PoolPanel extends JPanel {
 	private void loadPoolDisplay(){
 		poolPanel.removeAll();
 		for(MarkedImage mi : PoolManager.getPool().get_pool()){
-			JLabel jl = new JLabel(new ImageIcon(mi.get_image().getScaledInstance(50, 50, Image.SCALE_DEFAULT)));
+			JLabel jl = new JLabel(new ImageIcon(mi.get_image().getScaledInstance(80, 80, Image.SCALE_DEFAULT)));
 			jl.setToolTipText(mi.get_name());
 			poolPanel.add(jl);
 		}
@@ -52,7 +53,6 @@ public class PoolPanel extends JPanel {
 	
 	public void refreshPanel(){
 		loadPoolDisplay();
-		repaint();
 	}
 
 }

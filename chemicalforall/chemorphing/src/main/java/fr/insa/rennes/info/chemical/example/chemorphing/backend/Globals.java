@@ -24,5 +24,9 @@ public class Globals {
 	
 	public static final String ADD_BUTTON = "Ajouter à la piscine !";
 	
+	public static final int WINDOW_WIDTH = 800;
+	
+	public static final int WINDOW_HEIGHT = 600;
+	
 	
 }

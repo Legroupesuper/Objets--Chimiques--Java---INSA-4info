@@ -22,20 +22,20 @@ public class ChemorphWindow extends JFrame {
 	 */
 	private static final long serialVersionUID = -2868970750863786114L;
 	
-	protected TreatmentPanel tp = new TreatmentPanel();
-	protected PoolPanel pp = new PoolPanel();
-	protected ResultPanel rp = new ResultPanel();
-	protected AddPanel ap = new AddPanel();
+	private TreatmentPanel tp = new TreatmentPanel();
+	private PoolPanel pp = new PoolPanel();
+	private ResultPanel rp = new ResultPanel();
+	private AddPanel ap = new AddPanel();
 	
 	public ChemorphWindow(){
 		super();
 		
-		this.setLocationRelativeTo(null);
-		
-		this.setSize(500, 400);
+		this.setLocation(50, 50);
+
+		this.setSize(Globals.WINDOW_WIDTH, Globals.WINDOW_HEIGHT);
 		
 		this.setTitle(Globals.TITLE);
-		
+
 		this.setResizable(false);
 		
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -58,6 +58,9 @@ public class ChemorphWindow extends JFrame {
 		container.add(ap);
 
 		this.getContentPane().add(container);
+	}
+	public PoolPanel get_poolPanel() {
+		return pp;
 	}
 
 }
