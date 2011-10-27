@@ -4,8 +4,8 @@ public class LaunchManager {
 
 	
 	public static void init(){
-		//TODO to manage
-//		WindowManager.initModel();
+		
+		initModel();
 		
 		
 		
@@ -17,6 +17,14 @@ public class LaunchManager {
 	
 	
 	
+	private static void initModel() {
+	}
+
+
+
+
+
+
 	public static void main(String[] args){
 		init();
 	}

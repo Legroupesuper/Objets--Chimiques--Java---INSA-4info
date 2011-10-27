@@ -24,6 +24,10 @@ public class PoolManager {
 		}
 		return pool;
 	}
+	
+	public static boolean savePool(){
+		return getPool().savePool();
+	}
 
 	public static boolean addToPool(MarkedImage mi, Point[] points, Dimension visibleDimension){
 		boolean pointsOK = true;
@@ -39,12 +43,10 @@ public class PoolManager {
 			mi.set_point3(new Point((int)(points[2].x * mi.get_image().getWidth(null) / visibleDimension.getWidth()),
 					(int)(points[2].y * mi.get_image().getHeight(null) / visibleDimension.getHeight())));
 
-			System.out.println(mi.get_point1()+" : "+mi.get_point2()+" : "+mi.get_point3());
-
 			//Copy image file to the pool folder
 			try {
 				File src = new File(mi.get_address());
-				File dest = new File(Globals.POOL_FOLDER+"/"+src.getName());
+				File dest = new File(Globals.getSetting("POOL_FOLDER")+"/"+src.getName());
 				InputStream is = new FileInputStream(src);
 				OutputStream os = new FileOutputStream(dest);
 				byte[] buffer = new byte[1024];
@@ -54,7 +56,7 @@ public class PoolManager {
 				}
 
 				//Set correct address for MarkedImage
-				mi.set_address(Globals.POOL_FOLDER+"/"+src.getName());
+				mi.set_address(Globals.getSetting("POOL_FOLDER")+"/"+src.getName());
 
 
 			} catch (IOException e) {
@@ -63,10 +65,8 @@ public class PoolManager {
 
 			//Add current MarkedImage to the pool
 			PoolManager.getPool().add(mi);
-		} else {
-			return false;
 		}
-		return true;
+		return pointsOK;
 	}
 
 

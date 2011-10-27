@@ -4,12 +4,15 @@
 package fr.insa.rennes.info.chemical.example.chemorphing.frontend;
 
 import java.awt.GridLayout;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import fr.insa.rennes.info.chemical.example.chemorphing.backend.Globals;
+import fr.insa.rennes.info.chemical.example.chemorphing.middleend.PoolManager;
 
 /**
  * @author ArthurTemple
@@ -34,22 +37,30 @@ public class ChemorphWindow extends JFrame {
 
 		this.setSize(Globals.WINDOW_WIDTH, Globals.WINDOW_HEIGHT);
 		
-		this.setTitle(Globals.TITLE);
+		this.setTitle(Globals.getSetting("TITLE"));
 
 		this.setResizable(false);
 		
-		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+		this.addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent ev) {
+            	if(PoolManager.savePool()){
+            		System.exit(0);
+            	} else {
+            		System.exit(2);
+            	}
+            }
+        });
 		
 		JPanel container = new JPanel();
 		container.setLayout(new GridLayout(2, 2));
 		
-		tp.setBorder(BorderFactory.createTitledBorder(Globals.TREATMENT_TITLE));
+		tp.setBorder(BorderFactory.createTitledBorder(Globals.getSetting("TREATMENT_TITLE")));
 		
-		pp.setBorder(BorderFactory.createTitledBorder(Globals.POOL_TITLE));
+		pp.setBorder(BorderFactory.createTitledBorder(Globals.getSetting("POOL_TITLE")));
 		
-		rp.setBorder(BorderFactory.createTitledBorder(Globals.RESULT_TITLE));
+		rp.setBorder(BorderFactory.createTitledBorder(Globals.getSetting("RESULT_TITLE")));
 		
-		ap.setBorder(BorderFactory.createTitledBorder(Globals.ADD_TITLE));
+		ap.setBorder(BorderFactory.createTitledBorder(Globals.getSetting("ADD_TITLE")));
 		
 		// Add panels to the main window : beware ! the order defines how panels are positioned
 		container.add(tp);
@@ -61,6 +72,15 @@ public class ChemorphWindow extends JFrame {
 	}
 	public PoolPanel get_poolPanel() {
 		return pp;
+	}
+	public ResultPanel get_resultPanel() {
+		return rp;
+	}
+	public TreatmentPanel get_treatmentPanel() {
+		return tp;
+	}
+	public AddPanel get_addPanel() {
+		return ap;
 	}
 
 }

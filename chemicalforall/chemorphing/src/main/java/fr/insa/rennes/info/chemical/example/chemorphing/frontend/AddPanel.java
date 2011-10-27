@@ -10,12 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 
 import javax.imageio.ImageIO;
 import javax.swing.Box;
@@ -46,7 +41,7 @@ public class AddPanel extends JPanel {
 
 		this.add(Box.createRigidArea(new Dimension(0, 5)));
 
-		JButton browseButton = new JButton(Globals.SELECT_BUTTON);
+		JButton browseButton = new JButton(Globals.getSetting("SELECT_BUTTON"));
 		browseButton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
 				JFileChooser chooser = new JFileChooser();
@@ -72,7 +67,7 @@ public class AddPanel extends JPanel {
 
 		this.add(Box.createRigidArea(new Dimension(0, 5)));
 
-		JButton addButton = new JButton(Globals.ADD_BUTTON);
+		JButton addButton = new JButton(Globals.getSetting("ADD_BUTTON"));
 		addButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				AddPanel.this.asp.validateImage();

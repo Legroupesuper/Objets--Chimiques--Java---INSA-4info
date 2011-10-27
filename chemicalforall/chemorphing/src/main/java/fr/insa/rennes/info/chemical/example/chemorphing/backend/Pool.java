@@ -42,7 +42,7 @@ public class Pool {
 			Gson gson = new Gson();
 			Type collectionType = new TypeToken<SimpleMarkedImage[]>(){}.getType();
 
-			fis = new FileInputStream(Globals.POOL_INDEX);
+			fis = new FileInputStream(Globals.getSetting("POOL_FOLDER")+"/"+Globals.getSetting("POOL_INDEX"));
 
 			BufferedReader reader = new BufferedReader(new InputStreamReader(fis, System.getProperty("file.encoding")));
 			smiTab = gson.fromJson(reader, collectionType);
@@ -58,16 +58,17 @@ public class Pool {
 				this.add(new MarkedImage(img, smi.address, new Point(smi.x1, smi.y1), new Point(smi.x2, smi.y2), new Point(smi.x3, smi.y3)));
 			}
 			
-			//Return false if nothing was loaded (very own policy)
-			if(this.size()==0){
-				return false;
-			}
-			
 		} catch (FileNotFoundException e) {
 			return false;
 		} catch (UnsupportedEncodingException e) {
 			return false;
 		} finally {
+			
+			//Create an empty Map if nothing was loaded (very own policy)
+			if(this._pool == null){
+				this._pool = new ArrayList<MarkedImage>();
+			}
+			
 			try {
 				fis.close();
 			} catch (IOException e) {}
@@ -83,8 +84,8 @@ public class Pool {
 		String poolSave = gson.toJson(smiTab);
 
 		try{
-			File oldIndex = new File(Globals.POOL_INDEX);
-			File newIndex = new File(Globals.POOL_INDEX+"_foo.txt");
+			File oldIndex = new File(Globals.getSetting("POOL_FOLDER")+"/"+Globals.getSetting("POOL_INDEX"));
+			File newIndex = new File(Globals.getSetting("POOL_FOLDER")+"/"+Globals.getSetting("POOL_INDEX")+"_foo.txt");
 			PrintStream ps = new PrintStream(newIndex);
 			ps.print(poolSave);
 			ps.close();
@@ -107,9 +108,10 @@ public class Pool {
 		}
 	}
 
+	//TODO Should disappear, replaced by proper chemical pseudo-random selection
 	public MarkedImage[] selectRandom(int nb){
-		MarkedImage[] resulTab = new MarkedImage[this.get_pool().size()];
-		for(int i = 0 ; i < this.get_pool().size() ; i++){
+		MarkedImage[] resulTab = new MarkedImage[nb];
+		for(int i = 0 ; i < nb ; i++){
 			resulTab[i] = this.get_pool().get(i);
 		}
 		return resulTab;
