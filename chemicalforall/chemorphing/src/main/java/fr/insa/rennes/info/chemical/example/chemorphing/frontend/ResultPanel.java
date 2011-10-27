@@ -7,6 +7,7 @@ import java.awt.GraphicsEnvironment;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -62,8 +63,11 @@ public class ResultPanel extends JPanel {
 		JFileChooser chooser = new JFileChooser();
 		int returnVal = chooser.showSaveDialog(this);
 		if(returnVal == JFileChooser.APPROVE_OPTION) {
-			//FIXME untested (following is for opening, not saving !)
-			ExportManager.export(chooser.getSelectedFile());
+			File f = chooser.getSelectedFile();
+			if(!f.getName().endsWith(".gif")){
+				f = new File(f.getAbsolutePath()+".gif");
+			}
+			ExportManager.export(f);
 		}
 	}
 
