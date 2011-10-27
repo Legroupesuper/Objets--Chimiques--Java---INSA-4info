@@ -13,14 +13,11 @@ import fr.insa.rennes.info.chemical.example.chemorphing.backend.Globals;
 public class ExportManager {
 
 	public static void export(File outputFile) {
+		
 		// grab the output image type from the first image in the sequence
 		BufferedImage firstImage = imgToBuffImg(MorphManager.get_imgTab()[0]);
 
-
-
-
-		// create a gif sequence with the type of the first image, 1 second
-		// between frames, which loops continuously
+		// create a gif sequence with the type of the first image, which loops continuously
 		GifSequenceWriter writer;
 		try {
 			writer = new GifSequenceWriter(outputFile, firstImage.getType(), Integer.parseInt(Globals.getSetting("EXPORT_SECONDS_BETWEEN_FRAMES")), false);
@@ -36,10 +33,8 @@ public class ExportManager {
 			writer.close();
 
 		} catch (IIOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
