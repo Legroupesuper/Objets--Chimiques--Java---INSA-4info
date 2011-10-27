@@ -107,14 +107,11 @@ public class Pool {
 			this._pool.remove(mi);
 		}
 	}
-
-	//TODO Should disappear, replaced by proper chemical pseudo-random selection
-	public MarkedImage[] selectRandom(int nb){
-		MarkedImage[] resulTab = new MarkedImage[nb];
-		for(int i = 0 ; i < nb ; i++){
-			resulTab[i] = this.get_pool().get(i);
+	public MarkedImage get(int i){
+		if(this._pool == null){
+			this._pool = new ArrayList<MarkedImage>();
 		}
-		return resulTab;
+		return this._pool.get(i); 
 	}
 
 	private class SimpleMarkedImage{
