@@ -17,7 +17,9 @@ public class MoyenneDesPosRR implements ReactionRule {
 	}
 	
 	public int getShotType() {
-		return Solution.N_SHOT;
+		//Commented for bugfix, uncomment following line when OK
+		//return Solution.N_SHOT;
+		return 0;
 	}
 	
 	public Position getPosA() {

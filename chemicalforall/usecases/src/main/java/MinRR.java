@@ -5,8 +5,8 @@ import fr.insa.rennes.info.chemical.user.ReactionRule;
 
 
 public class MinRR implements ReactionRule {
-	private SubSolutionElement<Position> posA;
-	private SubSolutionElement<Position> posB;
+	private Position posA;
+	private Position posB;
 
 	public Object[] computeResult() {
 		if(posA.calculeNorme()<posB.calculeNorme()) return new Object[]{posA};
