@@ -16,10 +16,9 @@ public class MoyenneDesPosRR implements ReactionRule {
 		return true;
 	}
 	
-	public int getShotType() {
-		//Commented for bugfix, uncomment following line when OK
-		//return Solution.N_SHOT;
-		return 0;
+	public ReactionRule.Multiplicity getShotType() {
+		
+		return ReactionRule.Multiplicity.N_SHOT;
 	}
 	
 	public Position getPosA() {

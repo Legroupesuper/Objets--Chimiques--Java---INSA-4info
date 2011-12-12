@@ -6,6 +6,14 @@ package fr.insa.rennes.info.chemical.user;
  *
  */
 public interface ReactionRule {
+
+	/**
+	 * Possible multiplicities for a reaction :
+	 * N-shot (reaction runs n times)
+	 * Infinity-shot (reaction runs until solution inertia)
+	 */
+	public static enum Multiplicity{N_SHOT, INFINITY_SHOT};
+
 	/**
 	 * Cette méthode est appellée par la librairie et effectue un traitement.
 	 * A la fin du traitement, elle retourne un tableau d'objets qui seront réajoutés au multi-ensemble.
