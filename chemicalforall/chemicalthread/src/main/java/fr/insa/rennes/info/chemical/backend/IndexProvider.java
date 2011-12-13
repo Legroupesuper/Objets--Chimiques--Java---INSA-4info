@@ -111,6 +111,7 @@ class IndexProvider {
 
 	/**
 	 * Constructor with constraints
+	 * @param dependentIndexes The indexes that must not have the same value at the same time. The sublists are a list of indexes that are dependant, and as there can be more than one set of dependant indexes, we need a second list. 
 	 * @param maxIndex the table that represents the maximum values of the indexes
 	 * @param s the strategy used for the choice of reactives (random or ordered)
 	 * @throws ChemicalException
@@ -149,9 +150,11 @@ class IndexProvider {
 	 * have the save value. 
 	 */
 	private boolean checkDuplicate(){
+		List<Integer> valuesIndexProvider;
+		boolean isCurrentIndexValid;
 		for(List<Integer> l : _dependantIndexes){
-			List<Integer> valuesIndexProvider = new ArrayList<Integer>();
-			boolean isCurrentIndexValid = true;
+			valuesIndexProvider = new ArrayList<Integer>();
+			isCurrentIndexValid = true;
 
 			for(int n : l){
 

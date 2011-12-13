@@ -110,8 +110,9 @@ public final class Solution implements Collection<Object>{
 				//We check that every field has an appropriate setter
 				boolean classOK = true;
 				int numberOfMethods;
+				boolean setterOK;
 				for(Field f : clazz.getDeclaredFields()){
-					boolean setterOK = false;
+					setterOK = false;
 					numberOfMethods = clazz.getDeclaredMethods().length;
 					
 					for(int  i = 0; i < numberOfMethods; i++){
@@ -143,7 +144,7 @@ public final class Solution implements Collection<Object>{
 			if(_mapElements.get(className) != null){
 				List<Object> l = _mapElements.get(className);
 				boolean result = l.add(newReactive);
-				_mapElements.put(newReactive.getClass().getName(), l);
+				_mapElements.put(className, l);
 				return result;
 				//There is no entry for the moment : we init the list
 			}else{
@@ -247,25 +248,25 @@ public final class Solution implements Collection<Object>{
 	 * This function is called by the main function of a chemical thread
 	 */
 	protected synchronized void makeSleep(String s){
-		int nbAwake = 0;
+		boolean atLeastOneAwaken = false;;
 
 		//Count the number of thread that are awaken right now
 		for(Thread t : _threadTable){
 			if(!t.getState().equals(Thread.State.WAITING)){
-				nbAwake++;
+				atLeastOneAwaken = true;
 			}
 		}
 
 		//If there is more than one thread alive (including the current one)
 		//it means other reaction rules can react, so just make this thread wait
-		if(nbAwake>1){
+		if(!atLeastOneAwaken){
 			try {
 				wait();
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-			//If the current thread is the last one standing, kill all the threads by switching the 
-			//boolean _keepOnReacting to false (all thread are in a loop on this boolean).
+		//If the current thread is the last one standing, kill all the threads by switching the 
+		//boolean _keepOnReacting to false (all thread are in a loop on this boolean).
 		}else{
 			_keepOnReacting = false;
 
