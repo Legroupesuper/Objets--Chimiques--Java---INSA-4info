@@ -15,6 +15,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import fr.insa.rennes.info.chemical.user.InertEventListener;
 import fr.insa.rennes.info.chemical.user.ReactionRule;
 
 
@@ -38,14 +39,14 @@ public final class Solution implements Collection<Object>{
 	 * and the values are a list of object containing all the reactives of this type.
 	 */
 	private Map<String, List<Object>> _mapElements;
-	
+
 	/**
 	 * The map that remembers all the reaction rules setters so that we have to search for
 	 * them only once. The keys are the concatenation of the class name and the attribute name, and
 	 * the values are the name of the setter method.
 	 */
 	private Map<String, Integer> _mapReactionRulesSetters;
-	
+
 	/**
 	 * The boolean that indicates whether or not the solution is inert (can not react anymore)
 	 */
@@ -56,12 +57,12 @@ public final class Solution implements Collection<Object>{
 	 * all the thread stop.
 	 */
 	private boolean _keepOnReacting = true;
-	
+
 	/**
 	 * The list containing all the threads of the solution's reactions rules threads
 	 */
 	private List<Thread> _threadTable = new ArrayList<Thread>();
-	
+
 	/**
 	 * The thread group, common to all the threads
 	 */
@@ -72,6 +73,7 @@ public final class Solution implements Collection<Object>{
 	 */
 	private Strategy _strategy;
 
+	private InertEventListener _listener = null;
 	/**
 	 * Default constructor for a Chemical Programming-powered Solution
 	 * Takes random strategy as default behavior
@@ -113,17 +115,17 @@ public final class Solution implements Collection<Object>{
 				boolean setterOK;
 				for(Field f : clazz.getDeclaredFields()){
 					setterOK = false;
-					
+
 					for(int  i = 0; i < numberOfMethods; i++){
 						Method m = clazz.getDeclaredMethods()[i];
 						if(m.getName().toLowerCase().equals("set"+f.getName().toLowerCase())){
 							//Remember the setter name by putting it in the reaction rules' setters map
 							_mapReactionRulesSetters.put(clazz.getName()+"."+f.getName(), i);
-							
+
 							setterOK = true;
 						}
 					}
-					
+
 					if(!(setterOK)){
 						classOK = false;
 						if(!setterOK)
@@ -164,6 +166,10 @@ public final class Solution implements Collection<Object>{
 		return true;
 	}
 
+	public void addInnertListener(InertEventListener listener){
+		_listener = listener;
+	}
+
 	public void clear() {
 		_mapElements.clear();
 	}
@@ -185,6 +191,10 @@ public final class Solution implements Collection<Object>{
 				return false;
 		}
 		return true;
+	}
+
+	public void fireInertEvent(InertEvent e){
+		_listener.isInert(e);
 	}
 
 	//This void synchronised method acts as a lock
@@ -218,17 +228,17 @@ public final class Solution implements Collection<Object>{
 	}
 	public Iterator<Object> iterator() {
 		List<Object> reactivesCopy = new LinkedList<Object>();
-		
+
 		for(List<Object> reactiveList : _mapElements.values()) {
 			reactivesCopy.addAll(reactiveList);
 		}
-		
+
 		return Collections.unmodifiableList(reactivesCopy).iterator();
 	}
 
 	/*
 	 * Creates and launches a thread that will make the specified reaction rule react.
-	 * All the reaction rules threads will be in the same thread group and have 
+	 * All the reaction rules threads will be in the same thread group and have
 	 * a pointer to the solution (this)
 	 */
 	private void launchThread(ReactionRule r){
@@ -262,13 +272,27 @@ public final class Solution implements Collection<Object>{
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-		//If the current thread is the last one standing, kill all the threads by switching the 
-		//boolean _keepOnReacting to false (all thread are in a loop on this boolean).
+			//If the current thread is the last one standing, kill all the threads by switching the
+			//boolean _keepOnReacting to false (all thread are in a loop on this boolean).
 		}else{
 			_keepOnReacting = false;
 
 			notifyAll();
 			_inert = true;
+		}
+	}
+
+	/**
+	 * The main function that begins the reaction of the solution. It does not stop until the function
+	 * is_inert sends true.
+	 * Internally, it creates a thread for each reaction rule so that their execution be parallel.
+	 */
+	public void react() {
+		synchronized (this) {
+			for(Object r : _mapElements.get("ReactionRule")){//r est une ReactionRule
+				launchThread((ReactionRule)r);
+			}
+			notifyAll();
 		}
 	}
 
@@ -340,7 +364,7 @@ public final class Solution implements Collection<Object>{
 				tabMaxIndex[i] = _mapElements.get(table[i]).size();
 			}
 
-			//We have to provide the IndexProvider a list of a list of int, so 
+			//We have to provide the IndexProvider a list of a list of int, so
 			//we need to transform the map of list in a list of list
 			List<List<Integer>> listProvider = new ArrayList<List<Integer>>();
 			for(String s : mapIndexProvider.keySet()){
@@ -371,11 +395,11 @@ public final class Solution implements Collection<Object>{
 					//Find the setter for this field
 					setterNumber = _mapReactionRulesSetters.get(r.getClass().getName()+"."+f.getName());
 					setter = r.getClass().getDeclaredMethods()[setterNumber];
-					
+
 					//and invoke the setter
 					obj = _mapElements.get(f.getType().getName()).get(indexProvider.get(i));
 					setter.invoke(r, new Object[]{obj});
-					
+
 					reactives[i] = obj;
 					i++;
 				}
@@ -403,12 +427,12 @@ public final class Solution implements Collection<Object>{
 	public boolean retainAll(Collection<?> arg0) {
 		boolean res = false;
 		String reactiveName;
-		
+
 		//The write/remove operations on the hash map have to be atomic
 		synchronized (_mapElements) {
 			for(Object obj : arg0) {
 				reactiveName = getReactiveType(obj);
-				
+
 				if(_mapElements.get(reactiveName) == null || !_mapElements.get(reactiveName).contains(obj)) {
 					_mapElements.get(reactiveName).remove(obj);
 					res = true;
@@ -418,39 +442,25 @@ public final class Solution implements Collection<Object>{
 
 		return res;
 	}
-	
-	/**
-	 * The main function that begins the reaction of the solution. It does not stop until the function
-	 * is_inert sends true.
-	 * Internally, it creates a thread for each reaction rule so that their execution be parallel.
-	 */
-	public void react() {
-		synchronized (this) {
-			for(Object r : _mapElements.get("ReactionRule")){//r est une ReactionRule
-				launchThread((ReactionRule)r);
-			}
-			notifyAll();
-		}
-	}
 
 	public int size() {
 		int res = 0;
-		
+
 		for(List<Object> reactiveList : _mapElements.values()) {
 			res += reactiveList.size();
 		}
-		
+
 		return res;
 	}
 
 	public Object[] toArray() {
 		List<Object> res = new LinkedList<Object>();
-		
+
 		for(List<Object> reactiveList : _mapElements.values()) {
 			res.addAll(reactiveList);
-			
+
 		}
-		
+
 		return res.toArray();
 	}
 
@@ -461,11 +471,11 @@ public final class Solution implements Collection<Object>{
 	@Override
 	public String toString(){
 		String res = "Solution is :\n";
-		
+
 		for(Map.Entry<String, List<Object>> entry : _mapElements.entrySet()) {
-			res += entry.getKey()+" -> "+entry.getValue()+"\n"; 
+			res += entry.getKey()+" -> "+entry.getValue()+"\n";
 		}
-		
+
 		return res;
 	}
 
