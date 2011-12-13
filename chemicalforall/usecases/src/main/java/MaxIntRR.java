@@ -2,7 +2,7 @@ import fr.insa.rennes.info.chemical.user.ReactionRule;
 
 
 
-public class MaxRR implements ReactionRule{
+public class MaxIntRR implements ReactionRule{
 	private Integer a;
 	private Integer b;
 	public Object[] computeResult() {

@@ -1,7 +1,7 @@
 import fr.insa.rennes.info.chemical.user.ReactionRule;
 
 
-public class MaxRR implements ReactionRule {
+public class MaxPosRR implements ReactionRule {
 	private Position posA;
 	private Position posB;
 
