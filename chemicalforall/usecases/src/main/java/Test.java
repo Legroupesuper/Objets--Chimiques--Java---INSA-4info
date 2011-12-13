@@ -37,7 +37,7 @@ public class Test {
 		s.add(" Gros ");
 		s.add(" Eléphant ");
 		s.add(new ConcatRR());
-		s.add(new MaxRR());
+		s.add(new MaxIntRR());
 		//s.add(new RandomNumberRR());
 		//	s.add(new TrucRR());
 		System.out.println("AVANT : ");
