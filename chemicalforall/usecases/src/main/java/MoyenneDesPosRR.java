@@ -18,7 +18,7 @@ public class MoyenneDesPosRR implements ReactionRule {
 	
 	public ReactionRule.Multiplicity getShotType() {
 		
-		return ReactionRule.Multiplicity.N_SHOT;
+		return ReactionRule.Multiplicity.ONE_SHOT;
 	}
 	
 	public Position getPosA() {

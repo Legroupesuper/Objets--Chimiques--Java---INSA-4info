@@ -9,10 +9,10 @@ public interface ReactionRule {
 
 	/**
 	 * Possible multiplicities for a reaction :
-	 * N-shot (reaction runs n times)
+	 * 1-shot (reaction runs once)
 	 * Infinity-shot (reaction runs until solution inertia)
 	 */
-	public static enum Multiplicity{N_SHOT, INFINITY_SHOT};
+	public static enum Multiplicity{ONE_SHOT, INFINITY_SHOT};
 
 	/**
 	 * Cette méthode est appellée par la librairie et effectue un traitement.
