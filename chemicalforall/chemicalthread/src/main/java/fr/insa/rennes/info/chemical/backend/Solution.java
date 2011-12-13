@@ -109,11 +109,10 @@ public final class Solution implements Collection<Object>{
 
 				//We check that every field has an appropriate setter
 				boolean classOK = true;
-				int numberOfMethods;
+				int numberOfMethods = clazz.getDeclaredMethods().length;
 				boolean setterOK;
 				for(Field f : clazz.getDeclaredFields()){
 					setterOK = false;
-					numberOfMethods = clazz.getDeclaredMethods().length;
 					
 					for(int  i = 0; i < numberOfMethods; i++){
 						Method m = clazz.getDeclaredMethods()[i];
@@ -142,9 +141,7 @@ public final class Solution implements Collection<Object>{
 
 			//There is already an entry in the map for this reactive, so we just add the element
 			if(_mapElements.get(className) != null){
-				List<Object> l = _mapElements.get(className);
-				boolean result = l.add(newReactive);
-				_mapElements.put(className, l);
+				boolean result = _mapElements.get(className).add(newReactive);
 				return result;
 				//There is no entry for the moment : we init the list
 			}else{
@@ -247,19 +244,19 @@ public final class Solution implements Collection<Object>{
 	 * it stops all the reaction and declares the solution inert.
 	 * This function is called by the main function of a chemical thread
 	 */
-	protected synchronized void makeSleep(String s){
-		boolean atLeastOneAwaken = false;;
+	protected synchronized void makeSleep(){
+		int nbAwaken = 0;
 
 		//Count the number of thread that are awaken right now
 		for(Thread t : _threadTable){
 			if(!t.getState().equals(Thread.State.WAITING)){
-				atLeastOneAwaken = true;
+				nbAwaken++;
 			}
 		}
 
 		//If there is more than one thread alive (including the current one)
 		//it means other reaction rules can react, so just make this thread wait
-		if(!atLeastOneAwaken){
+		if(nbAwaken > 1){
 			try {
 				wait();
 			} catch (InterruptedException e) {

@@ -65,7 +65,7 @@ class ChemicalThread extends Thread {
 				}else{
 					//If we do not find valid parameters, the reaction goes to sleep
 					//A sleeping reaction waits for the solution to go inert or to see its inner elements modified
-					_solutionContainer.makeSleep(_reactionRule.getClass().getName());
+					_solutionContainer.makeSleep();
 				}
 			//TODO let us have a rethink about Exception handling ! (Some / all of those could be handled previously)
 			} catch (IllegalArgumentException e) {
