@@ -1,6 +1,6 @@
-import java.lang.reflect.InvocationTargetException;
-
+import fr.insa.rennes.info.chemical.backend.InertEvent;
 import fr.insa.rennes.info.chemical.backend.Solution;
+import fr.insa.rennes.info.chemical.user.InertEventListener;
 
 
 
@@ -15,7 +15,7 @@ public class Test {
 		//		} catch (FileNotFoundException e1) {
 		//			e1.printStackTrace();
 		//		}
-		Solution s = new Solution(Solution.Strategy.RANDOM);
+		final Solution s = new Solution(Solution.Strategy.RANDOM);
 		s.add(new Integer(5));
 		s.add(new Integer(15));
 		s.add(new Integer(35));
@@ -42,17 +42,19 @@ public class Test {
 		//	s.add(new TrucRR());
 		System.out.println("AVANT : ");
 		System.out.println(s);
-		
+
+
+		s.addInertListener(new InertEventListener() {
+
+			public void isInert(InertEvent e) {
+				System.out.println("Resultat : ");
+				System.out.println(s);
+			}
+		});
 		try {
 			s.react();
 		} catch (IllegalArgumentException e) {
 			e.printStackTrace();
 		}
-		while(!s.is_inert()){
-
-		}
-		System.out.println("Resultat : ");
-		System.out.println(s);
-
 	}
 }

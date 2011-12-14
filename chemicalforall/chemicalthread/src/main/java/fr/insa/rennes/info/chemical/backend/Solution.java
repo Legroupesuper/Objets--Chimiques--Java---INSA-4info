@@ -166,7 +166,7 @@ public final class Solution implements Collection<Object>{
 		return true;
 	}
 
-	public void addInnertListener(InertEventListener listener){
+	public void addInertListener(InertEventListener listener){
 		_listener = listener;
 	}
 
@@ -279,6 +279,7 @@ public final class Solution implements Collection<Object>{
 
 			notifyAll();
 			_inert = true;
+			fireInertEvent(new InertEvent(new Object()));
 		}
 	}
 
