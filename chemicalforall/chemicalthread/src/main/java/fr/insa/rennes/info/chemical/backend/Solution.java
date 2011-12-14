@@ -166,7 +166,7 @@ public final class Solution implements Collection<Object>{
 		return true;
 	}
 
-	public void addInertListener(InertEventListener listener){
+	public void addInertEventListener(InertEventListener listener){
 		_listener = listener;
 	}
 

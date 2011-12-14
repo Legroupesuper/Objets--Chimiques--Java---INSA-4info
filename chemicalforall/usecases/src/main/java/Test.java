@@ -44,7 +44,7 @@ public class Test {
 		System.out.println(s);
 
 
-		s.addInertListener(new InertEventListener() {
+		s.addInertEventListener(new InertEventListener() {
 
 			public void isInert(InertEvent e) {
 				System.out.println("Resultat : ");
