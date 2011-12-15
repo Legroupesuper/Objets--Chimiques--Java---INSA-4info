@@ -11,5 +11,6 @@
   	<module>chemicalib</module>
   	<module>chemicalthread</module>
   	<module>usecases</module>
+  	<module>bitheaven</module>
   </modules>
 </project>
