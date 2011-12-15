@@ -1,6 +1,3 @@
-import java.util.Iterator;
-
-import fr.insa.rennes.info.chemical.backend.Solution;
 import fr.insa.rennes.info.chemical.user.ReactionRule;
 
 
@@ -16,27 +13,31 @@ public class MinRR implements ReactionRule {
 	public boolean computeSelect() {
 		return true;
 	}
-	
-	public int getShotType() {
-		return 1;
+	public Multiplicity getMultiplicity() {
+		// TODO Auto-generated method stub
+		return Multiplicity.ONE_SHOT;
 	}
-	
 	public Position getPosA() {
 		return posA;
-	}
-
-	public void setPosA(Position posA) {
-		this.posA = posA;
 	}
 
 	public Position getPosB() {
 		return posB;
 	}
 
+	public int getShotType() {
+		return 1;
+	}
+
+	public void setPosA(Position posA) {
+		this.posA = posA;
+	}
+
 	public void setPosB(Position posB) {
 		this.posB = posB;
 	}
-	
+
+	@Override
 	public String toString(){
 		return "MinRR";
 	}

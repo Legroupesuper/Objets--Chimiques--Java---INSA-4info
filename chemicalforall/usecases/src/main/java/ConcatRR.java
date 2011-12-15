@@ -8,9 +8,12 @@ public class ConcatRR implements ReactionRule{
 	public Object[] computeResult() {
 		return new String[]{s+t};
 	}
-
 	public boolean computeSelect() {
 		return true;
+	}
+	public Multiplicity getMultiplicity() {
+		// TODO Auto-generated method stub
+		return Multiplicity.ONE_SHOT;
 	}
 
 	public String getS() {

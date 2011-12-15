@@ -13,23 +13,29 @@ public class MaxPosRR implements ReactionRule {
 	public boolean computeSelect() {
 		return true;//(posA.getX()%2 == 0);
 	}
-	
-	public Position getPosA() {
-		return posA;
+
+	public Multiplicity getMultiplicity() {
+		// TODO Auto-generated method stub
+		return Multiplicity.ONE_SHOT;
 	}
 
-	public void setPosA(Position posA) {
-		this.posA = posA;
+	public Position getPosA() {
+		return posA;
 	}
 
 	public Position getPosB() {
 		return posB;
 	}
 
+	public void setPosA(Position posA) {
+		this.posA = posA;
+	}
+
 	public void setPosB(Position posB) {
 		this.posB = posB;
 	}
-	
+
+	@Override
 	public String toString(){
 		return "MaxRR";
 	}

@@ -5,6 +5,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
 
 import fr.insa.rennes.info.chemical.user.ReactionRule;
+import fr.insa.rennes.info.chemical.user.ReactionRule.Multiplicity;
 
 
 
@@ -16,6 +17,7 @@ import fr.insa.rennes.info.chemical.user.ReactionRule;
 class ChemicalThread extends Thread {
 	private ReactionRule _reactionRule;
 	private Solution _solutionContainer;
+	private boolean _continue = true;
 
 	/**
 	 * Constructor for ChemicalThread
@@ -49,10 +51,10 @@ class ChemicalThread extends Thread {
 	@Override
 	public void run() {
 		//TODO Following line looks irrelevant... What about that ?
-//		_solutionContainer.firstSleep(_reactionRule.getClass().getName());
-		
+		//		_solutionContainer.firstSleep(_reactionRule.getClass().getName());
+
 		//Run as long as the solution is not inert
-		while(_solutionContainer.get_keepOnReacting()){
+		while(!_solutionContainer.is_inert() && _continue){
 			try {
 				//If we find enough valid parameters...
 				if(_solutionContainer.requestForParameters(_reactionRule)){
@@ -60,6 +62,10 @@ class ChemicalThread extends Thread {
 					Object obj[] = _reactionRule.computeResult();
 					//add the results to the solution
 					_solutionContainer.addAll(Arrays.asList(obj));
+					//If the reaction rule is ONE SHOT, we must delete it !
+					if(_reactionRule.getMultiplicity()==Multiplicity.ONE_SHOT){
+						_solutionContainer.deleteReaction(_reactionRule);
+					}
 					//then wake all ReactionRules (as the solution has been modified)
 					_solutionContainer.wakeAll();
 				}else{
@@ -67,7 +73,7 @@ class ChemicalThread extends Thread {
 					//A sleeping reaction waits for the solution to go inert or to see its inner elements modified
 					_solutionContainer.makeSleep();
 				}
-			//TODO let us have a rethink about Exception handling ! (Some / all of those could be handled previously)
+				//TODO let us have a rethink about Exception handling ! (Some / all of those could be handled previously)
 			} catch (IllegalArgumentException e) {
 				e.printStackTrace();
 			} catch (IllegalAccessException e) {
@@ -98,5 +104,9 @@ class ChemicalThread extends Thread {
 	 */
 	public void set_solutionContainer(Solution _solutionContainer) {
 		this._solutionContainer = _solutionContainer;
+	}
+
+	public void stopTheThread(){
+		_continue  = false;
 	}
 }

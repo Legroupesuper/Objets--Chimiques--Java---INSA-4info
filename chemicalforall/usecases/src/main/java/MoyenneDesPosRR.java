@@ -7,36 +7,40 @@ public class MoyenneDesPosRR implements ReactionRule {
 	private Position posB;
 
 	public Object[] computeResult() {
-		int moyX = (int) (posA.getX()+posB.getX())/2;
-		int moyY = (int) (posA.getY()+posB.getY())/2;
+		int moyX = (posA.getX()+posB.getX())/2;
+		int moyY = (posA.getY()+posB.getY())/2;
 		return new Object[]{new Position(moyX,moyY)};
 	}
 
 	public boolean computeSelect() {
 		return true;
 	}
-	
-	public ReactionRule.Multiplicity getShotType() {
-		
-		return ReactionRule.Multiplicity.ONE_SHOT;
+	public Multiplicity getMultiplicity() {
+		// TODO Auto-generated method stub
+		return Multiplicity.ONE_SHOT;
 	}
-	
 	public Position getPosA() {
 		return posA;
-	}
-
-	public void setPosA(Position posA) {
-		this.posA = posA;
 	}
 
 	public Position getPosB() {
 		return posB;
 	}
 
+	public ReactionRule.Multiplicity getShotType() {
+
+		return ReactionRule.Multiplicity.ONE_SHOT;
+	}
+
+	public void setPosA(Position posA) {
+		this.posA = posA;
+	}
+
 	public void setPosB(Position posB) {
 		this.posB = posB;
 	}
-	
+
+	@Override
 	public String toString(){
 		return "MoyenneDesPosRR";
 	}

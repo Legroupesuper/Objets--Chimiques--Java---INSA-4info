@@ -56,12 +56,12 @@ public final class Solution implements Collection<Object>{
 	 * This boolean is useful for the reaction rules threads. If it is set at false,
 	 * all the thread stop.
 	 */
-	private boolean _keepOnReacting = true;
+	private boolean _reactionInProgress = false;
 
 	/**
 	 * The list containing all the threads of the solution's reactions rules threads
 	 */
-	private List<Thread> _threadTable = new ArrayList<Thread>();
+	private Map<ReactionRule, ChemicalThread> _threadTable = Collections.synchronizedMap(new HashMap<ReactionRule, ChemicalThread>());
 
 	/**
 	 * The thread group, common to all the threads
@@ -102,9 +102,9 @@ public final class Solution implements Collection<Object>{
 
 			//At first we determine whether it is a ReactionRule or not
 			String className = getReactiveType(newReactive);
-
+			boolean addElement = true;
 			//It is a ReactionRule, hence special treatment
-			if(className.equals(ReactionRule.class.getSimpleName())){
+			if(className.equals(ReactionRule.class.getName())){
 
 				Class<? extends Object> clazz = newReactive.getClass();
 				String errorMsg = "";
@@ -129,7 +129,7 @@ public final class Solution implements Collection<Object>{
 					if(!(setterOK)){
 						classOK = false;
 						if(!setterOK)
-							errorMsg+="class "+clazz.getSimpleName()+" lacks a setter for attribute "+f+"\n";
+							errorMsg+="class "+clazz.getName()+" lacks a setter for attribute "+f+"\n";
 					}
 				}
 				if(!classOK){
@@ -138,21 +138,31 @@ public final class Solution implements Collection<Object>{
 					} catch (ChemicalException e) {
 						e.printStackTrace();
 					}
+				}else{
+					//If the reaction rule doesn't exist, we add it
+					if(!_threadTable.containsKey(newReactive)){
+						launchThread((ReactionRule) newReactive);
+					}else
+						addElement = false;
 				}
 			}
-
-			//There is already an entry in the map for this reactive, so we just add the element
-			if(_mapElements.get(className) != null){
-				boolean result = _mapElements.get(className).add(newReactive);
+			if(!className.equals(ChemicalElement.class.getName()) && addElement){
+				boolean result;
+				//When you add an element in the solution, the solution is no more inert
+				_inert = false;
+				//There is already an entry in the map for this reactive, so we just add the element
+				if(_mapElements.get(className) != null){
+					result = _mapElements.get(className).add(newReactive);
+					//There is no entry for the moment : we init the list
+				}else{
+					List<Object> l =new ArrayList<Object>();
+					result = l.add(newReactive);
+					_mapElements.put(className, l);
+				}
 				return result;
-				//There is no entry for the moment : we init the list
 			}else{
-				List<Object> l =new ArrayList<Object>();
-				boolean result = l.add(newReactive);
-				_mapElements.put(className, l);
-				return result;
+				return false;
 			}
-
 		}
 	}
 
@@ -193,8 +203,20 @@ public final class Solution implements Collection<Object>{
 		return true;
 	}
 
-	public void fireInertEvent(InertEvent e){
-		_listener.isInert(e);
+	protected void deleteReaction(ReactionRule r){
+		synchronized (_mapElements) {
+			List l = _mapElements.get(ReactionRule.class.getName());
+			l.remove(r);
+			synchronized (_threadTable) {
+				_threadTable.get(r).stopTheThread();
+				_threadTable.remove(r);
+			}
+			int nbAwake = getNumberOfActiveThreads();
+			if(nbAwake==0){
+				endOfReaction();
+			}
+
+		}
 	}
 
 	//This void synchronised method acts as a lock
@@ -202,19 +224,45 @@ public final class Solution implements Collection<Object>{
 	//
 	//	}
 
-	protected synchronized boolean get_keepOnReacting() {
-		return _keepOnReacting;
+	private synchronized void endOfReaction(){
+		_reactionInProgress = false;
+
+		notifyAll();
+		_inert = true;
+		fireInertEvent(new InertEvent(new Object()));
 	}
 
+	public void fireInertEvent(InertEvent e){
+		_listener.isInert(e);
+	}
+
+	protected synchronized boolean get_reactionInProgress() {
+		return _reactionInProgress;
+	}
+
+	private int getNumberOfActiveThreads(){
+		int nb=0;
+		synchronized (_threadTable) {
+			//Count the number of thread that are awaken right nowcollection synchron
+			for(Thread t : _threadTable.values()){
+				if(!t.getState().equals(Thread.State.WAITING)){
+					nb++;
+				}
+			}
+		}
+		return nb;
+	}
 	private String getReactiveType(Object reactive) {
 		String interfaceS = " ";
 		for(Class<?> s : reactive.getClass().getInterfaces()){
-			interfaceS += s.getSimpleName()+" ";
+			interfaceS += s.getName()+" ";
 		}
 
-		if(interfaceS.contains(" "+ReactionRule.class.getSimpleName()+" ")) {
-			return "ReactionRule";
-		} else {
+		if(interfaceS.contains(" "+ReactionRule.class.getName()+" ")) {
+			return ReactionRule.class.getName();
+		}else if(interfaceS.contains(" "+ChemicalElement.class.getName()+" ")){
+			return ChemicalElement.class.getName();
+		}else {
 			return reactive.getClass().getName();
 		}
 	}
@@ -223,16 +271,16 @@ public final class Solution implements Collection<Object>{
 		return _inert;
 	}
 
+
 	public boolean isEmpty() {
 		return _mapElements.isEmpty();
 	}
+
 	public Iterator<Object> iterator() {
 		List<Object> reactivesCopy = new LinkedList<Object>();
-
 		for(List<Object> reactiveList : _mapElements.values()) {
 			reactivesCopy.addAll(reactiveList);
 		}
-
 		return Collections.unmodifiableList(reactivesCopy).iterator();
 	}
 
@@ -243,10 +291,9 @@ public final class Solution implements Collection<Object>{
 	 */
 	private void launchThread(ReactionRule r){
 		ChemicalThread t = new ChemicalThread(r, this, _threadGroup);
-		_threadTable.add(t);
+		_threadTable.put(r, t);
 		t.start();
 	}
-
 
 	/*
 	 * When a reaction rule did not find any reactives, it calls this function that will "make" it sleep.
@@ -255,14 +302,7 @@ public final class Solution implements Collection<Object>{
 	 * This function is called by the main function of a chemical thread
 	 */
 	protected synchronized void makeSleep(){
-		int nbAwaken = 0;
-
-		//Count the number of thread that are awaken right now
-		for(Thread t : _threadTable){
-			if(!t.getState().equals(Thread.State.WAITING)){
-				nbAwaken++;
-			}
-		}
+		int nbAwaken = getNumberOfActiveThreads();
 
 		//If there is more than one thread alive (including the current one)
 		//it means other reaction rules can react, so just make this thread wait
@@ -275,11 +315,7 @@ public final class Solution implements Collection<Object>{
 			//If the current thread is the last one standing, kill all the threads by switching the
 			//boolean _keepOnReacting to false (all thread are in a loop on this boolean).
 		}else{
-			_keepOnReacting = false;
-
-			notifyAll();
-			_inert = true;
-			fireInertEvent(new InertEvent(new Object()));
+			endOfReaction();
 		}
 	}
 
@@ -290,11 +326,13 @@ public final class Solution implements Collection<Object>{
 	 */
 	public void react() {
 		synchronized (this) {
-			for(Object r : _mapElements.get("ReactionRule")){//r est une ReactionRule
-				launchThread((ReactionRule)r);
-			}
+			_reactionInProgress = true;
 			notifyAll();
 		}
+	}
+
+	private void reactMe(){
+
 	}
 
 	//To remove the object, we have to find its type
@@ -332,6 +370,17 @@ public final class Solution implements Collection<Object>{
 	 * This function is synchronized on the atoms' hash map
 	 */
 	public boolean requestForParameters(ReactionRule r) throws IllegalArgumentException, IllegalAccessException, InvocationTargetException, SecurityException, NoSuchMethodException{
+		synchronized (this) {
+			if(!_reactionInProgress){
+				try {
+					wait();
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+
 		//Build the type table : the types of the reaction rules reactives
 		Field[] fields = r.getClass().getDeclaredFields();
 		String table[] = new String[fields.length];
@@ -406,6 +455,7 @@ public final class Solution implements Collection<Object>{
 				}
 				//The right types have been found, now test the selection rule
 				if(r.computeSelect()){
+
 					//remove the selected reactives from the solution
 					for(Object react : reactives){
 						_mapElements.get(react.getClass().getName()).remove(react);
@@ -421,7 +471,6 @@ public final class Solution implements Collection<Object>{
 				return false;
 			}
 		}
-
 		return true;
 	}
 

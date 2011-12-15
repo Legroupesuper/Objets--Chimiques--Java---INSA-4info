@@ -26,4 +26,6 @@ public interface ReactionRule {
 	 * @return computeResult peut être appelé avec les paramètres choisis par la librairie
 	 */
 	public boolean computeSelect();
+
+	public Multiplicity getMultiplicity();
 }

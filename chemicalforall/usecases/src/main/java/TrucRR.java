@@ -13,9 +13,12 @@ public class TrucRR implements ReactionRule {
 	public boolean computeSelect() {
 		return true;
 	}
-
 	public int getI() {
 		return i;
+	}
+	public Multiplicity getMultiplicity() {
+		// TODO Auto-generated method stub
+		return Multiplicity.ONE_SHOT;
 	}
 
 	public String getS() {

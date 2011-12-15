@@ -13,14 +13,17 @@ public class RandomNumberRR implements ReactionRule {
 	public boolean computeSelect() {
 		return true;
 	}
-
-
 	public Integer getA() {
 		return a;
 	}
 
 	public Integer getB() {
 		return b;
+	}
+
+	public Multiplicity getMultiplicity() {
+		// TODO Auto-generated method stub
+		return Multiplicity.ONE_SHOT;
 	}
 
 	public void setA(Integer a) {

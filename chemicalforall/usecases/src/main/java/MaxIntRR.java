@@ -7,9 +7,9 @@ public class MaxIntRR implements ReactionRule{
 	private Integer b;
 	public Object[] computeResult() {
 		if(a>b)
-			return new Integer[]{a};
+			return new Object[]{a};
 
-		return new Integer[]{b};
+		return new Object[]{b,new ConcatRR()};
 	}
 
 	public boolean computeSelect() {
@@ -25,6 +25,10 @@ public class MaxIntRR implements ReactionRule{
 
 	public Integer getB() {
 		return b;
+	}
+
+	public Multiplicity getMultiplicity() {
+		return Multiplicity.INFINITY_SHOT;
 	}
 
 	public void setA(Integer a) {
