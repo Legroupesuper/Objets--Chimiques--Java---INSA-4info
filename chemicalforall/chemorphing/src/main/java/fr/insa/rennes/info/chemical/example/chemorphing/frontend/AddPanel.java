@@ -101,7 +101,7 @@ public class AddPanel extends JPanel {
 			picPanel = new JPanel(){
 				private static final long serialVersionUID = 1L;
 				public void paintComponent(Graphics g){
-					g.drawImage(mi.get_image(), 0, 0, this.getWidth(), this.getHeight(), this);
+					g.drawImage(mi.getImage(), 0, 0, this.getWidth(), this.getHeight(), this);
 					Point p;
 					g.setColor(Color.RED);
 					for(int i = 0 ; i < points.length ; i++){

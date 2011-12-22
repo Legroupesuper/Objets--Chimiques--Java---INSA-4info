@@ -44,8 +44,8 @@ public class PoolPanel extends JPanel {
 	
 	private void loadPoolDisplay(){
 		for(MarkedImage mi : PoolManager.getPool().get_pool()){
-			JLabel jl = new JLabel(new ImageIcon(mi.get_image().getScaledInstance(90, 90, Image.SCALE_DEFAULT)));
-			jl.setToolTipText(mi.get_name());
+			JLabel jl = new JLabel(new ImageIcon(mi.getImage().getScaledInstance(90, 90, Image.SCALE_DEFAULT)));
+			jl.setToolTipText(mi.getName());
 			poolPanel.add(jl);
 		}
 	}

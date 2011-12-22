@@ -36,16 +36,16 @@ public class PoolManager {
 		}
 		if(pointsOK){
 			//Correct control points coordinates
-			mi.set_point1(new Point((int)(points[0].x * mi.get_image().getWidth(null) / visibleDimension.getWidth()),
-					(int)(points[0].y * mi.get_image().getHeight(null) / visibleDimension.getHeight())));
-			mi.set_point2(new Point((int)(points[1].x * mi.get_image().getWidth(null) / visibleDimension.getWidth()),
-					(int)(points[1].y * mi.get_image().getHeight(null) / visibleDimension.getHeight())));
-			mi.set_point3(new Point((int)(points[2].x * mi.get_image().getWidth(null) / visibleDimension.getWidth()),
-					(int)(points[2].y * mi.get_image().getHeight(null) / visibleDimension.getHeight())));
+			mi.setPoint1(new Point((int)(points[0].x * mi.getImage().getWidth(null) / visibleDimension.getWidth()),
+					(int)(points[0].y * mi.getImage().getHeight(null) / visibleDimension.getHeight())));
+			mi.setPoint2(new Point((int)(points[1].x * mi.getImage().getWidth(null) / visibleDimension.getWidth()),
+					(int)(points[1].y * mi.getImage().getHeight(null) / visibleDimension.getHeight())));
+			mi.setPoint3(new Point((int)(points[2].x * mi.getImage().getWidth(null) / visibleDimension.getWidth()),
+					(int)(points[2].y * mi.getImage().getHeight(null) / visibleDimension.getHeight())));
 
 			//Copy image file to the pool folder
 			try {
-				File src = new File(mi.get_address());
+				File src = new File(mi.getAddress());
 				File dest = new File(Globals.getSetting("POOL_FOLDER")+"/"+src.getName());
 				InputStream is = new FileInputStream(src);
 				OutputStream os = new FileOutputStream(dest);
@@ -56,7 +56,7 @@ public class PoolManager {
 				}
 
 				//Set correct address for MarkedImage
-				mi.set_address(Globals.getSetting("POOL_FOLDER")+"/"+src.getName());
+				mi.setAddress(Globals.getSetting("POOL_FOLDER")+"/"+src.getName());
 
 
 			} catch (IOException e) {

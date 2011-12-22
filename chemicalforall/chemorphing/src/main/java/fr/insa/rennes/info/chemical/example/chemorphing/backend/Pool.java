@@ -134,7 +134,7 @@ public class Pool {
 			this.y3 = y3;
 		}
 		public SimpleMarkedImage(MarkedImage im) {
-			this(im.get_address(), im.get_point1().x, im.get_point1().y, im.get_point2().x, im.get_point2().y, im.get_point3().x, im.get_point3().y);
+			this(im.getAddress(), im.getPoint1().x, im.getPoint1().y, im.getPoint2().x, im.getPoint2().y, im.getPoint3().x, im.getPoint3().y);
 		}
 	}
 }

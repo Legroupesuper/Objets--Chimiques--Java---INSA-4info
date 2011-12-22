@@ -33,7 +33,7 @@ public class MorphManager {
 			MarkedImage mi2 = tab[(i+1)%tab.length];
 			//Create Morphing object
 			try {
-				morpher = new Morphing(mi1.get_image(), mi2.get_image(), FRAME_NUMBER, mi1.get_point1(), mi1.get_point2(), mi1.get_point3(), mi2.get_point1(), mi2.get_point2(), mi2.get_point3());
+				morpher = new Morphing(mi1.getImage(), mi2.getImage(), FRAME_NUMBER, mi1.getPoint1(), mi1.getPoint2(), mi1.getPoint3(), mi2.getPoint1(), mi2.getPoint2(), mi2.getPoint3());
 			} catch (IOException e) {
 				e.printStackTrace();
 				break;

@@ -5,54 +5,54 @@ import java.awt.Point;
 
 public class MarkedImage {
 
-	private Image _image;
-	private Point _point1;
-	private Point _point2;
-	private Point _point3;
-	private String _name;
-	public MarkedImage(Image _image, String name) {
+	private Image image;
+	private Point point1;
+	private Point point2;
+	private Point point3;
+	private String name;
+	public MarkedImage(Image image, String name) {
 		super();
-		this._image = _image;
-		this.set_address(name);
+		this.image = image;
+		this.name=name;
 	}
-	public MarkedImage(Image _image, String name, Point _point1, Point _point2, Point _point3) {
-		this(_image, name);
-		this._point1 = _point1;
-		this._point2 = _point2;
-		this._point3 = _point3;
+	public MarkedImage(Image image, String name, Point point1, Point point2, Point point3) {
+		this(image, name);
+		this.point1 = point1;
+		this.point2 = point2;
+		this.point3 = point3;
 	}
-	public Image get_image() {
-		return _image;
+	public Image getImage() {
+		return image;
 	}
-	public void set_image(Image _image) {
-		this._image = _image;
+	public void setImage(Image image) {
+		this.image = image;
 	}
-	public Point get_point1() {
-		return _point1;
+	public Point getPoint1() {
+		return point1;
 	}
-	public void set_point1(Point _point1) {
-		this._point1 = _point1;
+	public void setPoint1(Point point1) {
+		this.point1 = point1;
 	}
-	public Point get_point2() {
-		return _point2;
+	public Point getPoint2() {
+		return point2;
 	}
-	public void set_point2(Point _point2) {
-		this._point2 = _point2;
+	public void setPoint2(Point point2) {
+		this.point2 = point2;
 	}
-	public Point get_point3() {
-		return _point3;
+	public Point getPoint3() {
+		return point3;
 	}
-	public void set_point3(Point _point3) {
-		this._point3 = _point3;
+	public void setPoint3(Point point3) {
+		this.point3 = point3;
 	}
-	public void set_address(String _name) {
-		this._name = _name;
+	public void setAddress(String name) {
+		this.name = name;
 	}
-	public String get_address() {
-		return _name;
+	public String getAddress() {
+		return name;
 	}
-	public String get_name() {
-		return _name.replaceAll(".*/", "").replaceAll("\\..*", "");
+	public String getName() {
+		return name.replaceAll(".*/", "").replaceAll("\\..*", "");
 	}
 	
 }
