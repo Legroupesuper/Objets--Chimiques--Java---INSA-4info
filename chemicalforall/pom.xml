@@ -8,7 +8,6 @@
   <description>Root for our Chemical Library set (lib + examples)</description>
   <modules>
   	<module>chemorphing</module>
-  	<module>chemicalib</module>
   	<module>chemicalthread</module>
   	<module>usecases</module>
   	<module>bitheaven</module>
