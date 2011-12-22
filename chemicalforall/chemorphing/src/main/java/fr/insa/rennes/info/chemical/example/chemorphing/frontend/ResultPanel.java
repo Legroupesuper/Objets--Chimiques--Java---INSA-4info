@@ -124,7 +124,9 @@ public class ResultPanel extends JPanel {
 	}
 
 	public void addAnimationPanel(Image[] imgTab) {
-		adPanel = new AnimationDisplayPanel(imgTab);
+		Image[] tempTab = new Image[imgTab.length];
+		System.arraycopy(imgTab, 0, tempTab, 0, imgTab.length);
+		adPanel = new AnimationDisplayPanel(tempTab);
 		Dimension dim = new Dimension(Globals.WINDOW_WIDTH *1/4, Globals.WINDOW_HEIGHT *1/4);
 		adPanel.setPreferredSize(dim);
 		adPanel.setMinimumSize(dim);

@@ -88,7 +88,8 @@ class IndexProvider {
 	 * @throws ChemicalException
 	 */
 	public IndexProvider(int[] maxIndex, Strategy s) throws ChemicalException{
-		_maxIndex = maxIndex;
+		this(new ArrayList<List<Integer>>(), maxIndex, s);
+		/*_maxIndex = maxIndex;
 		_dependantIndexes =  new ArrayList<List<Integer>>();
 		_index = new int[maxIndex.length];
 		
@@ -106,7 +107,7 @@ class IndexProvider {
 			if(_maxIndex[i] == 0)
 				throw new ChemicalException("Maximum index value is invalid : 0");
 			_index[i] = 0;
-		}
+		}*/
 	}
 
 	/**
@@ -117,7 +118,7 @@ class IndexProvider {
 	 * @throws ChemicalException
 	 */
 	public IndexProvider(List<List<Integer>> dependantIndexes, int[] maxIndex, Strategy s) throws ChemicalException{
-		_maxIndex = maxIndex;
+		_maxIndex = maxIndex.clone();
 		_index = new int[maxIndex.length];
 		_dependantIndexes = dependantIndexes;
 		
@@ -129,7 +130,7 @@ class IndexProvider {
 			_incrementStrategy = new OrderedIncrementStrategy();
 		}
 		
-		//Check all the maximum indexes: if one of them is 0, the class can't 
+		//Check all the maximum indices: if one of them is 0, the class can't 
 		//do anything
 		for(int i=0; i<_index.length; i++){
 			if(_maxIndex[i] == 0)
@@ -145,9 +146,9 @@ class IndexProvider {
 
 
 	/*
-	 * Checks if there is a conflict between two dependant indexes.
+	 * Checks if there is a conflict between two dependant indices.
 	 * For example if the 1st index and the 3rd index are dependant, they can not
-	 * have the save value. 
+	 * have the same value. 
 	 */
 	private boolean checkDuplicate(){
 		List<Integer> valuesIndexProvider;
@@ -198,13 +199,14 @@ class IndexProvider {
 			}
 		}while(!checkDuplicate());
 	}
+	
 	public boolean is_overflowReached() {
 		return _overflowReached;
 	}
 
 	/**
 	 * 
-	 * @return A string descrbing the index, more precisely give the values in the index table
+	 * @return A string describing the index, more precisely give the values in the index table
 	 */
 	@Override
 	public String toString(){

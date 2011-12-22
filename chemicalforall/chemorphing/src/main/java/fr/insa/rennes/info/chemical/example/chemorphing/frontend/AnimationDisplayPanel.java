@@ -30,7 +30,8 @@ public class AnimationDisplayPanel extends JPanel {
 
 	public AnimationDisplayPanel(Image[] ai) {
 		super();
-		this.list = ai;
+		this.list = new Image[ai.length];
+		System.arraycopy(ai, 0, this.list, 0, ai.length);
 		this.index=0;
 		this.backgroundImg=this.list[index];
 	    t = new Timer();
