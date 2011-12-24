@@ -77,10 +77,10 @@ public class ResultPanel extends JPanel {
 		GraphicsDevice gs = ge.getDefaultScreenDevice();
 		if (gs.isFullScreenSupported()) {
 			// Full-screen mode is supported
-			System.out.println("OK for fullscreen");
+			Globals.logger.info("OK for fullscreen");
 		} else {
 			// Full-screen mode will be simulated
-			System.out.println("Unable to fullscreen your face, emulating instead");
+			Globals.logger.config("Unable to fullscreen your face, emulating instead");
 		}
 
 		// Create a button that leaves full-screen mode

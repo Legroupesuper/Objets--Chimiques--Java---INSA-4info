@@ -8,7 +8,9 @@ import fr.insa.rennes.info.chemical.example.chemorphing.frontend.ChemorphWindow;
 
 public class WindowManager {
 
-	static private ChemorphWindow window = null;
+	private WindowManager(){}	// Overriding/disabling default constructor in order to prevent from abusive accessibility
+
+	private static ChemorphWindow window = null;
 
 
 	public static void initView(){
@@ -31,14 +33,14 @@ public class WindowManager {
 
 	public static void repaintPool(){
 		checkWindow();
-		window.get_poolPanel().refreshPanel();
-		window.get_treatmentPanel().refreshPanel();
+		window.getPoolPanel().refreshPanel();
+		window.getTreatmentPanel().refreshPanel();
 		window.validate();
 	}
 	
 	public static void addAnimation(Image[] imgTab){
 		checkWindow();
-		window.get_resultPanel().addAnimationPanel(imgTab);
+		window.getResultPanel().addAnimationPanel(imgTab);
 		window.validate();
 	}
 

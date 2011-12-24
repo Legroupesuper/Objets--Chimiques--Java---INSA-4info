@@ -12,6 +12,7 @@ import java.io.PrintStream;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.imageio.ImageIO;
 
@@ -20,20 +21,20 @@ import com.google.gson.reflect.TypeToken;
 
 public class Pool {
 
-	private ArrayList<MarkedImage> _pool;
+	private List<MarkedImage> pool;
 
 	public Pool(){
 		super();
 	}
-	public ArrayList<MarkedImage> get_pool() {
-		return _pool;
+	public List<MarkedImage> getPool() {
+		return pool;
 	}
 
-	public void set_pool(ArrayList<MarkedImage> _pool) {
-		this._pool = _pool;
+	public void setPool(List<MarkedImage> pool) {
+		this.pool = pool;
 	}
 	public int size(){
-		return _pool.size();
+		return pool.size();
 	}
 	public boolean loadPool(){
 		FileInputStream fis = null;
@@ -65,8 +66,8 @@ public class Pool {
 		} finally {
 			
 			//Create an empty Map if nothing was loaded (very own policy)
-			if(this._pool == null){
-				this._pool = new ArrayList<MarkedImage>();
+			if(this.pool == null){
+				this.pool = new ArrayList<MarkedImage>();
 			}
 			
 			try {
@@ -77,9 +78,9 @@ public class Pool {
 	}
 	public boolean savePool(){
 		Gson gson = new Gson();
-		SimpleMarkedImage[] smiTab = new SimpleMarkedImage[_pool.size()];
-		for(int i = 0 ; i < _pool.size() ; i++){
-			smiTab[i] = new SimpleMarkedImage(_pool.get(i));
+		SimpleMarkedImage[] smiTab = new SimpleMarkedImage[pool.size()];
+		for(int i = 0 ; i < pool.size() ; i++){
+			smiTab[i] = new SimpleMarkedImage(pool.get(i));
 		}
 		String poolSave = gson.toJson(smiTab);
 
@@ -97,21 +98,21 @@ public class Pool {
 		return true;
 	}
 	public void add(MarkedImage mi){
-		if(this._pool == null){
-			this._pool = new ArrayList<MarkedImage>();
+		if(this.pool == null){
+			this.pool = new ArrayList<MarkedImage>();
 		}
-		this._pool.add(mi);
+		this.pool.add(mi);
 	}
 	public void remove(MarkedImage mi){
-		if(this._pool != null){
-			this._pool.remove(mi);
+		if(this.pool != null){
+			this.pool.remove(mi);
 		}
 	}
 	public MarkedImage get(int i){
-		if(this._pool == null){
-			this._pool = new ArrayList<MarkedImage>();
+		if(this.pool == null){
+			this.pool = new ArrayList<MarkedImage>();
 		}
-		return this._pool.get(i); 
+		return this.pool.get(i); 
 	}
 
 	private class SimpleMarkedImage{
@@ -133,7 +134,7 @@ public class Pool {
 			this.x3 = x3;
 			this.y3 = y3;
 		}
-		public SimpleMarkedImage(MarkedImage im) {
+		private SimpleMarkedImage(MarkedImage im) {
 			this(im.getAddress(), im.getPoint1().x, im.getPoint1().y, im.getPoint2().x, im.getPoint2().y, im.getPoint3().x, im.getPoint3().y);
 		}
 	}

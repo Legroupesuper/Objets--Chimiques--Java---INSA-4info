@@ -14,7 +14,6 @@ public class AnimationDisplayPanel extends JPanel {
 	 */
 	private static final long serialVersionUID = -7173332119516627449L;
 	
-	private Timer t;
 	private Image backgroundImg;
 	private Image[] list;
 	private int index;
@@ -34,7 +33,7 @@ public class AnimationDisplayPanel extends JPanel {
 		System.arraycopy(ai, 0, this.list, 0, ai.length);
 		this.index=0;
 		this.backgroundImg=this.list[index];
-	    t = new Timer();
+	    Timer t = new Timer();
 	    t.schedule(new Refresher(), 0, 100);
 	}
 	public Image nextImage(){

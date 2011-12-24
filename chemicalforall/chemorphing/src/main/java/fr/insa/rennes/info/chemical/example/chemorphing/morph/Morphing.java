@@ -29,6 +29,8 @@ import java.awt.image.MemoryImageSource;
 import java.awt.image.PixelGrabber;
 import java.io.IOException;
 
+import fr.insa.rennes.info.chemical.example.chemorphing.backend.Globals;
+
 public class Morphing{
 
 	private static final int NUM_TRIANGLES = 14;	//This value should not be modified (otherwise it crashes anyway)
@@ -94,7 +96,7 @@ public class Morphing{
 		try {
 			pg.grabPixels();
 		} catch (InterruptedException e){
-			e.printStackTrace();
+			Globals.logger.warning(e.getLocalizedMessage());
 		}
 		pg = null;
 
@@ -102,7 +104,7 @@ public class Morphing{
 		try {
 			pg.grabPixels();
 		} catch (InterruptedException e){
-			e.printStackTrace();
+			Globals.logger.warning(e.getLocalizedMessage());
 		}
 		pg = null;
 
@@ -243,8 +245,8 @@ public class Morphing{
 			t3[13] = new SimpleTriangle(0, iw-1, ih-1, x3, y3);
 
 			for (i = 0 ; i < NUM_TRIANGLES ; i+=2){
-				morph_triangles1(t1[i], t2[i], t3[i], from, to, step, iw, ratio);
-				morph_triangles2(t1[i+1],t2[i+1],t3[i+1],from, to, step, iw, ratio);
+				morphTriangles1(t1[i], t2[i], t3[i], from, to, step, iw, ratio);
+				morphTriangles2(t1[i+1],t2[i+1],t3[i+1],from, to, step, iw, ratio);
 			}
 
 			frames[f] = Toolkit.getDefaultToolkit().createImage(new MemoryImageSource(iw, ih, step, 0, iw));
@@ -255,7 +257,7 @@ public class Morphing{
 		t3 = null;
 	}
 
-	private void morph_triangles1(SimpleTriangle t1, SimpleTriangle t2, 
+	private void morphTriangles1(SimpleTriangle t1, SimpleTriangle t2, 
 			SimpleTriangle t3, int[] from, int[] to,
 			int[] step, int iw, double ratio){
 		int    x, y;
@@ -321,7 +323,7 @@ public class Morphing{
 		}
 	}
 
-	private void morph_triangles2(SimpleTriangle t1, SimpleTriangle t2, 
+	private void morphTriangles2(SimpleTriangle t1, SimpleTriangle t2, 
 			SimpleTriangle t3, int[] from, int[] to,
 			int[] step, int iw, double ratio){
 		int    x, y;

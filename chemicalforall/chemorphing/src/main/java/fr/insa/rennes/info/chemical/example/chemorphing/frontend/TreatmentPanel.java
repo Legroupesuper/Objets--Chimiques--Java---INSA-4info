@@ -44,7 +44,7 @@ public class TreatmentPanel extends JPanel {
 		
 	}
 	
-	private void initPanel(){
+	private final void initPanel(){
 		
 		this.add(Box.createRigidArea(new Dimension(0, 50)));
 		JLabel jl = new JLabel(Globals.getSetting("IMG_NUMBER_PROMPT"));

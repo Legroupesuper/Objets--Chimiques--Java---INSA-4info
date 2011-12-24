@@ -53,7 +53,7 @@ public class AddPanel extends JPanel {
 						container.add(asp);
 						AddPanel.this.validate();
 					} catch (IOException e1) {
-						e1.printStackTrace();
+						Globals.logger.warning(e1.getLocalizedMessage());
 					}
 				}
 			}
@@ -105,7 +105,8 @@ public class AddPanel extends JPanel {
 					Point p;
 					g.setColor(Color.RED);
 					for(int i = 0 ; i < points.length ; i++){
-						if((p = points[i]) != null){
+						p = points[i];
+						if(p != null){
 							g.fillOval(p.x-3, p.y-3, 6, 6);
 							g.drawString(String.valueOf(i+1), p.x+1, p.y-2);
 						}
@@ -130,11 +131,13 @@ public class AddPanel extends JPanel {
 					Point p;
 					String x = "", y = "";
 					for(int i = 0, j = 13 ; i<points.length ; i++, j+=26){
-						if((p = points[i]) != null){
+						p = points[i];
+						if(p != null){
 							x = String.valueOf(p.x);
 							y = String.valueOf(p.y);
 						} else {
-							x = y = "";
+							x = "";
+							y = "";
 						}
 						g.drawString("X"+(i+1)+" = "+x, 2, j);
 						g.drawString("Y"+(i+1)+" = "+y, 2, j+13);

@@ -4,77 +4,77 @@ package fr.insa.rennes.info.chemical.example.chemorphing.morph;
 import fr.insa.rennes.info.chemical.example.chemorphing.morph.SimpleTriangle;
 
 public class Triangle {
-	int            x1, y1;
-	int            x2, y2;
-	int            x3, y3;
-	SimpleTriangle t1 = null;
-	SimpleTriangle t2 = null;
+	private int            x1, y1;
+	private int            x2, y2;
+	private int            x3, y3;
+	protected SimpleTriangle t1 = null;
+	protected SimpleTriangle t2 = null;
 
-	Triangle(int X1, int Y1, int X2, int Y2, int X3, int Y3){
+	Triangle(int xx1, int yy1, int xx2, int yy2, int xx3, int yy3){
 		// sort vertices by y coordinate
 
-		if (Y1 <= Y2){
-			if (Y2 <= Y3){
+		if (yy1 <= yy2){
+			if (yy2 <= yy3){
 				// order v1, v2, v3
-				x1 = X1;
-				y1 = Y1;
-				x2 = X2;
-				y2 = Y2;
-				x3 = X3;
-				y3 = Y3;
+				x1 = xx1;
+				y1 = yy1;
+				x2 = xx2;
+				y2 = yy2;
+				x3 = xx3;
+				y3 = yy3;
 				return;
 			}
 
-			if (Y1 <= Y3){
+			if (yy1 <= yy3){
 				// order v1, v3, v2
-				x1 = X1;
-				y1 = Y1;
-				x2 = X3;
-				y2 = Y3;
-				x3 = X2;
-				y3 = Y2;
+				x1 = xx1;
+				y1 = yy1;
+				x2 = xx3;
+				y2 = yy3;
+				x3 = xx2;
+				y3 = yy2;
 				return;
 			}
 
 			// order v3, v1, v2
-			x1 = X3;
-			y1 = Y3;
-			x2 = X1;
-			y2 = Y1;
-			x3 = X2;
-			y3 = Y2;
+			x1 = xx3;
+			y1 = yy3;
+			x2 = xx1;
+			y2 = yy1;
+			x3 = xx2;
+			y3 = yy2;
 			return;
 		}
 
-		if (Y1 <= Y3){
+		if (yy1 <= yy3){
 			// order v2, v1, v3
-			x1 = X2;
-			y1 = Y2;
-			x2 = X1;
-			y2 = Y1;
-			x3 = X3;
-			y3 = Y3;
+			x1 = xx2;
+			y1 = yy2;
+			x2 = xx1;
+			y2 = yy1;
+			x3 = xx3;
+			y3 = yy3;
 			return;
 		}
 
-		if (Y2 <= Y3){
+		if (yy2 <= yy3){
 			// order v2, v3, v1
-			x1 = X2;
-			y1 = Y2;
-			x2 = X3;
-			y2 = Y3;
-			x3 = X1;
-			y3 = Y1;
+			x1 = xx2;
+			y1 = yy2;
+			x2 = xx3;
+			y2 = yy3;
+			x3 = xx1;
+			y3 = yy1;
 			return;
 		}
 
 		// order v3, v2, v1
-		x1 = X3;
-		y1 = Y3;
-		x2 = X2;
-		y2 = Y2;
-		x3 = X1;
-		y3 = Y1;
+		x1 = xx3;
+		y1 = yy3;
+		x2 = xx2;
+		y2 = yy2;
+		x3 = xx1;
+		y3 = yy1;
 	}
 
 	public boolean test(){

@@ -14,8 +14,10 @@ import fr.insa.rennes.info.chemical.example.chemorphing.backend.MarkedImage;
 import fr.insa.rennes.info.chemical.example.chemorphing.backend.Pool;
 
 public class PoolManager {
+	
+	private PoolManager(){}	// Overriding/disabling default constructor in order to prevent from abusive accessibility
 
-	static private Pool pool;
+	private static Pool pool;
 
 	public static Pool getPool(){
 		if(pool == null){

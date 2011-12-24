@@ -20,7 +20,7 @@ public class PoolPanel extends JPanel {
 	 */
 	private static final long serialVersionUID = -8061512060922263630L;
 
-	JPanel poolPanel = new JPanel();
+	private JPanel poolPanel = new JPanel();
 	
 	public PoolPanel(){
 		super();
@@ -43,7 +43,7 @@ public class PoolPanel extends JPanel {
 	}
 	
 	private void loadPoolDisplay(){
-		for(MarkedImage mi : PoolManager.getPool().get_pool()){
+		for(MarkedImage mi : PoolManager.getPool().getPool()){
 			JLabel jl = new JLabel(new ImageIcon(mi.getImage().getScaledInstance(90, 90, Image.SCALE_DEFAULT)));
 			jl.setToolTipText(mi.getName());
 			poolPanel.add(jl);

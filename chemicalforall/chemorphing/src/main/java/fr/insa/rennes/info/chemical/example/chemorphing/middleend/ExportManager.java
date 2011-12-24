@@ -12,10 +12,12 @@ import fr.insa.rennes.info.chemical.example.chemorphing.backend.Globals;
 
 public class ExportManager {
 
+	private ExportManager(){}	// Overriding/disabling default constructor in order to prevent from abusive accessibility
+
 	public static void export(File outputFile) {
 		
 		// grab the output image type from the first image in the sequence
-		BufferedImage firstImage = imgToBuffImg(MorphManager.get_imgTab()[0]);
+		BufferedImage firstImage = imgToBuffImg(MorphManager.getImgTab()[0]);
 
 		// create a gif sequence with the type of the first image, which loops continuously
 		GifSequenceWriter writer;
@@ -25,17 +27,17 @@ public class ExportManager {
 
 			// write out the first image to our sequence...
 			writer.writeToSequence(firstImage);
-			for(int i=1; i<MorphManager.get_imgTab().length; i++) {
-				BufferedImage nextImage = imgToBuffImg(MorphManager.get_imgTab()[i]);
+			for(int i=1; i<MorphManager.getImgTab().length; i++) {
+				BufferedImage nextImage = imgToBuffImg(MorphManager.getImgTab()[i]);
 				writer.writeToSequence(nextImage);
 			}
 
 			writer.close();
 
 		} catch (IIOException e) {
-			e.printStackTrace();
+			Globals.logger.warning(e.getLocalizedMessage());
 		} catch (IOException e) {
-			e.printStackTrace();
+			Globals.logger.warning(e.getLocalizedMessage());
 		}
 	}
 

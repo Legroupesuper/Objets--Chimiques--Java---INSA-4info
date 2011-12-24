@@ -70,16 +70,16 @@ public class ChemorphWindow extends JFrame {
 
 		this.getContentPane().add(container);
 	}
-	public PoolPanel get_poolPanel() {
+	public PoolPanel getPoolPanel() {
 		return pp;
 	}
-	public ResultPanel get_resultPanel() {
+	public ResultPanel getResultPanel() {
 		return rp;
 	}
-	public TreatmentPanel get_treatmentPanel() {
+	public TreatmentPanel getTreatmentPanel() {
 		return tp;
 	}
-	public AddPanel get_addPanel() {
+	public AddPanel getAddPanel() {
 		return ap;
 	}
 

@@ -5,6 +5,8 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.HashMap;
+import java.util.Map;
+import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -12,16 +14,20 @@ import java.util.regex.Pattern;
 
 public class Globals {
 	
-	
+	private Globals(){}	// Overriding/disabling default constructor in order to prevent from abusive accessibility
+
 	private static final String INI_FILE = "settings.ini";
 	
-	private static HashMap<String, String> _settings = analyseIni(INI_FILE);
+	public static Logger logger = Logger.getLogger("fr.insa.rennes.info.chemical");
+	
+	
+	private static Map<String, String> settings = analyseIni(INI_FILE);
 	
 	public static String getSetting(String setting){
-		return _settings.get(setting);
+		return settings.get(setting);
 	}
 	
-	private static HashMap<String, String> analyseIni(String iniFile){
+	private static Map<String, String> analyseIni(String iniFile){
 		HashMap<String, String> hm = new HashMap<String, String>();
 		try{
 			FileInputStream fis= new FileInputStream(iniFile);
@@ -37,7 +43,7 @@ public class Globals {
 				}
 			}
 		} catch(IOException e){
-			System.out.println("Unable to read file : "+iniFile);
+			logger.warning("Unable to read file : "+iniFile);
 			System.exit(1);
 		}
 		return hm;

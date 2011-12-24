@@ -3,14 +3,17 @@ package fr.insa.rennes.info.chemical.example.chemorphing.middleend;
 import java.awt.Image;
 import java.io.IOException;
 
+import fr.insa.rennes.info.chemical.example.chemorphing.backend.Globals;
 import fr.insa.rennes.info.chemical.example.chemorphing.backend.MarkedImage;
 import fr.insa.rennes.info.chemical.example.chemorphing.morph.Morphing;
 
 public class MorphManager {
+	
+	private MorphManager(){}	// Overriding/disabling default constructor in order to prevent from abusive accessibility
 
 	private static Image[] imgTab;
 
-	public static Image[] get_imgTab() {
+	public static Image[] getImgTab() {
 		return imgTab;
 	}
 
@@ -21,11 +24,11 @@ public class MorphManager {
 
 		Morphing morpher;
 
-		int FRAME_NUMBER = 10;
+		int frameNumber = 10;
 
 		MarkedImage[] tab = selectRandom(nb);
 
-		imgTab = new Image[tab.length * FRAME_NUMBER];
+		imgTab = new Image[tab.length * frameNumber];
 		int imgTabIndex = 0;
 
 		for(int i=0 ; i<tab.length ; i++){
@@ -33,9 +36,9 @@ public class MorphManager {
 			MarkedImage mi2 = tab[(i+1)%tab.length];
 			//Create Morphing object
 			try {
-				morpher = new Morphing(mi1.getImage(), mi2.getImage(), FRAME_NUMBER, mi1.getPoint1(), mi1.getPoint2(), mi1.getPoint3(), mi2.getPoint1(), mi2.getPoint2(), mi2.getPoint3());
+				morpher = new Morphing(mi1.getImage(), mi2.getImage(), frameNumber, mi1.getPoint1(), mi1.getPoint2(), mi1.getPoint3(), mi2.getPoint1(), mi2.getPoint2(), mi2.getPoint3());
 			} catch (IOException e) {
-				e.printStackTrace();
+				Globals.logger.warning(e.getLocalizedMessage());
 				break;
 			}
 

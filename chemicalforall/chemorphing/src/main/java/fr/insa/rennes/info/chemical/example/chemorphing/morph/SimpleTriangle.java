@@ -4,35 +4,35 @@ package fr.insa.rennes.info.chemical.example.chemorphing.morph;
 //v3 is above or below this edge. v1 is to the left (lesser x) of v2.
 
 public class SimpleTriangle {
-	int x1, x2, y;
-	int x3, y3;
+	protected int x1, x2, y;
+	protected int x3, y3;
 
-	SimpleTriangle(int X1, int X2, int Y, int X3, int Y3){
-		x1 = X1;
-		x2 = X2;
-		y  = Y;
-		x3 = X3;
-		y3 = Y3;
+	SimpleTriangle(int xx1, int xx2, int yy12, int xx3, int yy3){
+		x1 = xx1;
+		x2 = xx2;
+		y  = yy12;
+		x3 = xx3;
+		y3 = yy3;
 	}
 
 	public boolean test(){
-		if (x1 <= x2)
+		if (x1 <= x2){
 			return (true);
-
+		}
 		return (false);
 	}
 
 	public boolean type1(){
-		if (y3 > y)
+		if (y3 > y){
 			return (true);
-
+		}
 		return (false);
 	}
 
 	public boolean type2(){
-		if (y3 < y)
+		if (y3 < y){
 			return (true);
-
+		}
 		return (false);
 	}
 }
