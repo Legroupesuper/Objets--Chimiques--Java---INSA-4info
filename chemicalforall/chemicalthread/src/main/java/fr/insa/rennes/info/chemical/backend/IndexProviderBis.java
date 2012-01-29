@@ -7,6 +7,8 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.naming.LimitExceededException;
+
 import fr.insa.rennes.info.chemical.backend.Solution.Strategy;
 
 
@@ -19,47 +21,48 @@ import fr.insa.rennes.info.chemical.backend.Solution.Strategy;
  * @author Cédric Andreolli, Chloé Boulanger, Olivier Cléro, Antoine Guellier, Sébastien Guilloux, Arthur Templé
  */
 class IndexProviderBis {
-	private List<IndexProviderElement> _listElements;
-	private List<List<Integer>> _dependantIndexes;
+	private IndexProviderSubSolution _solution;
 	private IncrementStrategyBis _strategy;
 	private boolean _overflowReached;
-	public IndexProviderBis(List<IndexProviderElement> listElements, List<List<Integer>> dependantIndexes, Strategy s) {
+	
+	public IndexProviderBis(IndexProviderSubSolution solution, Strategy s) throws ChemicalException {
 		super();
-		this._listElements = listElements;
-		_dependantIndexes = dependantIndexes;
+		this._solution = solution;
 		_overflowReached = false;
 		if (s==Strategy.RANDOM){
-			_strategy = new RandomIncrementStrategyBis(listElements);
+			_strategy = new RandomIncrementStrategyBis(solution);
 		}
 		else {
-			_strategy = new RandomIncrementStrategyBis(listElements);
+			_strategy = new RandomIncrementStrategyBis(solution);
 		}
 		
-		for(IndexProviderElement e : _listElements){
-			e.init();
+		_solution.init();
+		while(!_solution.isValide()){
+			increment();
+			if(_overflowReached)
+				throw new ChemicalException("It's not possible to create the IndexProvider");
 		}
 	}
 	
-	public IndexProviderBis(List<IndexProviderElement> listElements) {
-		super();
-		this._listElements = listElements;
-		for(IndexProviderElement e : _listElements){
-			e.init();
-		}
+	IndexProviderSubSolution getSubSolution(){
+		return _solution;
+	}
+	public IndexProviderBis(IndexProviderSubSolution solution) throws ChemicalException {
+		this(solution, Strategy.RANDOM);
 	}
 	
-	public List<List<Integer>> increment(){
-		List<List<Integer>> result;
+	public IndexProviderSubSolution increment(){
+		
 		do{
 			try{
-				result = _strategy.increment(_listElements);
+				_solution = _strategy.increment(_solution);
 			} catch (ChemicalException e) {
-				System.err.println("Overflow reached : "+e.getMessage());
+//				System.err.println("Overflow reached : "+e.getMessage());
 				_overflowReached = true;
 				return null;
 			}
-		}while(!checkForDuplicates(result));
-		return result;
+		}while(!_solution.isValide());
+		return _solution;
 	}
 	
 	
@@ -80,7 +83,19 @@ class IndexProviderBis {
 		List<List<IndexProviderElement>> temp = new ArrayList<List<IndexProviderElement>>();
 		temp.add(l1);
 		temp.add(l2);
-		IndexProviderSubSolution ss1 = new IndexProviderSubSolution(temp);
+		
+		List<List<Integer>> lincomp = new ArrayList<List<Integer>>();
+		List<List<Integer>> lincomp2 = new ArrayList<List<Integer>>();
+		List<Integer> lbis = new ArrayList<Integer>();
+		lbis.add(0);
+		lbis.add(1);
+		List<Integer> lbis2 = new ArrayList<Integer>();
+		lbis2.add(0);
+		lbis2.add(2);
+		
+		lincomp.add(lbis);
+		lincomp2.add(lbis2);
+		IndexProviderSubSolution ss1 = new IndexProviderSubSolution(temp, lincomp);
 
 		
 		l.add(se1);
@@ -95,53 +110,27 @@ class IndexProviderBis {
 		tab.add(li);
 		List<List<IndexProviderElement>> ltemp = new ArrayList<List<IndexProviderElement>>();
 		ltemp.add(l);
-		IndexProviderSubSolution solution = new IndexProviderSubSolution(ltemp);
-		IndexProviderBis index = new IndexProviderBis(l, tab, Strategy.RANDOM);
+		IndexProviderSubSolution solution = new IndexProviderSubSolution(ltemp, lincomp2);
+		IndexProviderBis index = null;
+		try {
+			index = new IndexProviderBis(solution, Strategy.RANDOM);
+		} catch (ChemicalException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		int i=0;
-			System.out.println(solution.getNumberOfElements().intValue());
-			while(i<solution.getNumberOfElements().intValue()){
-				
-				//List<List<Integer>> resTab = index.increment();		
-//				System.out.println("************");
-//				System.out.println(index.toString());
-//				System.out.println(resTab);
-				System.out.println(solution);
-				solution.increment();
-				System.out.println("i="+i);
-				i++;
-			}	
+		System.out.println(solution.getNumberOfElements().intValue());
+		while(!index.is_overflowReached()){
+			System.out.println(index);
+			index.increment();
+		}
 	}
 	
-	private boolean checkForDuplicates(List<List<Integer>> result) {
-		List<Integer> valuesIndexProvider;
-		boolean isCurrentIndexValid;
-		for(List<Integer> l : _dependantIndexes){
-			valuesIndexProvider = new ArrayList<Integer>();
-			isCurrentIndexValid = true;
-
-			for(int n : l){
-
-				if(valuesIndexProvider.contains(_listElements.get(n).getValue())){
-					isCurrentIndexValid = false;
-					break;
-				}else{
-					valuesIndexProvider.add(_listElements.get(n).getValue());
-				}
-			}
-			if(!isCurrentIndexValid){
-				return false;
-			}
-		}
-		return true;
-	}
-
+	
 	public String toString(){
 		String result = "";
-		for(int i=0; i<_listElements.size(); i++){
-			result += _listElements.get(i).toString() + " - ";
-		}
-		return result;
+		return _solution.toString();
 	}
 	
 	boolean is_overflowReached(){
@@ -149,10 +138,6 @@ class IndexProviderBis {
 	}
 	
 	public BigInteger getNumberOfElements(){
-		BigInteger numberOfIndex = BigInteger.valueOf(1);
-		for(IndexProviderElement e : _listElements){
-			numberOfIndex = numberOfIndex.multiply(e.getNumberOfElements());
-		}
-		return numberOfIndex;
+		return _solution.getNumberOfElements();
 	}
 }

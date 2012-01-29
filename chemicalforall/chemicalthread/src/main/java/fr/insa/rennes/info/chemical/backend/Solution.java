@@ -371,8 +371,8 @@ public final class Solution implements Collection<Object>{
 			try{//Try to match a SubSolution
 				ParameterizedType oldParam = p;
 				p = (ParameterizedType) p.getActualTypeArguments()[0];
-				System.err.println("TADA");
-				System.out.println("Ca va saigner  - "+oldParam.getRawType());
+//				System.err.println("TADA");
+//				System.out.println("Ca va saigner  - "+oldParam.getRawType());
 				List<List<IndexProviderElement>> l = new ArrayList<List<IndexProviderElement>>();
 				int i=0;
 				for(Object solu : s._mapElements.get(Solution.class.getName())){
@@ -383,9 +383,12 @@ public final class Solution implements Collection<Object>{
 					l.add(ltemp);
 					i++;
 				}
-				System.err.println("TADA 2");
-				IndexProviderSubSolution subSol = new IndexProviderSubSolution(l);
-				System.err.println("TADA 3");
+//				System.err.println("TADA 2");
+				List<List<Integer>> lincomp = new ArrayList<List<Integer>>();
+				List<Integer> lbis = new ArrayList<Integer>();
+				lincomp.add(lbis);
+				IndexProviderSubSolution subSol = new IndexProviderSubSolution(l, lincomp);
+//				System.err.println("TADA 3");
 				return subSol;
 			}catch(Exception e){//Try to match a ListElement
 				IndexProviderElement elem;
@@ -397,30 +400,37 @@ public final class Solution implements Collection<Object>{
 							break;
 						}
 					}
-					System.out.println("**On est sorti**");
+//					System.out.println("**On est sorti**");
 					ChemicalElement result = (ChemicalElement) getter.invoke(r, new Object[0]);
 					List<List<IndexProviderElement>> finalList = new ArrayList<List<IndexProviderElement>>();
 					List<IndexProviderElement> tempList = new ArrayList<IndexProviderElement>();
 					for(Class<? extends Object> o : result.getTypeList()){
-						System.out.println("**C'EST MAINTENANT**");
-						System.out.println(o.getName());
+//						System.out.println("**C'EST MAINTENANT**");
+//						System.out.println(o.getName());
 						tempList.add(new IndexProviderSimpleElement(s._mapElements.get(o.getName()).size()));
-						System.out.println("On a fait le tour");
+//						System.out.println("On a fait le tour");
 					}
 					tempList.add(new IndexProviderSimpleElement(0));
 					finalList.add(tempList);
-					elem = new IndexProviderSubSolution(finalList);
+					//TODO gerer les incompatibilités ici
+					List<List<Integer>> lincomp = new ArrayList<List<Integer>>();
+					List<Integer> lbis = new ArrayList<Integer>();
+					lincomp.add(lbis);
+					elem = new IndexProviderSubSolution(finalList, lincomp);
 				}catch(Exception e2){
-					System.out.println("Exception : "+e2.getMessage());
+//					System.out.println("Exception : "+e2.getMessage());
 					List<List<IndexProviderElement>> finalList = new ArrayList<List<IndexProviderElement>>();
 					List<IndexProviderElement> tempList = new ArrayList<IndexProviderElement>();
 					tempList.add(new IndexProviderSimpleElement(0));
 					tempList.add(new IndexProviderSimpleElement(0));
 					finalList.add(tempList);
-					elem = new IndexProviderSubSolution(finalList);
+					List<List<Integer>> lincomp = new ArrayList<List<Integer>>();
+					List<Integer> lbis = new ArrayList<Integer>();
+					lincomp.add(lbis);
+					elem = new IndexProviderSubSolution(finalList, lincomp);
 				}
-				System.out.println("Ca va saigner pour finir - "+p.getActualTypeArguments()[0]);
-				System.out.println(elem);
+//				System.out.println("Ca va saigner pour finir - "+p.getActualTypeArguments()[0]);
+//				System.out.println(elem);
 				return elem;
 			}
 		}else{
@@ -476,7 +486,7 @@ public final class Solution implements Collection<Object>{
 				
 			}
 		}
-		System.out.println(listElements);
+//		System.out.println(listElements);
 		//The access to the main atom map is restricted to 1 thread at a time
 		synchronized(_mapElements) {
 			//Initialize the index provider to try every possible combination
@@ -504,7 +514,7 @@ public final class Solution implements Collection<Object>{
 			//we need to transform the map of list in a list of list
 			List<List<Integer>> listProvider = new ArrayList<List<Integer>>();
 			for(String s : mapIndexProvider.keySet()){
-				System.err.println(s);
+//				System.err.println(s);
 				if(mapIndexProvider.get(s).size()>1){
 					listProvider.add(mapIndexProvider.get(s));
 				}else{
@@ -514,7 +524,14 @@ public final class Solution implements Collection<Object>{
 
 			//Instantiate the IndexProvider object
 			IndexProviderBis indexProvider = null;
-			indexProvider = new IndexProviderBis(listElements, listProvider, _strategy);
+			List<List<IndexProviderElement>> ll = new ArrayList<List<IndexProviderElement>>();
+			ll.add(listElements);
+			IndexProviderSubSolution sol = new IndexProviderSubSolution(ll, listProvider);
+			try {
+				indexProvider = new IndexProviderBis(sol, _strategy);
+			} catch (ChemicalException e1) {
+				return false;
+			}
 
 
 			//Effectively research a valid set of reactives for the reaction rule
@@ -524,7 +541,10 @@ public final class Solution implements Collection<Object>{
 			boolean hasMatched = false;
 			//Loop until the reactives has been found OR all combination have been tested
 			while(!indexProvider.is_overflowReached()){
-				List<List<Integer>> positionIndex = indexProvider.increment();
+				IndexProviderSubSolution solution = indexProvider.increment();
+				if(solution == null)
+					return false;
+//				System.out.println(solution);
 				int i=0;
 				Object obj = null;
 				for(Field f : fields){
@@ -534,9 +554,10 @@ public final class Solution implements Collection<Object>{
 
 					//and invoke the setter
 					try{
-						obj = _mapElements.get(f.getType().getName()).get(positionIndex.get(i).get(0));
+						obj = _mapElements.get(f.getType().getName()).get(solution.get_listElements().get(i).getValue());
 					}catch(Exception e){
 						System.out.println("Exception levée et gérée magnifiquement v2");
+//						System.out.println(e.getMessage());
 						return false;
 					}
 					setter.invoke(r, new Object[]{obj});

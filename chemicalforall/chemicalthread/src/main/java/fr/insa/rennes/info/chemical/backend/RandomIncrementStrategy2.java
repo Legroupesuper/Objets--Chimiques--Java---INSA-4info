@@ -125,19 +125,15 @@ class RandomIncrementStrategyBis implements IncrementStrategyBis {
 	 * columns there is for this index provider.
 	 * @param maxIndex The maximum index array
 	 */
-	public RandomIncrementStrategyBis(List<IndexProviderElement> index){
+	public RandomIncrementStrategyBis(IndexProviderSubSolution solution){
 		_currentIndex = BigInteger.valueOf(0);
-		_numberOfIndex = BigInteger.valueOf(1);
-		for(IndexProviderElement e : index){
-			_numberOfIndex = _numberOfIndex.multiply(e.getNumberOfElements());
-		}
+		_numberOfIndex = solution.getNumberOfElements();
 		_shuffleList = new ArrayList<BigInteger>();
 		
 		for(BigInteger i= BigInteger.valueOf(0); _numberOfIndex.add(i.negate()).signum()>0; i=i.add(BigInteger.valueOf(1))){
 			_shuffleList.add(new BigInteger(i.toByteArray()));
 		}
 		Collections.shuffle(_shuffleList);
-		System.out.println("Number of element : "+_numberOfIndex);
 	}
 	
 	/**
@@ -148,16 +144,17 @@ class RandomIncrementStrategyBis implements IncrementStrategyBis {
 	 * @return A table of integers that is the new value of the indexes
 	 * @throws ChemicalException
 	 */	
-	public List<List<Integer>> increment(List<IndexProviderElement> list) throws ChemicalException{
-		for(IndexProviderElement e : list){
-			e.init();
-		}
+	public IndexProviderSubSolution increment(IndexProviderSubSolution solution) throws ChemicalException{
+		solution.init();
+		
 		List<List<Integer>> result = new ArrayList<List<Integer>>();
 		java.util.Iterator<BigInteger> it = _shuffleList.iterator();
 		BigInteger position = BigInteger.valueOf(0);
 		BigInteger i = BigInteger.valueOf(0);
 		if(_currentIndex.equals(_numberOfIndex))
 			throw new ChemicalException("Overflow reached first");
+		
+		//We can't use the simple _shuffleList.get(_currentIndex) because we need to use BigInteger
 		while(it.hasNext()){
 			if(i.equals(_currentIndex)){
 				_currentIndex = _currentIndex.add(BigInteger.valueOf(1));
@@ -168,21 +165,14 @@ class RandomIncrementStrategyBis implements IncrementStrategyBis {
 			i=i.add(BigInteger.valueOf(1));
 			it.next();
 		}
-		System.err.println("Position : "+position);
+		
+//		System.err.println("Position : "+position);
+		
 		for(i=BigInteger.valueOf(0); position.add(i.negate()).signum()>0; i=i.add(BigInteger.valueOf(1))){
-			list = incrementOnce(list);
+			solution.increment();
 		}
-		for(int ii=0; ii<list.size(); ii++){
-			List<Integer> l = new ArrayList<Integer>();
-			IndexProviderElement element = list.get(ii);
-			while(element instanceof IndexProviderSubSolution){
-				l.add(((IndexProviderSubSolution)element).getValue());
-				element = ((IndexProviderSubSolution)element).getElement();
-			}
-			l.add(element.getValue());
-			result.add(l);
-		}
-		return result;
+		
+		return solution;
 	}
 	
 	List<IndexProviderElement> incrementOnce(List<IndexProviderElement> list) throws ChemicalException{

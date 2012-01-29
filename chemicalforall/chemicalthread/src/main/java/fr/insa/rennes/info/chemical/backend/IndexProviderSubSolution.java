@@ -1,6 +1,7 @@
 package fr.insa.rennes.info.chemical.backend;
 
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -14,19 +15,24 @@ public class IndexProviderSubSolution implements IndexProviderElement{
 	private List<List<IndexProviderElement>> _listElements;
 	private int _currentValue;
 	private int _currentList;
-	
+	private List<List<Integer>> _dependantIndexes;
 	/**
 	 * Constructor
 	 * @param _listElements The first level list correspond to all subsolutions contained in the current level
 	 * of a solution. 
 	 */
-	public IndexProviderSubSolution(List<List<IndexProviderElement>> _listElements) {
+	public IndexProviderSubSolution(List<List<IndexProviderElement>> _listElements, List<List<Integer>> dependantIndexes) {
 		super();
 		this._listElements = _listElements;
+		this._dependantIndexes = dependantIndexes;
 	}
 
-	public List<List<IndexProviderElement>> get_listElements() {
-		return _listElements;
+	public List<IndexProviderElement> get_listElements(int position) {
+		return _listElements.get(position);
+	}
+	
+	public List<IndexProviderElement> get_listElements() {
+		return _listElements.get(_currentList);
 	}
 
 	public void set_listElements(List<List<IndexProviderElement>> _listElements) {
@@ -114,5 +120,34 @@ public class IndexProviderSubSolution implements IndexProviderElement{
 			result = result.add(resulttmp);
 		}
 		return result;
+	}
+
+	public boolean isValide() {
+		List<Integer> valuesIndexProvider;
+		boolean isCurrentIndexValid;
+		
+		for(IndexProviderElement e : _listElements.get(_currentList)){
+			if(!e.isValide())
+				return false;
+		}
+		
+		for(List<Integer> l : _dependantIndexes){
+			valuesIndexProvider = new ArrayList<Integer>();
+			isCurrentIndexValid = true;
+
+			for(int n : l){
+
+				if(valuesIndexProvider.contains(_listElements.get(_currentList).get(n).getValue())){
+					isCurrentIndexValid = false;
+					break;
+				}else{
+					valuesIndexProvider.add(_listElements.get(_currentList).get(n).getValue());
+				}
+			}
+			if(!isCurrentIndexValid){
+				return false;
+			}
+		}
+		return true;
 	}
 }
