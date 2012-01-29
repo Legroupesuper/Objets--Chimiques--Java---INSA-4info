@@ -13,7 +13,7 @@ public class ConcatRR implements ReactionRule{
 	}
 	public Multiplicity getMultiplicity() {
 		// TODO Auto-generated method stub
-		return Multiplicity.ONE_SHOT;
+		return Multiplicity.INFINITY_SHOT;
 	}
 
 	public String getS() {

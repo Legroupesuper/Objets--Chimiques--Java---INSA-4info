@@ -19,6 +19,17 @@ public class Test {
 		//			e1.printStackTrace();
 		//		}
 		final Solution s = new Solution(Solution.Strategy.RANDOM);
+		Solution s2 = new Solution();
+		Solution s3 = new Solution();
+		s3.add(5);
+		s3.add(5);
+		s3.add(6);
+//		s2.add(5);
+//		s2.add(5);
+//		s2.add(6);
+//		s2.add("toto");
+		s2.add(s3);
+		s.add(s2);
 		s.add(new Integer(5));
 		s.add(new Integer(15));
 		s.add(new Integer(35));
@@ -63,6 +74,7 @@ public class Test {
 		};
 		s.add(c);
 		s.add(new MaxIntRR());
+		s.add(new ConcatRR());
 		//s.add(new RandomNumberRR());
 		//	s.add(new TrucRR());
 		System.out.println("AVANT : ");

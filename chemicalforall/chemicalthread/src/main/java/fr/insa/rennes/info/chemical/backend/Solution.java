@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.lang.reflect.ParameterizedType;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -364,6 +365,69 @@ public final class Solution implements Collection<Object>{
 
 		return res;
 	}
+	
+	IndexProviderElement generateListIndexProviderElement(Field f, ReactionRule r, ParameterizedType p, Solution s, int pos){
+		if(p.getActualTypeArguments().length > 0){
+			try{//Try to match a SubSolution
+				ParameterizedType oldParam = p;
+				p = (ParameterizedType) p.getActualTypeArguments()[0];
+				System.err.println("TADA");
+				System.out.println("Ca va saigner  - "+oldParam.getRawType());
+				List<List<IndexProviderElement>> l = new ArrayList<List<IndexProviderElement>>();
+				int i=0;
+				for(Object solu : s._mapElements.get(Solution.class.getName())){
+					Solution sol = (Solution) solu;
+					IndexProviderElement elem = generateListIndexProviderElement(f, r, p, sol, i);
+					List<IndexProviderElement> ltemp = new ArrayList<IndexProviderElement>();
+					ltemp.add(elem);
+					l.add(ltemp);
+					i++;
+				}
+				System.err.println("TADA 2");
+				IndexProviderSubSolution subSol = new IndexProviderSubSolution(l);
+				System.err.println("TADA 3");
+				return subSol;
+			}catch(Exception e){//Try to match a ListElement
+				IndexProviderElement elem;
+				try{
+					Method getter = null;
+					for(Method get : r.getClass().getDeclaredMethods()){
+						if(get.getName().toLowerCase().contains("get"+f.getName().toLowerCase())){
+							getter = get;
+							break;
+						}
+					}
+					System.out.println("**On est sorti**");
+					ChemicalElement result = (ChemicalElement) getter.invoke(r, new Object[0]);
+					List<List<IndexProviderElement>> finalList = new ArrayList<List<IndexProviderElement>>();
+					List<IndexProviderElement> tempList = new ArrayList<IndexProviderElement>();
+					for(Class<? extends Object> o : result.getTypeList()){
+						System.out.println("**C'EST MAINTENANT**");
+						System.out.println(o.getName());
+						tempList.add(new IndexProviderSimpleElement(s._mapElements.get(o.getName()).size()));
+						System.out.println("On a fait le tour");
+					}
+					tempList.add(new IndexProviderSimpleElement(0));
+					finalList.add(tempList);
+					elem = new IndexProviderSubSolution(finalList);
+				}catch(Exception e2){
+					System.out.println("Exception : "+e2.getMessage());
+					List<List<IndexProviderElement>> finalList = new ArrayList<List<IndexProviderElement>>();
+					List<IndexProviderElement> tempList = new ArrayList<IndexProviderElement>();
+					tempList.add(new IndexProviderSimpleElement(0));
+					tempList.add(new IndexProviderSimpleElement(0));
+					finalList.add(tempList);
+					elem = new IndexProviderSubSolution(finalList);
+				}
+				System.out.println("Ca va saigner pour finir - "+p.getActualTypeArguments()[0]);
+				System.out.println(elem);
+				return elem;
+			}
+		}else{
+			return null;
+		}
+		
+	}
 
 	/*
 	 * This method is called by every thread-reaction rule to get its reactives.
@@ -386,14 +450,36 @@ public final class Solution implements Collection<Object>{
 		//Build the type table : the types of the reaction rules reactives
 		Field[] fields = r.getClass().getDeclaredFields();
 		String table[] = new String[fields.length];
+		List<IndexProviderElement> listElements = new ArrayList<IndexProviderElement>();
 		for(int i=0; i< fields.length; i++){
 			table[i] = fields[i].getType().getName();
+			if(fields[i].getType().getName().contains("SubSolution")){
+				listElements.add(
+						generateListIndexProviderElement(fields[i], r, 
+								(ParameterizedType)fields[i].getGenericType(), this, 0));
+//				IndexProviderSubSolution subSol = new IndexProviderSubSolution(_listElements)
+//				ParameterizedType paramType = (ParameterizedType)fields[i].getGenericType();
+//				while(paramType.getActualTypeArguments().length > 0){
+//					try{
+//						ParameterizedType oldParam = paramType;
+//						paramType = (ParameterizedType) paramType.getActualTypeArguments()[0];
+//						System.out.println("Ca va saigner  - "+oldParam.getRawType());
+//					}catch(Exception e){
+//						System.out.println("Ca va saigner  - "+paramType.getActualTypeArguments()[0]);
+//						break;
+//					}
+//				}
+				
+			}else{
+				//System.out.println(fields[i].getType().getName());
+				listElements.add(new IndexProviderSimpleElement(_mapElements.get(table[i]).size()));
+				
+			}
 		}
-
+		System.out.println(listElements);
 		//The access to the main atom map is restricted to 1 thread at a time
 		synchronized(_mapElements) {
 			//Initialize the index provider to try every possible combination
-			int tabMaxIndex[] = new int[table.length];
 
 			//Construct the map of the dependent indexes (two dependent indexes can not have the same value
 			//as they refer to the same element)
@@ -412,27 +498,24 @@ public final class Solution implements Collection<Object>{
 				//If the type isn't even an entry of the hash map, return false (didn't find any reactive)
 				if(_mapElements.get(table[i])== null)
 					return false;
-
-				tabMaxIndex[i] = _mapElements.get(table[i]).size();
 			}
 
 			//We have to provide the IndexProvider a list of a list of int, so
 			//we need to transform the map of list in a list of list
 			List<List<Integer>> listProvider = new ArrayList<List<Integer>>();
 			for(String s : mapIndexProvider.keySet()){
+				System.err.println(s);
 				if(mapIndexProvider.get(s).size()>1){
 					listProvider.add(mapIndexProvider.get(s));
+				}else{
+					throw new IllegalArgumentException();
 				}
 			}
 
 			//Instantiate the IndexProvider object
-			IndexProvider indexProvider = null;
-			try{
-				indexProvider = new IndexProvider(listProvider, tabMaxIndex, _strategy);
-			}catch(ChemicalException e){
-				System.out.println("Exception levée et gérée magnifiquement");
-				return false;
-			}
+			IndexProviderBis indexProvider = null;
+			indexProvider = new IndexProviderBis(listElements, listProvider, _strategy);
+
 
 			//Effectively research a valid set of reactives for the reaction rule
 			Object reactives[] = new Object[fields.length];
@@ -441,6 +524,7 @@ public final class Solution implements Collection<Object>{
 			boolean hasMatched = false;
 			//Loop until the reactives has been found OR all combination have been tested
 			while(!indexProvider.is_overflowReached()){
+				List<List<Integer>> positionIndex = indexProvider.increment();
 				int i=0;
 				Object obj = null;
 				for(Field f : fields){
@@ -449,7 +533,12 @@ public final class Solution implements Collection<Object>{
 					setter = r.getClass().getDeclaredMethods()[setterNumber];
 
 					//and invoke the setter
-					obj = _mapElements.get(f.getType().getName()).get(indexProvider.get(i));
+					try{
+						obj = _mapElements.get(f.getType().getName()).get(positionIndex.get(i).get(0));
+					}catch(Exception e){
+						System.out.println("Exception levée et gérée magnifiquement v2");
+						return false;
+					}
 					setter.invoke(r, new Object[]{obj});
 
 					reactives[i] = obj;
@@ -465,7 +554,7 @@ public final class Solution implements Collection<Object>{
 					hasMatched = true;
 					break;
 				}
-				indexProvider.increment();
+				
 			}
 			//All the possibilities have been tested here
 			//Return false if nothing matched
