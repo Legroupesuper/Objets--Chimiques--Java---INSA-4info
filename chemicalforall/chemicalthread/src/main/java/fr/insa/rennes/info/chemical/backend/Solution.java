@@ -549,7 +549,7 @@ public final class Solution implements Collection<Object>{
 			System.out.println("On va imprimer l'index provider de "+r.getClass().getName());
 			System.out.println(indexProvider);
 			//Effectively research a valid set of reactives for the reaction rule
-			Object reactives[] = new Object[fields.length];
+			Pair<Solution, Object> reactives[] = new Pair[fields.length];
 			int setterNumber;
 			Method setter;
 			boolean hasMatched = false;
@@ -560,7 +560,7 @@ public final class Solution implements Collection<Object>{
 					return false;
 //				System.out.println(solution);
 				int i=0;
-				Object obj = null;
+				Pair<Solution, Object> obj = null;
 				for(Field f : fields){
 					//Find the setter for this field
 					setterNumber = _mapReactionRulesSetters.get(r.getClass().getName()+"."+f.getName());
@@ -568,13 +568,16 @@ public final class Solution implements Collection<Object>{
 
 					//and invoke the setter
 					try{
-						obj = _mapElements.get(f.getType().getName()).get(solution.get_listElements().get(i).getValue());
+						obj = instanciateField(f, this, solution.get_listElements().get(i), r);
+						if(obj == null)
+							return false;
+						//obj = _mapElements.get(f.getType().getName()).get(solution.get_listElements().get(i).getValue());
 					}catch(Exception e){
 						System.out.println("Exception levée et gérée magnifiquement v2");
 //						System.out.println(e.getMessage());
 						return false;
 					}
-					setter.invoke(r, new Object[]{obj});
+					setter.invoke(r, new Object[]{obj.get_second()});
 
 					reactives[i] = obj;
 					i++;
@@ -583,8 +586,31 @@ public final class Solution implements Collection<Object>{
 				if(r.computeSelect()){
 
 					//remove the selected reactives from the solution
-					for(Object react : reactives){
-						_mapElements.get(react.getClass().getName()).remove(react);
+					for(Pair<Solution, Object> react : reactives){
+						try{
+							if(react.get_second().getClass().getName().equals(SubSolution.class.getName())){
+								SubSolution<ChemicalElement> s = (SubSolution<ChemicalElement>) react.get_second();
+								System.err.println("LA SOLUTION\n"+react.get_first());
+								for(Object o : s.getElementList()){
+									System.err.println("On supprime le "+o);
+									react.get_first()._mapElements.get(o.getClass().getName()).remove(o);
+								}
+								System.err.println(react.get_first());
+							}else{
+								react.get_first()._mapElements.get(react.get_second().getClass().getName()).remove(react.get_second());
+
+							}
+//							System.err.println(react.get_first());
+//							System.err.println("On supprime le "+react.get_second());
+//							System.err.println("************\n"+react.get_first());
+						}catch(Exception e){
+							System.err.println("========================================\n" +
+									"========================================\n"+
+									e.getMessage()+
+									"========================================\n"+
+									"========================================\n");
+							//return false;
+						}
 					}
 					hasMatched = true;
 					break;
@@ -600,6 +626,63 @@ public final class Solution implements Collection<Object>{
 		return true;
 	}
 
+	/**
+	 * This function is used to instanciate a field of a reaction rule.
+	 * To succeed this operation, it needs to use an IndexProviderElement which gives the indexe of the element
+	 * to use in the solution s.
+	 * @param f the field
+	 * @param s the solution
+	 * @param ipe the IndexProviderElement
+	 * @return the instanciated object or null
+	 */
+	private Pair<Solution, Object> instanciateField(Field f, Solution s, IndexProviderElement ipe, ReactionRule r){
+		if(ipe instanceof IndexProviderSimpleElement){//This is a simple element, so it it direct
+			return new Pair<Solution, Object>(s, s._mapElements.get(f.getType().getName()).get(ipe.getValue()));
+		}else{//This is a Solution, it will be more complex
+			Method getter = null;
+			for(Method get : r.getClass().getDeclaredMethods()){
+				if(get.getName().toLowerCase().contains("get"+f.getName().toLowerCase())){
+					getter = get;
+					System.out.println("ON A TROUV2 LE GETTER:"+getter.getName());
+					break;
+				}
+			}
+			try {
+				SubSolution<ChemicalElement> el = (SubSolution<ChemicalElement>) getter.invoke(r, null);
+				//We must genetrate the List<Object> of el
+				//First we must get the good subsolution
+				Solution nextS = (Solution)s._mapElements.get(Solution.class.getName()).get(ipe.getValue());
+				//Then we get le List<Object>
+				Pair<Solution, List<Object>> lo = generateListObject(((IndexProviderSubSolution)ipe).get_listElements(), nextS, el);
+				//finally, we use the setter
+				el.setElementList(lo.get_second());
+				return new Pair<Solution, Object>(lo.get_first(), el);
+			}catch(Exception e){
+				return null;
+			}
+		}
+	}
+	
+	private Pair<Solution, List<Object>> generateListObject(List<IndexProviderElement> lipe, Solution s, SubSolution<ChemicalElement> el){
+		try{
+			if(lipe.size()==1 && lipe.get(0) instanceof IndexProviderSubSolution){
+				IndexProviderSubSolution ipss = (IndexProviderSubSolution) lipe.get(0);
+				Solution snext = (Solution) s._mapElements.get(Solution.class.getName()).get(lipe.get(0).getValue());
+				return generateListObject(ipss.get_listElements(), snext, el);
+			}else{
+				List<Object> l = new ArrayList<Object>();
+				int i=0;
+				for(Class<?> c : el.getTypeList()){
+					l.add(s._mapElements.get(c.getName()).get(lipe.get(i).getValue()));
+					i++;
+				}
+				return new Pair<Solution, List<Object>>(s, l);
+			}
+		}catch(Exception e){
+			return null;
+		}
+	}
+	
 	private IndexProviderSubSolution generateIndexProviderSubSolution(Field[] fieldTable, List<List<Integer>> incompatiblesIndexes, ReactionRule r){
 		List<IndexProviderElement> secondLevelList = new ArrayList<IndexProviderElement>();
 		System.err.println("test");
