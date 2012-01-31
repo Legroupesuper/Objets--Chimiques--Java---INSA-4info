@@ -3,6 +3,7 @@ import java.util.List;
 import fr.insa.rennes.info.chemical.backend.ChemicalElement;
 import fr.insa.rennes.info.chemical.backend.InertEvent;
 import fr.insa.rennes.info.chemical.backend.Solution;
+import fr.insa.rennes.info.chemical.backend.Solution.Strategy;
 import fr.insa.rennes.info.chemical.user.InertEventListener;
 
 
@@ -27,9 +28,11 @@ public class Test {
 //		s2.add(5);
 //		s2.add(5);
 //		s2.add(6);
-//		s2.add("toto");
+		s3.add("toto");
 		s2.add(s3);
 		s.add(s2);
+		s.add(s2);
+		//s.add(s3);
 		s.add(new Integer(5));
 		s.add(new Integer(15));
 		s.add(new Integer(35));

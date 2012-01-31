@@ -8,6 +8,8 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -459,33 +461,39 @@ public final class Solution implements Collection<Object>{
 
 		//Build the type table : the types of the reaction rules reactives
 		Field[] fields = r.getClass().getDeclaredFields();
+		System.out.println("ATTENTION");
+		
+		System.out.println("FINI");
 		String table[] = new String[fields.length];
 		List<IndexProviderElement> listElements = new ArrayList<IndexProviderElement>();
 		for(int i=0; i< fields.length; i++){
 			table[i] = fields[i].getType().getName();
 			if(fields[i].getType().getName().contains("SubSolution")){
-				listElements.add(
-						generateListIndexProviderElement(fields[i], r, 
-								(ParameterizedType)fields[i].getGenericType(), this, 0));
-//				IndexProviderSubSolution subSol = new IndexProviderSubSolution(_listElements)
-//				ParameterizedType paramType = (ParameterizedType)fields[i].getGenericType();
-//				while(paramType.getActualTypeArguments().length > 0){
-//					try{
-//						ParameterizedType oldParam = paramType;
-//						paramType = (ParameterizedType) paramType.getActualTypeArguments()[0];
-//						System.out.println("Ca va saigner  - "+oldParam.getRawType());
-//					}catch(Exception e){
-//						System.out.println("Ca va saigner  - "+paramType.getActualTypeArguments()[0]);
-//						break;
-//					}
-//				}
-				
+				table[i] = Solution.class.getName();
+//				listElements.add(
+//						generateListIndexProviderElement(fields[i], r, 
+//								(ParameterizedType)fields[i].getGenericType(), this, 0));
+////				IndexProviderSubSolution subSol = new IndexProviderSubSolution(_listElements)
+////				ParameterizedType paramType = (ParameterizedType)fields[i].getGenericType();
+////				while(paramType.getActualTypeArguments().length > 0){
+////					try{
+////						ParameterizedType oldParam = paramType;
+////						paramType = (ParameterizedType) paramType.getActualTypeArguments()[0];
+////						System.out.println("Ca va saigner  - "+oldParam.getRawType());
+////					}catch(Exception e){
+////						System.out.println("Ca va saigner  - "+paramType.getActualTypeArguments()[0]);
+////						break;
+////					}
+////				}
+//				
 			}else{
-				//System.out.println(fields[i].getType().getName());
-				listElements.add(new IndexProviderSimpleElement(_mapElements.get(table[i]).size()));
-				
+				table[i] = fields[i].getType().getName();
+//				//System.out.println(fields[i].getType().getName());
+//				listElements.add(new IndexProviderSimpleElement(_mapElements.get(table[i]).size()));
+//				
 			}
 		}
+		
 //		System.out.println(listElements);
 		//The access to the main atom map is restricted to 1 thread at a time
 		synchronized(_mapElements) {
@@ -518,22 +526,28 @@ public final class Solution implements Collection<Object>{
 				if(mapIndexProvider.get(s).size()>1){
 					listProvider.add(mapIndexProvider.get(s));
 				}else{
-					throw new IllegalArgumentException();
+					//throw new IllegalArgumentException(s);
 				}
 			}
-
+			
+			IndexProviderSubSolution sol = generateIndexProviderSubSolution(fields, listProvider, r);
+			System.out.println("On va imprimer le IndexProviderSubSolution de "+r.getClass().getName());
+			if(sol == null || sol.getNumberOfElements().equals(BigInteger.ZERO))
+				return false;
+			
 			//Instantiate the IndexProvider object
 			IndexProviderBis indexProvider = null;
-			List<List<IndexProviderElement>> ll = new ArrayList<List<IndexProviderElement>>();
-			ll.add(listElements);
-			IndexProviderSubSolution sol = new IndexProviderSubSolution(ll, listProvider);
+			
+			
 			try {
 				indexProvider = new IndexProviderBis(sol, _strategy);
+				System.out.println(indexProvider);
 			} catch (ChemicalException e1) {
 				return false;
 			}
 
-
+			System.out.println("On va imprimer l'index provider de "+r.getClass().getName());
+			System.out.println(indexProvider);
 			//Effectively research a valid set of reactives for the reaction rule
 			Object reactives[] = new Object[fields.length];
 			int setterNumber;
@@ -586,6 +600,136 @@ public final class Solution implements Collection<Object>{
 		return true;
 	}
 
+	private IndexProviderSubSolution generateIndexProviderSubSolution(Field[] fieldTable, List<List<Integer>> incompatiblesIndexes, ReactionRule r){
+		List<IndexProviderElement> secondLevelList = new ArrayList<IndexProviderElement>();
+		System.err.println("test");
+		for(Field f : fieldTable){
+			System.err.println(f.getType().getName());
+			if(f.getType().getName().contains("SubSolution")){//This is a subsolution
+				List<List<IndexProviderElement>> ltemp = new ArrayList<List<IndexProviderElement>>();
+				System.out.println("Type parametré : "+f.getType().getName());
+				IndexProviderSubSolution subsol = null;
+				for(Object o : _mapElements.get(Solution.class.getName())){
+					Solution s = (Solution) o;
+					ParameterizedType p = (ParameterizedType)f.getGenericType();
+					System.out.println("Type critique : "+p.getRawType());
+					subsol = s.generateIndexProviderSubSolution(p, f, r, s);
+					if(subsol != null)
+						System.out.println("Nombre d'éléments premier niveau: "+subsol.getNumberOfElements());
+					else
+						return null;
+					if(!subsol.getNumberOfElements().equals(BigInteger.ZERO)){
+						List<IndexProviderElement> l = new ArrayList<IndexProviderElement>();
+						l.add(subsol);
+						ltemp.add(l);//We only have 1 element in the subsolution first level list
+					}
+				}
+				System.out.println("NOMBRE ELEMENT PREMIER NIVEAU : "+ltemp.size());
+				secondLevelList.add(new IndexProviderSubSolution(ltemp, subsol.get_dependantIndexes()));//We get the dependant indexes
+																										//from the computed IndexProviderSubSolution
+			}else{//It's an element
+				secondLevelList.add(new IndexProviderSimpleElement(_mapElements.get(f.getType().getName()).size()));
+			}
+		}
+		List<List<IndexProviderElement>> firstLevelList = new ArrayList<List<IndexProviderElement>>();
+		firstLevelList.add(secondLevelList);
+		return new IndexProviderSubSolution(firstLevelList, incompatiblesIndexes);
+	}
+	
+	private IndexProviderSubSolution generateIndexProviderSubSolution(ParameterizedType p, Field f, ReactionRule r, Solution s){
+		try{
+			p = (ParameterizedType)p.getActualTypeArguments()[0];
+			
+			List<List<IndexProviderElement>> ltemp = new ArrayList<List<IndexProviderElement>>();
+			System.out.println("Type parametré : "+f.getType().getName());
+			IndexProviderSubSolution subsol = null;
+			for(Object o : s._mapElements.get(Solution.class.getName())){
+				Solution stemp = (Solution) o;
+				IndexProviderSubSolution subsoltemp = generateIndexProviderSubSolution(p, f, r, stemp);
+				if(subsoltemp != null)
+					ltemp.add(subsoltemp.get_listElements());
+			}
+			
+			List<List<IndexProviderElement>> l = new ArrayList<List<IndexProviderElement>>();
+			List<List<Integer>> incompat = new ArrayList<List<Integer>>();
+			System.out.println("NOMBRE D'ELEMENT IMBRICATION : "+ltemp.size());
+			return new IndexProviderSubSolution(ltemp, incompat);
+		}catch(Exception e){
+			//We are on an ElementList
+			Method getter = null;
+			for(Method get : r.getClass().getDeclaredMethods()){
+				if(get.getName().toLowerCase().contains("get"+f.getName().toLowerCase())){
+					getter = get;
+					System.out.println("ON A TROUV2 LE GETTER:"+getter.getName());
+					break;
+				}
+			}
+			try {
+				SubSolution<ChemicalElement> el = (SubSolution<ChemicalElement>) getter.invoke(r, null);
+				System.out.println("On va imprimer la liste des arguments");
+				System.out.println("mais avant s : ");
+				
+				List<List<IndexProviderElement>> l = new ArrayList<List<IndexProviderElement>>();
+				List<IndexProviderElement> ll = new ArrayList<IndexProviderElement>();
+				List<String> table = new ArrayList<String>();
+				for(Class<?> c : el.getTypeList()){
+					table.add(c.getName());
+					System.out.println("we add \""+c.getName()+"\"");
+					System.out.println(s);
+					try{
+						System.out.println(c.getName()+
+								" : "+s.
+								_mapElements.
+								get(c.getName()).
+								size());
+						ll.add(new IndexProviderSimpleElement(s._mapElements.get(c.getName()).size()));
+					}catch(Exception ex){
+						System.out.println(ex.getMessage());
+						ex.printStackTrace();
+					}
+				}
+				l.add(ll);
+				//We need to generate the incompatible indexes list<list<integer>
+				Map<String, List<Integer>> mapIndexProvider = new HashMap<String, List<Integer>>();
+				System.out.println("On passe par la");
+				for(int i = 0; i < table.size(); i++){
+					if(mapIndexProvider.containsKey(table.get(i))){
+						List<Integer> lll = mapIndexProvider.get(table.get(i));
+						lll.add(i);
+						mapIndexProvider.put(table.get(i), lll);
+					}else{
+						List<Integer> lll = new ArrayList<Integer>();
+						lll.add(i);
+						mapIndexProvider.put(table.get(i), lll);
+					}
+
+					//If the type isn't even an entry of the hash map, return false (didn't find any reactive)
+					if(s._mapElements.get(table.get(i))== null){
+						System.out.println("On va retourner null");
+						return null;
+					}
+				}
+				System.out.println("On passe par ici");
+				//We have to provide the IndexProvider a list of a list of int, so
+				//we need to transform the map of list in a list of list
+				List<List<Integer>> listProvider = new ArrayList<List<Integer>>();
+				for(String sname : mapIndexProvider.keySet()){
+//					System.err.println(s);
+					if(mapIndexProvider.get(sname).size()>1){
+						listProvider.add(mapIndexProvider.get(s));
+					}else{
+						//throw new IllegalArgumentException(s);
+					}
+				}
+				
+				return new IndexProviderSubSolution(l, listProvider);
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
+		return null;
+	}
+	
 	public boolean retainAll(Collection<?> arg0) {
 		boolean res = false;
 		String reactiveName;

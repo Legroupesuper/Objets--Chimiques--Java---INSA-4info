@@ -6,7 +6,7 @@ public interface IndexProviderElement {
 	public void init();
 	public int getValue();
 	public BigInteger getNumberOfElements();
-	public boolean isValide();
+	public boolean isValid();
 	public void setValue(int v);
 	/*
 	 * Indicate if an overflow has been reached

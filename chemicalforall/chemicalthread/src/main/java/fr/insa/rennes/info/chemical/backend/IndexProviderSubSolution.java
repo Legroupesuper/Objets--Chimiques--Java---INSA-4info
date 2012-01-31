@@ -27,11 +27,20 @@ public class IndexProviderSubSolution implements IndexProviderElement{
 		this._dependantIndexes = dependantIndexes;
 	}
 
+	public List<List<Integer>> get_dependantIndexes() {
+		return _dependantIndexes;
+	}
+
+	public void set_dependantIndexes(List<List<Integer>> _dependantIndexes) {
+		this._dependantIndexes = _dependantIndexes;
+	}
+
 	public List<IndexProviderElement> get_listElements(int position) {
 		return _listElements.get(position);
 	}
 	
 	public List<IndexProviderElement> get_listElements() {
+		System.out.println("CURRENT LIST : "+_currentList);
 		return _listElements.get(_currentList);
 	}
 
@@ -76,7 +85,7 @@ public class IndexProviderSubSolution implements IndexProviderElement{
 		 *  otherwise, no overflow is detected and the next call to increment will try to increment _currentValue = 0.
 		 *  This algorithm work like the +1 algorithm. You always start to increment the least significant number.
 		 */
-		if(overflow && _currentList<_listElements.size()){//Increment the first level list
+		if(overflow && _currentList<_listElements.size()-1){//Increment the first level list
 			_currentList++;
 			_currentValue=0;
 			return false;
@@ -122,12 +131,12 @@ public class IndexProviderSubSolution implements IndexProviderElement{
 		return result;
 	}
 
-	public boolean isValide() {
+	public boolean isValid() {
 		List<Integer> valuesIndexProvider;
 		boolean isCurrentIndexValid;
 		
 		for(IndexProviderElement e : _listElements.get(_currentList)){
-			if(!e.isValide())
+			if(!e.isValid())
 				return false;
 		}
 		

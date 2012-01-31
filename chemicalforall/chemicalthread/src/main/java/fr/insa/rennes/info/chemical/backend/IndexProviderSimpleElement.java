@@ -47,7 +47,7 @@ public class IndexProviderSimpleElement  implements IndexProviderElement{
 		return BigInteger.valueOf(_numberElementsInSolution);
 	}
 
-	public boolean isValide() {
+	public boolean isValid() {
 		return true;
 	}
 }

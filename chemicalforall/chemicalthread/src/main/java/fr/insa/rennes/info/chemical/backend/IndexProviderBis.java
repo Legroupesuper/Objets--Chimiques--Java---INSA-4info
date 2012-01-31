@@ -37,7 +37,7 @@ class IndexProviderBis {
 		}
 		
 		_solution.init();
-		while(!_solution.isValide()){
+		while(!_solution.isValid()){
 			increment();
 			if(_overflowReached)
 				throw new ChemicalException("It's not possible to create the IndexProvider");
@@ -51,8 +51,7 @@ class IndexProviderBis {
 		this(solution, Strategy.RANDOM);
 	}
 	
-	public IndexProviderSubSolution increment(){
-		
+	public IndexProviderSubSolution increment(){		
 		do{
 			try{
 				_solution = _strategy.increment(_solution);
@@ -61,7 +60,7 @@ class IndexProviderBis {
 				_overflowReached = true;
 				return null;
 			}
-		}while(!_solution.isValide());
+		}while(!_solution.isValid());
 		return _solution;
 	}
 	

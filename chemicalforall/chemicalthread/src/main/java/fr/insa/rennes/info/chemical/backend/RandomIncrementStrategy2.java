@@ -22,97 +22,6 @@ class RandomIncrementStrategyBis implements IncrementStrategyBis {
 	 * @author Cédric Andreolli, Chloé Boulanger, Olivier Cléro, Antoine Guellier, Sébastien Guilloux, Arthur Templé
 	 *
 	 */
-//	public interface PermutElement{
-//		/**
-//		 * Shuffle the list
-//		 */
-//		void shuffle();
-//		/**
-//		 * Get the list of associations between values of the List<IndexProviderElement> and
-//		 * the random generated values.
-//		 * @return The list of associations to translate the values of the List<IndexProviderElement>
-//		 */
-//		List<Integer> getAssociations();
-//		int get(int i);
-//	}
-//	public class PermutSimpleElement implements PermutElement{
-//		private List<Integer> _listIntegers;
-//		
-//		/**
-//		 * Constructor
-//		 * @param n The number of elements you want to permute
-//		 */
-//		public PermutSimpleElement(IndexProviderSimpleElement e){
-//			_listIntegers = new ArrayList<Integer>();
-//			for(int i=0; i<e.get_nummberElementsInSolution(); i++)
-//				_listIntegers.add(i);
-//		}
-//		
-//		public void shuffle() {
-//			Collections.shuffle(_listIntegers);
-//		}
-//
-//		public List<Integer> getAssociations() {
-//			return _listIntegers;
-//		}
-//
-//		public int get(int i) {
-//			return _listIntegers.get(i);
-//		}
-//		
-//	}
-//	public class PermutCompounedElement implements PermutElement{
-//		private List<Integer> _listIntegers;
-//		private List<PermutElement> _listElements;
-//		public PermutCompounedElement(IndexProviderSubSolution e) throws ChemicalException{
-//			_listIntegers = new ArrayList<Integer>();
-//			_listElements = new ArrayList<PermutElement>();
-//			PermutElementFactory factory = new PermutElementFactory();
-//			for(int i=0; i<e.get_listElements().size(); i++){
-//				_listIntegers.add(i);
-//				_listElements.add(factory.buildElement(e.get_listElements().get(i)));
-//			}
-//		}
-//		
-//		public void shuffle() {
-//			Collections.shuffle(_listIntegers);
-//			for(PermutElement p : _listElements)
-//				p.shuffle();
-//		}
-//
-//		public List<Integer> getAssociations() {
-//			return _listIntegers;
-//		}
-//		
-//		public int get(int i) {
-//			System.out.print("On traduit "+i+" par "+_listIntegers.get(i)+" - ");
-//			return _listIntegers.get(i);
-//		}
-//		
-//		public PermutElement getElement(int i){
-//			return _listElements.get(i);
-//		}
-//	}
-//	
-//	public class PermutElementFactory{
-//		public PermutSimpleElement buildElement(IndexProviderSimpleElement e){
-//			return new PermutSimpleElement(e);
-//		}
-//		
-//		public PermutCompounedElement buildElement(IndexProviderSubSolution e) throws ChemicalException{
-//			return new PermutCompounedElement(e);
-//		}
-//		
-//		public PermutElement buildElement(IndexProviderElement e) throws ChemicalException{
-//			if(e instanceof IndexProviderSimpleElement)
-//				return buildElement((IndexProviderSimpleElement)e);
-//			else if(e instanceof IndexProviderSubSolution)
-//				return buildElement((IndexProviderSubSolution)e);
-//			throw new ChemicalException("Unrecognized type in buildElement");
-//		}
-//	}
-//
-//	
 	/**
 	 * A boolean needed for the first execution of increment
 	 */
@@ -166,24 +75,12 @@ class RandomIncrementStrategyBis implements IncrementStrategyBis {
 			it.next();
 		}
 		
-//		System.err.println("Position : "+position);
 		
 		for(i=BigInteger.valueOf(0); position.add(i.negate()).signum()>0; i=i.add(BigInteger.valueOf(1))){
 			solution.increment();
 		}
 		
 		return solution;
-	}
-	
-	List<IndexProviderElement> incrementOnce(List<IndexProviderElement> list) throws ChemicalException{
-		int i=0;
-		//Just increment the list of IndexProviderElements
-		while(i<list.size() && list.get(i).increment()){
-			i++;
-		}
-		if(i==list.size())
-			throw new ChemicalException("Overflow reached");
-		return list;
 	}
 
 }
