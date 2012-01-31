@@ -590,12 +590,12 @@ public final class Solution implements Collection<Object>{
 						try{
 							if(react.get_second().getClass().getName().equals(SubSolution.class.getName())){
 								SubSolution<ChemicalElement> s = (SubSolution<ChemicalElement>) react.get_second();
-								System.err.println("LA SOLUTION\n"+react.get_first());
+							//	System.err.println("LA SOLUTION\n"+react.get_first());
 								for(Object o : s.getElementList()){
-									System.err.println("On supprime le "+o);
+									//System.err.println("On supprime le "+o);
 									react.get_first()._mapElements.get(o.getClass().getName()).remove(o);
 								}
-								System.err.println(react.get_first());
+							//	System.err.println(react.get_first());
 							}else{
 								react.get_first()._mapElements.get(react.get_second().getClass().getName()).remove(react.get_second());
 
@@ -692,23 +692,25 @@ public final class Solution implements Collection<Object>{
 				List<List<IndexProviderElement>> ltemp = new ArrayList<List<IndexProviderElement>>();
 				System.out.println("Type parametré : "+f.getType().getName());
 				IndexProviderSubSolution subsol = null;
+				IndexProviderSubSolution lastSubSolution = null;
 				for(Object o : _mapElements.get(Solution.class.getName())){
 					Solution s = (Solution) o;
 					ParameterizedType p = (ParameterizedType)f.getGenericType();
 					System.out.println("Type critique : "+p.getRawType());
 					subsol = s.generateIndexProviderSubSolution(p, f, r, s);
-					if(subsol != null)
+					if(subsol != null){
+						lastSubSolution = subsol;
 						System.out.println("Nombre d'éléments premier niveau: "+subsol.getNumberOfElements());
-					else
-						return null;
-					if(!subsol.getNumberOfElements().equals(BigInteger.ZERO)){
-						List<IndexProviderElement> l = new ArrayList<IndexProviderElement>();
-						l.add(subsol);
-						ltemp.add(l);//We only have 1 element in the subsolution first level list
+
+						if(!subsol.getNumberOfElements().equals(BigInteger.ZERO)){
+							List<IndexProviderElement> l = new ArrayList<IndexProviderElement>();
+							l.add(subsol);
+							ltemp.add(l);//We only have 1 element in the subsolution first level list
+						}
 					}
 				}
 				System.out.println("NOMBRE ELEMENT PREMIER NIVEAU : "+ltemp.size());
-				secondLevelList.add(new IndexProviderSubSolution(ltemp, subsol.get_dependantIndexes()));//We get the dependant indexes
+				secondLevelList.add(new IndexProviderSubSolution(ltemp, lastSubSolution.get_dependantIndexes()));//We get the dependant indexes
 																										//from the computed IndexProviderSubSolution
 			}else{//It's an element
 				secondLevelList.add(new IndexProviderSimpleElement(_mapElements.get(f.getType().getName()).size()));
@@ -767,8 +769,8 @@ public final class Solution implements Collection<Object>{
 								size());
 						ll.add(new IndexProviderSimpleElement(s._mapElements.get(c.getName()).size()));
 					}catch(Exception ex){
-						System.out.println(ex.getMessage());
-						ex.printStackTrace();
+//						System.out.println(ex.getMessage());
+//						ex.printStackTrace();
 					}
 				}
 				l.add(ll);

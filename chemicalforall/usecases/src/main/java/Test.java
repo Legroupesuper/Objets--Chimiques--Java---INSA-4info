@@ -22,6 +22,13 @@ public class Test {
 		final Solution s = new Solution(Solution.Strategy.RANDOM);
 		Solution s2 = new Solution();
 		Solution s3 = new Solution();
+		Solution s4 = new Solution();
+		s4.add(12);
+		s4.add(12);
+		s4.add(12);
+		s4.add(12);
+		s4.add(12);
+		s4.add(12);
 		s3.add(5);
 		s3.add(5);
 		s3.add(6);
@@ -54,6 +61,7 @@ public class Test {
 		s3.add("toto");
 		s2.add(s3);
 		s.add(s2);
+		s.add(s4);
 		//s.add(s2);
 		//s.add(s3);
 		s.add(new Integer(5));
