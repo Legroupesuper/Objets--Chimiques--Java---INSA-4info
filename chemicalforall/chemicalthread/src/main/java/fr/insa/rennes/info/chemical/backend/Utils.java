@@ -1,6 +1,10 @@
 package fr.insa.rennes.info.chemical.backend;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.logging.Logger;
+
+import fr.insa.rennes.info.chemical.user.ReactionRule;
 
 public class Utils {
 	
@@ -46,5 +50,24 @@ public class Utils {
  */
 	// Scope is set to "default" on purpose : only this library should use this log
 	static Logger logger = Logger.getLogger("fr.insa.rennes.info.chemical");
+	
+	/**
+	 * This method is used to get a Method associated to a field and a ReactionRule.
+	 * This method is prefixed by the string s
+	 * @param r The ReactionRule
+	 * @param s The prefixed string
+	 * @param f The field
+	 * @return The method wich correspond to the previous parameters
+	 */
+	protected static Method getMethodFromReactionRule(ReactionRule r, String s, Field f){
+		Method m = null;
+		for(Method get : r.getClass().getDeclaredMethods()){
+			if(get.getName().toLowerCase().contains(s+f.getName().toLowerCase())){
+				m = get;
+				break;
+			}
+		}
+		return m;
+	}
 	
 }

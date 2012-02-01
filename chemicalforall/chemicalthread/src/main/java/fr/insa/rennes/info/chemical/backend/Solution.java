@@ -101,6 +101,11 @@ public final class Solution implements Collection<Object>{
 		_strategy = s;
 	}
 
+	/**
+	 * This method allow the user to add any type of Object to the solution.
+	 * @param newReactive The new reactive you want to add
+	 * @return The reactive has been added
+	 */
 	public boolean add(Object newReactive) {
 		//The map (container of our elements) must NOT be accessed concurrently
 		synchronized (_mapElements) {
@@ -151,6 +156,17 @@ public final class Solution implements Collection<Object>{
 						addElement = false;
 				}
 			}
+			
+			if(className.equals(Solution.class.getName())){
+				Solution sol = (Solution) newReactive;
+				sol.addInertEventListener(new InertEventListener() {
+
+					public void isInert(InertEvent e) {
+						Solution.this.wakeAll();
+					}
+				});
+			}
+			
 			if(!className.equals(ChemicalElement.class.getName()) && addElement){
 				boolean result;
 				//When you add an element in the solution, the solution is no more inert
@@ -210,7 +226,7 @@ public final class Solution implements Collection<Object>{
 
 	protected void deleteReaction(ReactionRule r){
 		synchronized (_mapElements) {
-			List l = _mapElements.get(ReactionRule.class.getName());
+			List<Object> l = _mapElements.get(ReactionRule.class.getName());
 			l.remove(r);
 			synchronized (_threadTable) {
 				_threadTable.get(r).stopTheThread();
@@ -223,11 +239,6 @@ public final class Solution implements Collection<Object>{
 
 		}
 	}
-
-	//This void synchronised method acts as a lock
-	//	protected synchronized void firstSleep(String s){
-	//
-	//	}
 
 	private synchronized void endOfReaction(){
 		_reactionInProgress = false;
@@ -257,6 +268,8 @@ public final class Solution implements Collection<Object>{
 		}
 		return nb;
 	}
+	
+	
 	private String getReactiveType(Object reactive) {
 		String interfaceS = " ";
 		for(Class<?> s : reactive.getClass().getInterfaces()){
@@ -272,6 +285,11 @@ public final class Solution implements Collection<Object>{
 		}
 	}
 
+	/**
+	 * The Solution is inert when no more reaction is possible. This means that the ReactionRules can't
+	 * react anymore. To be inert, all the inner solutions must be inert too.
+	 * @return The solution is inert
+	 */
 	public synchronized boolean is_inert() {
 		return _inert;
 	}
@@ -289,7 +307,7 @@ public final class Solution implements Collection<Object>{
 		return Collections.unmodifiableList(reactivesCopy).iterator();
 	}
 
-	/*
+	/**
 	 * Creates and launches a thread that will make the specified reaction rule react.
 	 * All the reaction rules threads will be in the same thread group and have
 	 * a pointer to the solution (this)
@@ -300,7 +318,7 @@ public final class Solution implements Collection<Object>{
 		t.start();
 	}
 
-	/*
+	/**
 	 * When a reaction rule did not find any reactives, it calls this function that will "make" it sleep.
 	 * It checks if this reaction rule's thread is the last standing. If it is,
 	 * it stops all the reaction and declares the solution inert.
@@ -311,6 +329,8 @@ public final class Solution implements Collection<Object>{
 
 		//If there is more than one thread alive (including the current one)
 		//it means other reaction rules can react, so just make this thread wait
+		//This function ever deals with inner solutions. Awaken threads in relation with 
+		//ReactionRules of inner solutions are detected in nbAwaken.
 		if(nbAwaken > 1){
 			try {
 				wait();
@@ -328,10 +348,38 @@ public final class Solution implements Collection<Object>{
 	 * The main function that begins the reaction of the solution. It does not stop until the function
 	 * is_inert sends true.
 	 * Internally, it creates a thread for each reaction rule so that their execution be parallel.
+	 * This function also starts the reactions in the inner solutions. Basically, a solution must
+	 * launch endOfReaction() when no more reaction is possible. This also include the case where the Solution
+	 * does not contain any ReactionRule. 
+	 * 
 	 */
 	public void react() {
 		synchronized (this) {
 			_reactionInProgress = true;
+			//We try to launch all the inner solutions
+			if(_mapElements.get(Solution.class.getName()) != null){//Go through all the inner solutions
+				for(Object o : _mapElements.get(Solution.class.getName())){
+					Solution s = (Solution) o;
+					if(!s.is_inert()){
+						/**
+						 * If the solution is not inert, we add an InertEvenListener that will notify this
+						 * when s will become inert. The notification will awake all the ReactionRules which are
+						 * included in _mapElements.
+						 */
+						s.addInertEventListener(new InertEventListener() {
+							public void isInert(InertEvent e) {
+								Solution.this.wakeAll();
+							}
+						});
+						s.react();
+					}
+				}
+			}else if(_mapElements.get(ReactionRule.class.getName()) == null){
+				/**
+				 * If there is no ReactionRule in the _mapElements, the solution can not react.
+				 */
+				endOfReaction();
+			}
 			notifyAll();
 		}
 	}
@@ -367,14 +415,12 @@ public final class Solution implements Collection<Object>{
 
 		return res;
 	}
-	
+
 	IndexProviderElement generateListIndexProviderElement(Field f, ReactionRule r, ParameterizedType p, Solution s, int pos){
 		if(p.getActualTypeArguments().length > 0){
 			try{//Try to match a SubSolution
 				ParameterizedType oldParam = p;
 				p = (ParameterizedType) p.getActualTypeArguments()[0];
-//				System.err.println("TADA");
-//				System.out.println("Ca va saigner  - "+oldParam.getRawType());
 				List<List<IndexProviderElement>> l = new ArrayList<List<IndexProviderElement>>();
 				int i=0;
 				for(Object solu : s._mapElements.get(Solution.class.getName())){
@@ -385,12 +431,10 @@ public final class Solution implements Collection<Object>{
 					l.add(ltemp);
 					i++;
 				}
-//				System.err.println("TADA 2");
 				List<List<Integer>> lincomp = new ArrayList<List<Integer>>();
 				List<Integer> lbis = new ArrayList<Integer>();
 				lincomp.add(lbis);
 				IndexProviderSubSolution subSol = new IndexProviderSubSolution(l, lincomp);
-//				System.err.println("TADA 3");
 				return subSol;
 			}catch(Exception e){//Try to match a ListElement
 				IndexProviderElement elem;
@@ -402,15 +446,11 @@ public final class Solution implements Collection<Object>{
 							break;
 						}
 					}
-//					System.out.println("**On est sorti**");
 					ChemicalElement result = (ChemicalElement) getter.invoke(r, new Object[0]);
 					List<List<IndexProviderElement>> finalList = new ArrayList<List<IndexProviderElement>>();
 					List<IndexProviderElement> tempList = new ArrayList<IndexProviderElement>();
 					for(Class<? extends Object> o : result.getTypeList()){
-//						System.out.println("**C'EST MAINTENANT**");
-//						System.out.println(o.getName());
 						tempList.add(new IndexProviderSimpleElement(s._mapElements.get(o.getName()).size()));
-//						System.out.println("On a fait le tour");
 					}
 					tempList.add(new IndexProviderSimpleElement(0));
 					finalList.add(tempList);
@@ -420,7 +460,6 @@ public final class Solution implements Collection<Object>{
 					lincomp.add(lbis);
 					elem = new IndexProviderSubSolution(finalList, lincomp);
 				}catch(Exception e2){
-//					System.out.println("Exception : "+e2.getMessage());
 					List<List<IndexProviderElement>> finalList = new ArrayList<List<IndexProviderElement>>();
 					List<IndexProviderElement> tempList = new ArrayList<IndexProviderElement>();
 					tempList.add(new IndexProviderSimpleElement(0));
@@ -431,14 +470,12 @@ public final class Solution implements Collection<Object>{
 					lincomp.add(lbis);
 					elem = new IndexProviderSubSolution(finalList, lincomp);
 				}
-//				System.out.println("Ca va saigner pour finir - "+p.getActualTypeArguments()[0]);
-//				System.out.println(elem);
 				return elem;
 			}
 		}else{
 			return null;
 		}
-		
+
 	}
 
 	/*
@@ -461,40 +498,17 @@ public final class Solution implements Collection<Object>{
 
 		//Build the type table : the types of the reaction rules reactives
 		Field[] fields = r.getClass().getDeclaredFields();
-		System.out.println("ATTENTION");
-		
-		System.out.println("FINI");
 		String table[] = new String[fields.length];
 		List<IndexProviderElement> listElements = new ArrayList<IndexProviderElement>();
 		for(int i=0; i< fields.length; i++){
 			table[i] = fields[i].getType().getName();
 			if(fields[i].getType().getName().contains("SubSolution")){
 				table[i] = Solution.class.getName();
-//				listElements.add(
-//						generateListIndexProviderElement(fields[i], r, 
-//								(ParameterizedType)fields[i].getGenericType(), this, 0));
-////				IndexProviderSubSolution subSol = new IndexProviderSubSolution(_listElements)
-////				ParameterizedType paramType = (ParameterizedType)fields[i].getGenericType();
-////				while(paramType.getActualTypeArguments().length > 0){
-////					try{
-////						ParameterizedType oldParam = paramType;
-////						paramType = (ParameterizedType) paramType.getActualTypeArguments()[0];
-////						System.out.println("Ca va saigner  - "+oldParam.getRawType());
-////					}catch(Exception e){
-////						System.out.println("Ca va saigner  - "+paramType.getActualTypeArguments()[0]);
-////						break;
-////					}
-////				}
-//				
 			}else{
 				table[i] = fields[i].getType().getName();
-//				//System.out.println(fields[i].getType().getName());
-//				listElements.add(new IndexProviderSimpleElement(_mapElements.get(table[i]).size()));
-//				
 			}
 		}
-		
-//		System.out.println(listElements);
+
 		//The access to the main atom map is restricted to 1 thread at a time
 		synchronized(_mapElements) {
 			//Initialize the index provider to try every possible combination
@@ -522,32 +536,26 @@ public final class Solution implements Collection<Object>{
 			//we need to transform the map of list in a list of list
 			List<List<Integer>> listProvider = new ArrayList<List<Integer>>();
 			for(String s : mapIndexProvider.keySet()){
-//				System.err.println(s);
 				if(mapIndexProvider.get(s).size()>1){
 					listProvider.add(mapIndexProvider.get(s));
 				}else{
-					//throw new IllegalArgumentException(s);
 				}
 			}
-			
+
 			IndexProviderSubSolution sol = generateIndexProviderSubSolution(fields, listProvider, r);
-			System.out.println("On va imprimer le IndexProviderSubSolution de "+r.getClass().getName());
 			if(sol == null || sol.getNumberOfElements().equals(BigInteger.ZERO))
 				return false;
-			
+
 			//Instantiate the IndexProvider object
 			IndexProviderBis indexProvider = null;
-			
-			
+
+
 			try {
 				indexProvider = new IndexProviderBis(sol, _strategy);
-				System.out.println(indexProvider);
 			} catch (ChemicalException e1) {
 				return false;
 			}
 
-			System.out.println("On va imprimer l'index provider de "+r.getClass().getName());
-			System.out.println(indexProvider);
 			//Effectively research a valid set of reactives for the reaction rule
 			Pair<Solution, Object> reactives[] = new Pair[fields.length];
 			int setterNumber;
@@ -558,7 +566,6 @@ public final class Solution implements Collection<Object>{
 				IndexProviderSubSolution solution = indexProvider.increment();
 				if(solution == null)
 					return false;
-//				System.out.println(solution);
 				int i=0;
 				Pair<Solution, Object> obj = null;
 				for(Field f : fields){
@@ -571,10 +578,7 @@ public final class Solution implements Collection<Object>{
 						obj = instanciateField(f, this, solution.get_listElements().get(i), r);
 						if(obj == null)
 							return false;
-						//obj = _mapElements.get(f.getType().getName()).get(solution.get_listElements().get(i).getValue());
 					}catch(Exception e){
-						System.out.println("Exception levée et gérée magnifiquement v2");
-//						System.out.println(e.getMessage());
 						return false;
 					}
 					setter.invoke(r, new Object[]{obj.get_second()});
@@ -587,35 +591,28 @@ public final class Solution implements Collection<Object>{
 
 					//remove the selected reactives from the solution
 					for(Pair<Solution, Object> react : reactives){
+						if(!react.get_first().is_inert() && react.get_first() != this){
+							System.err.println("On ne peut pas instancier des éléments d'une sous-solution non inerte");
+							System.err.println(react.get_first());
+							return false;
+						}
 						try{
 							if(react.get_second().getClass().getName().equals(SubSolution.class.getName())){
 								SubSolution<ChemicalElement> s = (SubSolution<ChemicalElement>) react.get_second();
-							//	System.err.println("LA SOLUTION\n"+react.get_first());
 								for(Object o : s.getElementList()){
-									//System.err.println("On supprime le "+o);
 									react.get_first()._mapElements.get(o.getClass().getName()).remove(o);
 								}
-							//	System.err.println(react.get_first());
 							}else{
 								react.get_first()._mapElements.get(react.get_second().getClass().getName()).remove(react.get_second());
 
 							}
-//							System.err.println(react.get_first());
-//							System.err.println("On supprime le "+react.get_second());
-//							System.err.println("************\n"+react.get_first());
 						}catch(Exception e){
-							System.err.println("========================================\n" +
-									"========================================\n"+
-									e.getMessage()+
-									"========================================\n"+
-									"========================================\n");
-							//return false;
 						}
 					}
 					hasMatched = true;
 					break;
 				}
-				
+
 			}
 			//All the possibilities have been tested here
 			//Return false if nothing matched
@@ -639,14 +636,7 @@ public final class Solution implements Collection<Object>{
 		if(ipe instanceof IndexProviderSimpleElement){//This is a simple element, so it it direct
 			return new Pair<Solution, Object>(s, s._mapElements.get(f.getType().getName()).get(ipe.getValue()));
 		}else{//This is a Solution, it will be more complex
-			Method getter = null;
-			for(Method get : r.getClass().getDeclaredMethods()){
-				if(get.getName().toLowerCase().contains("get"+f.getName().toLowerCase())){
-					getter = get;
-					System.out.println("ON A TROUV2 LE GETTER:"+getter.getName());
-					break;
-				}
-			}
+			Method getter = Utils.getMethodFromReactionRule(r, "get", f);
 			try {
 				SubSolution<ChemicalElement> el = (SubSolution<ChemicalElement>) getter.invoke(r, null);
 				//We must genetrate the List<Object> of el
@@ -662,7 +652,7 @@ public final class Solution implements Collection<Object>{
 			}
 		}
 	}
-	
+
 	private Pair<Solution, List<Object>> generateListObject(List<IndexProviderElement> lipe, Solution s, SubSolution<ChemicalElement> el){
 		try{
 			if(lipe.size()==1 && lipe.get(0) instanceof IndexProviderSubSolution){
@@ -682,25 +672,20 @@ public final class Solution implements Collection<Object>{
 			return null;
 		}
 	}
-	
+
 	private IndexProviderSubSolution generateIndexProviderSubSolution(Field[] fieldTable, List<List<Integer>> incompatiblesIndexes, ReactionRule r){
 		List<IndexProviderElement> secondLevelList = new ArrayList<IndexProviderElement>();
-		System.err.println("test");
 		for(Field f : fieldTable){
-			System.err.println(f.getType().getName());
 			if(f.getType().getName().contains("SubSolution")){//This is a subsolution
 				List<List<IndexProviderElement>> ltemp = new ArrayList<List<IndexProviderElement>>();
-				System.out.println("Type parametré : "+f.getType().getName());
 				IndexProviderSubSolution subsol = null;
 				IndexProviderSubSolution lastSubSolution = null;
 				for(Object o : _mapElements.get(Solution.class.getName())){
 					Solution s = (Solution) o;
 					ParameterizedType p = (ParameterizedType)f.getGenericType();
-					System.out.println("Type critique : "+p.getRawType());
 					subsol = s.generateIndexProviderSubSolution(p, f, r, s);
 					if(subsol != null){
 						lastSubSolution = subsol;
-						System.out.println("Nombre d'éléments premier niveau: "+subsol.getNumberOfElements());
 
 						if(!subsol.getNumberOfElements().equals(BigInteger.ZERO)){
 							List<IndexProviderElement> l = new ArrayList<IndexProviderElement>();
@@ -709,9 +694,8 @@ public final class Solution implements Collection<Object>{
 						}
 					}
 				}
-				System.out.println("NOMBRE ELEMENT PREMIER NIVEAU : "+ltemp.size());
 				secondLevelList.add(new IndexProviderSubSolution(ltemp, lastSubSolution.get_dependantIndexes()));//We get the dependant indexes
-																										//from the computed IndexProviderSubSolution
+				//from the computed IndexProviderSubSolution
 			}else{//It's an element
 				secondLevelList.add(new IndexProviderSimpleElement(_mapElements.get(f.getType().getName()).size()));
 			}
@@ -720,63 +704,49 @@ public final class Solution implements Collection<Object>{
 		firstLevelList.add(secondLevelList);
 		return new IndexProviderSubSolution(firstLevelList, incompatiblesIndexes);
 	}
+
+	
+	private List<List<IndexProviderElement>>  generateListListForIndexProviderSubSolution(ParameterizedType p, Field f, ReactionRule r, Solution s){
+		List<List<IndexProviderElement>> ltemp = new ArrayList<List<IndexProviderElement>>();
+		for(Object o : s._mapElements.get(Solution.class.getName())){
+			Solution stemp = (Solution) o;
+			IndexProviderSubSolution subsoltemp = generateIndexProviderSubSolution(p, f, r, stemp);
+			if(subsoltemp != null)
+				ltemp.add(subsoltemp.get_listElements());
+		}
+		return ltemp;
+	}
+	
+	
 	
 	private IndexProviderSubSolution generateIndexProviderSubSolution(ParameterizedType p, Field f, ReactionRule r, Solution s){
 		try{
-			p = (ParameterizedType)p.getActualTypeArguments()[0];
-			
-			List<List<IndexProviderElement>> ltemp = new ArrayList<List<IndexProviderElement>>();
-			System.out.println("Type parametré : "+f.getType().getName());
-			IndexProviderSubSolution subsol = null;
-			for(Object o : s._mapElements.get(Solution.class.getName())){
-				Solution stemp = (Solution) o;
-				IndexProviderSubSolution subsoltemp = generateIndexProviderSubSolution(p, f, r, stemp);
-				if(subsoltemp != null)
-					ltemp.add(subsoltemp.get_listElements());
-			}
-			
-			List<List<IndexProviderElement>> l = new ArrayList<List<IndexProviderElement>>();
+			p = (ParameterizedType)p.getActualTypeArguments()[0];//This cast can fail
+			List<List<IndexProviderElement>> ltemp = generateListListForIndexProviderSubSolution(p, f, r, s);
 			List<List<Integer>> incompat = new ArrayList<List<Integer>>();
-			System.out.println("NOMBRE D'ELEMENT IMBRICATION : "+ltemp.size());
 			return new IndexProviderSubSolution(ltemp, incompat);
 		}catch(Exception e){
-			//We are on an ElementList
-			Method getter = null;
-			for(Method get : r.getClass().getDeclaredMethods()){
-				if(get.getName().toLowerCase().contains("get"+f.getName().toLowerCase())){
-					getter = get;
-					System.out.println("ON A TROUV2 LE GETTER:"+getter.getName());
-					break;
-				}
-			}
+			/*
+			 * This exception is catched when the cast fails. It means that we are on an ElementList.
+			 * We need to get the type list to try to create the IndexProvider
+			 */
+			Method getter = Utils.getMethodFromReactionRule(r, "get", f);
 			try {
 				SubSolution<ChemicalElement> el = (SubSolution<ChemicalElement>) getter.invoke(r, null);
-				System.out.println("On va imprimer la liste des arguments");
-				System.out.println("mais avant s : ");
-				
+
 				List<List<IndexProviderElement>> l = new ArrayList<List<IndexProviderElement>>();
 				List<IndexProviderElement> ll = new ArrayList<IndexProviderElement>();
 				List<String> table = new ArrayList<String>();
 				for(Class<?> c : el.getTypeList()){
 					table.add(c.getName());
-					System.out.println("we add \""+c.getName()+"\"");
-					System.out.println(s);
 					try{
-						System.out.println(c.getName()+
-								" : "+s.
-								_mapElements.
-								get(c.getName()).
-								size());
 						ll.add(new IndexProviderSimpleElement(s._mapElements.get(c.getName()).size()));
 					}catch(Exception ex){
-//						System.out.println(ex.getMessage());
-//						ex.printStackTrace();
 					}
 				}
 				l.add(ll);
 				//We need to generate the incompatible indexes list<list<integer>
 				Map<String, List<Integer>> mapIndexProvider = new HashMap<String, List<Integer>>();
-				System.out.println("On passe par la");
 				for(int i = 0; i < table.size(); i++){
 					if(mapIndexProvider.containsKey(table.get(i))){
 						List<Integer> lll = mapIndexProvider.get(table.get(i));
@@ -790,23 +760,19 @@ public final class Solution implements Collection<Object>{
 
 					//If the type isn't even an entry of the hash map, return false (didn't find any reactive)
 					if(s._mapElements.get(table.get(i))== null){
-						System.out.println("On va retourner null");
 						return null;
 					}
 				}
-				System.out.println("On passe par ici");
 				//We have to provide the IndexProvider a list of a list of int, so
 				//we need to transform the map of list in a list of list
 				List<List<Integer>> listProvider = new ArrayList<List<Integer>>();
 				for(String sname : mapIndexProvider.keySet()){
-//					System.err.println(s);
 					if(mapIndexProvider.get(sname).size()>1){
 						listProvider.add(mapIndexProvider.get(s));
 					}else{
-						//throw new IllegalArgumentException(s);
 					}
 				}
-				
+
 				return new IndexProviderSubSolution(l, listProvider);
 			} catch (Exception e1) {
 				e1.printStackTrace();
@@ -814,7 +780,8 @@ public final class Solution implements Collection<Object>{
 		}
 		return null;
 	}
-	
+
+
 	public boolean retainAll(Collection<?> arg0) {
 		boolean res = false;
 		String reactiveName;
@@ -877,7 +844,7 @@ public final class Solution implements Collection<Object>{
 	public synchronized void wakeAll() {
 		notifyAll();
 	}
-	
+
 	/**
 	 * This method set the log file of the chemical library.
 	 * For information, logs are set not to be bigger than 10,000 bytes long
@@ -890,7 +857,7 @@ public final class Solution implements Collection<Object>{
 	 */
 	public static void setLogFile(String fileName) throws IOException{
 		Utils.logger.addHandler(new FileHandler(fileName, 10000, 5, false));
-		
+
 	}
 
 }

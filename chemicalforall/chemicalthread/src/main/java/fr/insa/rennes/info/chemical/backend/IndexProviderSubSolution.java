@@ -40,7 +40,6 @@ public class IndexProviderSubSolution implements IndexProviderElement{
 	}
 	
 	public List<IndexProviderElement> get_listElements() {
-		System.out.println("CURRENT LIST : "+_currentList);
 		return _listElements.get(_currentList);
 	}
 

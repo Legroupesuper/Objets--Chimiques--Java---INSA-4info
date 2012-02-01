@@ -32,8 +32,7 @@ public class MaxIntRR implements ReactionRule{
 	}
 	
 	public Object[] computeResult() {
-		System.out.println("On tente fait");
-		System.out.println(sol1.getElementList().get(0));
+		System.err.println("on fait");
 		if(a>b)
 			return new Object[]{a};
 
@@ -41,7 +40,7 @@ public class MaxIntRR implements ReactionRule{
 	}
 
 	public boolean computeSelect() {
-//		System.out.println("On tente");
+		System.err.println("on test");
 		boolean ok;
 		ok = a!=1 && a != 2 && b !=1 && b !=2;
 		return ok;

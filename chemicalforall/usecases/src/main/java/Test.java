@@ -14,11 +14,6 @@ public class Test {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		//		try {
-		//			System.setOut(new PrintStream(new File("bimbamboum.txt")));
-		//		} catch (FileNotFoundException e1) {
-		//			e1.printStackTrace();
-		//		}
 		final Solution s = new Solution(Solution.Strategy.RANDOM);
 		Solution s2 = new Solution();
 		Solution s3 = new Solution();
@@ -59,8 +54,11 @@ public class Test {
 		s3.add("toto");
 		s3.add("toto");
 		s3.add("toto");
+//		s3.add(new ConcatRR());
+//		s3.add(new MaxIntRR());
 		s2.add(s3);
 		s.add(s2);
+		
 		s.add(s4);
 		//s.add(s2);
 		//s.add(s3);
@@ -113,10 +111,11 @@ public class Test {
 		//	s.add(new TrucRR());
 		System.out.println("AVANT : ");
 		System.out.println(s);
-
+		final long time = System.currentTimeMillis();
 
 		s.addInertEventListener(new InertEventListener() {
 			public void isInert(InertEvent e) {
+				System.out.println("Time : "+(System.currentTimeMillis()-time)+" millisecondes");
 				System.out.println("Resultat : ");
 				System.out.println(s);
 			}

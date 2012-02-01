@@ -56,7 +56,6 @@ class IndexProviderBis {
 			try{
 				_solution = _strategy.increment(_solution);
 			} catch (ChemicalException e) {
-//				System.err.println("Overflow reached : "+e.getMessage());
 				_overflowReached = true;
 				return null;
 			}
@@ -119,9 +118,7 @@ class IndexProviderBis {
 		}
 
 		int i=0;
-		System.out.println(solution.getNumberOfElements().intValue());
 		while(!index.is_overflowReached()){
-			System.out.println(index);
 			index.increment();
 		}
 	}
