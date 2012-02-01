@@ -60,6 +60,7 @@ class RandomIncrementStrategyBis implements IncrementStrategyBis {
 		java.util.Iterator<BigInteger> it = _shuffleList.iterator();
 		BigInteger position = BigInteger.valueOf(0);
 		BigInteger i = BigInteger.valueOf(0);
+		//System.out.println(_currentIndex+"/"+solution.getNumberOfElements());
 		if(_currentIndex.equals(_numberOfIndex))
 			throw new ChemicalException("Overflow reached first");
 		

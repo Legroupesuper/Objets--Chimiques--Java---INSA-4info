@@ -57,6 +57,7 @@ class IndexProviderBis {
 				_solution = _strategy.increment(_solution);
 			} catch (ChemicalException e) {
 				_overflowReached = true;
+				System.err.println(e.getMessage());
 				return null;
 			}
 		}while(!_solution.isValid());

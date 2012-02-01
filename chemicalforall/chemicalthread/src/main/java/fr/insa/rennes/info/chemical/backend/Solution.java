@@ -499,13 +499,18 @@ public final class Solution implements Collection<Object>{
 		//Build the type table : the types of the reaction rules reactives
 		Field[] fields = r.getClass().getDeclaredFields();
 		String table[] = new String[fields.length];
+		List<String> tableS = new ArrayList<String>();
 		List<IndexProviderElement> listElements = new ArrayList<IndexProviderElement>();
 		for(int i=0; i< fields.length; i++){
-			table[i] = fields[i].getType().getName();
-			if(fields[i].getType().getName().contains("SubSolution")){
-				table[i] = Solution.class.getName();
-			}else{
-				table[i] = fields[i].getType().getName();
+			if(fields[i].getAnnotation(Dontreact.class) == null){
+				if(fields[i].getType().getName().contains("SubSolution")){
+					table[i] = Solution.class.getName();
+					tableS.add(Solution.class.getName());
+				}else{
+					table[i] = fields[i].getType().getName();
+					tableS.add(fields[i].getType().getName());
+					System.out.println("==>Annotations : "+fields[i].getAnnotation(Dontreact.class));
+				}
 			}
 		}
 
@@ -516,19 +521,19 @@ public final class Solution implements Collection<Object>{
 			//Construct the map of the dependent indexes (two dependent indexes can not have the same value
 			//as they refer to the same element)
 			Map<String, List<Integer>> mapIndexProvider = new HashMap<String, List<Integer>>();
-			for(int i = 0; i < table.length; i++){
-				if(mapIndexProvider.containsKey(table[i])){
-					List<Integer> l = mapIndexProvider.get(table[i]);
+			for(int i = 0; i < tableS.size(); i++){
+				if(mapIndexProvider.containsKey(tableS.get(i))){
+					List<Integer> l = mapIndexProvider.get(tableS.get(i));
 					l.add(i);
-					mapIndexProvider.put(table[i], l);
+					mapIndexProvider.put(tableS.get(i), l);
 				}else{
 					List<Integer> l = new ArrayList<Integer>();
 					l.add(i);
-					mapIndexProvider.put(table[i], l);
+					mapIndexProvider.put(tableS.get(i), l);
 				}
 
 				//If the type isn't even an entry of the hash map, return false (didn't find any reactive)
-				if(_mapElements.get(table[i])== null)
+				if(_mapElements.get(tableS.get(i))== null)
 					return false;
 			}
 
@@ -557,34 +562,37 @@ public final class Solution implements Collection<Object>{
 			}
 
 			//Effectively research a valid set of reactives for the reaction rule
-			Pair<Solution, Object> reactives[] = new Pair[fields.length];
+			List<Pair<Solution, Object>> reactives = new ArrayList<Pair<Solution,Object>>();
 			int setterNumber;
 			Method setter;
 			boolean hasMatched = false;
 			//Loop until the reactives has been found OR all combination have been tested
 			while(!indexProvider.is_overflowReached()){
+				reactives.clear();
 				IndexProviderSubSolution solution = indexProvider.increment();
 				if(solution == null)
 					return false;
 				int i=0;
 				Pair<Solution, Object> obj = null;
 				for(Field f : fields){
-					//Find the setter for this field
-					setterNumber = _mapReactionRulesSetters.get(r.getClass().getName()+"."+f.getName());
-					setter = r.getClass().getDeclaredMethods()[setterNumber];
-
-					//and invoke the setter
-					try{
-						obj = instanciateField(f, this, solution.get_listElements().get(i), r);
-						if(obj == null)
+					if(f.getAnnotation(Dontreact.class) == null){
+						//Find the setter for this field
+						setterNumber = _mapReactionRulesSetters.get(r.getClass().getName()+"."+f.getName());
+						setter = r.getClass().getDeclaredMethods()[setterNumber];
+	
+						//and invoke the setter
+						try{
+							obj = instanciateField(f, this, solution.get_listElements().get(i), r);
+							if(obj == null)
+								return false;
+						}catch(Exception e){
 							return false;
-					}catch(Exception e){
-						return false;
+						}
+						setter.invoke(r, new Object[]{obj.get_second()});
+	
+						reactives.add(obj);
+						i++;
 					}
-					setter.invoke(r, new Object[]{obj.get_second()});
-
-					reactives[i] = obj;
-					i++;
 				}
 				//The right types have been found, now test the selection rule
 				if(r.computeSelect()){
@@ -603,6 +611,7 @@ public final class Solution implements Collection<Object>{
 									react.get_first()._mapElements.get(o.getClass().getName()).remove(o);
 								}
 							}else{
+								System.err.println("On supprime "+react.get_second());
 								react.get_first()._mapElements.get(react.get_second().getClass().getName()).remove(react.get_second());
 
 							}
@@ -662,6 +671,7 @@ public final class Solution implements Collection<Object>{
 			}else{
 				List<Object> l = new ArrayList<Object>();
 				int i=0;
+				l.add(s);
 				for(Class<?> c : el.getTypeList()){
 					l.add(s._mapElements.get(c.getName()).get(lipe.get(i).getValue()));
 					i++;
@@ -676,28 +686,30 @@ public final class Solution implements Collection<Object>{
 	private IndexProviderSubSolution generateIndexProviderSubSolution(Field[] fieldTable, List<List<Integer>> incompatiblesIndexes, ReactionRule r){
 		List<IndexProviderElement> secondLevelList = new ArrayList<IndexProviderElement>();
 		for(Field f : fieldTable){
-			if(f.getType().getName().contains("SubSolution")){//This is a subsolution
-				List<List<IndexProviderElement>> ltemp = new ArrayList<List<IndexProviderElement>>();
-				IndexProviderSubSolution subsol = null;
-				IndexProviderSubSolution lastSubSolution = null;
-				for(Object o : _mapElements.get(Solution.class.getName())){
-					Solution s = (Solution) o;
-					ParameterizedType p = (ParameterizedType)f.getGenericType();
-					subsol = s.generateIndexProviderSubSolution(p, f, r, s);
-					if(subsol != null){
-						lastSubSolution = subsol;
-
-						if(!subsol.getNumberOfElements().equals(BigInteger.ZERO)){
-							List<IndexProviderElement> l = new ArrayList<IndexProviderElement>();
-							l.add(subsol);
-							ltemp.add(l);//We only have 1 element in the subsolution first level list
+			if(f.getAnnotation(Dontreact.class)==null){
+				if(f.getType().getName().contains("SubSolution")){//This is a subsolution
+					List<List<IndexProviderElement>> ltemp = new ArrayList<List<IndexProviderElement>>();
+					IndexProviderSubSolution subsol = null;
+					IndexProviderSubSolution lastSubSolution = null;
+					for(Object o : _mapElements.get(Solution.class.getName())){
+						Solution s = (Solution) o;
+						ParameterizedType p = (ParameterizedType)f.getGenericType();
+						subsol = s.generateIndexProviderSubSolution(p, f, r, s);
+						if(subsol != null){
+							lastSubSolution = subsol;
+	
+							if(!subsol.getNumberOfElements().equals(BigInteger.ZERO)){
+								List<IndexProviderElement> l = new ArrayList<IndexProviderElement>();
+								l.add(subsol);
+								ltemp.add(l);//We only have 1 element in the subsolution first level list
+							}
 						}
 					}
+					secondLevelList.add(new IndexProviderSubSolution(ltemp, lastSubSolution.get_dependantIndexes()));//We get the dependant indexes
+					//from the computed IndexProviderSubSolution
+				}else{//It's an element
+					secondLevelList.add(new IndexProviderSimpleElement(_mapElements.get(f.getType().getName()).size()));
 				}
-				secondLevelList.add(new IndexProviderSubSolution(ltemp, lastSubSolution.get_dependantIndexes()));//We get the dependant indexes
-				//from the computed IndexProviderSubSolution
-			}else{//It's an element
-				secondLevelList.add(new IndexProviderSimpleElement(_mapElements.get(f.getType().getName()).size()));
 			}
 		}
 		List<List<IndexProviderElement>> firstLevelList = new ArrayList<List<IndexProviderElement>>();

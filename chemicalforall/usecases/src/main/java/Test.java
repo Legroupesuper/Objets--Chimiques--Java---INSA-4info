@@ -127,8 +127,8 @@ public class Test {
 			}
 		};
 		s.add(c);
-		s.add(new MaxIntRR());
-		s.add(new ConcatRR());
+		s.add(new MaxIntRR(4));
+		//s.add(new ConcatRR());
 		//s.add(new RandomNumberRR());
 		//	s.add(new TrucRR());
 		System.out.println("AVANT : ");

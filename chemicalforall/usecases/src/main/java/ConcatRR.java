@@ -6,11 +6,9 @@ public class ConcatRR implements ReactionRule{
 	private String s;
 	private String t;
 	public Object[] computeResult() {
-		System.err.println("ConcatRR fait");
 		return new String[]{s+t};
 	}
 	public boolean computeSelect() {
-		System.err.println("ConcatRR test");
 		return true;
 	}
 	public Multiplicity getMultiplicity() {
