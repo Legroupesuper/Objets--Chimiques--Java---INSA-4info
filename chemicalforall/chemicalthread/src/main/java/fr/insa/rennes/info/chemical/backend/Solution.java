@@ -706,6 +706,14 @@ public final class Solution implements Collection<Object>{
 	}
 
 	
+	/**
+	 * Generate a List<List<IndexProviderElement>> from different parameters
+	 * @param p A parametrized type which must be a SubSolution<ChemicalElement>
+	 * @param f The starting field of the ReactionRule
+	 * @param r The reaction rules which contains the SubSolution
+	 * @param s The solution where we have to look for p
+	 * @return A well generated List<List<IndexProviderElement>>
+	 */
 	private List<List<IndexProviderElement>>  generateListListForIndexProviderSubSolution(ParameterizedType p, Field f, ReactionRule r, Solution s){
 		List<List<IndexProviderElement>> ltemp = new ArrayList<List<IndexProviderElement>>();
 		for(Object o : s._mapElements.get(Solution.class.getName())){
@@ -718,20 +726,32 @@ public final class Solution implements Collection<Object>{
 	}
 	
 	
-	
+	/**
+	 * This function create a IndexProviderSubSolution from a set of parameters
+	 * @param p A parametrized type which must be a SubSolution<ChemicalElement>
+	 * @param f The starting field of the ReactionRule
+	 * @param r The reaction rules which contains the SubSolution
+	 * @param s The solution where we have to look for p
+	 * @return An IndexProviderSubSolution or null when it's not possible to generate it
+	 */
 	private IndexProviderSubSolution generateIndexProviderSubSolution(ParameterizedType p, Field f, ReactionRule r, Solution s){
 		try{
 			p = (ParameterizedType)p.getActualTypeArguments()[0];//This cast can fail
+			//Then we generate the List<List<...>>
 			List<List<IndexProviderElement>> ltemp = generateListListForIndexProviderSubSolution(p, f, r, s);
+			//At this point we have a Subsolution<Subsolution<...>> so there is no incompatible indexes
+			//to generate
 			List<List<Integer>> incompat = new ArrayList<List<Integer>>();
 			return new IndexProviderSubSolution(ltemp, incompat);
 		}catch(Exception e){
 			/*
 			 * This exception is catched when the cast fails. It means that we are on an ElementList.
-			 * We need to get the type list to try to create the IndexProvider
+			 * We need to get the type list to try to create the IndexProvider.
+			 * At this point, s is the Solution in which we are going to try to find our elements list.
 			 */
 			Method getter = Utils.getMethodFromReactionRule(r, "get", f);
 			try {
+				//The getter allows us to generate SubSolution element to acces the type list
 				SubSolution<ChemicalElement> el = (SubSolution<ChemicalElement>) getter.invoke(r, null);
 
 				List<List<IndexProviderElement>> l = new ArrayList<List<IndexProviderElement>>();

@@ -18,6 +18,9 @@ public class Test {
 		Solution s2 = new Solution();
 		Solution s3 = new Solution();
 		Solution s4 = new Solution();
+		Solution s5 = new Solution();
+		Solution s6 = new Solution();
+		
 		s4.add(12);
 		s4.add(12);
 		s4.add(12);
@@ -56,9 +59,28 @@ public class Test {
 		s3.add("toto");
 //		s3.add(new ConcatRR());
 //		s3.add(new MaxIntRR());
+		s5.add(56);
+		s5.add(56);
+		s5.add(56);
+		s5.add(56);
+		s5.add(56);
+		s5.add(56);
+		s5.add(56);
+		s5.add("test");
+		s5.add("test");
+		s5.add("test");
+		s5.add("test");
+		s5.add("test");
+		s5.add("test");
+		s5.add("test");
+		s5.add("test");
+		s5.add("test");
+		s5.add("test");
+		s6.add(s5);
+		
 		s2.add(s3);
 		s.add(s2);
-		
+		s.add(s6);
 		s.add(s4);
 		//s.add(s2);
 		//s.add(s3);
