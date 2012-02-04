@@ -165,6 +165,8 @@ public final class Solution implements Collection<Object>{
 						Solution.this.wakeAll();
 					}
 				});
+				if(_reactionInProgress)
+					sol.react();
 			}
 			
 			if(!className.equals(ChemicalElement.class.getName()) && addElement){
