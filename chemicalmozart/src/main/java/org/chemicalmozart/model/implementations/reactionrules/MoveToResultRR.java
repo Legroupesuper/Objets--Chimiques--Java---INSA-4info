@@ -1,4 +1,4 @@
-package org.chemicalmozart.model.implementations;
+package org.chemicalmozart.model.implementations.reactionrules;
 
 import fr.insa.rennes.info.chemical.backend.SubSolution;
 import fr.insa.rennes.info.chemical.user.ReactionRule;
@@ -6,14 +6,14 @@ import fr.insa.rennes.info.chemical.user.ReactionRule;
 
 
 /**
- * Description of the class GarbageRR.
+ * Description of the class MoveToResultRR.
  *
  *
  */
-public class GarbageRR implements ReactionRule{
+public class MoveToResultRR implements ReactionRule{
 
-	public SubSolution _subSolutionMeasure;
-	public SubSolution _subSolutionResult;
+	private SubSolution _sol1;
+	private SubSolution _sol2;
 	
 	public Object[] computeResult() {
 		return null;

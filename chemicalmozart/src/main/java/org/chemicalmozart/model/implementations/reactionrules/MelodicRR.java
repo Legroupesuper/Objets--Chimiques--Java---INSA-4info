@@ -1,4 +1,10 @@
-package org.chemicalmozart.model.implementations;
+package org.chemicalmozart.model.implementations.reactionrules;
+
+import org.chemicalmozart.model.implementations.Max;
+import org.chemicalmozart.model.implementations.MelodicNumber;
+import org.chemicalmozart.model.implementations.Note;
+import org.chemicalmozart.model.implementations.Pitch;
+import org.chemicalmozart.model.implementations.PrevNote;
 
 import fr.insa.rennes.info.chemical.user.ReactionRule;
 

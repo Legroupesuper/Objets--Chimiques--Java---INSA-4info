@@ -1,4 +1,6 @@
-package org.chemicalmozart.model.implementations;
+package org.chemicalmozart.model.implementations.reactionrules;
+
+import org.chemicalmozart.model.implementations.MeasureNumber;
 
 import fr.insa.rennes.info.chemical.backend.SubSolution;
 import fr.insa.rennes.info.chemical.user.ReactionRule;

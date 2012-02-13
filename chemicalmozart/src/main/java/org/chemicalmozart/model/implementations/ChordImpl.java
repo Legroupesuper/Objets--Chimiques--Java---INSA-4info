@@ -2,6 +2,8 @@ package org.chemicalmozart.model.implementations;
 
 import java.util.HashSet;
 
+import org.chemicalmozart.model.implementations.reactionrules.RythmicRR;
+
 
 
 /**

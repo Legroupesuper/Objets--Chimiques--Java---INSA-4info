@@ -1,23 +1,23 @@
-package org.chemicalmozart.model.implementations;
+package org.chemicalmozart.model.implementations.reactionrules;
 
-import org.chemicalmozart.model.interfaces.Degree;
+
+import org.chemicalmozart.model.implementations.Number;
 
 import fr.insa.rennes.info.chemical.backend.SubSolution;
 import fr.insa.rennes.info.chemical.user.ReactionRule;
 
 
 
+
 /**
- * Description of the class HarmonicRR.
+ * For the moment, this class is not used
  *
- * 
  *
  */
-public class HarmonicRR implements ReactionRule{
+public class CopyMeasureRR implements ReactionRule{
 
-	public Degree _degree1;
-	public Degree _degree2;
 	private SubSolution _sol;
+	public Number _measureNum;
 	
 	public Object[] computeResult() {
 		return null;
@@ -28,7 +28,6 @@ public class HarmonicRR implements ReactionRule{
 	public Multiplicity getMultiplicity() {
 		return null;
 	}
-
 
 
 }

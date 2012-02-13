@@ -1,4 +1,4 @@
-package org.chemicalmozart.model.implementations;
+package org.chemicalmozart.model.implementations.reactionrules;
 
 import fr.insa.rennes.info.chemical.user.ReactionRule;
 
