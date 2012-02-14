@@ -1,6 +1,6 @@
 package org.chemicalmozart.model.interfaces;
 
-import controler.Observable;
+import org.chemicalmozart.controler.Observable;
 
 
 

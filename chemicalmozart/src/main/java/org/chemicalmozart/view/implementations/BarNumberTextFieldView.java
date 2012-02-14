@@ -7,7 +7,7 @@ import javax.swing.JTextField;
  *
  *
  */
-public class MeasureNumberTextFieldView extends JTextField {
+public class BarNumberTextFieldView extends JTextField {
 	// The model has several inheritances
 
 

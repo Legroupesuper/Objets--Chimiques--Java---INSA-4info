@@ -1,88 +1,77 @@
 package org.chemicalmozart.view.interfaces;
 
-import javax.swing.JDialog;
 import javax.swing.JButton;
 import javax.swing.JTextField;
 
+import org.chemicalmozart.view.implementations.BarNumberTextFieldView;
+import org.chemicalmozart.view.implementations.CloseButtonView;
+import org.chemicalmozart.view.implementations.MainView;
+import org.chemicalmozart.view.implementations.PlayButtonView;
+import org.chemicalmozart.view.implementations.RunButtonView;
+import org.chemicalmozart.view.implementations.SaveButtonView;
+import org.chemicalmozart.view.implementations.ScaleTextFieldView;
+import org.chemicalmozart.view.implementations.SecondView;
+import org.chemicalmozart.view.implementations.SpeedTextFieldView;
+
 
 /**
- *  Description of the interface ViewFactory.
- *
- *
+ *  This interface is used to define the factory calls. 
  */
 public interface ViewFactory {
 
 
     /**
-     *  Description of the method buildMainDialog.
-     *
-     *
-     * @return null
+     *  This method is used to build the MainView windows
+     * @return a new MainWiew
      */
-    public JDialog buildMainDialog() ;
+    public MainView buildMainView() ;
 
     /**
-     *  Description of the method buildSecondDialog.
-     *
-     *
-     * @return null
+     * Description of the method buildSecondDialog.
+     * @return a new SecondView
      */
-    public JDialog buildSecondDialog() ;
+    public SecondView buildView() ;
 
     /**
-     *  Description of the method buildCloseButton.
-     *
-     *
-     * @return null
+     * This method creates the CloseButtonView
+     * @return a new CloseButtonView
      */
-    public JButton buildCloseButton() ;
+    public CloseButtonView buildCloseButton() ;
 
     /**
-     *  Description of the method buildRunButton.
-     *
-     *
-     * @return null
+     * This method creates the RunButtonView
+     * @return a new RunButtonView
      */
-    public JButton buildRunButton() ;
+    public RunButtonView buildRunButton() ;
 
     /**
-     *  Description of the method buildPlayButton.
-     *
-     *
-     * @return null
+     * This method creates the PlayButtonView
+     * @return a new PlayButtonView
      */
-    public JButton buildPlayButton() ;
+    public PlayButtonView buildPlayButton() ;
 
     /**
-     *  Description of the method buildSaveButton.
-     *
-     *
-     * @return null
+     * This method creates the SaveButtonView
+     * @return a new SaveButtonView
      */
-    public JButton buildSaveButton() ;
+    public SaveButtonView buildSaveButton() ;
 
     /**
-     *  Description of the method buildSpeedTextField.
-     *
-     *
-     * @return null
+     * This method creates the SpeedTextFieldView
+     * @return a new SpeedTextFieldView
      */
-    public JTextField buildSpeedTextField() ;
+    public SpeedTextFieldView buildSpeedTextField() ;
 
     /**
-     *  Description of the method buildMeasureNumberTextField.
-     *
-     *
-     * @return null
+     * This method creates the BarNumberTextFieldView
+     * @return a new BarNumberTextFieldView
      */
-    public JTextField buildMeasureNumberTextField() ;
+    public BarNumberTextFieldView buildMeasureBarTextField() ;
 
     /**
-     *  Description of the method buildScaleTextField.
-     *
-     *
-     * @return null
+     * This method creates the ScaleTextFieldView
+     * @return a new ScaleTextFieldView
      */
-    public JTextField buildScaleTextField() ;
+    public ScaleTextFieldView buildScaleTextField() ;
 
 }

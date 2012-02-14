@@ -1,4 +1,4 @@
-package controler;
+package org.chemicalmozart.controler;
 /**
  *  Description of the interface Observable.
  *

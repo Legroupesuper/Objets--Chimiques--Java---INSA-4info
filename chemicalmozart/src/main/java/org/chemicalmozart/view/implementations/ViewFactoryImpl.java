@@ -1,55 +1,47 @@
 package org.chemicalmozart.view.implementations;
 
-import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JTextField;
 
 import org.chemicalmozart.view.interfaces.ViewFactory;
 
+/**
+ * The ViewFactoryImpl is used to build all the views of the application.
+ * @author groupechimique
+ */
 public class ViewFactoryImpl implements ViewFactory{
 
-	public JDialog buildMainDialog() {
-		// TODO Auto-generated method stub
+	public MainView buildMainView() {
 		return null;
 	}
 
-	public JDialog buildSecondDialog() {
-		// TODO Auto-generated method stub
+	public SecondView buildView() {
 		return null;
 	}
 
-	public JButton buildCloseButton() {
-		// TODO Auto-generated method stub
+	public CloseButtonView buildCloseButton() {
 		return null;
 	}
 
-	public JButton buildRunButton() {
-		// TODO Auto-generated method stub
+	public RunButtonView buildRunButton() {
 		return null;
 	}
 
-	public JButton buildPlayButton() {
-		// TODO Auto-generated method stub
+	public PlayButtonView buildPlayButton() {
 		return null;
 	}
 
-	public JButton buildSaveButton() {
-		// TODO Auto-generated method stub
+	public SaveButtonView buildSaveButton() {
 		return null;
 	}
 
-	public JTextField buildSpeedTextField() {
-		// TODO Auto-generated method stub
+	public SpeedTextFieldView buildSpeedTextField() {
 		return null;
 	}
 
-	public JTextField buildMeasureNumberTextField() {
-		// TODO Auto-generated method stub
+	public BarNumberTextFieldView buildMeasureBarTextField() {
 		return null;
 	}
 
-	public JTextField buildScaleTextField() {
-		// TODO Auto-generated method stub
+	public ScaleTextFieldView buildScaleTextField() {
 		return null;
 	}
 

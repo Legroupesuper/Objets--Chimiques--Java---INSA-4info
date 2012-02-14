@@ -3,7 +3,8 @@ package org.chemicalmozart.model.interfaces;
 
 import java.util.HashSet;
 
-import controler.Observable;
+import org.chemicalmozart.controler.Observable;
+
 
 
 /**

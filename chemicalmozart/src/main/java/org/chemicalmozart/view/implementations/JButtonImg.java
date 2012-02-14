@@ -42,7 +42,6 @@ public class JButtonImg extends JButton{
 			}
 			
 			public void mousePressed(MouseEvent e) {
-				// TODO Auto-generated method stub
 				_img = _imgp;
 			}
 			
@@ -57,7 +56,6 @@ public class JButtonImg extends JButton{
 			}
 			
 			public void mouseClicked(MouseEvent e) {
-				// TODO Auto-generated method stub
 				
 			}
 		});

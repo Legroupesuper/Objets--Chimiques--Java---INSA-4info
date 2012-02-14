@@ -12,12 +12,11 @@ import fr.insa.rennes.info.chemical.user.ReactionRule;
 
 
 /**
- * Description of the class MelodicRR.
+ *
  *
  *
  */
 public class MelodicRR implements ReactionRule{
-
 	private Max _max;
 	private PrevNote _prevNote;
 	private Note _note;
