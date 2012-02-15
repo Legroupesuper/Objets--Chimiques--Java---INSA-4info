@@ -554,11 +554,11 @@ public final class Solution implements Collection<Object>{
 				return false;
 
 			//Instantiate the IndexProvider object
-			IndexProviderBis indexProvider = null;
+			IndexProvider indexProvider = null;
 
 
 			try {
-				indexProvider = new IndexProviderBis(sol, _strategy);
+				indexProvider = new IndexProvider(sol, _strategy);
 			} catch (ChemicalException e1) {
 				return false;
 			}

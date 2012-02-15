@@ -1,5 +1,7 @@
 package fr.insa.rennes.info.chemical.backend;
 
+import java.util.List;
+
 /**
  * Strategy design pattern
  * For the choice of the reactives in the solution
@@ -7,6 +9,5 @@ package fr.insa.rennes.info.chemical.backend;
  * @author Cédric Andreolli, Chloé Boulanger, Olivier Cléro, Antoine Guellier, Sébastien Guilloux, Arthur Templé
  */
 interface IncrementStrategy {
-
-	public int[] increment(int[] _index, int[] _maxIndex) throws ChemicalException;
+	public IndexProviderSubSolution increment(IndexProviderSubSolution list) throws ChemicalException;
 }
