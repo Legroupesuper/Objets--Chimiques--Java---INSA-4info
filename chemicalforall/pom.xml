@@ -15,7 +15,6 @@
   </properties>
   
   <modules>
-  	<module>chemorphing</module>
   	<module>chemicalthread</module>
   	<module>usecases</module>
 	<module>chemicalmozart</module>
