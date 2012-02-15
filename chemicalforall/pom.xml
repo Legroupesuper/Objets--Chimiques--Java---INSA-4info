@@ -7,6 +7,13 @@
   <packaging>pom</packaging>
   <name>ChemicalPOM</name>
   <description>Root for our Chemical Library set (lib + examples)</description>
+  
+  <properties>
+      <maven.compiler.source>1.5</maven.compiler.source>
+      <maven.compiler.target>1.5</maven.compiler.target>
+      <encoding>UTF-8</encoding>
+  </properties>
+  
   <modules>
   	<module>chemorphing</module>
   	<module>chemicalthread</module>
