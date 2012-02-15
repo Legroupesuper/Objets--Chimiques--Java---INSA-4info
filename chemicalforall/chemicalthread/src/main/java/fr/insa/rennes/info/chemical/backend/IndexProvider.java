@@ -203,6 +203,7 @@ class IndexProvider {
 	public boolean is_overflowReached() {
 		return _overflowReached;
 	}
+	
 
 	/**
 	 * 
@@ -215,5 +216,21 @@ class IndexProvider {
 			result+= (i+" ");
 		}
 		return result;
+	}
+	
+	
+	
+	
+	/*
+	 * En test
+	 */
+	
+	/**
+	 * Set the index provider to 0
+	 */
+	public void init(){
+		for(int i=0; i<_index.length; i++){
+			_index[i] = 0;
+		}
 	}
 }

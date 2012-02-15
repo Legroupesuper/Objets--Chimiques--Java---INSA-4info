@@ -6,6 +6,10 @@ import java.util.List;
 public final class SubSolution<T extends ChemicalElement> implements ChemicalElement {
 	private T _element;
 
+	public SubSolution(T e){
+		_element = e;
+	}
+	
 	public List<Object> getElementList(){
 		return _element.getElementList();
 	}

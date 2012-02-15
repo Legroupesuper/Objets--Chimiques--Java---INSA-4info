@@ -3,6 +3,7 @@ import java.util.List;
 import fr.insa.rennes.info.chemical.backend.ChemicalElement;
 import fr.insa.rennes.info.chemical.backend.InertEvent;
 import fr.insa.rennes.info.chemical.backend.Solution;
+import fr.insa.rennes.info.chemical.backend.Solution.Strategy;
 import fr.insa.rennes.info.chemical.user.InertEventListener;
 
 
@@ -13,12 +14,76 @@ public class Test {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		//		try {
-		//			System.setOut(new PrintStream(new File("bimbamboum.txt")));
-		//		} catch (FileNotFoundException e1) {
-		//			e1.printStackTrace();
-		//		}
 		final Solution s = new Solution(Solution.Strategy.RANDOM);
+		Solution s2 = new Solution();
+		Solution s3 = new Solution();
+		Solution s4 = new Solution();
+		Solution s5 = new Solution();
+		Solution s6 = new Solution();
+		
+		s4.add(12);
+		s4.add(12);
+		s4.add(12);
+		s4.add(12);
+		s4.add(12);
+		s4.add(12);
+		s3.add(5);
+		s3.add(5);
+		s3.add(6);
+		s3.add(6);
+		s3.add(6);
+		s3.add(6);
+		s3.add(6);
+		s3.add(6);
+		s3.add(6);
+		s3.add(6);
+		s3.add(6);
+		s3.add(6);
+		s3.add(6);
+		s3.add(6);
+//		s2.add(5);
+//		s2.add(5);
+//		s2.add(6);
+		s3.add("toto");
+		s3.add("toto");
+		s3.add("toto");
+		s3.add("toto");
+		s3.add("toto");
+		s3.add("toto");
+		s3.add("toto");
+		s3.add("toto");
+		s3.add("toto");
+		s3.add("toto");
+		s3.add("toto");
+		s3.add("toto");
+		s3.add("toto");
+//		s3.add(new ConcatRR());
+//		s3.add(new MaxIntRR());
+		s5.add(56);
+		s5.add(56);
+		s5.add(56);
+		s5.add(56);
+		s5.add(56);
+		s5.add(56);
+		s5.add(56);
+		s5.add("test");
+		s5.add("test");
+		s5.add("test");
+		s5.add("test");
+		s5.add("test");
+		s5.add("test");
+		s5.add("test");
+		s5.add("test");
+		s5.add("test");
+		s5.add("test");
+		s6.add(s5);
+		
+		s2.add(s3);
+		s.add(s2);
+		s.add(s6);
+		s.add(s4);
+		//s.add(s2);
+		//s.add(s3);
 		s.add(new Integer(5));
 		s.add(new Integer(15));
 		s.add(new Integer(35));
@@ -62,15 +127,17 @@ public class Test {
 			}
 		};
 		s.add(c);
-		s.add(new MaxIntRR());
+		s.add(new MaxIntRR(4));
+		//s.add(new ConcatRR());
 		//s.add(new RandomNumberRR());
 		//	s.add(new TrucRR());
 		System.out.println("AVANT : ");
 		System.out.println(s);
-
+		final long time = System.currentTimeMillis();
 
 		s.addInertEventListener(new InertEventListener() {
 			public void isInert(InertEvent e) {
+				System.out.println("Time : "+(System.currentTimeMillis()-time)+" millisecondes");
 				System.out.println("Resultat : ");
 				System.out.println(s);
 			}
