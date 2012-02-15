@@ -11,8 +11,6 @@
   	<module>chemorphing</module>
   	<module>chemicalthread</module>
   	<module>usecases</module>
-  	<module>bitheaven</module>
-    <module>ChemicalMozart</module>
-    <module>chemicalmozart</module>
+	<module>chemicalmozart</module>
   </modules>
 </project>
