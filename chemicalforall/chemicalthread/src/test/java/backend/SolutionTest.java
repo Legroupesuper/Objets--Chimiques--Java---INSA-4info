@@ -1,11 +1,11 @@
 package backend;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
 import junit.framework.TestCase;
-import fr.insa.rennes.info.chemical.backend.Dontreact;
 import fr.insa.rennes.info.chemical.backend.InertEvent;
 import fr.insa.rennes.info.chemical.backend.Solution;
 import fr.insa.rennes.info.chemical.backend.Solution.Strategy;
@@ -50,7 +50,9 @@ public class SolutionTest extends TestCase {
 	public void testConstructor() {
 		testSolution = new Solution(Strategy.ORDERED);
 		boolean verification = true;
+		verification &= testSolution instanceof Collection;
 		verification &= testSolution.isEmpty();
+		verification &= !testSolution.is_inert();
 		assertTrue(verification == true);
 	}
 
@@ -170,6 +172,7 @@ public class SolutionTest extends TestCase {
 	 * Test method for {@link Solution#clear()}.
 	 */
 	public void testClear() {
+		testSolution.add(12);
 		testSolution.clear();
 		
 		assertTrue(testSolution.isEmpty());
@@ -203,6 +206,140 @@ public class SolutionTest extends TestCase {
 			}
 		});
 		
+	}
+
+	/**
+	 * Test method for {@link Solution#fireInertEvent(InertEvent)}.
+	 */
+	public void testFireInertEvent() {
+		testSolution = new Solution();
+		Solution subSol = new Solution();
+		final InertEvent ie = new InertEvent(subSol);
+		testSolution.addInertEventListener(new InertEventListener() {
+			public void isInert(InertEvent e) {
+				assertTrue(e.equals(ie));
+			}
+		});
+		testSolution.add(subSol);
+		subSol.fireInertEvent(ie);
+	}
+
+	/**
+	 * Test method for {@link Solution#is_inert()}.
+	 */
+	public void testIsInert() {
+		testSolution.add(12);
+		testSolution.add("toto");
+		testSolution.add(16);
+		testSolution.add(new ReactionRule() {
+			
+			private int a;
+			private int b;
+			
+			public void setA(int aA){
+				this.a = aA;
+			}
+			
+			public void setB(int aB){
+				this.b = aB;
+			}
+			
+			public Multiplicity getMultiplicity() {
+				return Multiplicity.ONE_SHOT;
+			}
+			
+			public boolean computeSelect() {
+				return true;
+			}
+			
+			public Object[] computeResult() {
+				return new Object[]{a+b, a-b};
+			}
+		});
+		testSolution.addInertEventListener(new InertEventListener() {
+			public void isInert(InertEvent e) {
+				assertTrue(testSolution.is_inert());
+			}
+		});
+		testSolution.react();
+	}
+
+	/**
+	 * Test method for {@link Solution#isEmpty()}.
+	 */
+	public void testIsEmpty() {
+		testSolution.add(12);
+		testSolution.add("toto");
+		testSolution.add(16);
+		testSolution.clear();
+		assertTrue(testSolution.isEmpty());
+	}
+
+	/**
+	 * Test method for {@link Solution#iterator()}.
+	 */
+	public void testIterator() {
+		assertTrue(testSolution.iterator().getClass().equals(Collections.unmodifiableList(new LinkedList<Object>()).iterator().getClass()));
+	}
+
+	/**
+	 * Test method for {@link Solution#react()}.
+	 */
+	public void testReact() {
+		testSolution = new Solution(Strategy.RANDOM);
+		testSolution.add(12);
+		testSolution.add("toto");
+		testSolution.add(16);
+		testSolution.add(new ReactionRule() {
+			
+			private int a;
+			private int b;
+			
+			public void setA(int aA){
+				this.a = aA;
+			}
+			
+			public void setB(int aB){
+				this.b = aB;
+			}
+			
+			public Multiplicity getMultiplicity() {
+				return Multiplicity.ONE_SHOT;
+			}
+			
+			public boolean computeSelect() {
+				return true;
+			}
+			
+			public Object[] computeResult() {
+				return new Object[]{a+b, a-b};
+			}
+		});
+		testSolution.addInertEventListener(new InertEventListener() {
+			public void isInert(InertEvent e) {
+				assertTrue(testSolution.size() == 1);
+			}
+		});
+		testSolution.react();
+	}
+
+	/**
+	 * Test method for {@link Solution#remove(Object)}.
+	 */
+	public void testRemove() {
+		testSolution.clear();
+		testSolution.add(12);
+		assertTrue(testSolution.remove(12));
+	}
+
+	/**
+	 * Test method for {@link Solution#removeAll(Collection)}.
+	 */
+	public void testRemoveAll() {
+		LinkedList<Integer> ll = new LinkedList<Integer>();
+		ll.add(0, Integer.valueOf(12));
+		testSolution.add(12);
+		assertTrue(testSolution.removeAll(ll));
 	}
 	
 	
