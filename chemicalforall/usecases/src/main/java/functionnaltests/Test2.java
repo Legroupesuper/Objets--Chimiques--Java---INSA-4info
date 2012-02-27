@@ -1,0 +1,39 @@
+package functionnaltests;
+import fr.insa.rennes.info.chemical.backend.InertEvent;
+import fr.insa.rennes.info.chemical.backend.Solution;
+import fr.insa.rennes.info.chemical.user.InertEventListener;
+
+
+public class Test2 {
+	public static void main(String[] args) {
+		final Solution mainSol = new Solution();
+		Solution innerSol= new Solution();
+		Solution innerSol2= new Solution();
+		//innerSol2.add(innerSol);
+		innerSol.add(1);
+		innerSol.add(2);
+		innerSol.add(3);
+		innerSol.add(4);
+		innerSol2.add(15);
+		innerSol2.add(25);
+		innerSol2.add(35);
+		innerSol2.add(45);
+		mainSol.add(new MaxIntRR());
+		mainSol.add(new DeleteRR());
+		//mainSol.add(new DeleteRR());
+		mainSol.add(innerSol);
+		mainSol.add(innerSol2);
+		mainSol.add(new DeleteRuleMax());
+		mainSol.addInertEventListener(new InertEventListener() {
+			
+			public void isInert(InertEvent e) {
+				System.out.println("Après : ");
+				System.out.println(mainSol);
+			}
+		});
+		
+		System.out.println("Avant : ");
+		System.out.println(mainSol);
+		mainSol.react();
+	}
+}

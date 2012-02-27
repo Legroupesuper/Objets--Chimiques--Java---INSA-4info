@@ -61,7 +61,8 @@ class ChemicalThread extends Thread {
 					//...we compute reaction result
 					Object obj[] = _reactionRule.computeResult();
 					//add the results to the solution
-					_solutionContainer.addAll(Arrays.asList(obj));
+					if(obj != null)
+						_solutionContainer.addAll(Arrays.asList(obj));
 					//If the reaction rule is ONE SHOT, we must delete it !
 					if(_reactionRule.getMultiplicity()==Multiplicity.ONE_SHOT){
 						_solutionContainer.deleteReaction(_reactionRule);

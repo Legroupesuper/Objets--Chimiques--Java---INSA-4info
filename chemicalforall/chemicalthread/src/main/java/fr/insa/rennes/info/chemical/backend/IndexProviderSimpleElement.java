@@ -36,7 +36,7 @@ public class IndexProviderSimpleElement  implements IndexProviderElement{
 	}
 	
 	public String toString(){
-		return "|"+_currentValue;
+		return "|"+_currentValue+"/"+_numberElementsInSolution;
 	}
 
 	public void setValue(int v) {

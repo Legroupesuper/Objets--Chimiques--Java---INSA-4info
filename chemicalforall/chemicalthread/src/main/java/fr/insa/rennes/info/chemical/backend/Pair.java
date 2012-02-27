@@ -19,7 +19,7 @@ public class Pair<A, B> {
 		super();
 		this._first = _first;
 		this._second = _second;
-	}
-	
-	
+	}	
 }
+
+

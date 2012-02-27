@@ -4,6 +4,8 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.omg.CORBA._IDLTypeStub;
+
 /**
  * This class represents a specific case of IndexProviderElement.
  * It is used to represent a subsolution.
@@ -102,9 +104,9 @@ public class IndexProviderSubSolution implements IndexProviderElement{
 	}
 	
 	public String toString(){
-		String result = "("+_currentList;
+		String result = "("+_currentList+"/"+_listElements.size();
 		//result += _currentValue;
-		result += ") ";
+		result += ") {"+_dependantIndexes+"}";
 		for(IndexProviderElement e : _listElements.get(_currentList))
 			result+= (e.toString()+" ");
 		return result;
@@ -123,7 +125,13 @@ public class IndexProviderSubSolution implements IndexProviderElement{
 		for(List<IndexProviderElement> l : _listElements){
 			BigInteger resulttmp = BigInteger.valueOf(1);
 			for(IndexProviderElement e : l){
-				resulttmp = resulttmp.multiply(e.getNumberOfElements());
+				try{
+				resulttmp = resulttmp.
+						multiply(
+						e.getNumberOfElements());
+				}catch(Exception ex){
+					return BigInteger.valueOf(0);
+				}
 			}
 			result = result.add(resulttmp);
 		}
@@ -135,6 +143,7 @@ public class IndexProviderSubSolution implements IndexProviderElement{
 		boolean isCurrentIndexValid;
 		
 		for(IndexProviderElement e : _listElements.get(_currentList)){
+			System.out.println("IndexProvidertemp : "+e);
 			if(!e.isValid())
 				return false;
 		}
@@ -142,20 +151,32 @@ public class IndexProviderSubSolution implements IndexProviderElement{
 		for(List<Integer> l : _dependantIndexes){
 			valuesIndexProvider = new ArrayList<Integer>();
 			isCurrentIndexValid = true;
-
-			for(int n : l){
-
-				if(valuesIndexProvider.contains(_listElements.get(_currentList).get(n).getValue())){
-					isCurrentIndexValid = false;
-					break;
-				}else{
-					valuesIndexProvider.add(_listElements.get(_currentList).get(n).getValue());
+			//TODO : Vérifier le l != null
+			System.out.println("IndexProviderSubSol says : dependant indexes are "+_dependantIndexes);
+			if(l!=null){
+				for(int n : l){
+					System.out.println(n+" dans "+l);
+					System.out.println(this);
+					if(valuesIndexProvider.contains(_listElements.
+							get(_currentList).
+							get(n).getValue())){
+						isCurrentIndexValid = false;
+						break;
+					}else{
+						valuesIndexProvider.add(_listElements.get(_currentList).get(n).getValue());
+					}
+				}
+				if(!isCurrentIndexValid){
+					System.out.println("INDEX INVALIDE");
+					return false;
 				}
 			}
-			if(!isCurrentIndexValid){
-				return false;
-			}
 		}
+		System.out.println("INDEX VALIDE COOL");
 		return true;
+	}
+
+	public void merge(IndexProviderSubSolution subsol) {
+		_listElements.addAll(subsol._listElements);
 	}
 }

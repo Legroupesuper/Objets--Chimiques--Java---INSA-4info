@@ -86,6 +86,7 @@ public final class Solution implements Collection<Object>{
 	 */
 	public Solution() {
 		this(Strategy.RANDOM);
+		_inert = false;
 	}
 
 	/**
@@ -99,6 +100,7 @@ public final class Solution implements Collection<Object>{
 		_mapElements = Collections.synchronizedMap(_mapElements);
 		_mapReactionRulesSetters = new HashMap<String, Integer>();
 		_strategy = s;
+		_inert = false;
 	}
 
 	/**
@@ -394,7 +396,7 @@ public final class Solution implements Collection<Object>{
 	//and check that it is present in the hash map
 	public boolean remove(Object reactive) {
 		String reactiveType = getReactiveType(reactive);
-
+		boolean res = false;
 		//For the same reason as in add, synchronized have to be declared on the hash map
 		synchronized(_mapElements) {
 			//If the hash map doesn't even know the type, return false
@@ -402,7 +404,11 @@ public final class Solution implements Collection<Object>{
 				return false;
 			}
 
-			return _mapElements.get(reactiveType).remove(reactive);
+			res = _mapElements.get(reactiveType).remove(reactive);
+			if(_mapElements.get(reactiveType).size() == 0){
+				_mapElements.remove(reactiveType);
+			}
+			return res;
 		}
 	}
 
@@ -562,7 +568,7 @@ public final class Solution implements Collection<Object>{
 			} catch (ChemicalException e1) {
 				return false;
 			}
-
+			System.out.println(indexProvider);
 			//Effectively research a valid set of reactives for the reaction rule
 			List<Pair<Solution, Object>> reactives = new ArrayList<Pair<Solution,Object>>();
 			int setterNumber;
@@ -609,15 +615,31 @@ public final class Solution implements Collection<Object>{
 						try{
 							if(react.get_second().getClass().getName().equals(SubSolution.class.getName())){
 								SubSolution<ChemicalElement> s = (SubSolution<ChemicalElement>) react.get_second();
+								System.err.println("Solution temp = "+react.get_first()._mapElements);
 								for(Object o : s.getElementList()){
-									react.get_first()._mapElements.get(o.getClass().getName()).remove(o);
+									try{
+										System.err.println("elem - "+o);
+										react.get_first()._mapElements.get(o.getClass().getName()).remove(o);
+									}catch(Exception ex){
+										
+									}
 								}
 							}else{
+								if(react.get_second().getClass().getName().equals(Solution.class.getName())){
+									Solution stemp = (Solution) react.get_second();
+									System.err.println("!!!!!!!!!!!!!!!!!\n!!!!!!!!!!!!!!!!!!!!\n!!!!!!!!!!!!!!!!!\nOn a matché un solution "+stemp);
+									if(!stemp._inert){
+										System.err.println("?????????????\n????????????????????\n?????????????????\nOn a matché un solution");
+										return false;
+									}
+								}
 								System.err.println("On supprime "+react.get_second());
 								react.get_first()._mapElements.get(react.get_second().getClass().getName()).remove(react.get_second());
 
 							}
 						}catch(Exception e){
+							System.err.println(e.getMessage());
+							e.printStackTrace();
 						}
 					}
 					hasMatched = true;
@@ -687,27 +709,37 @@ public final class Solution implements Collection<Object>{
 
 	private IndexProviderSubSolution generateIndexProviderSubSolution(Field[] fieldTable, List<List<Integer>> incompatiblesIndexes, ReactionRule r){
 		List<IndexProviderElement> secondLevelList = new ArrayList<IndexProviderElement>();
+		System.out.println("INCOMPATIBLES 1st LEVEL : "+incompatiblesIndexes);
 		for(Field f : fieldTable){
 			if(f.getAnnotation(Dontreact.class)==null){
 				if(f.getType().getName().contains("SubSolution")){//This is a subsolution
 					List<List<IndexProviderElement>> ltemp = new ArrayList<List<IndexProviderElement>>();
 					IndexProviderSubSolution subsol = null;
 					IndexProviderSubSolution lastSubSolution = null;
+					System.out.println(_mapElements);
+					
 					for(Object o : _mapElements.get(Solution.class.getName())){
 						Solution s = (Solution) o;
 						ParameterizedType p = (ParameterizedType)f.getGenericType();
 						subsol = s.generateIndexProviderSubSolution(p, f, r, s);
 						if(subsol != null){
-							lastSubSolution = subsol;
+							if(lastSubSolution == null)
+								lastSubSolution = subsol;
+							else
+								lastSubSolution.merge(subsol);
 	
-							if(!subsol.getNumberOfElements().equals(BigInteger.ZERO)){
+							/*if(!subsol.getNumberOfElements().equals(BigInteger.ZERO)){
 								List<IndexProviderElement> l = new ArrayList<IndexProviderElement>();
 								l.add(subsol);
 								ltemp.add(l);//We only have 1 element in the subsolution first level list
+								
 							}
+							*/
 						}
 					}
-					secondLevelList.add(new IndexProviderSubSolution(ltemp, lastSubSolution.get_dependantIndexes()));//We get the dependant indexes
+					secondLevelList.add(lastSubSolution);
+					//if(lastSubSolution != null)
+					//	secondLevelList.add(new IndexProviderSubSolution(ltemp, new ArrayList<List<Integer>>()));//We get the dependant indexes
 					//from the computed IndexProviderSubSolution
 				}else{//It's an element
 					secondLevelList.add(new IndexProviderSimpleElement(_mapElements.get(f.getType().getName()).size()));
@@ -736,6 +768,7 @@ public final class Solution implements Collection<Object>{
 			if(subsoltemp != null)
 				ltemp.add(subsoltemp.get_listElements());
 		}
+		System.err.println("LA TAILLE DE LA LISTE AU PREMIER NIVEAU EST DE :"+ltemp.size());
 		return ltemp;
 	}
 	
@@ -756,6 +789,7 @@ public final class Solution implements Collection<Object>{
 			//At this point we have a Subsolution<Subsolution<...>> so there is no incompatible indexes
 			//to generate
 			List<List<Integer>> incompat = new ArrayList<List<Integer>>();
+			System.out.println("Ca n'a pas fail");
 			return new IndexProviderSubSolution(ltemp, incompat);
 		}catch(Exception e){
 			/*
@@ -763,6 +797,7 @@ public final class Solution implements Collection<Object>{
 			 * We need to get the type list to try to create the IndexProvider.
 			 * At this point, s is the Solution in which we are going to try to find our elements list.
 			 */
+			System.out.println("Ca a fail");
 			Method getter = Utils.getMethodFromReactionRule(r, "get", f);
 			try {
 				//The getter allows us to generate SubSolution element to acces the type list
@@ -774,6 +809,7 @@ public final class Solution implements Collection<Object>{
 				for(Class<?> c : el.getTypeList()){
 					table.add(c.getName());
 					try{
+						System.err.println("on ajoute un "+c.getName());
 						ll.add(new IndexProviderSimpleElement(s._mapElements.get(c.getName()).size()));
 					}catch(Exception ex){
 					}
@@ -801,12 +837,14 @@ public final class Solution implements Collection<Object>{
 				//we need to transform the map of list in a list of list
 				List<List<Integer>> listProvider = new ArrayList<List<Integer>>();
 				for(String sname : mapIndexProvider.keySet()){
+					System.err.println("Pour le type "+sname+" on a "+mapIndexProvider.get(sname).size()+" éléments dans la map");
 					if(mapIndexProvider.get(sname).size()>1){
-						listProvider.add(mapIndexProvider.get(s));
+						System.err.println("On ajoute donc bien les éléments");
+						listProvider.add(mapIndexProvider.get(sname));
 					}else{
 					}
 				}
-
+				System.err.println("On a enfin notre liste incompatible : "+listProvider);
 				return new IndexProviderSubSolution(l, listProvider);
 			} catch (Exception e1) {
 				e1.printStackTrace();
