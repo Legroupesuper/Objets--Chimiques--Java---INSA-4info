@@ -61,7 +61,7 @@ public class CreateMeasureRR implements ReactionRule{
 	}
 
 	/**
-	 * Create a new solution which represents a new measure.
+	 * Create a new solution which represents a new measure. This solution must contains a BarInCreation object to be easily identifiable.
 	 * The computeResult must create a new Solution which contains a copy of _number and a copy of
 	 * _quater. Then it must increase _number by one.<br />
 	 * It must also return a MoveToReasultRR

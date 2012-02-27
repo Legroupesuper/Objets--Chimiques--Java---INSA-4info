@@ -8,7 +8,7 @@ import fr.insa.rennes.info.chemical.user.ReactionRule;
 
 /**
  * This rule compute the degree of harmony that will be played after the current degree.
- * It creates a temporary solution in which all the possible degrees are present.
+ * It creates a temporary solution in which all the possible degrees are present. The created solution is identified with a Temporary object.
  * It also creates a PickOneRR and a RythmeHRR. 
  * <br />
  * Here is how it works :<br />

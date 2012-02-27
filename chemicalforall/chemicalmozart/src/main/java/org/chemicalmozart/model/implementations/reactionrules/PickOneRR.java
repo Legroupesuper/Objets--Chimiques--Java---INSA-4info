@@ -65,7 +65,8 @@ public class PickOneRR implements ReactionRule{
 	}
 	
 	/**
-	 * It just returns the chosen DegreeImpl into the parent solution 
+	 * It just returns the chosen DegreeImpl into the parent solution and a garbage reaction rule to remove the temporary solution.
+	 * The rule used to clean is named GarbageRR
 	 */
 	public Object[] computeResult() {
 		/*
@@ -75,13 +76,11 @@ public class PickOneRR implements ReactionRule{
 	}
 	
 	/**
-	 * The computeSelect guarantees that the subsolution _subsol and sol are the same solutions
-	 * This will allow to delete the solution once the reaction is done.
-	 * This is a trick
+	 * The computeSelect always succeed
 	 * @TODO check that the trick is working
 	 */
 	public boolean computeSelect() {
-		return _subSol.getElementList().get(0) == _sol;
+		return true;
 	}
 	
 	/**

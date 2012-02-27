@@ -1,5 +1,6 @@
 package org.chemicalmozart.model.implementations.reactionrules;
 
+import fr.insa.rennes.info.chemical.backend.ElementList;
 import fr.insa.rennes.info.chemical.backend.SubSolution;
 import fr.insa.rennes.info.chemical.user.ReactionRule;
 
@@ -11,11 +12,10 @@ import fr.insa.rennes.info.chemical.user.ReactionRule;
  * <ul>
  * 	<li>SubSolution
  * 		<ul>
- * 			<li>Temp : To identify the bar in creation</li>
+ * 			<li>BarInCreation : To identify the bar in creation</li>
  * 			<li>QuaterLeft : To test in the computeSelect if the bar is full.</li>
  * 		</ul>
  *  </li>
- *  <li>Solution : It represents the bar in creation. We need a second reference to delete the bar from the parent solution</li>
  *  <li>Subsolution
  *  	<ul>
  *  		<li>Result : The object that identify the result solution.</li>
@@ -25,8 +25,8 @@ import fr.insa.rennes.info.chemical.user.ReactionRule;
  */
 public class MoveToResultRR implements ReactionRule{
 
-	private SubSolution _sol1;
-	private SubSolution _sol2;
+	private SubSolution<ElementList> _subSolInCreation;
+	private SubSolution<ElementList> _subSolResult;
 	
 	public Object[] computeResult() {
 		return null;
