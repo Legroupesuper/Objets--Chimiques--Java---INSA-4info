@@ -28,6 +28,18 @@ public class MoveToResultRR implements ReactionRule{
 	private SubSolution<ElementList> _subSolInCreation;
 	private SubSolution<ElementList> _subSolResult;
 	
+	public SubSolution<ElementList> get_subSolInCreation() {
+		return _subSolInCreation;
+	}
+	public void set_subSolInCreation(SubSolution<ElementList> _subSolInCreation) {
+		this._subSolInCreation = _subSolInCreation;
+	}
+	public SubSolution<ElementList> get_subSolResult() {
+		return _subSolResult;
+	}
+	public void set_subSolResult(SubSolution<ElementList> _subSolResult) {
+		this._subSolResult = _subSolResult;
+	}
 	public Object[] computeResult() {
 		return null;
 	}

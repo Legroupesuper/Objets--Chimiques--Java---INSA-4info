@@ -253,7 +253,8 @@ public final class Solution implements Collection<Object>{
 	}
 
 	public void fireInertEvent(InertEvent e){
-		_listener.isInert(e);
+		if(_listener != null)
+			_listener.isInert(e);
 	}
 
 	protected synchronized boolean get_reactionInProgress() {
@@ -847,7 +848,7 @@ public final class Solution implements Collection<Object>{
 				System.err.println("On a enfin notre liste incompatible : "+listProvider);
 				return new IndexProviderSubSolution(l, listProvider);
 			} catch (Exception e1) {
-				e1.printStackTrace();
+				//e1.printStackTrace();
 			}
 		}
 		return null;

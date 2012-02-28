@@ -4,18 +4,15 @@ package org.chemicalmozart.model.implementations;
 
 
 /**
- * Description of the class ChordNumber.
+ * Description of the class QuaterPerMeasure.
  *
  *
  */
-public class ChordNumber extends Number {
+public class QuaterPerBar extends Number {
 
-	public ChordNumber(int _value) {
+	public QuaterPerBar(int _value) {
 		super(_value);
 		// TODO Auto-generated constructor stub
 	}
-
-
-
 
 }

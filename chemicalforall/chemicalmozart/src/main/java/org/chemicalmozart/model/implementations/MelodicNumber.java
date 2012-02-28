@@ -9,4 +9,10 @@ package org.chemicalmozart.model.implementations;
  *
  */
 public class MelodicNumber extends Number {
+
+	public MelodicNumber(int _value) {
+		super(_value);
+		// TODO Auto-generated constructor stub
+	}
+	
 }

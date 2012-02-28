@@ -25,7 +25,9 @@ public class AppTest
      */
     public static Test suite()
     {
-        return new TestSuite( AppTest.class );
+    	TestSuite testSuite = new TestSuite();
+    	testSuite.addTest(new TestSuite(CreateBarRRTest.class));
+    	return testSuite;
     }
 
     /**

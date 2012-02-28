@@ -19,4 +19,11 @@
   	<module>usecases</module>
 	<module>chemicalmozart</module>
   </modules>
+  <dependencies>
+  	<dependency>
+  		<groupId>org.slf4j</groupId>
+  		<artifactId>slf4j-nop</artifactId>
+  		<version>1.6.4</version>
+  	</dependency>
+  </dependencies>
 </project>

@@ -7,4 +7,9 @@ package org.chemicalmozart.model.implementations;
  */
 public class Max extends Number {
 
+	public Max(int _value) {
+		super(_value);
+		// TODO Auto-generated constructor stub
+	}
+
 }

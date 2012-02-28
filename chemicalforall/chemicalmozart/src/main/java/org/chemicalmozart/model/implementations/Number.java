@@ -13,6 +13,11 @@ public class Number {
 	private int _value;
 
 
+	public Number(int _value) {
+		super();
+		this._value = _value;
+	}
+
 	/**
 	 * Description of the method getValue.
 	 *

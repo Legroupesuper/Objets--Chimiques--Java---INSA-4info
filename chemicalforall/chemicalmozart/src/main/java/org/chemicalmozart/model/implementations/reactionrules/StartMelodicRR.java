@@ -1,6 +1,6 @@
 package org.chemicalmozart.model.implementations.reactionrules;
 
-import org.chemicalmozart.model.implementations.MeasureNumber;
+import org.chemicalmozart.model.implementations.BarNumber;
 
 import fr.insa.rennes.info.chemical.backend.SubSolution;
 import fr.insa.rennes.info.chemical.user.ReactionRule;
@@ -14,18 +14,18 @@ import fr.insa.rennes.info.chemical.user.ReactionRule;
  */
 public class StartMelodicRR implements ReactionRule{
 
-	private MeasureNumber _measureNumber;
+	private BarNumber _measureNumber;
 	private SubSolution _sol;
 	/**
 	 * @return the measureNumber
 	 */
-	public MeasureNumber getMeasureNumber() {
+	public BarNumber getMeasureNumber() {
 		return _measureNumber;
 	}
 	/**
 	 * @param measureNumber the measureNumber to set
 	 */
-	public void setMeasureNumber(MeasureNumber measureNumber) {
+	public void setMeasureNumber(BarNumber measureNumber) {
 		this._measureNumber = measureNumber;
 	}
 	/**
