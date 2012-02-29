@@ -6,7 +6,7 @@ import java.util.List;
 import org.chemicalmozart.model.implementations.DegreeImpl;
 import org.chemicalmozart.model.implementations.solutionindentification.Temporary;
 
-import fr.insa.rennes.info.chemical.backend.ElementList;
+import fr.insa.rennes.info.chemical.backend.SubSolutionElements;
 import fr.insa.rennes.info.chemical.backend.Solution;
 import fr.insa.rennes.info.chemical.backend.SubSolution;
 import fr.insa.rennes.info.chemical.user.ReactionRule;
@@ -20,20 +20,20 @@ import fr.insa.rennes.info.chemical.user.ReactionRule;
  */
 public class PickOneRR implements ReactionRule{
 
-	private SubSolution<ElementList> _subSol;
+	private SubSolution<SubSolutionElements> _subSol;
 	private Solution _sol;
 	
 	/**
 	 * @return the _subSol
 	 */
-	public SubSolution<ElementList> get_subSol() {
+	public SubSolution<SubSolutionElements> get_subSol() {
 		return _subSol;
 	}
 
 	/**
 	 * @param _subSol the _subSol to set
 	 */
-	public void set_subSol(SubSolution<ElementList> _subSol) {
+	public void set_subSol(SubSolution<SubSolutionElements> _subSol) {
 		this._subSol = _subSol;
 	}
 
@@ -56,7 +56,7 @@ public class PickOneRR implements ReactionRule{
 	 * the subsolution _subSol.
 	 */
 	public PickOneRR(){
-		_subSol = new SubSolution<ElementList>(new ElementList());
+		_subSol = new SubSolution<SubSolutionElements>(new SubSolutionElements());
 		List<Class<? extends Object>> l = new ArrayList<Class<? extends Object>>();
 		l.add(Temporary.class);
 		l.add(DegreeImpl.class);

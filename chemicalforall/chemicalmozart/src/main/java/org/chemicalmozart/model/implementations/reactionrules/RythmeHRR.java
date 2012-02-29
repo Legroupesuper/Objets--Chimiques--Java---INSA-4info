@@ -7,7 +7,7 @@ import org.chemicalmozart.model.implementations.DegreeImpl;
 import org.chemicalmozart.model.implementations.QuaterLeft;
 import org.chemicalmozart.model.implementations.solutionindentification.Temporary;
 
-import fr.insa.rennes.info.chemical.backend.ElementList;
+import fr.insa.rennes.info.chemical.backend.SubSolutionElements;
 import fr.insa.rennes.info.chemical.backend.SubSolution;
 import fr.insa.rennes.info.chemical.user.ReactionRule;
 
@@ -43,7 +43,7 @@ public class RythmeHRR implements ReactionRule{
 	 */
 	public RythmeHRR() {
 		super();
-		_sol = new SubSolution<ElementList>(new ElementList());
+		_sol = new SubSolution<SubSolutionElements>(new SubSolutionElements());
 		List<Class<? extends Object>> l = new ArrayList<Class<? extends Object>>();
 		l.add(Integer.class);
 		l.add(DegreeImpl.class);

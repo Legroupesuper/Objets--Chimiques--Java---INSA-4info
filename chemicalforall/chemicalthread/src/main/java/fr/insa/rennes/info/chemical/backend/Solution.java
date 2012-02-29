@@ -173,7 +173,7 @@ public final class Solution implements Collection<Object>{
 					sol.react();
 			}
 			
-			if(!className.equals(ChemicalElement.class.getName()) && addElement){
+			if(!className.equals(SubSolutionReactivesAccessor.class.getName()) && addElement){
 				boolean result;
 				//When you add an element in the solution, the solution is no more inert
 				_inert = false;
@@ -285,8 +285,8 @@ public final class Solution implements Collection<Object>{
 
 		if(interfaceS.contains(" "+ReactionRule.class.getName()+" ")) {
 			return ReactionRule.class.getName();
-		}else if(interfaceS.contains(" "+ChemicalElement.class.getName()+" ")){
-			return ChemicalElement.class.getName();
+		}else if(interfaceS.contains(" "+SubSolutionReactivesAccessor.class.getName()+" ")){
+			return SubSolutionReactivesAccessor.class.getName();
 		}else {
 			return reactive.getClass().getName();
 		}
@@ -457,7 +457,7 @@ public final class Solution implements Collection<Object>{
 							break;
 						}
 					}
-					ChemicalElement result = (ChemicalElement) getter.invoke(r, new Object[0]);
+					SubSolutionReactivesAccessor result = (SubSolutionReactivesAccessor) getter.invoke(r, new Object[0]);
 					List<List<IndexProviderElement>> finalList = new ArrayList<List<IndexProviderElement>>();
 					List<IndexProviderElement> tempList = new ArrayList<IndexProviderElement>();
 					for(Class<? extends Object> o : result.getTypeList()){
@@ -617,9 +617,9 @@ public final class Solution implements Collection<Object>{
 						}
 						try{
 							if(react.get_second().getClass().getName().equals(SubSolution.class.getName())){
-								SubSolution<ChemicalElement> s = (SubSolution<ChemicalElement>) react.get_second();
+								SubSolution<SubSolutionReactivesAccessor> s = (SubSolution<SubSolutionReactivesAccessor>) react.get_second();
 								System.err.println("Solution temp = "+react.get_first()._mapElements);
-								for(Object o : s.getElementList()){
+								for(Object o : s.getElements()){
 									try{
 										System.err.println("elem - "+o);
 										react.get_first()._mapElements.get(o.getClass().getName()).remove(o);
@@ -674,14 +674,14 @@ public final class Solution implements Collection<Object>{
 		}else{//This is a Solution, it will be more complex
 			Method getter = Utils.getMethodFromReactionRule(r, "get", f);
 			try {
-				SubSolution<ChemicalElement> el = (SubSolution<ChemicalElement>) getter.invoke(r, null);
+				SubSolution<SubSolutionReactivesAccessor> el = (SubSolution<SubSolutionReactivesAccessor>) getter.invoke(r, null);
 				//We must genetrate the List<Object> of el
 				//First we must get the good subsolution
 				Solution nextS = (Solution)s._mapElements.get(Solution.class.getName()).get(ipe.getValue());
 				//Then we get le List<Object>
 				Pair<Solution, List<Object>> lo = generateListObject(((IndexProviderSubSolution)ipe).get_listElements(), nextS, el);
 				//finally, we use the setter
-				el.setElementList(lo.get_second());
+				el.setElements(lo.get_second());
 				return new Pair<Solution, Object>(lo.get_first(), el);
 			}catch(Exception e){
 				return null;
@@ -689,7 +689,7 @@ public final class Solution implements Collection<Object>{
 		}
 	}
 
-	private Pair<Solution, List<Object>> generateListObject(List<IndexProviderElement> lipe, Solution s, SubSolution<ChemicalElement> el){
+	private Pair<Solution, List<Object>> generateListObject(List<IndexProviderElement> lipe, Solution s, SubSolution<SubSolutionReactivesAccessor> el){
 		try{
 			if(lipe.size()==1 && lipe.get(0) instanceof IndexProviderSubSolution){
 				IndexProviderSubSolution ipss = (IndexProviderSubSolution) lipe.get(0);
@@ -804,7 +804,7 @@ public final class Solution implements Collection<Object>{
 			Method getter = Utils.getMethodFromReactionRule(r, "get", f);
 			try {
 				//The getter allows us to generate SubSolution element to acces the type list
-				SubSolution<ChemicalElement> el = (SubSolution<ChemicalElement>) getter.invoke(r, null);
+				SubSolution<SubSolutionReactivesAccessor> el = (SubSolution<SubSolutionReactivesAccessor>) getter.invoke(r, null);
 
 				List<List<IndexProviderElement>> l = new ArrayList<List<IndexProviderElement>>();
 				List<IndexProviderElement> ll = new ArrayList<IndexProviderElement>();

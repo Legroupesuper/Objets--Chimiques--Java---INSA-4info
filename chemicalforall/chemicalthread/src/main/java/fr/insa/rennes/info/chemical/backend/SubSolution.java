@@ -4,23 +4,23 @@ import java.util.List;
 
 
 
-public final class SubSolution<T extends ChemicalElement> implements ChemicalElement {
+public final class SubSolution<T extends SubSolutionReactivesAccessor> implements SubSolutionReactivesAccessor {
 	private T _element;
 
 	public SubSolution(T e){
 		_element = e;
 	}
 	
-	public List<Object> getElementList(){
-		return _element.getElementList();
+	public List<Object> getElements(){
+		return _element.getElements();
 	}
 
 	public List<Class<? extends Object>> getTypeList() {
 		return _element.getTypeList();
 	}
 
-	public void setElementList(List<Object> l) {
-		_element.setElementList(l);
+	public void setElements(List<Object> l) {
+		_element.setElements(l);
 	}
 
 	public void setTypeList(List<Class<? extends Object>> l) {

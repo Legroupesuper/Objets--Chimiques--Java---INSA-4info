@@ -1,6 +1,6 @@
 package org.chemicalmozart.model.implementations.reactionrules;
 
-import fr.insa.rennes.info.chemical.backend.ElementList;
+import fr.insa.rennes.info.chemical.backend.SubSolutionElements;
 import fr.insa.rennes.info.chemical.backend.SubSolution;
 import fr.insa.rennes.info.chemical.user.ReactionRule;
 
@@ -25,19 +25,19 @@ import fr.insa.rennes.info.chemical.user.ReactionRule;
  */
 public class MoveToResultRR implements ReactionRule{
 
-	private SubSolution<ElementList> _subSolInCreation;
-	private SubSolution<ElementList> _subSolResult;
+	private SubSolution<SubSolutionElements> _subSolInCreation;
+	private SubSolution<SubSolutionElements> _subSolResult;
 	
-	public SubSolution<ElementList> get_subSolInCreation() {
+	public SubSolution<SubSolutionElements> get_subSolInCreation() {
 		return _subSolInCreation;
 	}
-	public void set_subSolInCreation(SubSolution<ElementList> _subSolInCreation) {
+	public void set_subSolInCreation(SubSolution<SubSolutionElements> _subSolInCreation) {
 		this._subSolInCreation = _subSolInCreation;
 	}
-	public SubSolution<ElementList> get_subSolResult() {
+	public SubSolution<SubSolutionElements> get_subSolResult() {
 		return _subSolResult;
 	}
-	public void set_subSolResult(SubSolution<ElementList> _subSolResult) {
+	public void set_subSolResult(SubSolution<SubSolutionElements> _subSolResult) {
 		this._subSolResult = _subSolResult;
 	}
 	public Object[] computeResult() {

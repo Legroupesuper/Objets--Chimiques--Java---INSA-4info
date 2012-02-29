@@ -1,10 +1,4 @@
 package functionnaltests;
-import java.util.ArrayList;
-import java.util.List;
-
-import fr.insa.rennes.info.chemical.backend.ChemicalElement;
-import fr.insa.rennes.info.chemical.backend.ElementList;
-import fr.insa.rennes.info.chemical.backend.SubSolution;
 import fr.insa.rennes.info.chemical.user.Dontreact;
 import fr.insa.rennes.info.chemical.user.ReactionRule;
 
