@@ -15,4 +15,8 @@ public class QuaterPerBar extends Number {
 		// TODO Auto-generated constructor stub
 	}
 
+	public QuaterPerBar(QuaterPerBar quater) {
+		super(quater);
+	}
+
 }

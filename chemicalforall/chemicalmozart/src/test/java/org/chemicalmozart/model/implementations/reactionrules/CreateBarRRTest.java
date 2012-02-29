@@ -8,32 +8,35 @@ import org.chemicalmozart.model.implementations.QuaterPerBar;
 import org.chemicalmozart.model.implementations.reactionrules.CreateBarRR;
 import org.chemicalmozart.model.implementations.reactionrules.MoveToResultRR;
 import org.chemicalmozart.model.implementations.solutionindentification.BarInCreation;
+import org.junit.Test;
 
 import fr.insa.rennes.info.chemical.backend.Solution;
 import junit.framework.TestCase;
 
 public class CreateBarRRTest extends TestCase {
-
-	public void testComputeResult() {
-		boolean rrMissing = true;
-		boolean solPresent = false;
-		boolean moveToResultPresent = false;
-		boolean isBarNumberPresent = false;
-		boolean isBarNumberValid = false;
-		boolean isBarNumber2Valid = false;
-		boolean isBarNumber2Present = false;
-		boolean isQuaterLeft2Present = false;
-		
-		
-		Solution sol = new Solution();
+	private boolean _rrMissing = true;
+	private boolean _solPresent = false;
+	private boolean _moveToResultPresent = false;
+	private boolean _isBarNumberPresent = false;
+	private boolean _isBarNumberValid = false;
+	private boolean _isBarNumber2Valid = false;
+	private boolean _isBarNumber2Present = false;
+	private boolean _isQuaterLeft2Present = false;
+	private boolean _isIntegerPresent = false;
+	private Solution _sol;
+	private QuaterPerBar _quaterPerBar;
+	private String _debugValue= "";
+	public CreateBarRRTest() {
+		super();	
+		 _sol = new Solution();
 		BarNumber measureNumber = new BarNumber(1);
-		QuaterPerBar quaterPerBar = new QuaterPerBar(4);
-		sol.add(measureNumber);
-		sol.add(quaterPerBar);
-		sol.add(new CreateBarRR());
-		sol.react();
-		while(!sol.is_inert());
-		Iterator<Object> it = sol.iterator();
+		 _quaterPerBar = new QuaterPerBar(4);
+		_sol.add(measureNumber);
+		_sol.add(_quaterPerBar);
+		_sol.add(new CreateBarRR());
+		_sol.react();
+		while(!_sol.is_inert());
+		Iterator<Object> it = _sol.iterator();
 		while(it.hasNext()){
 			Object o = it.next();
 			if(o instanceof Solution){//Test if the bar in creation is in the contained solution
@@ -41,39 +44,83 @@ public class CreateBarRRTest extends TestCase {
 				while(it2.hasNext()){
 					Object o2 = it2.next();
 					if(o2 instanceof BarInCreation){
-						solPresent = true;
+						_solPresent = true;
 						break;
 					}
 				}
-				if(solPresent){
+				if(_solPresent){
 					for(Object o2 : ((Solution)o)){
 						if(o2 instanceof QuaterLeft){
-							isQuaterLeft2Present = true;
+							_isQuaterLeft2Present = true;
 						}else if(o2 instanceof BarNumber){
-							isBarNumber2Present = true;
-							isBarNumber2Valid = ((BarNumber) o2).getValue()==1;
+							_isBarNumber2Present = true;
+							_isBarNumber2Valid = ((BarNumber) o2).getValue()==1;
+						}else if(o2 instanceof Integer){
+							_isIntegerPresent = true;
 						}
 					}
 				}
 			}else if(o instanceof CreateBarRR){//There must not be any CreateMeasureRR
-				rrMissing = false;
+				_rrMissing = false;
 			}else if(o instanceof MoveToResultRR){
-				moveToResultPresent = true;
+				_moveToResultPresent = true;
 			}else if(o instanceof BarNumber){
-				isBarNumberPresent = true;
+				_isBarNumberPresent = true;
 				if(((BarNumber) o).getValue() == 2)
-					isBarNumberValid = true;
+					_isBarNumberValid = true;
+				else
+					_debugValue = ""+((BarNumber) o).getValue();
 			}
 		}
-		assertTrue("Tests if CreateBarRR has been deleted", rrMissing);
-		assertTrue("Tests if the new bar has been found", solPresent);
-		assertTrue("Tests if the MoveToResultRR is present", moveToResultPresent);
-		assertTrue("Tests if the quaterPerBar is still present in the main solution", sol.contains(quaterPerBar));
-		assertTrue("Tests if the BarNumber is present in the main solution", isBarNumberPresent);
-		assertTrue("Tests if the BarNumber is valid in the main solution", isBarNumberValid);
-		assertTrue("QuaterLeft is not present in the returned solution", isQuaterLeft2Present);
-		assertTrue("BarNumber is not present in the returned solution", isBarNumber2Present);
-		assertTrue("Tests if the BarNumber is valid in the main solution", isBarNumber2Valid);
+	}
+	
+	@Test
+	public void testIntegerPresent() {
+		assertTrue("The integer which represent the number of ChordImplement is not in the returned solution", _isIntegerPresent);
 	}
 
+	@Test
+	public void testRRMissing(){
+		assertTrue("Tests if CreateBarRR has been deleted", _rrMissing);
+	}
+	
+	@Test
+	public void testNewBarPresent(){
+		assertTrue("Tests if the new bar has been found", _solPresent);
+	}
+	
+	@Test
+	public void testMoveToResultPresent(){
+		assertTrue("Tests if the MoveToResultRR is present", _moveToResultPresent);
+	}
+	
+	@Test
+	public void testQuaterPerBar(){
+		assertTrue("Tests if the quaterPerBar is still present in the main solution", _sol.contains(_quaterPerBar));
+	}
+	
+	@Test
+	public void testBarNumberPresent(){
+		assertTrue("Tests if the BarNumber is present in the main solution", _isBarNumberPresent);
+	}
+	
+	@Test
+	public void testBarNumerValid(){
+		assertTrue("Tests if the BarNumber is valid in the main solution : "+_debugValue, _isBarNumberValid);
+	}
+	
+	@Test
+	public void testQuaterLeftPresent(){
+		assertTrue("QuaterLeft2 is not present in the returned solution", _isQuaterLeft2Present);
+	}
+	
+	@Test
+	public void testBarNumber2Present(){
+		assertTrue("BarNumber2 is not present in the returned solution", _isBarNumber2Present);
+	}
+	
+	@Test
+	public void testBarNumber2Valid(){
+		assertTrue("Tests if the BarNumber2 is valid in the main solution", _isBarNumber2Valid);
+	}
 }

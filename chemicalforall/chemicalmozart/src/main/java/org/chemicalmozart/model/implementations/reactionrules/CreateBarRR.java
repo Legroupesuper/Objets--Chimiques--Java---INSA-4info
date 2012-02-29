@@ -1,8 +1,11 @@
 package org.chemicalmozart.model.implementations.reactionrules;
 
 import org.chemicalmozart.model.implementations.BarNumber;
+import org.chemicalmozart.model.implementations.QuaterLeft;
 import org.chemicalmozart.model.implementations.QuaterPerBar;
+import org.chemicalmozart.model.implementations.solutionindentification.BarInCreation;
 
+import fr.insa.rennes.info.chemical.backend.Solution;
 import fr.insa.rennes.info.chemical.user.Dontuse;
 import fr.insa.rennes.info.chemical.user.ReactionRule;
 
@@ -62,15 +65,18 @@ public class CreateBarRR implements ReactionRule{
 	/**
 	 * Create a new solution which represents a new bar. This solution must contains a BarInCreation object to be easily identifiable.
 	 * The computeResult must create a new Solution which contains a copy of _number and a copy of
-	 * _quater. Then it must increase _number by one.<br />
+	 * _quater. Then it must increase _number by one. It must also contains an integer initialised to 0 which represents the current number of
+	 * ChordImpl in the bar<br />
 	 * It must also return a MoveToReasultRR
-	 * @return a table which contains the new solution, the initial _quater, and _number increased by one.
+	 * @return a table which contains the new solution described before, the initial _quater, and a new BarNumber with the value
+	 * of _number increased by one.
 	 * It also returns a MoveToResultRR
 	 */
 	public Object[] computeResult() {
 		/*
 		 * must be completed
 		 */
+
 		return null;
 	}
 

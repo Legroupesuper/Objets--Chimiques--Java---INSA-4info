@@ -17,6 +17,11 @@ public class Number {
 		super();
 		this._value = _value;
 	}
+	
+	public Number(Number n){
+		super();
+		_value = n._value;
+	}
 
 	/**
 	 * Description of the method getValue.
