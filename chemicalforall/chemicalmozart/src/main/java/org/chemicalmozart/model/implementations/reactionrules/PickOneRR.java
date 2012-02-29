@@ -6,7 +6,6 @@ import java.util.List;
 import org.chemicalmozart.model.implementations.DegreeImpl;
 import org.chemicalmozart.model.implementations.solutionindentification.Temporary;
 
-import fr.insa.rennes.info.chemical.backend.ChemicalElement;
 import fr.insa.rennes.info.chemical.backend.ElementList;
 import fr.insa.rennes.info.chemical.backend.Solution;
 import fr.insa.rennes.info.chemical.backend.SubSolution;
