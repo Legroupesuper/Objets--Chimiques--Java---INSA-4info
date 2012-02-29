@@ -32,9 +32,9 @@ public class UtilsTest extends TestCase {
 	}
 
 	/**
-	 * Test method for {@link Utils#get_reactionRule()}.
+	 * Test method for {@link Utils#fooTest()}.
 	 */
-	/*public void testGet_reactionRule() {
-		assertTrue(testReactionRule == testChemicalThread.get_reactionRule());
-	}*/
+	public void testFooTest() {
+		assertTrue(true);
+	}
 }

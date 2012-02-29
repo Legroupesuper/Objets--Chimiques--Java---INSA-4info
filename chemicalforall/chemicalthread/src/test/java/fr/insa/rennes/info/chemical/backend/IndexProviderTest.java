@@ -34,9 +34,9 @@ public class IndexProviderTest extends TestCase {
 	}
 
 	/**
-	 * Test method for {@link IndexProvider#get_reactionRule()}.
+	 * Test method for {@link IndexProvider#fooTest()}.
 	 */
-	/*public void testGet_reactionRule() {
-		assertTrue(testReactionRule == testChemicalThread.get_reactionRule());
-	}*/
+	public void testFooTest() {
+		assertTrue(true);
+	}
 }

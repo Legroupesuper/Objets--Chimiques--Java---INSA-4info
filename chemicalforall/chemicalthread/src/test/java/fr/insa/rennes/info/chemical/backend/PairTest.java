@@ -34,9 +34,9 @@ public class PairTest extends TestCase {
 	}
 
 	/**
-	 * Test method for {@link Pair#get_reactionRule()}.
+	 * Test method for {@link Pair#fooTest()}.
 	 */
-	/*public void testGet_reactionRule() {
-		assertTrue(testReactionRule == testChemicalThread.get_reactionRule());
-	}*/
+	public void testFooTest() {
+		assertTrue(true);
+	}
 }

@@ -34,9 +34,9 @@ public class SubSolutionTest extends TestCase {
 	}
 
 	/**
-	 * Test method for {@link SubSolution#get_reactionRule()}.
+	 * Test method for {@link SubSolution#fooTest()}.
 	 */
-	/*public void testGet_reactionRule() {
-		assertTrue(testReactionRule == testChemicalThread.get_reactionRule());
-	}*/
+	public void testFooTest() {
+		assertTrue(true);
+	}
 }
