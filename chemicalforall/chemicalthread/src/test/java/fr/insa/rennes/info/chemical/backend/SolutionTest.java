@@ -25,7 +25,6 @@ public class SolutionTest extends TestCase {
 	 */
 	public SolutionTest(String name) {
 		super(name);
-		this.testSolution = new Solution();
 	}
 
 	/* (non-Javadoc)
@@ -33,6 +32,7 @@ public class SolutionTest extends TestCase {
 	 */
 	protected void setUp() throws Exception {
 		super.setUp();
+		this.testSolution = new Solution();
 	}
 
 	/* (non-Javadoc)
@@ -153,7 +153,6 @@ public class SolutionTest extends TestCase {
 	 * Test method for {@link Solution#addInertEventListener(InertEventListener)}.
 	 */
 	public void testAddInertEventListener() {
-		testSolution = new Solution();
 		
 		testSolution.addInertEventListener(new InertEventListener() {
 			
@@ -181,7 +180,6 @@ public class SolutionTest extends TestCase {
 	 * Test method for {@link Solution#deleteReaction(ReactionRule)}.
 	 */
 	public void testDeleteReaction() {
-		testSolution = new Solution();
 		ReactionRule rr = new ReactionRule() {
 			
 			public Multiplicity getMultiplicity() {
@@ -210,7 +208,6 @@ public class SolutionTest extends TestCase {
 	 * Test method for {@link Solution#fireInertEvent(InertEvent)}.
 	 */
 	public void testFireInertEvent() {
-		testSolution = new Solution();
 		Solution subSol = new Solution();
 		final InertEvent ie = new InertEvent(subSol);
 		testSolution.addInertEventListener(new InertEventListener() {
@@ -284,7 +281,6 @@ public class SolutionTest extends TestCase {
 	 * Test method for {@link Solution#react()}.
 	 */
 	public void testReact() {
-		testSolution = new Solution(Strategy.RANDOM);
 		testSolution.add(12);
 		testSolution.add("toto");
 		testSolution.add(16);
@@ -338,6 +334,84 @@ public class SolutionTest extends TestCase {
 		ll.add(0, Integer.valueOf(12));
 		testSolution.add(12);
 		assertTrue(testSolution.removeAll(ll));
+	}
+
+	/**
+	 * Test method for {@link Solution#requestForParameters(ReactionRule)}.
+	 */
+	/*
+	public void testRequestForParameters() {
+		testSolution.clear();
+		testSolution.add(12);
+		testSolution.add(16);
+		ReactionRule rr = new ReactionRule() {
+			
+			private int a;
+			private int b;
+			
+			public void setA(int aA){
+				this.a = aA;
+			}
+			public void setB(int aB){
+				this.b = aB;
+			}
+			
+			public Multiplicity getMultiplicity() {
+				return Multiplicity.ONE_SHOT;
+			}
+			
+			public boolean computeSelect() {
+				return true;
+			}
+			
+			public Object[] computeResult() {
+				return null;
+			}
+		};
+		testSolution.add(rr);
+		try {
+			assertTrue(testSolution.requestForParameters(rr));
+		} catch (IllegalArgumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SecurityException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InvocationTargetException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NoSuchMethodException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	*/
+
+	/**
+	 * Test method for {@link Solution#retainAll(Collection)}.
+	 */
+	public void testRetainAll() {
+		LinkedList<Object> ll = new LinkedList<Object>();
+		testSolution.add(12);
+		ll.add(12);
+		testSolution.add(15);
+		ll.add(15);
+		String foo1 = "Chilean wine amateur";
+		String foo2 = "French connoisseur";
+		String foo0 = "one hundred";
+		testSolution.add(foo0);
+		ll.add(foo0);
+		testSolution.add(foo1);
+		ll.add(foo2);
+		
+		assertTrue(testSolution.retainAll(ll));
+		
+		assertFalse(testSolution.contains(foo1));
+		assertFalse(testSolution.contains(foo2));
+		assertTrue(testSolution.contains(foo0));
 	}
 	
 	
