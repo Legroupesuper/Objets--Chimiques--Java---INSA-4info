@@ -1,11 +1,7 @@
 package fr.insa.rennes.info.chemical.backend;
 
 import junit.framework.TestCase;
-import fr.insa.rennes.info.chemical.backend.ChemicalThread;
-import fr.insa.rennes.info.chemical.backend.Solution;
-import fr.insa.rennes.info.chemical.user.InertEventListener;
 import fr.insa.rennes.info.chemical.user.ReactionRule;
-import fr.insa.rennes.info.chemical.user.ReactionRule.Multiplicity;
 
 /**
  * @author ArthurTemple

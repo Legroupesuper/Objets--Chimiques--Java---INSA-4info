@@ -1,4 +1,4 @@
-package backend;
+package fr.insa.rennes.info.chemical.backend;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -6,12 +6,10 @@ import java.util.LinkedList;
 import java.util.List;
 
 import junit.framework.TestCase;
-import fr.insa.rennes.info.chemical.backend.Solution;
 import fr.insa.rennes.info.chemical.backend.Solution.Strategy;
 import fr.insa.rennes.info.chemical.user.InertEvent;
 import fr.insa.rennes.info.chemical.user.InertEventListener;
 import fr.insa.rennes.info.chemical.user.ReactionRule;
-import fr.insa.rennes.info.chemical.user.ReactionRule.Multiplicity;
 
 /**
  * @author ArthurTemple
