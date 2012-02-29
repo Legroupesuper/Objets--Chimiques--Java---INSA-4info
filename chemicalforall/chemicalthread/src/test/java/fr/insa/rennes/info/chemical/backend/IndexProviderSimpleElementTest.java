@@ -1,7 +1,8 @@
 package fr.insa.rennes.info.chemical.backend;
 
+import java.math.BigInteger;
+
 import junit.framework.TestCase;
-import fr.insa.rennes.info.chemical.user.ReactionRule;
 
 /**
  * @author ArthurTemple
@@ -11,12 +12,14 @@ import fr.insa.rennes.info.chemical.user.ReactionRule;
 public class IndexProviderSimpleElementTest extends TestCase {
 
 	private IndexProviderSimpleElement testIndexProviderSimpleElement;
+	private final int numberElementsInSolution;
 	
 	/**
 	 * @param name
 	 */
 	public IndexProviderSimpleElementTest(String name) {
 		super(name);
+		numberElementsInSolution = 12;
 	}
 
 	/* (non-Javadoc)
@@ -24,6 +27,7 @@ public class IndexProviderSimpleElementTest extends TestCase {
 	 */
 	protected void setUp() throws Exception {
 		super.setUp();
+		this.testIndexProviderSimpleElement = new IndexProviderSimpleElement(numberElementsInSolution);
 	}
 
 	/* (non-Javadoc)
@@ -34,9 +38,75 @@ public class IndexProviderSimpleElementTest extends TestCase {
 	}
 
 	/**
-	 * Test method for {@link IndexProviderSimpleElement#get_reactionRule()}.
+	 * Test method for {@link IndexProviderSimpleElement#get_nummberElementsInSolution()}.
 	 */
-	/*public void testGet_reactionRule() {
-		assertTrue(testReactionRule == testChemicalThread.get_reactionRule());
-	}*/
+	public void testGet_nummberElementsInSolution() {
+		assertTrue(numberElementsInSolution == testIndexProviderSimpleElement.get_nummberElementsInSolution());
+	}
+
+	/**
+	 * Test method for {@link IndexProviderSimpleElement#set_nummberElementsInSolution(int)}.
+	 */
+	public void testSet_nummberElementsInSolution() {
+		int testInt = 42;
+		testIndexProviderSimpleElement.set_nummberElementsInSolution(testInt);
+		assertTrue(testInt == testIndexProviderSimpleElement.get_nummberElementsInSolution());
+	}
+
+	/**
+	 * Test method for {@link IndexProviderSimpleElement#getValue()}.
+	 */
+	public void testGetValue() {
+		assertNotNull(testIndexProviderSimpleElement.getValue());
+	}
+
+	/**
+	 * Test method for {@link IndexProviderSimpleElement#init()}.
+	 */
+	public void testInit() {
+		testIndexProviderSimpleElement.init();
+		assertTrue(0 == testIndexProviderSimpleElement.getValue());
+	}
+
+	/**
+	 * Test method for {@link IndexProviderSimpleElement#increment()}.
+	 */
+	public void testIncrement() {
+		boolean overflow = false;
+		for(int i = 0 ; i < numberElementsInSolution ; i++){
+			overflow |= testIndexProviderSimpleElement.increment();
+		}
+		assertTrue(overflow);
+		overflow = false;
+		testIndexProviderSimpleElement.init();
+		int localMax = numberElementsInSolution-1;	//Maximum acceptable value without overflow
+		for(int i = 0 ; i < localMax ; i++){
+			overflow |= testIndexProviderSimpleElement.increment();
+		}
+		assertFalse(overflow);
+		assertTrue(localMax == testIndexProviderSimpleElement.getValue());
+	}
+
+	/**
+	 * Test method for {@link IndexProviderSimpleElement#setValue(int)}.
+	 */
+	public void testSetValue() {
+		int test = 42;
+		testIndexProviderSimpleElement.setValue(test);
+		assertTrue(test == testIndexProviderSimpleElement.getValue());
+	}
+
+	/**
+	 * Test method for {@link IndexProviderSimpleElement#getNumberOfElements()}.
+	 */
+	public void testGetNumberOfElements() {
+		assertTrue(BigInteger.valueOf(numberElementsInSolution) == testIndexProviderSimpleElement.getNumberOfElements());
+	}
+
+	/**
+	 * Test method for {@link IndexProviderSimpleElement#isValid()}.
+	 */
+	public void testIsValid() {
+		assertTrue(testIndexProviderSimpleElement.isValid());
+	}
 }
