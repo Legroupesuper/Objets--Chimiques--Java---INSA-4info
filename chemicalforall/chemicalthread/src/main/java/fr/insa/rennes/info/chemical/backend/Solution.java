@@ -105,7 +105,63 @@ public final class Solution implements Collection<Object>{
 		_strategy = s;
 		_inert = false;
 	}
+	
+	
+	private boolean checkReactionRuleReactive(Object reactionRuleObject) {
+		Class<? extends Object> clazz = reactionRuleObject.getClass();
+		String errorMsg = "";
 
+		//We check that every field has an appropriate setter
+		boolean classOK = true;
+		int numberOfMethods = clazz.getDeclaredMethods().length;
+		boolean setterOK;
+		for(Field f : clazz.getDeclaredFields()){
+			setterOK = false;
+
+			for(int  i = 0; i < numberOfMethods; i++){
+				Method m = clazz.getDeclaredMethods()[i];
+				if(m.getName().toLowerCase().equals("set"+f.getName().toLowerCase())){
+					//Remember the setter name by putting it in the reaction rules' setters map
+					_mapReactionRulesSetters.put(clazz.getName()+"."+f.getName(), i);
+
+					setterOK = true;
+				}
+			}
+
+			if(!(setterOK)){
+				classOK = false;
+				if(!setterOK)
+					errorMsg+="class "+clazz.getName()+" lacks a setter for attribute "+f+"\n";
+			}
+		}
+		if(!classOK){
+			try {
+				throw new ChemicalException(errorMsg);
+			} catch (ChemicalException e) {
+				e.printStackTrace();
+			}
+		}else{
+			//If the reaction rule doesn't exist, we add it
+			if(!_threadTable.containsKey(reactionRuleObject)){
+				launchThread((ReactionRule) reactionRuleObject);
+			}else
+				return false;
+		}
+		return true;
+	}
+	
+	private void processAddSubSolution(Object solutionObject) {
+		Solution sol = (Solution) solutionObject;
+		sol.addInertEventListener(new InertEventListener() {
+
+			public void isInert(InertEvent e) {
+				Solution.this.wakeAll();
+			}
+		});
+		if(_reactionInProgress)
+			sol.react();
+	}
+	
 	/**
 	 * This method allow the user to add any type of Object to the solution.
 	 * @param newReactive The new reactive you want to add
@@ -118,62 +174,15 @@ public final class Solution implements Collection<Object>{
 			//At first we determine whether it is a ReactionRule or not
 			String className = getReactiveType(newReactive);
 			boolean addElement = true;
+			
 			//It is a ReactionRule, hence special treatment
 			if(className.equals(ReactionRule.class.getName())) {
-
-				Class<? extends Object> clazz = newReactive.getClass();
-				String errorMsg = "";
-
-				//We check that every field has an appropriate setter
-				boolean classOK = true;
-				int numberOfMethods = clazz.getDeclaredMethods().length;
-				boolean setterOK;
-				for(Field f : clazz.getDeclaredFields()){
-					setterOK = false;
-
-					for(int  i = 0; i < numberOfMethods; i++){
-						Method m = clazz.getDeclaredMethods()[i];
-						if(m.getName().toLowerCase().equals("set"+f.getName().toLowerCase())){
-							//Remember the setter name by putting it in the reaction rules' setters map
-							_mapReactionRulesSetters.put(clazz.getName()+"."+f.getName(), i);
-
-							setterOK = true;
-						}
-					}
-
-					if(!(setterOK)){
-						classOK = false;
-						if(!setterOK)
-							errorMsg+="class "+clazz.getName()+" lacks a setter for attribute "+f+"\n";
-					}
-				}
-				if(!classOK){
-					try {
-						throw new ChemicalException(errorMsg);
-					} catch (ChemicalException e) {
-						e.printStackTrace();
-					}
-				}else{
-					//If the reaction rule doesn't exist, we add it
-					if(!_threadTable.containsKey(newReactive)){
-						launchThread((ReactionRule) newReactive);
-					}else
-						addElement = false;
-				}
+				addElement = checkReactionRuleReactive(newReactive);
+			} else if(className.equals(Solution.class.getName())){
+				processAddSubSolution(newReactive);
 			}
 			
-			if(className.equals(Solution.class.getName())){
-				Solution sol = (Solution) newReactive;
-				sol.addInertEventListener(new InertEventListener() {
-
-					public void isInert(InertEvent e) {
-						Solution.this.wakeAll();
-					}
-				});
-				if(_reactionInProgress)
-					sol.react();
-			}
-			
+			//TODO: Pas la peine le premier test, de toute facon l'utilisateur peut pas accéder à SubSolutionReactivesAccessor
 			if(!className.equals(SubSolutionReactivesAccessor.class.getName()) && addElement){
 				boolean result;
 				//When you add an element in the solution, the solution is no more inert
@@ -240,7 +249,7 @@ public final class Solution implements Collection<Object>{
 				_threadTable.remove(r);
 			}
 			int nbAwake = getNumberOfActiveThreads();
-			if(nbAwake==0){
+			if(nbAwake == 0){
 				endOfReaction();
 			}
 
@@ -265,7 +274,7 @@ public final class Solution implements Collection<Object>{
 	}
 
 	private int getNumberOfActiveThreads(){
-		int nb=0;
+		int nb = 0;
 		synchronized (_threadTable) {
 			//Count the number of thread that are awaken right nowcollection synchron
 			for(Thread t : _threadTable.values()){
@@ -279,18 +288,15 @@ public final class Solution implements Collection<Object>{
 	
 	
 	private String getReactiveType(Object reactive) {
-		String interfaceS = " ";
 		for(Class<?> s : reactive.getClass().getInterfaces()){
-			interfaceS += s.getName()+" ";
+			if(s.getName().equals(ReactionRule.class.getName())) {
+				return ReactionRule.class.getName();
+			}else if(s.getName().equals(SubSolutionReactivesAccessor.class.getName())){
+				return SubSolutionReactivesAccessor.class.getName();
+			}
 		}
-
-		if(interfaceS.contains(" "+ReactionRule.class.getName()+" ")) {
-			return ReactionRule.class.getName();
-		}else if(interfaceS.contains(" "+SubSolutionReactivesAccessor.class.getName()+" ")){
-			return SubSolutionReactivesAccessor.class.getName();
-		}else {
-			return reactive.getClass().getName();
-		}
+		
+		return reactive.getClass().getName();
 	}
 
 	/**
@@ -390,10 +396,6 @@ public final class Solution implements Collection<Object>{
 			}
 			notifyAll();
 		}
-	}
-
-	private void reactMe(){
-
 	}
 
 	//To remove the object, we have to find its type
@@ -515,7 +517,7 @@ public final class Solution implements Collection<Object>{
 		List<SubIndexProvider> listElements = new ArrayList<SubIndexProvider>();
 		for(int i=0; i< fields.length; i++){
 			if(fields[i].getAnnotation(Dontreact.class) == null){
-				if(fields[i].getType().getName().contains("SubSolution")){
+				if(fields[i].getType().getName().contains(SubSolution.class.getName())){
 					table[i] = Solution.class.getName();
 					tableS.add(Solution.class.getName());
 				}else{
