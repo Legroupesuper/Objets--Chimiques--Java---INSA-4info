@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.chemicalmozart.model.implementations.DegreeImpl;
 import org.chemicalmozart.model.implementations.QuaterLeft;
-import org.chemicalmozart.model.implementations.solutionindentification.Temporary;
 
 import fr.insa.rennes.info.chemical.backend.ElementList;
 import fr.insa.rennes.info.chemical.backend.SubSolution;
@@ -36,7 +35,7 @@ import fr.insa.rennes.info.chemical.user.ReactionRule;
  */
 public class RythmeHRR implements ReactionRule{
 	
-	private SubSolution _sol;
+	private SubSolution<ElementList> _sol;
 	
 	/**
 	 * The constructor is used to fill the types we want to match in the subsolution
@@ -54,13 +53,13 @@ public class RythmeHRR implements ReactionRule{
 	/**
 	 * @return the sol
 	 */
-	public SubSolution getSol() {
+	public SubSolution<ElementList> getSol() {
 		return _sol;
 	}
 	/**
 	 * @param sol the sol to set
 	 */
-	public void setSol(SubSolution sol) {
+	public void setSol(SubSolution<ElementList> sol) {
 		this._sol = sol;
 	}
 	

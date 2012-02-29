@@ -1,6 +1,5 @@
 import java.util.List;
 
-import fr.insa.rennes.info.chemical.backend.ChemicalElement;
 import fr.insa.rennes.info.chemical.backend.Solution;
 import fr.insa.rennes.info.chemical.backend.Solution.Strategy;
 import fr.insa.rennes.info.chemical.user.InertEvent;
@@ -104,29 +103,6 @@ public class Test {
 		s.add(" Le ");
 		s.add(" Gros ");
 		s.add(" Eléphant ");
-		ChemicalElement c = new ChemicalElement() {
-
-			public List<Object> getElementList() {
-				// TODO Auto-generated method stub
-				return null;
-			}
-
-			public List<Class<? extends Object>> getTypeList() {
-				// TODO Auto-generated method stub
-				return null;
-			}
-
-			public void setElementList(List<Object> l) {
-				// TODO Auto-generated method stub
-
-			}
-
-			public void setTypeList(List<Class<? extends Object>> l) {
-				// TODO Auto-generated method stub
-
-			}
-		};
-		s.add(c);
 		s.add(new MaxIntRR(0));
 		//s.add(new ConcatRR());
 		//s.add(new RandomNumberRR());

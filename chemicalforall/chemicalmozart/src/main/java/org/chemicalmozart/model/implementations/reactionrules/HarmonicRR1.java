@@ -1,7 +1,10 @@
 package org.chemicalmozart.model.implementations.reactionrules;
 
 import org.chemicalmozart.model.implementations.DegreeImpl;
+
+import fr.insa.rennes.info.chemical.backend.ElementList;
 import fr.insa.rennes.info.chemical.backend.Solution;
+import fr.insa.rennes.info.chemical.backend.SubSolution;
 import fr.insa.rennes.info.chemical.user.ReactionRule;
 
 
@@ -15,15 +18,39 @@ import fr.insa.rennes.info.chemical.user.ReactionRule;
  * It takes two reactives :<br />
  * <ul>
  * 	<li>DegreeImpl _degree1</li>
- *  <li>Solution _sol</li>
+ *  <li>SubSolution _barInCreationSolution</li>
  *  </ul>
  * The computeSelect is used, see the computeSelect and computeResult documentation for more informations
  */
 public class HarmonicRR1 implements ReactionRule{
 
+	/**
+	 * Represents the current Degree that we will use for the next chord.
+	 */
 	public DegreeImpl _degree;
-	private Solution _sol;
+	/**
+	 * Represents the BarInCreation Solution. It must contain :
+	 * <ul>
+	 * 	<li>a <b>BarInCreation</b> object to identify the good solution</li>
+	 * </ul>
+	 */
+	private SubSolution<ElementList> _barInCreationSolution;
 	
+	/**
+	 * @return the _barInCreationSolution
+	 */
+	public SubSolution<ElementList> get_barInCreationSolution() {
+		return _barInCreationSolution;
+	}
+
+	/**
+	 * @param _barInCreationSolution the _barInCreationSolution to set
+	 */
+	public void set_barInCreationSolution(
+			SubSolution<ElementList> _barInCreationSolution) {
+		this._barInCreationSolution = _barInCreationSolution;
+	}
+
 	/**
 	 * @return the _degree
 	 */
@@ -38,19 +65,7 @@ public class HarmonicRR1 implements ReactionRule{
 		this._degree = _degree;
 	}
 
-	/**
-	 * @return the _sol
-	 */
-	public Solution get_sol() {
-		return _sol;
-	}
 
-	/**
-	 * @param _sol the _sol to set
-	 */
-	public void set_sol(Solution _sol) {
-		this._sol = _sol;
-	}
 
 	/**
 	 * It musn't return _degree into the main solution !
@@ -66,7 +81,11 @@ public class HarmonicRR1 implements ReactionRule{
 	 * ! _degree must be added to _sol !
 	 * The computResult add a temporary solution into the main solution. To identify this solution, you must add a
 	 * Temporary object into the solution. This object will be used later.
-	 * @return a table which contains a solution with a proportional number of each possible next degree, <br />
+	 * 
+	 * It also add the _degree in the solution identified by a BarInCreationObject. It must also put back the BarInCreation object into
+	 *  _barInCreationSolution because, due to the reaction, it's no longer in _barInCreationSolution.
+	 * 
+	 * @return a Solution identified by a HarmonicSol object with a proportional number of each possible degrees, <br />
 	 * a PickOneRR and a RythmeHRR.
 
 	 */
@@ -79,7 +98,7 @@ public class HarmonicRR1 implements ReactionRule{
 	
 	/**
 	 * This method must succeed if :
-	 *  _sol is a measure solution <br />
+	 *  _barInCreationSolution is a bar in creation solution <br />
 	 *  && _degree.getValue() is equal to 1 (This is HarmonicRR1)
 	 */
 	public boolean computeSelect() {

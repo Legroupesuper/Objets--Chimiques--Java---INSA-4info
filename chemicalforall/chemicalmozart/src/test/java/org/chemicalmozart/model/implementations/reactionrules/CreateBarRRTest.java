@@ -1,8 +1,9 @@
-package org.chemicalmozart;
+package org.chemicalmozart.model.implementations.reactionrules;
 
 import java.util.Iterator;
 
 import org.chemicalmozart.model.implementations.BarNumber;
+import org.chemicalmozart.model.implementations.QuaterLeft;
 import org.chemicalmozart.model.implementations.QuaterPerBar;
 import org.chemicalmozart.model.implementations.reactionrules.CreateBarRR;
 import org.chemicalmozart.model.implementations.reactionrules.MoveToResultRR;
@@ -19,6 +20,10 @@ public class CreateBarRRTest extends TestCase {
 		boolean moveToResultPresent = false;
 		boolean isBarNumberPresent = false;
 		boolean isBarNumberValid = false;
+		boolean isBarNumber2Valid = false;
+		boolean isBarNumber2Present = false;
+		boolean isQuaterLeft2Present = false;
+		
 		
 		Solution sol = new Solution();
 		BarNumber measureNumber = new BarNumber(1);
@@ -31,13 +36,23 @@ public class CreateBarRRTest extends TestCase {
 		Iterator<Object> it = sol.iterator();
 		while(it.hasNext()){
 			Object o = it.next();
-			if(o instanceof Solution){//Test if the bar in creation is in the main solution
+			if(o instanceof Solution){//Test if the bar in creation is in the contained solution
 				Iterator<Object> it2 = ((Solution) o).iterator();
 				while(it2.hasNext()){
 					Object o2 = it2.next();
 					if(o2 instanceof BarInCreation){
 						solPresent = true;
 						break;
+					}
+				}
+				if(solPresent){
+					for(Object o2 : ((Solution)o)){
+						if(o2 instanceof QuaterLeft){
+							isQuaterLeft2Present = true;
+						}else if(o2 instanceof BarNumber){
+							isBarNumber2Present = true;
+							isBarNumber2Valid = ((BarNumber) o2).getValue()==1;
+						}
 					}
 				}
 			}else if(o instanceof CreateBarRR){//There must not be any CreateMeasureRR
@@ -56,6 +71,9 @@ public class CreateBarRRTest extends TestCase {
 		assertTrue("Tests if the quaterPerBar is still present in the main solution", sol.contains(quaterPerBar));
 		assertTrue("Tests if the BarNumber is present in the main solution", isBarNumberPresent);
 		assertTrue("Tests if the BarNumber is valid in the main solution", isBarNumberValid);
+		assertTrue("QuaterLeft is not present in the returned solution", isQuaterLeft2Present);
+		assertTrue("BarNumber is not present in the returned solution", isBarNumber2Present);
+		assertTrue("Tests if the BarNumber is valid in the main solution", isBarNumber2Valid);
 	}
 
 }

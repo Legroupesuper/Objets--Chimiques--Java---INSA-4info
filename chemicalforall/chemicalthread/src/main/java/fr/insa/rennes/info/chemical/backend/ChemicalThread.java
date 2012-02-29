@@ -14,7 +14,7 @@ import fr.insa.rennes.info.chemical.user.ReactionRule.Multiplicity;
  * @author Jean-Paul Sartre, Raymond Aron, Emmanuel Kant
  *
  */
-class ChemicalThread extends Thread {
+public class ChemicalThread extends Thread {
 	private ReactionRule _reactionRule;
 	private Solution _solutionContainer;
 	private boolean _continue = true;
