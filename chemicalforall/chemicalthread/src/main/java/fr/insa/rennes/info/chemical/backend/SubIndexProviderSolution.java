@@ -13,17 +13,17 @@ import org.omg.CORBA._IDLTypeStub;
  * @author Cédric Andreolli, Chloé Boulanger, Olivier Cléro, Antoine Guellier, Sébastien Guilloux, Arthur Templé
  *
  */
-class IndexProviderSubSolution implements IndexProviderElement{
-	private List<List<IndexProviderElement>> _listElements;
+class SubIndexProviderSolution implements SubIndexProvider{
+	private List<List<SubIndexProvider>> _listElements;
 	private int _currentValue;
-	private int _currentList;
+	private int _currentSubSol;
 	private List<List<Integer>> _dependantIndexes;
 	/**
 	 * Constructor
 	 * @param _listElements The first level list correspond to all subsolutions contained in the current level
 	 * of a solution. 
 	 */
-	public IndexProviderSubSolution(List<List<IndexProviderElement>> _listElements, List<List<Integer>> dependantIndexes) {
+	public SubIndexProviderSolution(List<List<SubIndexProvider>> _listElements, List<List<Integer>> dependantIndexes) {
 		super();
 		this._listElements = _listElements;
 		this._dependantIndexes = dependantIndexes;
@@ -37,28 +37,28 @@ class IndexProviderSubSolution implements IndexProviderElement{
 		this._dependantIndexes = _dependantIndexes;
 	}
 
-	public List<IndexProviderElement> get_listElements(int position) {
+	public List<SubIndexProvider> get_listElements(int position) {
 		return _listElements.get(position);
 	}
 	
-	public List<IndexProviderElement> get_listElements() {
-		return _listElements.get(_currentList);
+	public List<SubIndexProvider> get_listElements() {
+		return _listElements.get(_currentSubSol);
 	}
 
-	public void set_listElements(List<List<IndexProviderElement>> _listElements) {
+	public void set_listElements(List<List<SubIndexProvider>> _listElements) {
 		this._listElements = _listElements;
 	}
 
 	public void init() {
 		_currentValue = 0;
-		_currentList=0;
-		for(List<IndexProviderElement> l : _listElements)
-			for(IndexProviderElement e : l)
+		_currentSubSol = 0;
+		for(List<SubIndexProvider> l : _listElements)
+			for(SubIndexProvider e : l)
 				e.init();
 	}
 
 	public int getValue() {
-		return _currentList;
+		return _currentSubSol;
 	}
 
 	/**
@@ -74,7 +74,7 @@ class IndexProviderSubSolution implements IndexProviderElement{
 		 * The condition of the loop fails when no overflow is detected or when the _currentValue is
 		 * greater than number of elements in the _currentList.
 		 */
-		while(_currentValue < _listElements.get(_currentList).size() && (overflow = _listElements.get(_currentList).get(_currentValue).increment()
+		while(_currentValue < _listElements.get(_currentSubSol).size() && (overflow = _listElements.get(_currentSubSol).get(_currentValue).increment()
 				)){
 			_currentValue++;
 		}
@@ -86,8 +86,8 @@ class IndexProviderSubSolution implements IndexProviderElement{
 		 *  otherwise, no overflow is detected and the next call to increment will try to increment _currentValue = 0.
 		 *  This algorithm work like the +1 algorithm. You always start to increment the least significant number.
 		 */
-		if(overflow && _currentList<_listElements.size()-1){//Increment the first level list
-			_currentList++;
+		if(overflow && _currentSubSol<_listElements.size()-1){//Increment the first level list
+			_currentSubSol++;
 			_currentValue=0;
 			return false;
 		}else if(overflow){//Real overflow
@@ -99,21 +99,21 @@ class IndexProviderSubSolution implements IndexProviderElement{
 		}
 	}
 	
-	public IndexProviderElement getElement(){
-		return _listElements.get(_currentList).get(_currentValue);
+	public SubIndexProvider getElement(){
+		return _listElements.get(_currentSubSol).get(_currentValue);
 	}
 	
 	public String toString(){
-		String result = "("+_currentList+"/"+_listElements.size();
+		String result = "("+_currentSubSol+"/"+_listElements.size();
 		//result += _currentValue;
 		result += ") {"+_dependantIndexes+"}";
-		for(IndexProviderElement e : _listElements.get(_currentList))
+		for(SubIndexProvider e : _listElements.get(_currentSubSol))
 			result+= (e.toString()+" ");
 		return result;
 	}
 	
 	public void setValue(int v) {
-		_currentList = v;
+		_currentSubSol = v;
 	}
 	
 	/**
@@ -122,9 +122,9 @@ class IndexProviderSubSolution implements IndexProviderElement{
 	public BigInteger getNumberOfElements() {
 		BigInteger result = BigInteger.valueOf(0);
 		
-		for(List<IndexProviderElement> l : _listElements){
+		for(List<SubIndexProvider> l : _listElements){
 			BigInteger resulttmp = BigInteger.valueOf(1);
-			for(IndexProviderElement e : l){
+			for(SubIndexProvider e : l){
 				try{
 				resulttmp = resulttmp.
 						multiply(
@@ -142,8 +142,8 @@ class IndexProviderSubSolution implements IndexProviderElement{
 		List<Integer> valuesIndexProvider;
 		boolean isCurrentIndexValid;
 		
-		for(IndexProviderElement e : _listElements.get(_currentList)){
-			System.out.println("IndexProvidertemp : "+e);
+		for(SubIndexProvider e : _listElements.get(_currentSubSol)){
+			
 			if(!e.isValid())
 				return false;
 		}
@@ -152,31 +152,30 @@ class IndexProviderSubSolution implements IndexProviderElement{
 			valuesIndexProvider = new ArrayList<Integer>();
 			isCurrentIndexValid = true;
 			//TODO : Vérifier le l != null
-			System.out.println("IndexProviderSubSol says : dependant indexes are "+_dependantIndexes);
+			
 			if(l!=null){
 				for(int n : l){
-					System.out.println(n+" dans "+l);
-					System.out.println(this);
+					
 					if(valuesIndexProvider.contains(_listElements.
-							get(_currentList).
+							get(_currentSubSol).
 							get(n).getValue())){
 						isCurrentIndexValid = false;
 						break;
 					}else{
-						valuesIndexProvider.add(_listElements.get(_currentList).get(n).getValue());
+						valuesIndexProvider.add(_listElements.get(_currentSubSol).get(n).getValue());
 					}
 				}
 				if(!isCurrentIndexValid){
-					System.out.println("INDEX INVALIDE");
+					
 					return false;
 				}
 			}
 		}
-		System.out.println("INDEX VALIDE COOL");
+		
 		return true;
 	}
 
-	public void merge(IndexProviderSubSolution subsol) {
+	public void merge(SubIndexProviderSolution subsol) {
 		_listElements.addAll(subsol._listElements);
 	}
 }

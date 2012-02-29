@@ -34,7 +34,7 @@ class RandomIncrementStrategy implements IncrementStrategy {
 	 * columns there is for this index provider.
 	 * @param maxIndex The maximum index array
 	 */
-	public RandomIncrementStrategy(IndexProviderSubSolution solution){
+	public RandomIncrementStrategy(SubIndexProviderSolution solution){
 		_currentIndex = BigInteger.valueOf(0);
 		_numberOfIndex = solution.getNumberOfElements();
 		_shuffleList = new ArrayList<BigInteger>();
@@ -53,7 +53,7 @@ class RandomIncrementStrategy implements IncrementStrategy {
 	 * @return A table of integers that is the new value of the indexes
 	 * @throws ChemicalException
 	 */	
-	public IndexProviderSubSolution increment(IndexProviderSubSolution solution) throws ChemicalException{
+	public SubIndexProviderSolution increment(SubIndexProviderSolution solution) throws ChemicalException{
 		solution.init();
 		
 		List<List<Integer>> result = new ArrayList<List<Integer>>();

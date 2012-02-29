@@ -68,7 +68,7 @@ public final class Solution implements Collection<Object>{
 	/**
 	 * The list containing all the threads of the solution's reactions rules threads
 	 */
-	private Map<ReactionRule, ChemicalThread> _threadTable = Collections.synchronizedMap(new HashMap<ReactionRule, ChemicalThread>());
+	private Map<ReactionRule, ChemicalThread> _threadTable;
 
 	/**
 	 * The thread group, common to all the threads
@@ -101,6 +101,7 @@ public final class Solution implements Collection<Object>{
 		_mapElements = new HashMap<String, List<Object>>();
 		_mapElements = Collections.synchronizedMap(_mapElements);
 		_mapReactionRulesSetters = new HashMap<String, Integer>();
+		_threadTable = Collections.synchronizedMap(new HashMap<ReactionRule, ChemicalThread>());
 		_strategy = s;
 		_inert = false;
 	}
@@ -118,7 +119,7 @@ public final class Solution implements Collection<Object>{
 			String className = getReactiveType(newReactive);
 			boolean addElement = true;
 			//It is a ReactionRule, hence special treatment
-			if(className.equals(ReactionRule.class.getName())){
+			if(className.equals(ReactionRule.class.getName())) {
 
 				Class<? extends Object> clazz = newReactive.getClass();
 				String errorMsg = "";
@@ -427,17 +428,17 @@ public final class Solution implements Collection<Object>{
 		return res;
 	}
 
-	IndexProviderElement generateListIndexProviderElement(Field f, ReactionRule r, ParameterizedType p, Solution s, int pos){
+	SubIndexProvider generateListIndexProviderElement(Field f, ReactionRule r, ParameterizedType p, Solution s, int pos){
 		if(p.getActualTypeArguments().length > 0){
 			try{//Try to match a SubSolution
 				ParameterizedType oldParam = p;
 				p = (ParameterizedType) p.getActualTypeArguments()[0];
-				List<List<IndexProviderElement>> l = new ArrayList<List<IndexProviderElement>>();
+				List<List<SubIndexProvider>> l = new ArrayList<List<SubIndexProvider>>();
 				int i=0;
 				for(Object solu : s._mapElements.get(Solution.class.getName())){
 					Solution sol = (Solution) solu;
-					IndexProviderElement elem = generateListIndexProviderElement(f, r, p, sol, i);
-					List<IndexProviderElement> ltemp = new ArrayList<IndexProviderElement>();
+					SubIndexProvider elem = generateListIndexProviderElement(f, r, p, sol, i);
+					List<SubIndexProvider> ltemp = new ArrayList<SubIndexProvider>();
 					ltemp.add(elem);
 					l.add(ltemp);
 					i++;
@@ -445,10 +446,10 @@ public final class Solution implements Collection<Object>{
 				List<List<Integer>> lincomp = new ArrayList<List<Integer>>();
 				List<Integer> lbis = new ArrayList<Integer>();
 				lincomp.add(lbis);
-				IndexProviderSubSolution subSol = new IndexProviderSubSolution(l, lincomp);
+				SubIndexProviderSolution subSol = new SubIndexProviderSolution(l, lincomp);
 				return subSol;
 			}catch(Exception e){//Try to match a ListElement
-				IndexProviderElement elem;
+				SubIndexProvider elem;
 				try{
 					Method getter = null;
 					for(Method get : r.getClass().getDeclaredMethods()){
@@ -458,28 +459,28 @@ public final class Solution implements Collection<Object>{
 						}
 					}
 					SubSolutionReactivesAccessor result = (SubSolutionReactivesAccessor) getter.invoke(r, new Object[0]);
-					List<List<IndexProviderElement>> finalList = new ArrayList<List<IndexProviderElement>>();
-					List<IndexProviderElement> tempList = new ArrayList<IndexProviderElement>();
+					List<List<SubIndexProvider>> finalList = new ArrayList<List<SubIndexProvider>>();
+					List<SubIndexProvider> tempList = new ArrayList<SubIndexProvider>();
 					for(Class<? extends Object> o : result.getTypeList()){
-						tempList.add(new IndexProviderSimpleElement(s._mapElements.get(o.getName()).size()));
+						tempList.add(new SubIndexProviderElement(s._mapElements.get(o.getName()).size()));
 					}
-					tempList.add(new IndexProviderSimpleElement(0));
+					tempList.add(new SubIndexProviderElement(0));
 					finalList.add(tempList);
 					//TODO gerer les incompatibilités ici
 					List<List<Integer>> lincomp = new ArrayList<List<Integer>>();
 					List<Integer> lbis = new ArrayList<Integer>();
 					lincomp.add(lbis);
-					elem = new IndexProviderSubSolution(finalList, lincomp);
+					elem = new SubIndexProviderSolution(finalList, lincomp);
 				}catch(Exception e2){
-					List<List<IndexProviderElement>> finalList = new ArrayList<List<IndexProviderElement>>();
-					List<IndexProviderElement> tempList = new ArrayList<IndexProviderElement>();
-					tempList.add(new IndexProviderSimpleElement(0));
-					tempList.add(new IndexProviderSimpleElement(0));
+					List<List<SubIndexProvider>> finalList = new ArrayList<List<SubIndexProvider>>();
+					List<SubIndexProvider> tempList = new ArrayList<SubIndexProvider>();
+					tempList.add(new SubIndexProviderElement(0));
+					tempList.add(new SubIndexProviderElement(0));
 					finalList.add(tempList);
 					List<List<Integer>> lincomp = new ArrayList<List<Integer>>();
 					List<Integer> lbis = new ArrayList<Integer>();
 					lincomp.add(lbis);
-					elem = new IndexProviderSubSolution(finalList, lincomp);
+					elem = new SubIndexProviderSolution(finalList, lincomp);
 				}
 				return elem;
 			}
@@ -511,7 +512,7 @@ public final class Solution implements Collection<Object>{
 		Field[] fields = r.getClass().getDeclaredFields();
 		String table[] = new String[fields.length];
 		List<String> tableS = new ArrayList<String>();
-		List<IndexProviderElement> listElements = new ArrayList<IndexProviderElement>();
+		List<SubIndexProvider> listElements = new ArrayList<SubIndexProvider>();
 		for(int i=0; i< fields.length; i++){
 			if(fields[i].getAnnotation(Dontreact.class) == null){
 				if(fields[i].getType().getName().contains("SubSolution")){
@@ -558,7 +559,7 @@ public final class Solution implements Collection<Object>{
 				}
 			}
 
-			IndexProviderSubSolution sol = generateIndexProviderSubSolution(fields, listProvider, r);
+			SubIndexProviderSolution sol = generateIndexProviderSubSolution(fields, listProvider, r);
 			if(sol == null || sol.getNumberOfElements().equals(BigInteger.ZERO))
 				return false;
 
@@ -580,7 +581,7 @@ public final class Solution implements Collection<Object>{
 			//Loop until the reactives has been found OR all combination have been tested
 			while(!indexProvider.is_overflowReached()){
 				reactives.clear();
-				IndexProviderSubSolution solution = indexProvider.increment();
+				SubIndexProviderSolution solution = indexProvider.increment();
 				if(solution == null)
 					return false;
 				int i=0;
@@ -668,8 +669,8 @@ public final class Solution implements Collection<Object>{
 	 * @param ipe the IndexProviderElement
 	 * @return the instanciated object or null
 	 */
-	private Pair<Solution, Object> instanciateField(Field f, Solution s, IndexProviderElement ipe, ReactionRule r){
-		if(ipe instanceof IndexProviderSimpleElement){//This is a simple element, so it it direct
+	private Pair<Solution, Object> instanciateField(Field f, Solution s, SubIndexProvider ipe, ReactionRule r){
+		if(ipe instanceof SubIndexProviderElement){//This is a simple element, so it it direct
 			return new Pair<Solution, Object>(s, s._mapElements.get(f.getType().getName()).get(ipe.getValue()));
 		}else{//This is a Solution, it will be more complex
 			Method getter = Utils.getMethodFromReactionRule(r, "get", f);
@@ -679,7 +680,7 @@ public final class Solution implements Collection<Object>{
 				//First we must get the good subsolution
 				Solution nextS = (Solution)s._mapElements.get(Solution.class.getName()).get(ipe.getValue());
 				//Then we get le List<Object>
-				Pair<Solution, List<Object>> lo = generateListObject(((IndexProviderSubSolution)ipe).get_listElements(), nextS, el);
+				Pair<Solution, List<Object>> lo = generateListObject(((SubIndexProviderSolution)ipe).get_listElements(), nextS, el);
 				//finally, we use the setter
 				el.setElements(lo.get_second());
 				return new Pair<Solution, Object>(lo.get_first(), el);
@@ -689,10 +690,10 @@ public final class Solution implements Collection<Object>{
 		}
 	}
 
-	private Pair<Solution, List<Object>> generateListObject(List<IndexProviderElement> lipe, Solution s, SubSolution<SubSolutionReactivesAccessor> el){
+	private Pair<Solution, List<Object>> generateListObject(List<SubIndexProvider> lipe, Solution s, SubSolution<SubSolutionReactivesAccessor> el){
 		try{
-			if(lipe.size()==1 && lipe.get(0) instanceof IndexProviderSubSolution){
-				IndexProviderSubSolution ipss = (IndexProviderSubSolution) lipe.get(0);
+			if(lipe.size()==1 && lipe.get(0) instanceof SubIndexProviderSolution){
+				SubIndexProviderSolution ipss = (SubIndexProviderSolution) lipe.get(0);
 				Solution snext = (Solution) s._mapElements.get(Solution.class.getName()).get(lipe.get(0).getValue());
 				return generateListObject(ipss.get_listElements(), snext, el);
 			}else{
@@ -710,15 +711,15 @@ public final class Solution implements Collection<Object>{
 		}
 	}
 
-	private IndexProviderSubSolution generateIndexProviderSubSolution(Field[] fieldTable, List<List<Integer>> incompatiblesIndexes, ReactionRule r){
-		List<IndexProviderElement> secondLevelList = new ArrayList<IndexProviderElement>();
+	private SubIndexProviderSolution generateIndexProviderSubSolution(Field[] fieldTable, List<List<Integer>> incompatiblesIndexes, ReactionRule r){
+		List<SubIndexProvider> secondLevelList = new ArrayList<SubIndexProvider>();
 		System.out.println("INCOMPATIBLES 1st LEVEL : "+incompatiblesIndexes);
 		for(Field f : fieldTable){
 			if(f.getAnnotation(Dontreact.class)==null){
 				if(f.getType().getName().contains("SubSolution")){//This is a subsolution
-					List<List<IndexProviderElement>> ltemp = new ArrayList<List<IndexProviderElement>>();
-					IndexProviderSubSolution subsol = null;
-					IndexProviderSubSolution lastSubSolution = null;
+					List<List<SubIndexProvider>> ltemp = new ArrayList<List<SubIndexProvider>>();
+					SubIndexProviderSolution subsol = null;
+					SubIndexProviderSolution lastSubSolution = null;
 					System.out.println(_mapElements);
 					
 					for(Object o : _mapElements.get(Solution.class.getName())){
@@ -745,13 +746,13 @@ public final class Solution implements Collection<Object>{
 					//	secondLevelList.add(new IndexProviderSubSolution(ltemp, new ArrayList<List<Integer>>()));//We get the dependant indexes
 					//from the computed IndexProviderSubSolution
 				}else{//It's an element
-					secondLevelList.add(new IndexProviderSimpleElement(_mapElements.get(f.getType().getName()).size()));
+					secondLevelList.add(new SubIndexProviderElement(_mapElements.get(f.getType().getName()).size()));
 				}
 			}
 		}
-		List<List<IndexProviderElement>> firstLevelList = new ArrayList<List<IndexProviderElement>>();
+		List<List<SubIndexProvider>> firstLevelList = new ArrayList<List<SubIndexProvider>>();
 		firstLevelList.add(secondLevelList);
-		return new IndexProviderSubSolution(firstLevelList, incompatiblesIndexes);
+		return new SubIndexProviderSolution(firstLevelList, incompatiblesIndexes);
 	}
 
 	
@@ -763,11 +764,11 @@ public final class Solution implements Collection<Object>{
 	 * @param s The solution where we have to look for p
 	 * @return A well generated List<List<IndexProviderElement>>
 	 */
-	private List<List<IndexProviderElement>>  generateListListForIndexProviderSubSolution(ParameterizedType p, Field f, ReactionRule r, Solution s){
-		List<List<IndexProviderElement>> ltemp = new ArrayList<List<IndexProviderElement>>();
+	private List<List<SubIndexProvider>>  generateListListForIndexProviderSubSolution(ParameterizedType p, Field f, ReactionRule r, Solution s){
+		List<List<SubIndexProvider>> ltemp = new ArrayList<List<SubIndexProvider>>();
 		for(Object o : s._mapElements.get(Solution.class.getName())){
 			Solution stemp = (Solution) o;
-			IndexProviderSubSolution subsoltemp = generateIndexProviderSubSolution(p, f, r, stemp);
+			SubIndexProviderSolution subsoltemp = generateIndexProviderSubSolution(p, f, r, stemp);
 			if(subsoltemp != null)
 				ltemp.add(subsoltemp.get_listElements());
 		}
@@ -784,16 +785,16 @@ public final class Solution implements Collection<Object>{
 	 * @param s The solution where we have to look for p
 	 * @return An IndexProviderSubSolution or null when it's not possible to generate it
 	 */
-	private IndexProviderSubSolution generateIndexProviderSubSolution(ParameterizedType p, Field f, ReactionRule r, Solution s){
+	private SubIndexProviderSolution generateIndexProviderSubSolution(ParameterizedType p, Field f, ReactionRule r, Solution s){
 		try{
 			p = (ParameterizedType)p.getActualTypeArguments()[0];//This cast can fail
 			//Then we generate the List<List<...>>
-			List<List<IndexProviderElement>> ltemp = generateListListForIndexProviderSubSolution(p, f, r, s);
+			List<List<SubIndexProvider>> ltemp = generateListListForIndexProviderSubSolution(p, f, r, s);
 			//At this point we have a Subsolution<Subsolution<...>> so there is no incompatible indexes
 			//to generate
 			List<List<Integer>> incompat = new ArrayList<List<Integer>>();
 			System.out.println("Ca n'a pas fail");
-			return new IndexProviderSubSolution(ltemp, incompat);
+			return new SubIndexProviderSolution(ltemp, incompat);
 		}catch(Exception e){
 			/*
 			 * This exception is catched when the cast fails. It means that we are on an ElementList.
@@ -806,14 +807,14 @@ public final class Solution implements Collection<Object>{
 				//The getter allows us to generate SubSolution element to acces the type list
 				SubSolution<SubSolutionReactivesAccessor> el = (SubSolution<SubSolutionReactivesAccessor>) getter.invoke(r, null);
 
-				List<List<IndexProviderElement>> l = new ArrayList<List<IndexProviderElement>>();
-				List<IndexProviderElement> ll = new ArrayList<IndexProviderElement>();
+				List<List<SubIndexProvider>> l = new ArrayList<List<SubIndexProvider>>();
+				List<SubIndexProvider> ll = new ArrayList<SubIndexProvider>();
 				List<String> table = new ArrayList<String>();
 				for(Class<?> c : el.getTypeList()){
 					table.add(c.getName());
 					try{
 						System.err.println("on ajoute un "+c.getName());
-						ll.add(new IndexProviderSimpleElement(s._mapElements.get(c.getName()).size()));
+						ll.add(new SubIndexProviderElement(s._mapElements.get(c.getName()).size()));
 					}catch(Exception ex){
 					}
 				}
@@ -848,7 +849,7 @@ public final class Solution implements Collection<Object>{
 					}
 				}
 				System.err.println("On a enfin notre liste incompatible : "+listProvider);
-				return new IndexProviderSubSolution(l, listProvider);
+				return new SubIndexProviderSolution(l, listProvider);
 			} catch (Exception e1) {
 				//e1.printStackTrace();
 			}
