@@ -2,7 +2,6 @@ package functionnaltests;
 import java.util.ArrayList;
 import java.util.List;
 
-import fr.insa.rennes.info.chemical.backend.ElementList;
 import fr.insa.rennes.info.chemical.backend.SubSolution;
 import fr.insa.rennes.info.chemical.user.Dontreact;
 import fr.insa.rennes.info.chemical.user.ReactionRule;
@@ -24,20 +23,20 @@ public class MaxIntRR implements ReactionRule{
 		this.c = c;
 	}
 
-//	private SubSolution<SubSolution<ElementList>> sol1;
+//	private SubSolution<SubSolution<SubSolutionElements>> sol1;
 //	
-//	public SubSolution<SubSolution<ElementList>> getSol1() {
+//	public SubSolution<SubSolution<SubSolutionElements>> getSol1() {
 //		return sol1;
 //	}
 //
-//	public void setSol1(SubSolution<SubSolution<ElementList>> sol1) {
+//	public void setSol1(SubSolution<SubSolution<SubSolutionElements>> sol1) {
 //		this.sol1 = sol1;
 //	}
 
 	public MaxIntRR() {
-//		ElementList e = new ElementList();
-//		SubSolution<ElementList> e1 = new SubSolution<ElementList>(e);
-//		sol1 = new SubSolution<SubSolution<ElementList>>(e1);
+//		SubSolutionElements e = new SubSolutionElements();
+//		SubSolution<SubSolutionElements> e1 = new SubSolution<SubSolutionElements>(e);
+//		sol1 = new SubSolution<SubSolution<SubSolutionElements>>(e1);
 //		List<Class<? extends Object>> l = new ArrayList<Class<? extends Object>>();
 //		l.add(Integer.class);
 //		l.add(String.class);

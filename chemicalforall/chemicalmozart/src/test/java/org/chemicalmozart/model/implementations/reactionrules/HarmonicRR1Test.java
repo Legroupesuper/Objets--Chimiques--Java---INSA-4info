@@ -13,7 +13,7 @@ import org.chemicalmozart.model.implementations.QuaterLeft;
 import org.chemicalmozart.model.implementations.solutionindentification.BarInCreation;
 import org.junit.Test;
 
-import fr.insa.rennes.info.chemical.backend.ElementList;
+import fr.insa.rennes.info.chemical.backend.SubSolutionElements;
 import fr.insa.rennes.info.chemical.backend.Solution;
 import fr.insa.rennes.info.chemical.backend.SubSolution;
 
@@ -38,15 +38,15 @@ public class HarmonicRR1Test {
 		sol.add(new BarNumber(1));
 		
 		//Instanciate a SubSolution object for the RR
-		ElementList e = new  ElementList();
+		SubSolutionElements e = new  SubSolutionElements();
 		List<Class<? extends Object>> l = new ArrayList<Class<? extends Object>>();
 		l.add(BarInCreation.class);
 		e.setTypeList(l);
 		List<Object> ll = new ArrayList<Object>();
 		ll.add(sol);
 		ll.add(bic);
-		e.setElementList(ll);
-		SubSolution<ElementList> subsol = new SubSolution<ElementList>(e);
+		e.setElements(ll);
+		SubSolution<SubSolutionElements> subsol = new SubSolution<SubSolutionElements>(e);
 		rr.set_barInCreationSolution(subsol);
 		
 		assertTrue("The computeSelect doesn't validate some good parameters", rr.computeSelect());
@@ -96,15 +96,15 @@ public class HarmonicRR1Test {
 		BarInCreation bic = new BarInCreation();
 		
 		//Instanciate a SubSolution object for the RR
-		ElementList e = new  ElementList();
+		SubSolutionElements e = new  SubSolutionElements();
 		List<Class<? extends Object>> l = new ArrayList<Class<? extends Object>>();
 		l.add(BarInCreation.class);
 		e.setTypeList(l);
 		List<Object> ll = new ArrayList<Object>();
 		ll.add(sol);
 		ll.add(bic);
-		e.setElementList(ll);
-		SubSolution<ElementList> subsol = new SubSolution<ElementList>(e);
+		e.setElements(ll);
+		SubSolution<SubSolutionElements> subsol = new SubSolution<SubSolutionElements>(e);
 		rr.set_barInCreationSolution(subsol);
 		assertFalse("The computeSelect shouldn't accept this configuration", rr.computeSelect());
 		sol.add(bic);

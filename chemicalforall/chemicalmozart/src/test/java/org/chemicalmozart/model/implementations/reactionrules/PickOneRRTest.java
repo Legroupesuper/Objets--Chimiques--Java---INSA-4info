@@ -12,7 +12,7 @@ import org.chemicalmozart.model.implementations.solutionindentification.BarInCre
 import org.chemicalmozart.model.implementations.solutionindentification.Temporary;
 import org.junit.Test;
 
-import fr.insa.rennes.info.chemical.backend.ElementList;
+import fr.insa.rennes.info.chemical.backend.SubSolutionElements;
 import fr.insa.rennes.info.chemical.backend.Solution;
 import fr.insa.rennes.info.chemical.backend.SubSolution;
 
@@ -41,19 +41,19 @@ public class PickOneRRTest {
 		barInCreationSolution.add(new QuaterLeft(4));
 		barInCreationSolution.add(new BarNumber(1));
 		
-		ElementList e1 = new ElementList();
+		SubSolutionElements e1 = new SubSolutionElements();
 		List<Object> l1 = new ArrayList<Object>();
 		l1.add(temporarySolution);
 		l1.add(temp);
 		l1.add(deg);
-		e1.setElementList(l1);
-		SubSolution<ElementList> temporaryBar = new SubSolution<ElementList>(e1);
+		e1.setElements(l1);
+		SubSolution<SubSolutionElements> temporaryBar = new SubSolution<SubSolutionElements>(e1);
 		
-		ElementList e2 = new ElementList();
+		SubSolutionElements e2 = new SubSolutionElements();
 		List<Object> l2 = new ArrayList<Object>();
 		l2.add(BarInCreation.class);
-		e2.setElementList(l2);
-		SubSolution<ElementList> barInCreation = new SubSolution<ElementList>(e2);
+		e2.setElements(l2);
+		SubSolution<SubSolutionElements> barInCreation = new SubSolution<SubSolutionElements>(e2);
 		
 		PickOneRR rr = new PickOneRR();
 		rr.set_barInCreation(barInCreation);

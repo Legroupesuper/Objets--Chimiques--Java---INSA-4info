@@ -2,9 +2,9 @@ package org.chemicalmozart.model.implementations.reactionrules;
 
 import org.chemicalmozart.model.implementations.DegreeImpl;
 
-import fr.insa.rennes.info.chemical.backend.ElementList;
 import fr.insa.rennes.info.chemical.backend.Solution;
 import fr.insa.rennes.info.chemical.backend.SubSolution;
+import fr.insa.rennes.info.chemical.backend.SubSolutionElements;
 import fr.insa.rennes.info.chemical.user.ReactionRule;
 
 
@@ -34,12 +34,12 @@ public class HarmonicRR1 implements ReactionRule{
 	 * 	<li>a <b>BarInCreation</b> object to identify the good solution</li>
 	 * </ul>
 	 */
-	private SubSolution<ElementList> _barInCreationSolution;
+	private SubSolution<SubSolutionElements> _barInCreationSolution;
 	
 	/**
 	 * @return the _barInCreationSolution
 	 */
-	public SubSolution<ElementList> get_barInCreationSolution() {
+	public SubSolution<SubSolutionElements> get_barInCreationSolution() {
 		return _barInCreationSolution;
 	}
 
@@ -47,7 +47,7 @@ public class HarmonicRR1 implements ReactionRule{
 	 * @param _barInCreationSolution the _barInCreationSolution to set
 	 */
 	public void set_barInCreationSolution(
-			SubSolution<ElementList> _barInCreationSolution) {
+			SubSolution<SubSolutionElements> _barInCreationSolution) {
 		this._barInCreationSolution = _barInCreationSolution;
 	}
 

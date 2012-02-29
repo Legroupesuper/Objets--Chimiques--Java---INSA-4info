@@ -2,11 +2,11 @@ package fr.insa.rennes.info.chemical.backend;
 
 import java.util.List;
 
-public class ElementList implements ChemicalElement{
+public class SubSolutionElements implements SubSolutionReactivesAccessor{
 	private List<Object> _elements;
 	private List<Class<? extends Object>> _types;
 
-	public List<Object> getElementList(){
+	public List<Object> getElements(){
 		return _elements;
 	}
 
@@ -14,7 +14,7 @@ public class ElementList implements ChemicalElement{
 		return _types;
 	}
 
-	public void setElementList(List<Object> l) {
+	public void setElements(List<Object> l) {
 		_elements = l;
 	}
 

@@ -6,7 +6,7 @@ import java.util.List;
 import org.chemicalmozart.model.implementations.DegreeImpl;
 import org.chemicalmozart.model.implementations.solutionindentification.Temporary;
 
-import fr.insa.rennes.info.chemical.backend.ElementList;
+import fr.insa.rennes.info.chemical.backend.SubSolutionElements;
 import fr.insa.rennes.info.chemical.backend.Solution;
 import fr.insa.rennes.info.chemical.backend.SubSolution;
 import fr.insa.rennes.info.chemical.user.ReactionRule;
@@ -28,42 +28,41 @@ public class PickOneRR implements ReactionRule{
 	 * 	<li>At least, one <b>DegreeImpl</b></li>
 	 * </ul>
 	 */
-	private SubSolution<ElementList> _temporaryBar;
+	private SubSolution<SubSolutionElements> _temporaryBar;
 	/**
 	 * This value represents the current bar in creation. This bar is a solution which must contain :
 	 * <ul>
 	 * 	<li>a <BarInCreation</b> object as identifier</li>
 	 * </ul>
 	 */
-	private SubSolution<ElementList> _barInCreation;
-	
+	private SubSolution<SubSolutionElements> _barInCreation;
 	
 
 	/**
 	 * @return the _temporaryBar
 	 */
-	public SubSolution<ElementList> get_temporaryBar() {
+	public SubSolution<SubSolutionElements> get_temporaryBar() {
 		return _temporaryBar;
 	}
 
 	/**
 	 * @param _temporaryBar the _temporaryBar to set
 	 */
-	public void set_temporaryBar(SubSolution<ElementList> _temporaryBar) {
+	public void set_temporaryBar(SubSolution<SubSolutionElements> _temporaryBar) {
 		this._temporaryBar = _temporaryBar;
 	}
 
 	/**
 	 * @return the _barInCreation
 	 */
-	public SubSolution<ElementList> get_barInCreation() {
+	public SubSolution<SubSolutionElements> get_barInCreation() {
 		return _barInCreation;
 	}
 
 	/**
 	 * @param _barInCreation the _barInCreation to set
 	 */
-	public void set_barInCreation(SubSolution<ElementList> _barInCreation) {
+	public void set_barInCreation(SubSolution<SubSolutionElements> _barInCreation) {
 		this._barInCreation = _barInCreation;
 	}
 
@@ -72,7 +71,7 @@ public class PickOneRR implements ReactionRule{
 	 * the subsolutions _temporaryBar and _barInCreation.
 	 */
 	public PickOneRR(){
-		_temporaryBar = new SubSolution<ElementList>(new ElementList());
+		_temporaryBar = new SubSolution<SubSolutionElements>(new SubSolutionElements());
 		List<Class<? extends Object>> l = new ArrayList<Class<? extends Object>>();
 		l.add(Temporary.class);
 		l.add(DegreeImpl.class);
