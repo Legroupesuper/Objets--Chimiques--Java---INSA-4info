@@ -3,7 +3,7 @@ package org.chemicalmozart.model.implementations.reactionrules;
 import org.chemicalmozart.model.implementations.BarNumber;
 import org.chemicalmozart.model.implementations.QuaterPerBar;
 
-import fr.insa.rennes.info.chemical.backend.Dontuse;
+import fr.insa.rennes.info.chemical.user.Dontuse;
 import fr.insa.rennes.info.chemical.user.ReactionRule;
 
 

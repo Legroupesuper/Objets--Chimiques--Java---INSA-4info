@@ -1,6 +1,6 @@
 package fr.insa.rennes.info.chemical.backend;
 
-public class Pair<A, B> {
+class Pair<A, B> {
 	private A _first;
 	private B _second;
 	public A get_first() {

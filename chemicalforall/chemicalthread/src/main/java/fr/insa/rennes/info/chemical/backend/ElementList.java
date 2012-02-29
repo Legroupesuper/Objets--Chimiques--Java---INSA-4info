@@ -2,7 +2,7 @@ package fr.insa.rennes.info.chemical.backend;
 
 import java.util.List;
 
-public class ElementList implements ChemicalElement{
+class ElementList implements ChemicalElement{
 	private List<Object> _elements;
 	private List<Class<? extends Object>> _types;
 

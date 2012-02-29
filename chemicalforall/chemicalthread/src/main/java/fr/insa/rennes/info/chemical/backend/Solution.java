@@ -20,6 +20,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.FileHandler;
 
+import fr.insa.rennes.info.chemical.user.Dontreact;
+import fr.insa.rennes.info.chemical.user.InertEvent;
 import fr.insa.rennes.info.chemical.user.InertEventListener;
 import fr.insa.rennes.info.chemical.user.ReactionRule;
 

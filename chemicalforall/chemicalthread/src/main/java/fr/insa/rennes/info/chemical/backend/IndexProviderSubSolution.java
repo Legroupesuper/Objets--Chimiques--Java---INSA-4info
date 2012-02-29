@@ -13,7 +13,7 @@ import org.omg.CORBA._IDLTypeStub;
  * @author Cédric Andreolli, Chloé Boulanger, Olivier Cléro, Antoine Guellier, Sébastien Guilloux, Arthur Templé
  *
  */
-public class IndexProviderSubSolution implements IndexProviderElement{
+class IndexProviderSubSolution implements IndexProviderElement{
 	private List<List<IndexProviderElement>> _listElements;
 	private int _currentValue;
 	private int _currentList;

@@ -6,7 +6,7 @@ import java.util.logging.Logger;
 
 import fr.insa.rennes.info.chemical.user.ReactionRule;
 
-public class Utils {
+class Utils {
 	
 /*
  * Logger (remplace avantageusement les classiques
@@ -57,7 +57,7 @@ public class Utils {
 	 * @param r The ReactionRule
 	 * @param s The prefixed string
 	 * @param f The field
-	 * @return The method wich correspond to the previous parameters
+	 * @return The method which correspond to the previous parameters
 	 */
 	protected static Method getMethodFromReactionRule(ReactionRule r, String s, Field f){
 		Method m = null;

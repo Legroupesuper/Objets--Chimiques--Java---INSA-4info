@@ -3,6 +3,7 @@ package fr.insa.rennes.info.chemical.backend;
 import java.util.List;
 
 
+
 public final class SubSolution<T extends ChemicalElement> implements ChemicalElement {
 	private T _element;
 

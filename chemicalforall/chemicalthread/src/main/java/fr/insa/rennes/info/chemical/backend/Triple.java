@@ -1,6 +1,6 @@
 package fr.insa.rennes.info.chemical.backend;
 
-public class Triple<A, B, C> {
+class Triple<A, B, C> {
 	private A _first;
 	private B _second;
 	private C _triple;

@@ -2,7 +2,7 @@ package fr.insa.rennes.info.chemical.backend;
 
 import java.math.BigInteger;
 
-public interface IndexProviderElement {
+interface IndexProviderElement {
 	public void init();
 	public int getValue();
 	public BigInteger getNumberOfElements();

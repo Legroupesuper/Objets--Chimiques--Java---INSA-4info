@@ -3,9 +3,9 @@ package functionnaltests;
 import java.util.ArrayList;
 import java.util.List;
 
-import fr.insa.rennes.info.chemical.backend.Dontputback;
 import fr.insa.rennes.info.chemical.backend.ElementList;
 import fr.insa.rennes.info.chemical.backend.SubSolution;
+import fr.insa.rennes.info.chemical.user.Dontputback;
 import fr.insa.rennes.info.chemical.user.ReactionRule;
 
 public class DeleteRuleMax implements ReactionRule{

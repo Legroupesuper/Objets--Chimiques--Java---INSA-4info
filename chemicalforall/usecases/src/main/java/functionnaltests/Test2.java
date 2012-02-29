@@ -1,6 +1,6 @@
 package functionnaltests;
-import fr.insa.rennes.info.chemical.backend.InertEvent;
 import fr.insa.rennes.info.chemical.backend.Solution;
+import fr.insa.rennes.info.chemical.user.InertEvent;
 import fr.insa.rennes.info.chemical.user.InertEventListener;
 
 
