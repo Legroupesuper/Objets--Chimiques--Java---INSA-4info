@@ -26,9 +26,10 @@ public class CreateBarRRTest extends TestCase {
 	private Solution _sol;
 	private QuaterPerBar _quaterPerBar;
 	private String _debugValue= "";
-	public CreateBarRRTest() {
-		super();	
-		 _sol = new Solution();
+	
+	protected void setUp() throws Exception {
+		super.setUp();
+		_sol = new Solution();
 		BarNumber measureNumber = new BarNumber(1);
 		 _quaterPerBar = new QuaterPerBar(4);
 		_sol.add(measureNumber);

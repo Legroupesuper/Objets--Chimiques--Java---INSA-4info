@@ -1,9 +1,10 @@
 package org.chemicalmozart.model.implementations.reactionrules;
 
-import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import junit.framework.TestCase;
 
 import org.chemicalmozart.model.implementations.BarNumber;
 import org.chemicalmozart.model.implementations.DegreeImpl;
@@ -16,16 +17,15 @@ import fr.insa.rennes.info.chemical.backend.SubSolutionElements;
 import fr.insa.rennes.info.chemical.backend.Solution;
 import fr.insa.rennes.info.chemical.backend.SubSolution;
 
-public class PickOneRRTest {
-
-	@Test
-	public void testComputeResult() {
-		boolean isGarbageRRPresent = false;
-		boolean isDegreeImplPresent = false;
-		boolean isBarInCreationPresent = false;
-		boolean isQuaterLeftPresent = false;
-		boolean isBarNumberPresent = false;
-		
+public class PickOneRRTest extends TestCase{
+	private boolean _isGarbageRRPresent = false;
+	private boolean _isDegreeImplPresent = false;
+	private boolean _isBarInCreationPresent = false;
+	private boolean _isQuaterLeftPresent = false;
+	private boolean _isBarNumberPresent = false;
+	
+	protected void setUp() throws Exception {
+		super.setUp();
 		//Instantiate the needed parameters
 		Solution temporarySolution = new Solution();
 		Temporary temp = new Temporary();
@@ -34,13 +34,13 @@ public class PickOneRRTest {
 		temporarySolution.add(deg);
 		temporarySolution.add(new DegreeImpl(2));
 		temporarySolution.add(new DegreeImpl(3));
-		
+
 		Solution barInCreationSolution = new Solution();
 		BarInCreation bic = new BarInCreation();
 		barInCreationSolution.add(bic);
 		barInCreationSolution.add(new QuaterLeft(4));
 		barInCreationSolution.add(new BarNumber(1));
-		
+
 		SubSolutionElements e1 = new SubSolutionElements();
 		List<Object> l1 = new ArrayList<Object>();
 		l1.add(temporarySolution);
@@ -48,43 +48,61 @@ public class PickOneRRTest {
 		l1.add(deg);
 		e1.setElements(l1);
 		SubSolution<SubSolutionElements> temporaryBar = new SubSolution<SubSolutionElements>(e1);
-		
+
 		SubSolutionElements e2 = new SubSolutionElements();
 		List<Object> l2 = new ArrayList<Object>();
 		l2.add(BarInCreation.class);
 		e2.setElements(l2);
 		SubSolution<SubSolutionElements> barInCreation = new SubSolution<SubSolutionElements>(e2);
-		
+
 		PickOneRR rr = new PickOneRR();
 		rr.set_barInCreation(barInCreation);
 		rr.set_temporaryBar(temporaryBar);
-		
+
 		//Now the RR is instantiated and ready for being tested
 		Object[] result = rr.computeResult();
-		
+
 		for(Object o : result){
 			if(o instanceof GarbageRR){
-				isGarbageRRPresent = true;
+				_isGarbageRRPresent = true;
 			}else if(o instanceof DegreeImpl){
-				isDegreeImplPresent = true;
+				_isDegreeImplPresent = true;
 			}
 		}
-		
+
 		for(Object o : barInCreationSolution){
 			if(o instanceof QuaterLeft){
-				isQuaterLeftPresent = true;
+				_isQuaterLeftPresent = true;
 			}else if(o instanceof BarInCreation){
-				isBarInCreationPresent = true;
+				_isBarInCreationPresent = true;
 			}else if(o instanceof BarNumber){
-				isBarNumberPresent = true;
+				_isBarNumberPresent = true;
 			}
 		}
-		
-		assertTrue("GarbageRR is not present", isGarbageRRPresent);
-		assertTrue("DegreeImpl is not present", isDegreeImplPresent);
-		assertTrue("QuaterLeft is no more present", isQuaterLeftPresent);
-		assertTrue("Bar in creation is not present in the BarInCreation Solution", isBarInCreationPresent);
-		assertTrue("BarNumber is not present", isBarNumberPresent);
 	}
 
+	@Test
+	public void testGarbageRRPresent() {
+		assertTrue("GarbageRR is not present", _isGarbageRRPresent);
+	}
+
+	@Test
+	public void testDegreeImplPresent(){
+		assertTrue("DegreeImpl is not present", _isDegreeImplPresent);
+	}
+	
+	@Test
+	public void testQuaterLeftPresent(){
+		assertTrue("QuaterLeft is no more present", _isQuaterLeftPresent);
+	}
+	
+	@Test
+	public void testBarInCreationPresent(){
+		assertTrue("Bar in creation is not present in the BarInCreation Solution", _isBarInCreationPresent);
+	}
+	
+	@Test
+	public void testBarNumberPresent(){
+		assertTrue("BarNumber is not present", _isBarNumberPresent);
+	}
 }

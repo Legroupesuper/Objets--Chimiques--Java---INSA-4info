@@ -20,7 +20,7 @@ import fr.insa.rennes.info.chemical.user.ReactionRule;
  *  </ul>
  * The computeSelect is used, see the computeSelect and computeResult documentation for more informations
  */
-public class HarmonicRR1 implements ReactionRule{
+public class HarmonicRR2 implements ReactionRule{
 
 	/**
 	 * Represents the current Degree that we will use for the next chord.
@@ -37,15 +37,16 @@ public class HarmonicRR1 implements ReactionRule{
 	/**
 	 * The constructor is used by the library to instantiate the _barInCreationSolution element.
 	 */
-	public HarmonicRR1() {
+	public HarmonicRR2() {
 		super();
 		/*
 		 *must be completed
 		 */
 	}
+
 	/**
 	 * It musn't return _degree into the main solution !<br />
-	 * After a 1st degree, you can go :<br />
+	 * After a 2nd degree, you can go :<br />
 	 * <ul>
 	 * <li> On a 1nd degree on 10%</li>
 	 * <li> On a 2nd degree on 10%</li>
@@ -77,7 +78,7 @@ public class HarmonicRR1 implements ReactionRule{
 	/**
 	 * This method must succeed if :<br />
 	 *  _barInCreationSolution is a bar in creation solution <br />
-	 *  && _degree.getValue() is equal to 1 (This is HarmonicRR1)
+	 *  && _degree.getValue() is equal to 2 (This is HarmonicRR1)
 	 */
 	public boolean computeSelect() {
 		/*

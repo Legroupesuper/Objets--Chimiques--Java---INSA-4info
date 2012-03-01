@@ -16,14 +16,14 @@ import fr.insa.rennes.info.chemical.backend.Solution;
 import fr.insa.rennes.info.chemical.backend.SubSolution;
 import fr.insa.rennes.info.chemical.backend.SubSolutionElements;
 
-public class HarmonicRR1Test extends TestCase{
+public class HarmonicRR6Test extends TestCase{
 	private boolean _isSolutionPresent = false;
 	private boolean _isSolutionValid = false;
 	private boolean _isPickOneRRPresent = false;
 	private boolean _isRythmeRRPresent = false;
 	private boolean _isBarInCreationPresent = false;
 
-	private Solution setRR(HarmonicRR1 rr){
+	private Solution setRR(HarmonicRR6 rr){
 		rr.set_degree(new DegreeImpl(1));
 		//create the BarInCreation solution
 		Solution sol = new Solution();
@@ -49,7 +49,7 @@ public class HarmonicRR1Test extends TestCase{
 
 	@Test
 	public void testBarInCreationPresent(){
-		HarmonicRR1 rr = new HarmonicRR1();
+		HarmonicRR6 rr = new HarmonicRR6();
 		Solution sol = this.setRR(rr);
 
 		rr.computeResult();
@@ -64,12 +64,12 @@ public class HarmonicRR1Test extends TestCase{
 
 	@Test
 	public void testComputeSelect() {
-		HarmonicRR1 rr = new HarmonicRR1();
+		HarmonicRR6 rr = new HarmonicRR6();
 		assertFalse("The computeSelect shouldn't accept this configuration", rr.computeSelect());
 
 		//We instantiate the RR with a valid DegreeImpl and a valid Solution which represents a BarInCreation
 		//We test some different configurations
-		rr.set_degree(new DegreeImpl(1));
+		rr.set_degree(new DegreeImpl(6));
 		assertFalse("The computeSelect shouldn't accept this configuration", rr.computeSelect());
 		Solution sol = new Solution();
 		BarInCreation bic = new BarInCreation();
@@ -96,7 +96,7 @@ public class HarmonicRR1Test extends TestCase{
 
 	@Test
 	public void testComputeSelectFail() {
-		HarmonicRR1 rr = new HarmonicRR1();
+		HarmonicRR6 rr = new HarmonicRR6();
 
 		//We instantiate the RR with a valid DegreeImpl and a valid Solution which represents a BarInCreation
 		//We test some different configurations
@@ -123,7 +123,7 @@ public class HarmonicRR1Test extends TestCase{
 
 	@Test
 	public void testPickOneRRPresent(){
-		HarmonicRR1 rr = new HarmonicRR1();
+		HarmonicRR6 rr = new HarmonicRR6();
 		this.setRR(rr);
 
 		Object[] result = rr.computeResult();
@@ -140,7 +140,7 @@ public class HarmonicRR1Test extends TestCase{
 
 	@Test
 	public void testRythmeRRPresent(){
-		HarmonicRR1 rr = new HarmonicRR1();
+		HarmonicRR6 rr = new HarmonicRR6();
 		this.setRR(rr);
 
 		Object[] result = rr.computeResult();
@@ -157,7 +157,7 @@ public class HarmonicRR1Test extends TestCase{
 
 	@Test
 	public void testSolutionPresent(){
-		HarmonicRR1 rr = new HarmonicRR1();
+		HarmonicRR6 rr = new HarmonicRR6();
 		this.setRR(rr);
 
 		Object[] result = rr.computeResult();
@@ -174,7 +174,7 @@ public class HarmonicRR1Test extends TestCase{
 
 	@Test
 	public void testSolutionValid(){
-		HarmonicRR1 rr = new HarmonicRR1();
+		HarmonicRR6 rr = new HarmonicRR6();
 		this.setRR(rr);
 
 		Object[] result = rr.computeResult();

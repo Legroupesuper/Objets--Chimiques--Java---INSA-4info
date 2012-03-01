@@ -6,23 +6,21 @@ import java.util.List;
 import org.chemicalmozart.model.implementations.DegreeImpl;
 import org.chemicalmozart.model.implementations.solutionindentification.Temporary;
 
-import fr.insa.rennes.info.chemical.backend.SubSolutionElements;
-import fr.insa.rennes.info.chemical.backend.Solution;
 import fr.insa.rennes.info.chemical.backend.SubSolution;
+import fr.insa.rennes.info.chemical.backend.SubSolutionElements;
 import fr.insa.rennes.info.chemical.user.ReactionRule;
-
 
 
 /**
  * This ReactionRule is used to pick a Degree in the temporary solution and move it
  * to the main solution. It also create a GarbageRR to remove the Temporary Bar from the main Solution
- * This rule disappears once it has react.
+ * This rule disappears once it has react.<br />
  */
 public class PickOneRR implements ReactionRule{
 
 	/**
-	 * This value represents the temporary bar which contains the possible following degrees.
-	 * It must contain :
+	 * This value represents the temporary bar which contains the possible following degrees.<br />
+	 * It must contain :<br />
 	 * <ul>
 	 * 	<li>a <b>Temporary</b> object as identifier</li>
 	 * 	<li>At least, one <b>DegreeImpl</b></li>
@@ -30,33 +28,69 @@ public class PickOneRR implements ReactionRule{
 	 */
 	private SubSolution<SubSolutionElements> _temporaryBar;
 	/**
-	 * This value represents the current bar in creation. This bar is a solution which must contain :
+	 * This value represents the current bar in creation. This bar is a solution which must contain :<br />
 	 * <ul>
 	 * 	<li>a <BarInCreation</b> object as identifier</li>
 	 * </ul>
 	 */
 	private SubSolution<SubSolutionElements> _barInCreation;
-	
+
 
 	/**
-	 * @return the _temporaryBar
+	 * The constructor is used to set the type of the element we want to match in
+	 * the subsolutions _temporaryBar and _barInCreation.
 	 */
-	public SubSolution<SubSolutionElements> get_temporaryBar() {
-		return _temporaryBar;
+	public PickOneRR(){
+		this._temporaryBar = new SubSolution<SubSolutionElements>(new SubSolutionElements());
+		List<Class<? extends Object>> l = new ArrayList<Class<? extends Object>>();
+		l.add(Temporary.class);
+		l.add(DegreeImpl.class);
+		this._temporaryBar.setTypeList(l);
+
+		/*
+		 * Do quite the same thing to get the bar in creation solution
+		 */
 	}
 
 	/**
-	 * @param _temporaryBar the _temporaryBar to set
+	 * It just returns the chosen DegreeImpl into the parent solution and a GarbageRR to remove the temporary solution.<br />
+	 * It must also put back the BarInCreation into the concerned solution because due to the reaction, it will be consumed.
+	 * @return the Choosen DegreeImpl, a GarbageRR
 	 */
-	public void set_temporaryBar(SubSolution<SubSolutionElements> _temporaryBar) {
-		this._temporaryBar = _temporaryBar;
+	public Object[] computeResult() {
+		/*
+		 * must be completed
+		 */
+		return null;
+	}
+
+	/**
+	 * The computeSelect always succeed
+	 * @TODO check that the trick is working
+	 */
+	public boolean computeSelect() {
+		return true;
 	}
 
 	/**
 	 * @return the _barInCreation
 	 */
 	public SubSolution<SubSolutionElements> get_barInCreation() {
-		return _barInCreation;
+		return this._barInCreation;
+	}
+
+	/**
+	 * @return the _temporaryBar
+	 */
+	public SubSolution<SubSolutionElements> get_temporaryBar() {
+		return this._temporaryBar;
+	}
+
+	/**
+	 * This is a one-shot rule
+	 */
+	public Multiplicity getMultiplicity() {
+		return Multiplicity.ONE_SHOT;
 	}
 
 	/**
@@ -67,45 +101,9 @@ public class PickOneRR implements ReactionRule{
 	}
 
 	/**
-	 * The constructor is used to set the type of the element we want to match in
-	 * the subsolutions _temporaryBar and _barInCreation.
+	 * @param _temporaryBar the _temporaryBar to set
 	 */
-	public PickOneRR(){
-		_temporaryBar = new SubSolution<SubSolutionElements>(new SubSolutionElements());
-		List<Class<? extends Object>> l = new ArrayList<Class<? extends Object>>();
-		l.add(Temporary.class);
-		l.add(DegreeImpl.class);
-		_temporaryBar.setTypeList(l);
-		
-		/*
-		 * Do quite the same thing to get the bar in creation solution
-		 */
-	}
-	
-	/**
-	 * It just returns the chosen DegreeImpl into the parent solution and a GarbageRR to remove the temporary solution.
-	 * It must also put back the BarInCreation into the concerned solution because due to the reaction, it will be consumed.
-	 * @return the Choosen DegreeImpl, a GarbageRR
-	 */
-	public Object[] computeResult() {
-		/*
-		 * must be completed
-		 */
-		return null;
-	}
-	
-	/**
-	 * The computeSelect always succeed
-	 * @TODO check that the trick is working
-	 */
-	public boolean computeSelect() {
-		return true;
-	}
-	
-	/**
-	 * This is a one-shot rule
-	 */
-	public Multiplicity getMultiplicity() {
-		return Multiplicity.ONE_SHOT;
+	public void set_temporaryBar(SubSolution<SubSolutionElements> _temporaryBar) {
+		this._temporaryBar = _temporaryBar;
 	}
 }
