@@ -9,20 +9,12 @@ public class Test2 {
 		final Solution mainSol = new Solution();
 		Solution innerSol= new Solution();
 		Solution innerSol2= new Solution();
-		//innerSol2.add(innerSol);
 		innerSol.add(1);
 		innerSol.add(2);
 		innerSol.add(3);
 		innerSol.add(4);
-		innerSol2.add(15);
-		innerSol2.add(25);
-		innerSol2.add(35);
-		innerSol2.add(45);
-		mainSol.add(new MaxIntRR());
 		mainSol.add(new DeleteRR());
-		//mainSol.add(new DeleteRR());
 		mainSol.add(innerSol);
-		mainSol.add(innerSol2);
 		mainSol.add(new DeleteRuleMax());
 		mainSol.addInertEventListener(new InertEventListener() {
 			

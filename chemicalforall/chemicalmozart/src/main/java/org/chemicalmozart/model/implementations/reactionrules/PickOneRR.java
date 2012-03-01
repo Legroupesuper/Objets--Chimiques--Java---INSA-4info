@@ -15,57 +15,77 @@ import fr.insa.rennes.info.chemical.user.ReactionRule;
 
 /**
  * This ReactionRule is used to pick a Degree in the temporary solution and move it
- * to the main solution.
+ * to the main solution. It also create a GarbageRR to remove the Temporary Bar from the main Solution
  * This rule disappears once it has react.
  */
 public class PickOneRR implements ReactionRule{
 
-	private SubSolution<SubSolutionElements> _subSol;
-	private Solution _sol;
+	/**
+	 * This value represents the temporary bar which contains the possible following degrees.
+	 * It must contain :
+	 * <ul>
+	 * 	<li>a <b>Temporary</b> object as identifier</li>
+	 * 	<li>At least, one <b>DegreeImpl</b></li>
+	 * </ul>
+	 */
+	private SubSolution<SubSolutionElements> _temporaryBar;
+	/**
+	 * This value represents the current bar in creation. This bar is a solution which must contain :
+	 * <ul>
+	 * 	<li>a <BarInCreation</b> object as identifier</li>
+	 * </ul>
+	 */
+	private SubSolution<SubSolutionElements> _barInCreation;
 	
+
 	/**
-	 * @return the _subSol
+	 * @return the _temporaryBar
 	 */
-	public SubSolution<SubSolutionElements> get_subSol() {
-		return _subSol;
+	public SubSolution<SubSolutionElements> get_temporaryBar() {
+		return _temporaryBar;
 	}
 
 	/**
-	 * @param _subSol the _subSol to set
+	 * @param _temporaryBar the _temporaryBar to set
 	 */
-	public void set_subSol(SubSolution<SubSolutionElements> _subSol) {
-		this._subSol = _subSol;
+	public void set_temporaryBar(SubSolution<SubSolutionElements> _temporaryBar) {
+		this._temporaryBar = _temporaryBar;
 	}
 
 	/**
-	 * @return the _sol
+	 * @return the _barInCreation
 	 */
-	public Solution get_sol() {
-		return _sol;
+	public SubSolution<SubSolutionElements> get_barInCreation() {
+		return _barInCreation;
 	}
 
 	/**
-	 * @param _sol the _sol to set
+	 * @param _barInCreation the _barInCreation to set
 	 */
-	public void set_sol(Solution _sol) {
-		this._sol = _sol;
+	public void set_barInCreation(SubSolution<SubSolutionElements> _barInCreation) {
+		this._barInCreation = _barInCreation;
 	}
 
 	/**
 	 * The constructor is used to set the type of the element we want to match in
-	 * the subsolution _subSol.
+	 * the subsolutions _temporaryBar and _barInCreation.
 	 */
 	public PickOneRR(){
-		_subSol = new SubSolution<SubSolutionElements>(new SubSolutionElements());
+		_temporaryBar = new SubSolution<SubSolutionElements>(new SubSolutionElements());
 		List<Class<? extends Object>> l = new ArrayList<Class<? extends Object>>();
 		l.add(Temporary.class);
 		l.add(DegreeImpl.class);
-		_subSol.setTypeList(l);
+		_temporaryBar.setTypeList(l);
+		
+		/*
+		 * Do quite the same thing to get the bar in creation solution
+		 */
 	}
 	
 	/**
-	 * It just returns the chosen DegreeImpl into the parent solution and a garbage reaction rule to remove the temporary solution.
-	 * The rule used to clean is named GarbageRR
+	 * It just returns the chosen DegreeImpl into the parent solution and a GarbageRR to remove the temporary solution.
+	 * It must also put back the BarInCreation into the concerned solution because due to the reaction, it will be consumed.
+	 * @return the Choosen DegreeImpl, a GarbageRR
 	 */
 	public Object[] computeResult() {
 		/*

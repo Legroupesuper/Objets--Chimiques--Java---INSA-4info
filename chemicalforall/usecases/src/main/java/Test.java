@@ -112,29 +112,6 @@ public class Test {
 		s.add(" Le ");
 		s.add(" Gros ");
 		s.add(" Eléphant ");
-		/*ChemicalElement c = new ChemicalElement() {
-
-			public List<Object> getElements() {
-				// TODO Auto-generated method stub
-				return null;
-			}
-
-			public List<Class<? extends Object>> getTypeList() {
-				// TODO Auto-generated method stub
-				return null;
-			}
-
-			public void setElementList(List<Object> l) {
-				// TODO Auto-generated method stub
-
-			}
-
-			public void setTypeList(List<Class<? extends Object>> l) {
-				// TODO Auto-generated method stub
-
-			}
-		};
-		s.add(c);*/
 		s.add(new MaxIntRR(0));
 		//s.add(new MaxIntSubSolRR());
 		s.add(new ConcatRR());

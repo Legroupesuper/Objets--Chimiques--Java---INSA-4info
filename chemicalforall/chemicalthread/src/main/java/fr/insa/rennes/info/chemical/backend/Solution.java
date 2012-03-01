@@ -812,7 +812,7 @@ public final class Solution implements Collection<Object>{
 			return new SubIndexProviderSolution(ltemp, incompat);
 		}catch(Exception e){
 			/*
-			 * This exception is catched when the cast fails. It means that we are on an ElementList.
+			 * This exception is catched when the cast fails. It means that we are on an SubSolutionElements.
 			 * We need to get the type list to try to create the IndexProvider.
 			 * At this point, s is the Solution in which we are going to try to find our elements list.
 			 */

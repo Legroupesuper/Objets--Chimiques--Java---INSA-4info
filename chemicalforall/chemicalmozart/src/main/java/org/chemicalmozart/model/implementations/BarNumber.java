@@ -14,7 +14,7 @@ public class BarNumber extends Number {
 		super(_value);
 	}
 
-	public void increment(){
-		setValue(getValue()+1);
+	public BarNumber(BarNumber number) {
+		super(number);
 	}
 }

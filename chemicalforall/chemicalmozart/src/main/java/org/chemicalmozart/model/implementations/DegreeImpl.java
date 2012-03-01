@@ -12,14 +12,23 @@ public class DegreeImpl {
 
 	private int _value;
 
+	/**
+	 * @return the _value
+	 */
+	public int get_value() {
+		return _value;
+	}
 
 	/**
-	 * Description of the method getValue.
-	 *
-	 * @return null
+	 * @param _value the _value to set
 	 */
-	public int getValue() {
-		return 0;
+	public void set_value(int _value) {
+		this._value = _value;
+	}
+
+	public DegreeImpl(int _value) {
+		super();
+		this._value = _value;
 	}
 
 
