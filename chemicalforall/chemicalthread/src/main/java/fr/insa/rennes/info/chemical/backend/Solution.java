@@ -106,7 +106,7 @@ public final class Solution implements Collection<Object>{
 		_inert = false;
 	}
 	
-	
+	//REFACTORING
 	private boolean checkReactionRuleReactive(Object reactionRuleObject) {
 		Class<? extends Object> clazz = reactionRuleObject.getClass();
 		String errorMsg = "";
@@ -150,6 +150,7 @@ public final class Solution implements Collection<Object>{
 		return true;
 	}
 	
+	//REFACTORING
 	private void processAddSubSolution(Object solutionObject) {
 		Solution sol = (Solution) solutionObject;
 		sol.addInertEventListener(new InertEventListener() {
@@ -491,7 +492,42 @@ public final class Solution implements Collection<Object>{
 		}
 
 	}
+	
+	
+	//REFACTORING
+	private List<List<Integer>> buildDependantIndexesMap(List<String> rrReactives) {
+		
+		Map<String, List<Integer>> dependantIndexesMap = new HashMap<String, List<Integer>>();
+		String reactiveTypeName;
+		for(int i = 0; i < rrReactives.size(); i++){
+			reactiveTypeName = rrReactives.get(i);
+			if(dependantIndexesMap.containsKey(reactiveTypeName)){
+				dependantIndexesMap.get(reactiveTypeName).add(i);
+			}else{
+				List<Integer> l = new ArrayList<Integer>();
+				l.add(i);
+				dependantIndexesMap.put(reactiveTypeName, l);
+			}
 
+			//If the type isn't even an entry of the hash map, return false (didn't find any reactive)
+			if(_mapElements.get(rrReactives.get(i))== null)
+				return null;
+		}
+		
+		//We have to provide the IndexProvider a list of a list of int, so
+		//we need to transform the map of list in a list of list
+		List<List<Integer>> dependantIndexesList = new ArrayList<List<Integer>>();
+		for(String s : dependantIndexesMap.keySet()){
+			if(dependantIndexesMap.get(s).size() > 1){
+				dependantIndexesList.add(dependantIndexesMap.get(s));
+			}
+		}
+		
+		return dependantIndexesList;
+	}
+	
+	
+	
 	/*
 	 * This method is called by every thread-reaction rule to get its reactives.
 	 * It returns true if a set of parameter have been found, else false. The reactives are set directly
@@ -511,19 +547,19 @@ public final class Solution implements Collection<Object>{
 		}
 
 		//Build the type table : the types of the reaction rules reactives
-		Field[] fields = r.getClass().getDeclaredFields();
-		String table[] = new String[fields.length];
-		List<String> tableS = new ArrayList<String>();
+		Field[] rrFields = r.getClass().getDeclaredFields();
+		//String table[] = new String[fields.length];
+		List<String> rrReactives = new ArrayList<String>();
 		List<SubIndexProvider> listElements = new ArrayList<SubIndexProvider>();
-		for(int i=0; i< fields.length; i++){
-			if(fields[i].getAnnotation(Dontreact.class) == null){
-				if(fields[i].getType().getName().contains(SubSolution.class.getName())){
-					table[i] = Solution.class.getName();
-					tableS.add(Solution.class.getName());
+		for(int i=0; i< rrFields.length; i++){
+			if(rrFields[i].getAnnotation(Dontreact.class) == null){
+				if(rrFields[i].getType().getName().contains(SubSolution.class.getName())){
+					//table[i] = Solution.class.getName();
+					rrReactives.add(Solution.class.getName());
 				}else{
-					table[i] = fields[i].getType().getName();
-					tableS.add(fields[i].getType().getName());
-					System.out.println("==>Annotations : "+fields[i].getAnnotation(Dontreact.class));
+					//table[i] = fields[i].getType().getName();
+					rrReactives.add(rrFields[i].getType().getName());
+					System.out.println("==>Annotations : "+rrFields[i].getAnnotation(Dontreact.class));
 				}
 			}
 		}
@@ -534,34 +570,11 @@ public final class Solution implements Collection<Object>{
 
 			//Construct the map of the dependent indexes (two dependent indexes can not have the same value
 			//as they refer to the same element)
-			Map<String, List<Integer>> mapIndexProvider = new HashMap<String, List<Integer>>();
-			for(int i = 0; i < tableS.size(); i++){
-				if(mapIndexProvider.containsKey(tableS.get(i))){
-					List<Integer> l = mapIndexProvider.get(tableS.get(i));
-					l.add(i);
-					mapIndexProvider.put(tableS.get(i), l);
-				}else{
-					List<Integer> l = new ArrayList<Integer>();
-					l.add(i);
-					mapIndexProvider.put(tableS.get(i), l);
-				}
+			List<List<Integer>> dependantIndexesList = buildDependantIndexesMap(rrReactives);
+			if(dependantIndexesList == null)
+				return false;
 
-				//If the type isn't even an entry of the hash map, return false (didn't find any reactive)
-				if(_mapElements.get(tableS.get(i))== null)
-					return false;
-			}
-
-			//We have to provide the IndexProvider a list of a list of int, so
-			//we need to transform the map of list in a list of list
-			List<List<Integer>> listProvider = new ArrayList<List<Integer>>();
-			for(String s : mapIndexProvider.keySet()){
-				if(mapIndexProvider.get(s).size()>1){
-					listProvider.add(mapIndexProvider.get(s));
-				}else{
-				}
-			}
-
-			SubIndexProviderSolution sol = generateIndexProviderSubSolution(fields, listProvider, r);
+			SubIndexProviderSolution sol = generateIndexProviderSubSolution(rrFields, dependantIndexesList, r);
 			if(sol == null || sol.getNumberOfElements().equals(BigInteger.ZERO))
 				return false;
 
@@ -588,7 +601,7 @@ public final class Solution implements Collection<Object>{
 					return false;
 				int i=0;
 				Pair<Solution, Object> obj = null;
-				for(Field f : fields){
+				for(Field f : rrFields){
 					if(f.getAnnotation(Dontreact.class) == null){
 						//Find the setter for this field
 						setterNumber = _mapReactionRulesSetters.get(r.getClass().getName()+"."+f.getName());

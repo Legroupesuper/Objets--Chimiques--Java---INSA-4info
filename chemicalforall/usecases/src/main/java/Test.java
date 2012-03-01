@@ -12,6 +12,15 @@ public class Test {
 	 * @param args
 	 */
 	public static void main(String[] args) {
+//		MaxIntSubSolRR lala = new MaxIntSubSolRR();
+//		
+//		lala.computeResult();
+//		
+//		System.out.println(lala);
+//		
+//		if(true)
+//			return;
+		
 		final Solution s = new Solution(Solution.Strategy.RANDOM);
 		Solution s2 = new Solution();
 		Solution s3 = new Solution();
@@ -27,18 +36,18 @@ public class Test {
 		s4.add(12);
 		s3.add(5);
 		s3.add(5);
+		s3.add(9);
 		s3.add(6);
+		s3.add(18);
+		s3.add(12);
 		s3.add(6);
+		s3.add(23);
 		s3.add(6);
+		s3.add(98);
 		s3.add(6);
-		s3.add(6);
-		s3.add(6);
-		s3.add(6);
-		s3.add(6);
-		s3.add(6);
-		s3.add(6);
-		s3.add(6);
-		s3.add(6);
+		s3.add(21);
+		s3.add(786);
+		s3.add(77);
 //		s2.add(5);
 //		s2.add(5);
 //		s2.add(6);
@@ -56,7 +65,7 @@ public class Test {
 		s3.add("toto");
 		s3.add("toto");
 //		s3.add(new ConcatRR());
-//		s3.add(new MaxIntRR());
+//		s3.add(new MaxIntRR(0));
 		s5.add(56);
 		s5.add(56);
 		s5.add(56);
@@ -77,6 +86,7 @@ public class Test {
 		s6.add(s5);
 		
 		s2.add(s3);
+		s2.add(new MaxIntSubSolRR());
 		s.add(s2);
 		s.add(s6);
 		s.add(s4);
@@ -126,6 +136,7 @@ public class Test {
 		};
 		s.add(c);*/
 		s.add(new MaxIntRR(0));
+		//s.add(new MaxIntSubSolRR());
 		s.add(new ConcatRR());
 		//s.add(new RandomNumberRR());
 		//	s.add(new TrucRR());
