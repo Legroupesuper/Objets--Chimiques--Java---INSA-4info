@@ -47,12 +47,6 @@ public class MaxIntRR implements ReactionRule{
 		c = val;
 	}
 	public Object[] computeResult() {
-		try {
-			Thread.sleep(1000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		if(a>b)
 			return new Object[]{a};
 

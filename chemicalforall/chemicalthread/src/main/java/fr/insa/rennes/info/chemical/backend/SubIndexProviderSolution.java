@@ -175,7 +175,7 @@ class SubIndexProviderSolution implements SubIndexProvider{
 		return true;
 	}
 
-	public void merge(SubIndexProviderSolution subsol) {
-		_listElements.addAll(subsol._listElements);
+	public void merge(SubIndexProviderSolution sipSol) {
+		_listElements.addAll(sipSol._listElements);
 	}
 }

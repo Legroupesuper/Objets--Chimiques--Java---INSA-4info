@@ -183,7 +183,7 @@ public final class Solution implements Collection<Object>{
 				processAddSubSolution(newReactive);
 			}
 			
-			//TODO: Pas la peine le premier test, de toute facon l'utilisateur peut pas accéder à SubSolutionReactivesAccessor
+			//TODO: (Message de Antoine) Pas la peine le premier test, de toute facon l'utilisateur peut pas accéder à SubSolutionReactivesAccessor
 			if(!className.equals(SubSolutionReactivesAccessor.class.getName()) && addElement){
 				boolean result;
 				//When you add an element in the solution, the solution is no more inert
@@ -495,7 +495,7 @@ public final class Solution implements Collection<Object>{
 	
 	
 	//REFACTORING
-	private List<List<Integer>> buildDependantIndexesMap(List<String> rrReactives) {
+	/*private List<List<Integer>> buildDependantIndexesList(List<String> rrReactives) {
 		
 		Map<String, List<Integer>> dependantIndexesMap = new HashMap<String, List<Integer>>();
 		String reactiveTypeName;
@@ -524,7 +524,7 @@ public final class Solution implements Collection<Object>{
 		}
 		
 		return dependantIndexesList;
-	}
+	}*/
 	
 	
 	
@@ -559,7 +559,6 @@ public final class Solution implements Collection<Object>{
 				}else{
 					//table[i] = fields[i].getType().getName();
 					rrReactives.add(rrFields[i].getType().getName());
-					System.out.println("==>Annotations : "+rrFields[i].getAnnotation(Dontreact.class));
 				}
 			}
 		}
@@ -570,31 +569,42 @@ public final class Solution implements Collection<Object>{
 
 			//Construct the map of the dependent indexes (two dependent indexes can not have the same value
 			//as they refer to the same element)
-			List<List<Integer>> dependantIndexesList = buildDependantIndexesMap(rrReactives);
+			/*List<List<Integer>> dependantIndexesList = buildDependantIndexesList(rrReactives);
 			if(dependantIndexesList == null)
-				return false;
+				return false;*/
 
-			SubIndexProviderSolution sol = generateIndexProviderSubSolution(rrFields, dependantIndexesList, r);
-			if(sol == null || sol.getNumberOfElements().equals(BigInteger.ZERO))
-				return false;
+			/*SubIndexProviderSolution ipSubSol = generateIndexProviderSubSolution(rrFields, dependantIndexesList, r);
+			if(ipSubSol == null || ipSubSol.getNumberOfElements().equals(BigInteger.ZERO))
+				return false;*/
 
 			//Instantiate the IndexProvider object
 			IndexProvider indexProvider = null;
-
-
 			try {
-				indexProvider = new IndexProvider(sol, _strategy);
+				IndexProviderBuilder ipBuilder = new IndexProviderBuilder();
+				ipBuilder.setSolution(this);
+				ipBuilder.setReactionRule(r);
+				ipBuilder.setReactionRuleFields(rrFields);
+				ipBuilder.setStrategy(_strategy);
+				ipBuilder.build();
+				indexProvider = ipBuilder.getIndexProvider();//new IndexProvider(ipSubSol, _strategy);
+				
 			} catch (ChemicalException e1) {
+				/*System.out.println("MEEEEEEEEEEEEEEEEEEEEEEEEERDE : "+e1.getMessage());
+				e1.printStackTrace();*/
 				return false;
 			}
-			System.out.println(indexProvider);
+			
+			
+			
+			
+			//End of initialization
 			//Effectively research a valid set of reactives for the reaction rule
 			List<Pair<Solution, Object>> reactives = new ArrayList<Pair<Solution,Object>>();
 			int setterNumber;
 			Method setter;
 			boolean hasMatched = false;
 			//Loop until the reactives has been found OR all combination have been tested
-			while(!indexProvider.is_overflowReached()){
+			while(!indexProvider.is_overflowReached()) {
 				reactives.clear();
 				SubIndexProviderSolution solution = indexProvider.increment();
 				if(solution == null)
@@ -691,7 +701,7 @@ public final class Solution implements Collection<Object>{
 			Method getter = Utils.getMethodFromReactionRule(r, "get", f);
 			try {
 				SubSolution<SubSolutionReactivesAccessor> el = (SubSolution<SubSolutionReactivesAccessor>) getter.invoke(r, null);
-				//We must genetrate the List<Object> of el
+				//We must generate the List<Object> of el
 				//First we must get the good subsolution
 				Solution nextS = (Solution)s._mapElements.get(Solution.class.getName()).get(ipe.getValue());
 				//Then we get le List<Object>
@@ -812,7 +822,7 @@ public final class Solution implements Collection<Object>{
 			return new SubIndexProviderSolution(ltemp, incompat);
 		}catch(Exception e){
 			/*
-			 * This exception is catched when the cast fails. It means that we are on an SubSolutionElements.
+			 * This exception is caught when the cast fails. It means that we are on an SubSolutionElements.
 			 * We need to get the type list to try to create the IndexProvider.
 			 * At this point, s is the Solution in which we are going to try to find our elements list.
 			 */
@@ -938,7 +948,15 @@ public final class Solution implements Collection<Object>{
 	public synchronized void wakeAll() {
 		notifyAll();
 	}
-
+	
+	List<Object> getSubSolutions() {
+		return _mapElements.get(Solution.class.getSimpleName());
+	}
+	
+	Map<String, List<Object>> getMapElements() {
+		return _mapElements;
+	}
+	
 	/**
 	 * This method set the log file of the chemical library.
 	 * For information, logs are set not to be bigger than 10,000 bytes long
