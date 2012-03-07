@@ -879,10 +879,13 @@ public final class Solution implements Collection<Object>{
 
 		//The write/remove operations on the hash map have to be atomic
 		synchronized (_mapElements) {
-			for(Object obj : arg0) {
-				reactiveName = getReactiveType(obj);
+			Iterator<Object> it = this.iterator();
+			Object obj = null;
+			while(it.hasNext()) {
+				obj = it.next();
 
-				if(_mapElements.get(reactiveName) == null || !_mapElements.get(reactiveName).contains(obj)) {
+				if(!arg0.contains(obj)) {
+					reactiveName = getReactiveType(obj);
 					_mapElements.get(reactiveName).remove(obj);
 					res = true;
 				}
