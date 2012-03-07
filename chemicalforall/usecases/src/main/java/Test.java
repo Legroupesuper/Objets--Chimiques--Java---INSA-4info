@@ -1,8 +1,7 @@
-import java.util.List;
-
 import fr.insa.rennes.info.chemical.backend.Solution;
 import fr.insa.rennes.info.chemical.user.InertEvent;
 import fr.insa.rennes.info.chemical.user.InertEventListener;
+import functionnaltests.DeleteRuleMax;
 
 
 
@@ -86,7 +85,6 @@ public class Test {
 		s6.add(s5);
 		
 		s2.add(s3);
-		s2.add(new MaxIntSubSolRR());
 		s.add(s2);
 		s.add(s6);
 		s.add(s4);
@@ -112,8 +110,8 @@ public class Test {
 		s.add(" Le ");
 		s.add(" Gros ");
 		s.add(" Eléphant ");
-		s.add(new MaxIntRR(0));
-		//s.add(new MaxIntSubSolRR());
+		//s.add(new MaxIntRR(0));
+		s.add(new MaxIntSubSolRR());
 		s.add(new ConcatRR());
 		//s.add(new RandomNumberRR());
 		//	s.add(new TrucRR());

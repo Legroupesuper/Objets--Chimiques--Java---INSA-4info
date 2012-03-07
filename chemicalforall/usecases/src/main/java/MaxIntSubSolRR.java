@@ -10,7 +10,7 @@ import fr.insa.rennes.info.chemical.user.ReactionRule;
 
 public class MaxIntSubSolRR implements ReactionRule{
 
-	private SubSolution<SubSolutionElements> a;
+	private SubSolution<SubSolution<SubSolutionElements>> a;
 	@Dontreact
 	private Integer c;
 	
@@ -29,8 +29,9 @@ public class MaxIntSubSolRR implements ReactionRule{
 		la.add(Integer.class);
 		la.add(Integer.class);
 		ea.setTypeList(la);
-		//SubSolution<SubSolutionElements> sa = new SubSolution<SubSolutionElements>(ea);
-		a = new SubSolution<SubSolutionElements>(ea);
+		
+		SubSolution<SubSolutionElements> sa = new SubSolution<SubSolutionElements>(ea);
+		a = new SubSolution<SubSolution<SubSolutionElements>>(sa);
 		
 		/*SubSolutionElements eb = new SubSolutionElements();
 		List<Class<? extends Object>> lb = new ArrayList<Class<? extends Object>>();
@@ -67,7 +68,7 @@ public class MaxIntSubSolRR implements ReactionRule{
 	}
 
 
-	public SubSolution<SubSolutionElements> getA() {
+	public SubSolution<SubSolution<SubSolutionElements>> getA() {
 		return a;
 	}
 
@@ -79,7 +80,7 @@ public class MaxIntSubSolRR implements ReactionRule{
 		return Multiplicity.INFINITY_SHOT;
 	}
 
-	public void setA(SubSolution<SubSolutionElements> a) {
+	public void setA(SubSolution<SubSolution<SubSolutionElements>> a) {
 		this.a = a;
 	}
 

@@ -589,10 +589,19 @@ public final class Solution implements Collection<Object>{
 				indexProvider = ipBuilder.getIndexProvider();//new IndexProvider(ipSubSol, _strategy);
 				
 			} catch (ChemicalException e1) {
-				/*System.out.println("MEEEEEEEEEEEEEEEEEEEEEEEEERDE : "+e1.getMessage());
-				e1.printStackTrace();*/
+					System.out.println("MEEEEEEEEEEEEEEEEEEEEEEEEERDE : rr = "+r+", "+e1.getMessage());
+				//e1.printStackTrace();
 				return false;
 			}
+			
+			/*if(r.getClass().getSimpleName().equals("MaxIntSubSolRR")) {
+				System.out.println("\n\n\n\n\n"+r.getClass().getName());
+				System.out.println(indexProvider);
+				System.out.println("\n\n\n\n\n");
+			} else {
+				
+				
+			}*/
 			
 			
 			
@@ -950,7 +959,10 @@ public final class Solution implements Collection<Object>{
 	}
 	
 	List<Object> getSubSolutions() {
-		return _mapElements.get(Solution.class.getSimpleName());
+		List<Object> res = _mapElements.get(Solution.class.getName());
+		if(res == null)
+			res = new ArrayList<Object>();
+		return res;
 	}
 	
 	Map<String, List<Object>> getMapElements() {

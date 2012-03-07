@@ -71,8 +71,8 @@ public class SubIndexProviderSolutionBuilder {
 
 		_complete = true;
 	}
-	
-	
+
+
 
 	private void recursiveBuild() throws ChemicalException {
 		if(_paramType == null || _solution == null || _rrSubSolField == null)
@@ -81,15 +81,17 @@ public class SubIndexProviderSolutionBuilder {
 		try{
 			//This cast can fail
 			_paramType = (ParameterizedType)_paramType.getActualTypeArguments()[0];
-			
+
 			//If the cast does not fail, we found another SubSolution object,
 			//and another recursion is needed
-			
+
 			//Then we generate the List of List for the SubIndexProviderSolution
 			List<List<SubIndexProvider>> firstLevelList = new ArrayList<List<SubIndexProvider>>();
+			List<SubIndexProvider> secondLevelList = new ArrayList<SubIndexProvider>();
+			SubIndexProviderSolution sipSolAccumulation = null;
 			for(Object o : _solution.getSubSolutions()){
 				Solution subSubSol = (Solution) o;
-				
+
 				SubIndexProviderSolutionBuilder sipSolBuilder = new SubIndexProviderSolutionBuilder();
 
 				sipSolBuilder.setReactionRule(_rr);
@@ -97,18 +99,32 @@ public class SubIndexProviderSolutionBuilder {
 				sipSolBuilder.setSolution(subSubSol);
 				sipSolBuilder.setSubSolutionField(_rrSubSolField);
 				sipSolBuilder.build();
-				
+
 				SubIndexProviderSolution sipSol = sipSolBuilder.getSubIndexProvider();
-				if(sipSol != null)
-					firstLevelList.add(sipSol.get_listElements());
+				if(sipSol != null){
+					if(sipSolAccumulation == null)
+						sipSolAccumulation = sipSol;
+					else
+						sipSolAccumulation.merge(sipSol);
+				}
+				
+				/*if(sipSol != null)
+					firstLevelList.add(sipSol.get_listElements());*/
+				System.out.print("Le SOUS sipSol est: "+sipSol+" pour la solution "+subSubSol);
 			}
 			
-			
-			//At this point we have a Subsolution<Subsolution<...>> so there can 
-			//not be dependent indexes
-			List<List<Integer>> dependentIndexesList = new ArrayList<List<Integer>>();
-			_sipSol = new SubIndexProviderSolution(firstLevelList, dependentIndexesList);
-		}catch(Exception e){
+			if(sipSolAccumulation == null) {
+				_sipSol = null;
+			} else {
+				secondLevelList.add(sipSolAccumulation);
+				firstLevelList.add(secondLevelList);
+	
+				//At this point we have a Subsolution<Subsolution<...>> so there can 
+				//not be dependent indexes
+				List<List<Integer>> dependentIndexesList = new ArrayList<List<Integer>>();
+				_sipSol = new SubIndexProviderSolution(firstLevelList, dependentIndexesList);
+			}
+		}catch(ClassCastException e){
 			//This exception is caught when the cast fails. It means that we are on an SubSolutionElements.
 			//We need to get the type list to try to create the IndexProvider.
 			//At this point, this._subSol is the Solution in which we are going to try to find our reactives.
@@ -117,7 +133,7 @@ public class SubIndexProviderSolutionBuilder {
 			try {
 				//The getter allows us to generate SubSolution element to access the type list
 				SubSolution<SubSolutionReactivesAccessor> el = (SubSolution<SubSolutionReactivesAccessor>) getter.invoke(_rr, null);
-				
+
 				//For each type in the SubSolutionReactivesAccessor type list, create
 				//a SubIndexProviderElement object.
 				List<List<SubIndexProvider>> firstLevelList = new ArrayList<List<SubIndexProvider>>();
@@ -125,30 +141,33 @@ public class SubIndexProviderSolutionBuilder {
 				List<String> typeList = new ArrayList<String>();
 				for(Class<?> c : el.getTypeList()){
 					typeList.add(c.getName());
-					
-					SubIndexProviderElement sipElmt = new SubIndexProviderElement(_solution.getMapElements().get(c.getName()).size());
-					
-					secondLevelList.add(sipElmt);
+
+					if(_solution.getMapElements().get(c.getName()) != null) {
+						SubIndexProviderElement sipElmt = new SubIndexProviderElement(_solution.getMapElements().get(c.getName()).size());
+						secondLevelList.add(sipElmt);
+					}
 				}
-				
+
 				//Here the first level list contains only one sub list of index providers
 				firstLevelList.add(secondLevelList);
 				
 				//Finally, generate the incompatible indexes list<list<integer>
 				List<List<Integer>> dependentIndexesList = this.buildDependantIndexesListWithTypes(typeList, _solution.getMapElements());
-				
+
 				_sipSol = new SubIndexProviderSolution(firstLevelList, dependentIndexesList);
-			} catch (Exception e1) {
-				//e1.printStackTrace();
+			} catch(ChemicalException e1) {
+				throw e1;
+			} catch (Exception e2) {
+				e2.printStackTrace();
 			}
 		}
 	}
 
-	
+
 	private void rootBuild() throws ChemicalException {
 		if(_rrFields == null)
 			throw new ChemicalException("The reaction rule's fields parameters need to be given to build the IndexProvider.");
-		
+
 		//The two level of list of the index provider being built right now
 		//In this case, the first level list only contains sub-list 
 		//(particular case of the root SubIndexProviderSolution in an IndexProvider object)
@@ -166,18 +185,18 @@ public class SubIndexProviderSolutionBuilder {
 					//Each one of them is an alternative to find the desired reactives
 					SubIndexProviderSolution sipSolAccumulation = null;
 					ParameterizedType p = (ParameterizedType)f.getGenericType();
-					
+
 					for(Object o : _solution.getMapElements().get(Solution.class.getName())){
 						Solution s = (Solution) o;
-						
+
 						//Recursion : create sub sub index providers
 						SubIndexProviderSolutionBuilder sipSolBuilder = new SubIndexProviderSolutionBuilder();
+						sipSolBuilder.setSolution(s);
 						sipSolBuilder.setReactionRule(_rr);
 						sipSolBuilder.setParamType(p);
-						sipSolBuilder.setSolution(s);
 						sipSolBuilder.setSubSolutionField(f);
 						sipSolBuilder.build();
-						
+
 						SubIndexProviderSolution sipSol = sipSolBuilder.getSubIndexProvider();
 						if(sipSol != null){
 							if(sipSolAccumulation == null)
@@ -185,6 +204,8 @@ public class SubIndexProviderSolutionBuilder {
 							else
 								sipSolAccumulation.merge(sipSol);
 						}
+						System.out.print("Le sipSol est: "+sipSol+" pour la solution "+s);
+						System.out.println(", son accumulation est: "+sipSolAccumulation);
 					}
 					sip = sipSolAccumulation;
 				}else{
@@ -196,19 +217,25 @@ public class SubIndexProviderSolutionBuilder {
 				secondLevelList.add(sip);
 			}
 		}
-		
+
 		//The first level list only contains one sub-list (see why in the comment up there in this function)
 		firstLevelList.add(secondLevelList);
-		
+
 		//Finally, get the dependent indexes list for this level of nesting
 		List<List<Integer>> dependantIndexesList = buildDependantIndexesListWithFields(_rrFields, _solution.getMapElements());
-		
+
 		_sipSol = new SubIndexProviderSolution(firstLevelList, dependantIndexesList);
+
+		if(_rr.getClass().getSimpleName().equals("MaxIntSubSolRR") || _rr.getClass().getSimpleName().equals("DeleteRuleMax")){
+			System.out.println("Le _sipSol final root construit est : "+_sipSol);
+			System.out.println("\n\n\n\n\n");
+		}
+
 	}
 
 
-	
-	private List<List<Integer>> buildDependantIndexesListWithFields(Field[] rrFields, Map<String, List<Object>> mapElements) {
+
+	private List<List<Integer>> buildDependantIndexesListWithFields(Field[] rrFields, Map<String, List<Object>> mapElements) throws ChemicalException {
 
 		Map<String, List<Integer>> dependantIndexesMap = new HashMap<String, List<Integer>>();
 		String reactiveTypeName;
@@ -222,7 +249,7 @@ public class SubIndexProviderSolutionBuilder {
 
 				//If the type isn't even an entry of the hash map, don't bother
 				if(mapElements.get(reactiveTypeName) == null)
-					continue;
+					throw new ChemicalException("rrFields There is no reactive of this type, aborting IndexProvider instanciation.");
 
 				if(dependantIndexesMap.containsKey(reactiveTypeName)){
 					dependantIndexesMap.get(reactiveTypeName).add(i);
@@ -246,7 +273,7 @@ public class SubIndexProviderSolutionBuilder {
 		return dependantIndexesList;
 	}
 
-	private List<List<Integer>> buildDependantIndexesListWithTypes(List<String> typeList, Map<String, List<Object>> mapElements) {
+	private List<List<Integer>> buildDependantIndexesListWithTypes(List<String> typeList, Map<String, List<Object>> mapElements) throws ChemicalException {
 
 		Map<String, List<Integer>> dependantIndexesMap = new HashMap<String, List<Integer>>();
 		String reactiveTypeName;
@@ -262,7 +289,7 @@ public class SubIndexProviderSolutionBuilder {
 
 			//If the type isn't even an entry of the hash map, return false (didn't find any reactive)
 			if(mapElements.get(typeList.get(i))== null)
-				return null;
+				throw new ChemicalException("There is no reactive of this type, aborting IndexProvider instanciation.");
 		}
 
 		//We have to provide the IndexProvider a list of a list of int, so

@@ -104,11 +104,23 @@ class SubIndexProviderSolution implements SubIndexProvider{
 	}
 	
 	public String toString(){
-		String result = "("+_currentSubSol+"/"+_listElements.size();
+		String result = "";
+		int i = 0;
+		for(List<SubIndexProvider> lSip : _listElements) {
+			result += "[ "+i+" : ";
+			for(SubIndexProvider sip : lSip) {
+				result += sip.toString();
+			}
+			result += "]";
+			
+			i++;
+		}
+		
+		/*String result = "("+_currentSubSol+"/"+_listElements.size();
 		//result += _currentValue;
 		result += ") {"+_dependantIndexes+"}";
 		for(SubIndexProvider e : _listElements.get(_currentSubSol))
-			result+= (e.toString()+" ");
+			result+= (e.toString()+" ");*/
 		return result;
 	}
 	
