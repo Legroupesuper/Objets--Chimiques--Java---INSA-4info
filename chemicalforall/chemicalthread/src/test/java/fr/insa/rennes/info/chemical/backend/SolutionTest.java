@@ -2,6 +2,7 @@ package fr.insa.rennes.info.chemical.backend;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -119,6 +120,38 @@ public class SolutionTest extends TestCase {
 		}
 
 		assertTrue(test);
+	}
+
+	/**
+	 * Test method for {@link Solution#contains(Object)}.
+	 */
+	public void testContains() {
+		Collection<Object> coll = new ArrayList<Object>();
+		
+		coll.add(12);
+		testSolution.add(12);
+		
+		Solution subSol = new Solution();
+		coll.add(subSol);
+		testSolution.add(subSol);
+		
+		Object foo = new Object();
+		coll.add(foo);
+		testSolution.add(foo);
+		
+		List<?> subColl = new LinkedList<Byte>();
+		coll.add(subColl);
+		testSolution.add(subColl);
+		
+		boolean[] subTab = new boolean[]{true, false, true, true};
+		coll.add(subTab);
+		testSolution.add(subTab);
+		
+		Iterator<Object> it = testSolution.iterator();
+		while(it.hasNext()){
+			assertTrue(coll.contains(it.next()));
+		}
+		
 	}
 
 	/**
