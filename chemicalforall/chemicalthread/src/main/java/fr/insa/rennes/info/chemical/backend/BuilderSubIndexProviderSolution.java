@@ -11,7 +11,7 @@ import java.util.Map;
 import fr.insa.rennes.info.chemical.user.Dontreact;
 import fr.insa.rennes.info.chemical.user.ReactionRule;
 
-public class SubIndexProviderSolutionBuilder {
+public class BuilderSubIndexProviderSolution {
 	private SubIndexProviderSolution _sipSol;
 	private ReactionRule _rr;
 	private Field[] _rrFields;
@@ -20,7 +20,7 @@ public class SubIndexProviderSolutionBuilder {
 	private Field _rrSubSolField;
 	private boolean _complete;
 
-	public SubIndexProviderSolutionBuilder() {
+	public BuilderSubIndexProviderSolution() {
 		_rr = null;
 		_rrFields = null;
 		_paramType = null;
@@ -92,7 +92,7 @@ public class SubIndexProviderSolutionBuilder {
 			for(Object o : _solution.getSubSolutions()){
 				Solution subSubSol = (Solution) o;
 
-				SubIndexProviderSolutionBuilder sipSolBuilder = new SubIndexProviderSolutionBuilder();
+				BuilderSubIndexProviderSolution sipSolBuilder = new BuilderSubIndexProviderSolution();
 
 				sipSolBuilder.setReactionRule(_rr);
 				sipSolBuilder.setParamType(_paramType);
@@ -110,7 +110,7 @@ public class SubIndexProviderSolutionBuilder {
 				
 				/*if(sipSol != null)
 					firstLevelList.add(sipSol.get_listElements());*/
-				System.out.print("Le SOUS sipSol est: "+sipSol+" pour la solution "+subSubSol);
+				//System.out.print("Le SOUS sipSol est: "+sipSol+" pour la solution "+subSubSol);
 			}
 			
 			if(sipSolAccumulation == null) {
@@ -190,7 +190,7 @@ public class SubIndexProviderSolutionBuilder {
 						Solution s = (Solution) o;
 
 						//Recursion : create sub sub index providers
-						SubIndexProviderSolutionBuilder sipSolBuilder = new SubIndexProviderSolutionBuilder();
+						BuilderSubIndexProviderSolution sipSolBuilder = new BuilderSubIndexProviderSolution();
 						sipSolBuilder.setSolution(s);
 						sipSolBuilder.setReactionRule(_rr);
 						sipSolBuilder.setParamType(p);
@@ -204,8 +204,8 @@ public class SubIndexProviderSolutionBuilder {
 							else
 								sipSolAccumulation.merge(sipSol);
 						}
-						System.out.print("Le sipSol est: "+sipSol+" pour la solution "+s);
-						System.out.println(", son accumulation est: "+sipSolAccumulation);
+						//System.out.print("Le sipSol est: "+sipSol+" pour la solution "+s);
+						//System.out.println(", son accumulation est: "+sipSolAccumulation);
 					}
 					sip = sipSolAccumulation;
 				}else{
@@ -226,10 +226,10 @@ public class SubIndexProviderSolutionBuilder {
 
 		_sipSol = new SubIndexProviderSolution(firstLevelList, dependantIndexesList);
 
-		if(_rr.getClass().getSimpleName().equals("MaxIntSubSolRR") || _rr.getClass().getSimpleName().equals("DeleteRuleMax")){
+		/*if(_rr.getClass().getSimpleName().equals("MaxIntSubSolRR") || _rr.getClass().getSimpleName().equals("DeleteRuleMax")){
 			System.out.println("Le _sipSol final root construit est : "+_sipSol);
 			System.out.println("\n\n\n\n\n");
-		}
+		}*/
 
 	}
 

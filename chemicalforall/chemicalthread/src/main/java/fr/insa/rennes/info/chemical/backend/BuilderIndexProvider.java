@@ -7,7 +7,7 @@ import java.util.Map;
 import fr.insa.rennes.info.chemical.backend.Solution.Strategy;
 import fr.insa.rennes.info.chemical.user.ReactionRule;
 
-public class IndexProviderBuilder {
+public class BuilderIndexProvider {
 	private IndexProvider _ip;
 	private Solution _solution;
 	private ReactionRule _rr;
@@ -15,7 +15,7 @@ public class IndexProviderBuilder {
 	private Strategy _strategy;
 	private boolean _complete;
 	
-	public IndexProviderBuilder() {
+	public BuilderIndexProvider() {
 		_complete = false;
 		_solution = null;
 		_rr = null;
@@ -50,7 +50,7 @@ public class IndexProviderBuilder {
 			throw new ChemicalException("All parameters need to be instanciated to build the IndexProvider.");
 		
 		//First, use a builder for the SubIndexProvider
-		SubIndexProviderSolutionBuilder sipSolBuilder = new SubIndexProviderSolutionBuilder();
+		BuilderSubIndexProviderSolution sipSolBuilder = new BuilderSubIndexProviderSolution();
 		sipSolBuilder.setSolution(_solution);
 		sipSolBuilder.setReactionRule(_rr);
 		sipSolBuilder.setReactionRuleFields(_rrFields);

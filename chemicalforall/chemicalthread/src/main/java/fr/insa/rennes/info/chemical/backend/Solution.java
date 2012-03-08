@@ -569,18 +569,30 @@ public final class Solution implements Collection<Object>{
 
 			//Construct the map of the dependent indexes (two dependent indexes can not have the same value
 			//as they refer to the same element)
-			/*List<List<Integer>> dependantIndexesList = buildDependantIndexesList(rrReactives);
+			/*List<List<Integer>> dependantIndexesList = buildDependantIndexesMap(rrReactives);
 			if(dependantIndexesList == null)
-				return false;*/
-
-			/*SubIndexProviderSolution ipSubSol = generateIndexProviderSubSolution(rrFields, dependantIndexesList, r);
-			if(ipSubSol == null || ipSubSol.getNumberOfElements().equals(BigInteger.ZERO))
-				return false;*/
+			return false;
+			
+			SubIndexProviderSolution sol = generateIndexProviderSubSolution(rrFields, dependantIndexesList, r);
+			if(sol == null || sol.getNumberOfElements().equals(BigInteger.ZERO))
+			return false;
+			
+			//Instantiate the IndexProvider object
+			IndexProvider indexProvider = null;
+			
+			
+			try {
+			indexProvider = new IndexProvider(sol, _strategy);
+			} catch (ChemicalException e1) {
+			return false;
+			}
+			System.out.println(indexProvider);
+			*/
 
 			//Instantiate the IndexProvider object
 			IndexProvider indexProvider = null;
 			try {
-				IndexProviderBuilder ipBuilder = new IndexProviderBuilder();
+				BuilderIndexProvider ipBuilder = new BuilderIndexProvider();
 				ipBuilder.setSolution(this);
 				ipBuilder.setReactionRule(r);
 				ipBuilder.setReactionRuleFields(rrFields);
@@ -589,19 +601,10 @@ public final class Solution implements Collection<Object>{
 				indexProvider = ipBuilder.getIndexProvider();//new IndexProvider(ipSubSol, _strategy);
 				
 			} catch (ChemicalException e1) {
-					System.out.println("MEEEEEEEEEEEEEEEEEEEEEEEEERDE : rr = "+r+", "+e1.getMessage());
+				//System.out.println("MEEEEEEEEEEEEEEEEEEEEEEEEERDE : rr = "+r+", "+e1.getMessage());
 				//e1.printStackTrace();
 				return false;
 			}
-			
-			/*if(r.getClass().getSimpleName().equals("MaxIntSubSolRR")) {
-				System.out.println("\n\n\n\n\n"+r.getClass().getName());
-				System.out.println(indexProvider);
-				System.out.println("\n\n\n\n\n");
-			} else {
-				
-				
-			}*/
 			
 			
 			
