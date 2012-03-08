@@ -105,24 +105,24 @@ public final class Solution implements Collection<Object>{
 		_strategy = s;
 		_inert = false;
 	}
-	
+
 	//REFACTORING
 	private boolean checkReactionRuleReactive(Object reactionRuleObject) {
-		Class<? extends Object> clazz = reactionRuleObject.getClass();
+		Class<? extends Object> rrClass = reactionRuleObject.getClass();
 		String errorMsg = "";
 
 		//We check that every field has an appropriate setter
 		boolean classOK = true;
-		int numberOfMethods = clazz.getDeclaredMethods().length;
+		int numberOfMethods = rrClass.getDeclaredMethods().length;
 		boolean setterOK;
-		for(Field f : clazz.getDeclaredFields()){
+		for(Field f : rrClass.getDeclaredFields()){
 			setterOK = false;
 
 			for(int  i = 0; i < numberOfMethods; i++){
-				Method m = clazz.getDeclaredMethods()[i];
+				Method m = rrClass.getDeclaredMethods()[i];
 				if(m.getName().toLowerCase().equals("set"+f.getName().toLowerCase())){
 					//Remember the setter name by putting it in the reaction rules' setters map
-					_mapReactionRulesSetters.put(clazz.getName()+"."+f.getName(), i);
+					_mapReactionRulesSetters.put(rrClass.getName()+"."+f.getName(), i);
 
 					setterOK = true;
 				}
@@ -131,7 +131,7 @@ public final class Solution implements Collection<Object>{
 			if(!(setterOK)){
 				classOK = false;
 				if(!setterOK)
-					errorMsg+="class "+clazz.getName()+" lacks a setter for attribute "+f+"\n";
+					errorMsg+="class "+rrClass.getName()+" lacks a setter for attribute "+f+"\n";
 			}
 		}
 		if(!classOK){
@@ -149,7 +149,7 @@ public final class Solution implements Collection<Object>{
 		}
 		return true;
 	}
-	
+
 	//REFACTORING
 	private void processAddSubSolution(Object solutionObject) {
 		Solution sol = (Solution) solutionObject;
@@ -162,7 +162,7 @@ public final class Solution implements Collection<Object>{
 		if(_reactionInProgress)
 			sol.react();
 	}
-	
+
 	/**
 	 * This method allow the user to add any type of Object to the solution.
 	 * @param newReactive The new reactive you want to add
@@ -175,14 +175,14 @@ public final class Solution implements Collection<Object>{
 			//At first we determine whether it is a ReactionRule or not
 			String className = getReactiveType(newReactive);
 			boolean addElement = true;
-			
+
 			//It is a ReactionRule, hence special treatment
 			if(className.equals(ReactionRule.class.getName())) {
 				addElement = checkReactionRuleReactive(newReactive);
 			} else if(className.equals(Solution.class.getName())){
 				processAddSubSolution(newReactive);
 			}
-			
+
 			//TODO: (Message de Antoine) Pas la peine le premier test, de toute facon l'utilisateur peut pas accéder à SubSolutionReactivesAccessor
 			if(!className.equals(SubSolutionReactivesAccessor.class.getName()) && addElement){
 				boolean result;
@@ -286,8 +286,8 @@ public final class Solution implements Collection<Object>{
 		}
 		return nb;
 	}
-	
-	
+
+
 	private String getReactiveType(Object reactive) {
 		for(Class<?> s : reactive.getClass().getInterfaces()){
 			if(s.getName().equals(ReactionRule.class.getName())) {
@@ -296,7 +296,7 @@ public final class Solution implements Collection<Object>{
 				return SubSolutionReactivesAccessor.class.getName();
 			}
 		}
-		
+
 		return reactive.getClass().getName();
 	}
 
@@ -431,110 +431,16 @@ public final class Solution implements Collection<Object>{
 		return res;
 	}
 
-	SubIndexProvider generateListIndexProviderElement(Field f, ReactionRule r, ParameterizedType p, Solution s, int pos){
-		if(p.getActualTypeArguments().length > 0){
-			try{//Try to match a SubSolution
-				ParameterizedType oldParam = p;
-				p = (ParameterizedType) p.getActualTypeArguments()[0];
-				List<List<SubIndexProvider>> l = new ArrayList<List<SubIndexProvider>>();
-				int i=0;
-				for(Object solu : s._mapElements.get(Solution.class.getName())){
-					Solution sol = (Solution) solu;
-					SubIndexProvider elem = generateListIndexProviderElement(f, r, p, sol, i);
-					List<SubIndexProvider> ltemp = new ArrayList<SubIndexProvider>();
-					ltemp.add(elem);
-					l.add(ltemp);
-					i++;
-				}
-				List<List<Integer>> lincomp = new ArrayList<List<Integer>>();
-				List<Integer> lbis = new ArrayList<Integer>();
-				lincomp.add(lbis);
-				SubIndexProviderSolution subSol = new SubIndexProviderSolution(l, lincomp);
-				return subSol;
-			}catch(Exception e){//Try to match a ListElement
-				SubIndexProvider elem;
-				try{
-					Method getter = null;
-					for(Method get : r.getClass().getDeclaredMethods()){
-						if(get.getName().toLowerCase().contains("get"+f.getName().toLowerCase())){
-							getter = get;
-							break;
-						}
-					}
-					SubSolutionReactivesAccessor result = (SubSolutionReactivesAccessor) getter.invoke(r, new Object[0]);
-					List<List<SubIndexProvider>> finalList = new ArrayList<List<SubIndexProvider>>();
-					List<SubIndexProvider> tempList = new ArrayList<SubIndexProvider>();
-					for(Class<? extends Object> o : result.getTypeList()){
-						tempList.add(new SubIndexProviderElement(s._mapElements.get(o.getName()).size()));
-					}
-					tempList.add(new SubIndexProviderElement(0));
-					finalList.add(tempList);
-					//TODO gerer les incompatibilités ici
-					List<List<Integer>> lincomp = new ArrayList<List<Integer>>();
-					List<Integer> lbis = new ArrayList<Integer>();
-					lincomp.add(lbis);
-					elem = new SubIndexProviderSolution(finalList, lincomp);
-				}catch(Exception e2){
-					List<List<SubIndexProvider>> finalList = new ArrayList<List<SubIndexProvider>>();
-					List<SubIndexProvider> tempList = new ArrayList<SubIndexProvider>();
-					tempList.add(new SubIndexProviderElement(0));
-					tempList.add(new SubIndexProviderElement(0));
-					finalList.add(tempList);
-					List<List<Integer>> lincomp = new ArrayList<List<Integer>>();
-					List<Integer> lbis = new ArrayList<Integer>();
-					lincomp.add(lbis);
-					elem = new SubIndexProviderSolution(finalList, lincomp);
-				}
-				return elem;
-			}
-		}else{
-			return null;
-		}
 
-	}
-	
-	
-	//REFACTORING
-	/*private List<List<Integer>> buildDependantIndexesList(List<String> rrReactives) {
-		
-		Map<String, List<Integer>> dependantIndexesMap = new HashMap<String, List<Integer>>();
-		String reactiveTypeName;
-		for(int i = 0; i < rrReactives.size(); i++){
-			reactiveTypeName = rrReactives.get(i);
-			if(dependantIndexesMap.containsKey(reactiveTypeName)){
-				dependantIndexesMap.get(reactiveTypeName).add(i);
-			}else{
-				List<Integer> l = new ArrayList<Integer>();
-				l.add(i);
-				dependantIndexesMap.put(reactiveTypeName, l);
-			}
 
-			//If the type isn't even an entry of the hash map, return false (didn't find any reactive)
-			if(_mapElements.get(rrReactives.get(i))== null)
-				return null;
-		}
-		
-		//We have to provide the IndexProvider a list of a list of int, so
-		//we need to transform the map of list in a list of list
-		List<List<Integer>> dependantIndexesList = new ArrayList<List<Integer>>();
-		for(String s : dependantIndexesMap.keySet()){
-			if(dependantIndexesMap.get(s).size() > 1){
-				dependantIndexesList.add(dependantIndexesMap.get(s));
-			}
-		}
-		
-		return dependantIndexesList;
-	}*/
-	
-	
-	
+
 	/*
 	 * This method is called by every thread-reaction rule to get its reactives.
 	 * It returns true if a set of parameter have been found, else false. The reactives are set directly
 	 * in the reaction rule instance by reflexivity so no need to return them.
 	 * This function is synchronized on the atoms' hash map
 	 */
-	public boolean requestForParameters(ReactionRule r) throws IllegalArgumentException, IllegalAccessException, InvocationTargetException, SecurityException, NoSuchMethodException{
+	public boolean requestForParameters(ReactionRule r) {
 		synchronized (this) {
 			if(!_reactionInProgress){
 				try {
@@ -546,49 +452,11 @@ public final class Solution implements Collection<Object>{
 			}
 		}
 
-		//Build the type table : the types of the reaction rules reactives
+		//Get the reaction rule fields
 		Field[] rrFields = r.getClass().getDeclaredFields();
-		//String table[] = new String[fields.length];
-		List<String> rrReactives = new ArrayList<String>();
-		List<SubIndexProvider> listElements = new ArrayList<SubIndexProvider>();
-		for(int i=0; i< rrFields.length; i++){
-			if(rrFields[i].getAnnotation(Dontreact.class) == null){
-				if(rrFields[i].getType().getName().contains(SubSolution.class.getName())){
-					//table[i] = Solution.class.getName();
-					rrReactives.add(Solution.class.getName());
-				}else{
-					//table[i] = fields[i].getType().getName();
-					rrReactives.add(rrFields[i].getType().getName());
-				}
-			}
-		}
 
 		//The access to the main atom map is restricted to 1 thread at a time
 		synchronized(_mapElements) {
-			//Initialize the index provider to try every possible combination
-
-			//Construct the map of the dependent indexes (two dependent indexes can not have the same value
-			//as they refer to the same element)
-			/*List<List<Integer>> dependantIndexesList = buildDependantIndexesMap(rrReactives);
-			if(dependantIndexesList == null)
-			return false;
-			
-			SubIndexProviderSolution sol = generateIndexProviderSubSolution(rrFields, dependantIndexesList, r);
-			if(sol == null || sol.getNumberOfElements().equals(BigInteger.ZERO))
-			return false;
-			
-			//Instantiate the IndexProvider object
-			IndexProvider indexProvider = null;
-			
-			
-			try {
-			indexProvider = new IndexProvider(sol, _strategy);
-			} catch (ChemicalException e1) {
-			return false;
-			}
-			System.out.println(indexProvider);
-			*/
-
 			//Instantiate the IndexProvider object
 			IndexProvider indexProvider = null;
 			try {
@@ -598,100 +466,121 @@ public final class Solution implements Collection<Object>{
 				ipBuilder.setReactionRuleFields(rrFields);
 				ipBuilder.setStrategy(_strategy);
 				ipBuilder.build();
-				indexProvider = ipBuilder.getIndexProvider();//new IndexProvider(ipSubSol, _strategy);
-				
+				indexProvider = ipBuilder.getIndexProvider();
+
 			} catch (ChemicalException e1) {
-				//System.out.println("MEEEEEEEEEEEEEEEEEEEEEEEEERDE : rr = "+r+", "+e1.getMessage());
-				//e1.printStackTrace();
 				return false;
 			}
-			
-			
-			
-			
-			//End of initialization
-			//Effectively research a valid set of reactives for the reaction rule
-			List<Pair<Solution, Object>> reactives = new ArrayList<Pair<Solution,Object>>();
-			int setterNumber;
-			Method setter;
-			boolean hasMatched = false;
-			//Loop until the reactives has been found OR all combination have been tested
-			while(!indexProvider.is_overflowReached()) {
-				reactives.clear();
-				SubIndexProviderSolution solution = indexProvider.increment();
-				if(solution == null)
-					return false;
-				int i=0;
-				Pair<Solution, Object> obj = null;
-				for(Field f : rrFields){
-					if(f.getAnnotation(Dontreact.class) == null){
-						//Find the setter for this field
-						setterNumber = _mapReactionRulesSetters.get(r.getClass().getName()+"."+f.getName());
-						setter = r.getClass().getDeclaredMethods()[setterNumber];
-	
-						//and invoke the setter
-						try{
-							obj = instanciateField(f, this, solution.get_listElements().get(i), r);
-							if(obj == null)
-								return false;
-						}catch(Exception e){
-							return false;
-						}
-						setter.invoke(r, new Object[]{obj.get_second()});
-	
-						reactives.add(obj);
-						i++;
-					}
-				}
-				//The right types have been found, now test the selection rule
-				if(r.computeSelect()){
 
-					//remove the selected reactives from the solution
-					for(Pair<Solution, Object> react : reactives){
-						if(!react.get_first().is_inert() && react.get_first() != this){
-							System.err.println("On ne peut pas instancier des éléments d'une sous-solution non inerte");
-							System.err.println(react.get_first());
-							return false;
-						}
-						try{
-							if(react.get_second().getClass().getName().equals(SubSolution.class.getName())){
-								SubSolution<SubSolutionReactivesAccessor> s = (SubSolution<SubSolutionReactivesAccessor>) react.get_second();
-								System.err.println("Solution temp = "+react.get_first()._mapElements);
-								for(Object o : s.getElements()){
-									try{
-										System.err.println("elem - "+o);
-										react.get_first()._mapElements.get(o.getClass().getName()).remove(o);
-									}catch(Exception ex){
-										
-									}
-								}
-							}else{
-								if(react.get_second().getClass().getName().equals(Solution.class.getName())){
-									Solution stemp = (Solution) react.get_second();
-									System.err.println("!!!!!!!!!!!!!!!!!\n!!!!!!!!!!!!!!!!!!!!\n!!!!!!!!!!!!!!!!!\nOn a matché un solution "+stemp);
-									if(!stemp._inert){
-										System.err.println("?????????????\n????????????????????\n?????????????????\nOn a matché un solution");
-										return false;
-									}
-								}
-								System.err.println("On supprime "+react.get_second());
-								react.get_first()._mapElements.get(react.get_second().getClass().getName()).remove(react.get_second());
-
-							}
-						}catch(Exception e){
-							System.err.println(e.getMessage());
-							e.printStackTrace();
-						}
-					}
-					hasMatched = true;
-					break;
-				}
-
-			}
-			//All the possibilities have been tested here
-			//Return false if nothing matched
-			if(!hasMatched){
+			//Once the index provider is created, we have to search for reactives matching,
+			//Meanwhile, we have to catch every Exception before the user get them
+			try {
+				boolean reactivesFound = searchForReactives(r, rrFields, indexProvider);
+				
+				return reactivesFound;
+			
+				//TODO : Gestion des exceptions
+			} catch (IllegalArgumentException e) {
+				e.printStackTrace();
 				return false;
+			} catch (IllegalAccessException e) {
+				e.printStackTrace();
+				return false;
+			} catch (InvocationTargetException e) {
+				e.printStackTrace();
+				return false;
+			} catch(Exception e) {
+				e.printStackTrace();
+				return false;
+			}
+		}
+	}
+
+	private boolean searchForReactives(ReactionRule rr, Field[] rrFields, IndexProvider indexProvider) throws IllegalArgumentException, IllegalAccessException, InvocationTargetException {
+		//Effectively research a valid set of reactives for the reaction rule
+		//given all the tools
+		List<Pair<Solution, Object>> reactives = new ArrayList<Pair<Solution,Object>>();
+		int setterNumber;
+		Method setter;
+		Pair<Solution, Object> reactiveObject = null;
+
+		//Loop until the reactives has been found OR all combination have been tested
+		while(!indexProvider.is_overflowReached()) {
+			SubIndexProviderSolution sipSol = indexProvider.increment();
+
+			//If the increment returns null, means that the overflow is reached
+			//We return false to mean no reactives were found
+			if(indexProvider.is_overflowReached())
+				return false;
+
+			int i = 0;
+			for(Field f : rrFields) {
+				if(f.getAnnotation(Dontreact.class) == null){
+					//Find the setter for this field...
+					setterNumber = _mapReactionRulesSetters.get(rr.getClass().getName()+"."+f.getName());
+					setter = rr.getClass().getDeclaredMethods()[setterNumber];
+
+					//...and invoke the setter
+					reactiveObject = instanciateField(f, sipSol.get_listElements().get(i), rr);
+					setter.invoke(rr, new Object[]{reactiveObject.get_second()});
+
+					reactives.add(reactiveObject);
+					i++;
+				}
+			}
+
+			//When we get here, the right types have been found, now test the selection rule
+			if(rr.computeSelect()) {
+				//If the computeSelect says OK, 
+				//TRY to delete the reactives from their respective solutions (this operation can fail)
+				boolean reactivesDeleted = extractReactivesFromSolutions(reactives);
+				if(reactivesDeleted) {
+					//If all went well, the set of reactives was fitting, return ok
+					return true;
+				}
+			}
+			
+			//If we did not leave the function, it means something is 
+			//wrong with the set of reactives, erase it and loop
+			reactives.clear();
+		}
+		
+		//If we reach this line, it means we tried every combination and all failed
+		return false;
+	}
+
+	private boolean extractReactivesFromSolutions(List<Pair<Solution, Object>> reactives) {
+		//remove the selected reactives from the solution
+		for(Pair<Solution, Object> react : reactives){
+			//If one of the reactives is in a non inert sub-solution, reaction is forbidden
+			if(!react.get_first().is_inert() && react.get_first() != this){
+				return false;
+			}
+
+			if(react.get_second().getClass().getName().equals(SubSolution.class.getName())){
+				SubSolution<SubSolutionReactivesAccessor> s = (SubSolution<SubSolutionReactivesAccessor>) react.get_second();
+				//System.err.println("Solution temp = "+react.get_first()._mapElements);
+				for(Object o : s.getElements()){
+					//System.err.println("react - "+react);
+					//System.err.println("react.get_first() - "+react.get_first());
+					//System.err.println("elem - "+o);
+					react.get_first()._mapElements.get(o.getClass().getName()).remove(o);
+				}
+			}else{
+				//If the reactive is a solution, we have to see that this solution is inert
+				if(react.get_second().getClass().getName().equals(Solution.class.getName())){
+					Solution stemp = (Solution) react.get_second();
+					//System.err.println("!!!!!!!!!!!!!!!!!\n!!!!!!!!!!!!!!!!!!!!\n!!!!!!!!!!!!!!!!!\nOn a matché un solution "+stemp);
+					//If among the reactives we try to use a solution object
+					//and that this solution is not inert, the matching fails (it is impossible to do that)
+					if(!stemp._inert){
+						//System.err.println("?????????????\n????????????????????\n?????????????????\nOn a matché un solution");
+						return false;
+					}
+				}
+				//System.err.println("On supprime "+react.get_second());
+				react.get_first()._mapElements.get(react.get_second().getClass().getName()).remove(react.get_second());
+
 			}
 		}
 		return true;
@@ -703,196 +592,50 @@ public final class Solution implements Collection<Object>{
 	 * to use in the solution s.
 	 * @param f the field
 	 * @param s the solution
-	 * @param ipe the IndexProviderElement
+	 * @param sip the IndexProviderElement
 	 * @return the instanciated object or null
+	 * @throws InvocationTargetException 
+	 * @throws IllegalAccessException 
+	 * @throws IllegalArgumentException 
 	 */
-	private Pair<Solution, Object> instanciateField(Field f, Solution s, SubIndexProvider ipe, ReactionRule r){
-		if(ipe instanceof SubIndexProviderElement){//This is a simple element, so it it direct
-			return new Pair<Solution, Object>(s, s._mapElements.get(f.getType().getName()).get(ipe.getValue()));
-		}else{//This is a Solution, it will be more complex
+	private Pair<Solution, Object> instanciateField(Field f, SubIndexProvider sip, ReactionRule r) throws IllegalArgumentException, IllegalAccessException, InvocationTargetException{
+		//If the field is a simple element,it is direct
+		if(sip instanceof SubIndexProviderElement){
+			return new Pair<Solution, Object>(this, _mapElements.get(f.getType().getName()).get(sip.getValue()));
+		}
+		//TIf the field is a set of elements in a subsolution, it will be more complex
+		else{
 			Method getter = Utils.getMethodFromReactionRule(r, "get", f);
-			try {
-				SubSolution<SubSolutionReactivesAccessor> el = (SubSolution<SubSolutionReactivesAccessor>) getter.invoke(r, null);
-				//We must generate the List<Object> of el
-				//First we must get the good subsolution
-				Solution nextS = (Solution)s._mapElements.get(Solution.class.getName()).get(ipe.getValue());
-				//Then we get le List<Object>
-				Pair<Solution, List<Object>> lo = generateListObject(((SubIndexProviderSolution)ipe).get_listElements(), nextS, el);
-				//finally, we use the setter
-				el.setElements(lo.get_second());
-				return new Pair<Solution, Object>(lo.get_first(), el);
-			}catch(Exception e){
-				return null;
+			SubSolution<SubSolutionReactivesAccessor> subSolObject = (SubSolution<SubSolutionReactivesAccessor>) getter.invoke(r, null);
+			
+			//In order to instanciate a SubSolution object, we have to go down the 
+			//nested solutions... (recursion)
+			SubIndexProviderSolution sipSol = (SubIndexProviderSolution)sip;
+			Solution nextSol = (Solution)this._mapElements.get(Solution.class.getName()).get(sip.getValue());
+			while(sipSol.get_listElements().size() == 1 && sipSol.get_listElements().get(0) instanceof SubIndexProviderSolution){
+				nextSol = (Solution) nextSol._mapElements.get(Solution.class.getName()).get(sipSol.get_listElements().get(0).getValue());
+				sipSol = (SubIndexProviderSolution) sipSol.get_listElements().get(0);
 			}
-		}
-	}
-
-	private Pair<Solution, List<Object>> generateListObject(List<SubIndexProvider> lipe, Solution s, SubSolution<SubSolutionReactivesAccessor> el){
-		try{
-			if(lipe.size()==1 && lipe.get(0) instanceof SubIndexProviderSolution){
-				SubIndexProviderSolution ipss = (SubIndexProviderSolution) lipe.get(0);
-				Solution snext = (Solution) s._mapElements.get(Solution.class.getName()).get(lipe.get(0).getValue());
-				return generateListObject(ipss.get_listElements(), snext, el);
-			}else{
-				List<Object> l = new ArrayList<Object>();
-				int i=0;
-				l.add(s);
-				for(Class<?> c : el.getTypeList()){
-					l.add(s._mapElements.get(c.getName()).get(lipe.get(i).getValue()));
-					i++;
-				}
-				return new Pair<Solution, List<Object>>(s, l);
+			
+			//...until we reach the level in which the reactives have to be found,
+			//so that we can instanciate the elementList of the SubSolution object
+			List<Object> l = new ArrayList<Object>();
+			int i = 0;
+			for(Class<?> c : subSolObject.getTypeList()){
+				l.add(nextSol._mapElements.get(c.getName()).get(sipSol.get_listElements().get(i).getValue()));
+				i++;
 			}
-		}catch(Exception e){
-			return null;
+			
+			//Finally, we use the setter of SubSolution
+			subSolObject.setElements(l);
+			subSolObject.setSolution(nextSol);
+			
+			
+			return new Pair<Solution, Object>(nextSol, subSolObject);
 		}
 	}
 
-	private SubIndexProviderSolution generateIndexProviderSubSolution(Field[] fieldTable, List<List<Integer>> incompatiblesIndexes, ReactionRule r){
-		List<SubIndexProvider> secondLevelList = new ArrayList<SubIndexProvider>();
-		System.out.println("INCOMPATIBLES 1st LEVEL : "+incompatiblesIndexes);
-		for(Field f : fieldTable){
-			if(f.getAnnotation(Dontreact.class)==null){
-				if(f.getType().getName().contains("SubSolution")){//This is a subsolution
-					List<List<SubIndexProvider>> ltemp = new ArrayList<List<SubIndexProvider>>();
-					SubIndexProviderSolution subsol = null;
-					SubIndexProviderSolution lastSubSolution = null;
-					System.out.println(_mapElements);
-					
-					for(Object o : _mapElements.get(Solution.class.getName())){
-						Solution s = (Solution) o;
-						ParameterizedType p = (ParameterizedType)f.getGenericType();
-						subsol = s.generateIndexProviderSubSolution(p, f, r, s);
-						if(subsol != null){
-							if(lastSubSolution == null)
-								lastSubSolution = subsol;
-							else
-								lastSubSolution.merge(subsol);
-	
-							/*if(!subsol.getNumberOfElements().equals(BigInteger.ZERO)){
-								List<IndexProviderElement> l = new ArrayList<IndexProviderElement>();
-								l.add(subsol);
-								ltemp.add(l);//We only have 1 element in the subsolution first level list
-								
-							}
-							*/
-						}
-					}
-					secondLevelList.add(lastSubSolution);
-					//if(lastSubSolution != null)
-					//	secondLevelList.add(new IndexProviderSubSolution(ltemp, new ArrayList<List<Integer>>()));//We get the dependant indexes
-					//from the computed IndexProviderSubSolution
-				}else{//It's an element
-					secondLevelList.add(new SubIndexProviderElement(_mapElements.get(f.getType().getName()).size()));
-				}
-			}
-		}
-		List<List<SubIndexProvider>> firstLevelList = new ArrayList<List<SubIndexProvider>>();
-		firstLevelList.add(secondLevelList);
-		return new SubIndexProviderSolution(firstLevelList, incompatiblesIndexes);
-	}
 
-	
-	/**
-	 * Generate a List<List<IndexProviderElement>> from different parameters
-	 * @param p A parametrized type which must be a SubSolution<ChemicalElement>
-	 * @param f The starting field of the ReactionRule
-	 * @param r The reaction rules which contains the SubSolution
-	 * @param s The solution where we have to look for p
-	 * @return A well generated List<List<IndexProviderElement>>
-	 */
-	private List<List<SubIndexProvider>>  generateListListForIndexProviderSubSolution(ParameterizedType p, Field f, ReactionRule r, Solution s){
-		List<List<SubIndexProvider>> ltemp = new ArrayList<List<SubIndexProvider>>();
-		for(Object o : s._mapElements.get(Solution.class.getName())){
-			Solution stemp = (Solution) o;
-			SubIndexProviderSolution subsoltemp = generateIndexProviderSubSolution(p, f, r, stemp);
-			if(subsoltemp != null)
-				ltemp.add(subsoltemp.get_listElements());
-		}
-		System.err.println("LA TAILLE DE LA LISTE AU PREMIER NIVEAU EST DE :"+ltemp.size());
-		return ltemp;
-	}
-	
-	
-	/**
-	 * This function create a IndexProviderSubSolution from a set of parameters
-	 * @param p A parametrized type which must be a SubSolution<ChemicalElement>
-	 * @param f The starting field of the ReactionRule
-	 * @param r The reaction rules which contains the SubSolution
-	 * @param s The solution where we have to look for p
-	 * @return An IndexProviderSubSolution or null when it's not possible to generate it
-	 */
-	private SubIndexProviderSolution generateIndexProviderSubSolution(ParameterizedType p, Field f, ReactionRule r, Solution s){
-		try{
-			p = (ParameterizedType)p.getActualTypeArguments()[0];//This cast can fail
-			//Then we generate the List<List<...>>
-			List<List<SubIndexProvider>> ltemp = generateListListForIndexProviderSubSolution(p, f, r, s);
-			//At this point we have a Subsolution<Subsolution<...>> so there is no incompatible indexes
-			//to generate
-			List<List<Integer>> incompat = new ArrayList<List<Integer>>();
-			System.out.println("Ca n'a pas fail");
-			return new SubIndexProviderSolution(ltemp, incompat);
-		}catch(Exception e){
-			/*
-			 * This exception is caught when the cast fails. It means that we are on an SubSolutionElements.
-			 * We need to get the type list to try to create the IndexProvider.
-			 * At this point, s is the Solution in which we are going to try to find our elements list.
-			 */
-			System.out.println("Ca a fail");
-			Method getter = Utils.getMethodFromReactionRule(r, "get", f);
-			try {
-				//The getter allows us to generate SubSolution element to acces the type list
-				SubSolution<SubSolutionReactivesAccessor> el = (SubSolution<SubSolutionReactivesAccessor>) getter.invoke(r, null);
-
-				List<List<SubIndexProvider>> l = new ArrayList<List<SubIndexProvider>>();
-				List<SubIndexProvider> ll = new ArrayList<SubIndexProvider>();
-				List<String> table = new ArrayList<String>();
-				for(Class<?> c : el.getTypeList()){
-					table.add(c.getName());
-					try{
-						System.err.println("on ajoute un "+c.getName());
-						ll.add(new SubIndexProviderElement(s._mapElements.get(c.getName()).size()));
-					}catch(Exception ex){
-					}
-				}
-				l.add(ll);
-				//We need to generate the incompatible indexes list<list<integer>
-				Map<String, List<Integer>> mapIndexProvider = new HashMap<String, List<Integer>>();
-				for(int i = 0; i < table.size(); i++){
-					if(mapIndexProvider.containsKey(table.get(i))){
-						List<Integer> lll = mapIndexProvider.get(table.get(i));
-						lll.add(i);
-						mapIndexProvider.put(table.get(i), lll);
-					}else{
-						List<Integer> lll = new ArrayList<Integer>();
-						lll.add(i);
-						mapIndexProvider.put(table.get(i), lll);
-					}
-
-					//If the type isn't even an entry of the hash map, return false (didn't find any reactive)
-					if(s._mapElements.get(table.get(i))== null){
-						return null;
-					}
-				}
-				//We have to provide the IndexProvider a list of a list of int, so
-				//we need to transform the map of list in a list of list
-				List<List<Integer>> listProvider = new ArrayList<List<Integer>>();
-				for(String sname : mapIndexProvider.keySet()){
-					System.err.println("Pour le type "+sname+" on a "+mapIndexProvider.get(sname).size()+" éléments dans la map");
-					if(mapIndexProvider.get(sname).size()>1){
-						System.err.println("On ajoute donc bien les éléments");
-						listProvider.add(mapIndexProvider.get(sname));
-					}else{
-					}
-				}
-				System.err.println("On a enfin notre liste incompatible : "+listProvider);
-				return new SubIndexProviderSolution(l, listProvider);
-			} catch (Exception e1) {
-				//e1.printStackTrace();
-			}
-		}
-		return null;
-	}
 
 
 	public boolean retainAll(Collection<?> arg0) {
@@ -960,18 +703,18 @@ public final class Solution implements Collection<Object>{
 	public synchronized void wakeAll() {
 		notifyAll();
 	}
-	
+
 	List<Object> getSubSolutions() {
 		List<Object> res = _mapElements.get(Solution.class.getName());
 		if(res == null)
 			res = new ArrayList<Object>();
 		return res;
 	}
-	
+
 	Map<String, List<Object>> getMapElements() {
 		return _mapElements;
 	}
-	
+
 	/**
 	 * This method set the log file of the chemical library.
 	 * For information, logs are set not to be bigger than 10,000 bytes long

@@ -54,8 +54,6 @@ public class MaxIntRR implements ReactionRule{
 	}
 
 	public boolean computeSelect() {
-		System.out.println("test : "+(a>c && b>c));
-		System.out.println(a+">"+c+" && "+b+">"+c);
 		return a>c && b>c;
 	}
 

@@ -8,4 +8,6 @@ interface SubSolutionReactivesAccessor {
 	public List<Class<? extends Object>> getTypeList();
 	public void setElements(List<Object> l);
 	public void setTypeList(List<Class<? extends Object>> l);
+	public Solution getSolution();
+	public void setSolution(Solution s);
 }

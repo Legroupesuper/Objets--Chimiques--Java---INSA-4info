@@ -110,7 +110,8 @@ public class Test {
 		s.add(" Le ");
 		s.add(" Gros ");
 		s.add(" Eléphant ");
-		//s.add(new MaxIntRR(0));
+		s.add(new MaxIntRR(0));
+		//s2.add(new DeleteRuleMax());
 		s.add(new MaxIntSubSolRR());
 		s.add(new ConcatRR());
 		//s.add(new RandomNumberRR());

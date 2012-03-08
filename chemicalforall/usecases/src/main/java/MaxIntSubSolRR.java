@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import fr.insa.rennes.info.chemical.backend.SubSolution;
@@ -54,8 +55,8 @@ public class MaxIntSubSolRR implements ReactionRule{
 	}
 
 	public Object[] computeResult() {
-		int inta = (Integer)a.getElements().get(1);
-		int intb = (Integer)a.getElements().get(2);
+		int inta = (Integer)a.getElements().get(0);
+		int intb = (Integer)a.getElements().get(1);
 		
 		if(inta>intb)
 			return new Object[]{inta};

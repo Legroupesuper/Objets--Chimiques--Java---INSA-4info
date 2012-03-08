@@ -55,38 +55,23 @@ public class ChemicalThread extends Thread {
 
 		//Run as long as the solution is not inert
 		while(!_solutionContainer.is_inert() && _continue){
-			try {
-				//If we find enough valid parameters...
-				if(_solutionContainer.requestForParameters(_reactionRule)){
-					//...we compute reaction result
-					Object obj[] = _reactionRule.computeResult();
-					//add the results to the solution
-					if(obj != null)
-						_solutionContainer.addAll(Arrays.asList(obj));
-					//If the reaction rule is ONE SHOT, we must delete it !
-					if(_reactionRule.getMultiplicity()==Multiplicity.ONE_SHOT){
-						_solutionContainer.deleteReaction(_reactionRule);
-					}
-					//then wake all ReactionRules (as the solution has been modified)
-					_solutionContainer.wakeAll();
-				}else{
-					//If we do not find valid parameters, the reaction goes to sleep
-					//A sleeping reaction waits for the solution to go inert or to see its inner elements modified
-					_solutionContainer.makeSleep();
+			//If we find enough valid parameters...
+			if(_solutionContainer.requestForParameters(_reactionRule)){
+				//...we compute reaction result
+				Object obj[] = _reactionRule.computeResult();
+				//add the results to the solution
+				if(obj != null)
+					_solutionContainer.addAll(Arrays.asList(obj));
+				//If the reaction rule is ONE SHOT, we must delete it !
+				if(_reactionRule.getMultiplicity()==Multiplicity.ONE_SHOT){
+					_solutionContainer.deleteReaction(_reactionRule);
 				}
-				//TODO let us have a rethink about Exception handling ! (Some / all of those could be handled previously)
-			} catch (IllegalArgumentException e) {
-				e.printStackTrace();
-			} catch (IllegalAccessException e) {
-				e.printStackTrace();
-			} catch (InvocationTargetException e) {
-				e.printStackTrace();
-			} catch (SecurityException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (NoSuchMethodException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				//then wake all ReactionRules (as the solution has been modified)
+				_solutionContainer.wakeAll();
+			}else{
+				//If we do not find valid parameters, the reaction goes to sleep
+				//A sleeping reaction waits for the solution to go inert or to see its inner elements modified
+				_solutionContainer.makeSleep();
 			}
 		}
 	}

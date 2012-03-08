@@ -27,5 +27,13 @@ public final class SubSolution<T extends SubSolutionReactivesAccessor> implement
 		_element.setTypeList(l);
 	}
 
+	public Solution getSolution() {
+		return _element.getSolution();
+	}
+
+	public void setSolution(Solution s) {
+		_element.setSolution(s);
+	}
+
 
 }

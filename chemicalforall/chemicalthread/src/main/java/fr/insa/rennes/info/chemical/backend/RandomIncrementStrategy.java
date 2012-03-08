@@ -34,9 +34,9 @@ class RandomIncrementStrategy implements IncrementStrategy {
 	 * columns there is for this index provider.
 	 * @param maxIndex The maximum index array
 	 */
-	public RandomIncrementStrategy(SubIndexProviderSolution solution){
+	public RandomIncrementStrategy(SubIndexProviderSolution sipSol){
 		_currentIndex = BigInteger.valueOf(0);
-		_numberOfIndex = solution.getNumberOfElements();
+		_numberOfIndex = sipSol.getNumberOfElements();
 		_shuffleList = new ArrayList<BigInteger>();
 		
 		for(BigInteger i= BigInteger.valueOf(0); _numberOfIndex.add(i.negate()).signum()>0; i=i.add(BigInteger.valueOf(1))){

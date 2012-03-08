@@ -119,7 +119,7 @@ public class BuilderSubIndexProviderSolution {
 				secondLevelList.add(sipSolAccumulation);
 				firstLevelList.add(secondLevelList);
 	
-				//At this point we have a Subsolution<Subsolution<...>> so there can 
+				//At this point we have a SubSolution<Subsolution<...>> so there can 
 				//not be dependent indexes
 				List<List<Integer>> dependentIndexesList = new ArrayList<List<Integer>>();
 				_sipSol = new SubIndexProviderSolution(firstLevelList, dependentIndexesList);
@@ -132,20 +132,21 @@ public class BuilderSubIndexProviderSolution {
 			Method getter = Utils.getMethodFromReactionRule(_rr, "get", _rrSubSolField);
 			try {
 				//The getter allows us to generate SubSolution element to access the type list
-				SubSolution<SubSolutionReactivesAccessor> el = (SubSolution<SubSolutionReactivesAccessor>) getter.invoke(_rr, null);
+				SubSolution<SubSolutionReactivesAccessor> subSolObject = (SubSolution<SubSolutionReactivesAccessor>) getter.invoke(_rr, null);
 
 				//For each type in the SubSolutionReactivesAccessor type list, create
 				//a SubIndexProviderElement object.
 				List<List<SubIndexProvider>> firstLevelList = new ArrayList<List<SubIndexProvider>>();
 				List<SubIndexProvider> secondLevelList = new ArrayList<SubIndexProvider>();
 				List<String> typeList = new ArrayList<String>();
-				for(Class<?> c : el.getTypeList()){
+				for(Class<?> c : subSolObject.getTypeList()){
 					typeList.add(c.getName());
 
-					if(_solution.getMapElements().get(c.getName()) != null) {
-						SubIndexProviderElement sipElmt = new SubIndexProviderElement(_solution.getMapElements().get(c.getName()).size());
-						secondLevelList.add(sipElmt);
-					}
+					if(_solution.getMapElements().get(c.getName()) == null)
+						throw new ChemicalException("There is no reactive of the type asked ("+c.getName()+"), aborting index provider building.");
+					
+					SubIndexProviderElement sipElmt = new SubIndexProviderElement(_solution.getMapElements().get(c.getName()).size());
+					secondLevelList.add(sipElmt);
 				}
 
 				//Here the first level list contains only one sub list of index providers
@@ -211,6 +212,9 @@ public class BuilderSubIndexProviderSolution {
 				}else{
 					//Else, the reaction rule attribute is a simple Java object,
 					//and a SubIndexProviderElement is sufficient
+					if(_solution.getMapElements().get(f.getType().getName()) == null)
+						throw new ChemicalException("There is no reactive of the type asked ("+f.getType().getName()+"), aborting index provider building.");
+					
 					sip = new SubIndexProviderElement(_solution.getMapElements().get(f.getType().getName()).size());
 				}
 

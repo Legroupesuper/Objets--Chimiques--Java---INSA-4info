@@ -4,6 +4,7 @@ import java.util.List;
 
 public class SubSolutionElements implements SubSolutionReactivesAccessor{
 	private List<Object> _elements;
+	private Solution _containingSolution;
 	private List<Class<? extends Object>> _types;
 
 	public List<Object> getElements(){
@@ -21,7 +22,14 @@ public class SubSolutionElements implements SubSolutionReactivesAccessor{
 	public void setTypeList(List<Class<? extends Object>> l) {
 		_types = l;
 	}
-
+	
+	public void setSolution(Solution s) {
+		_containingSolution = s;
+	}
+	
+	public Solution getSolution() {
+		return _containingSolution;
+	}
 
 
 }
