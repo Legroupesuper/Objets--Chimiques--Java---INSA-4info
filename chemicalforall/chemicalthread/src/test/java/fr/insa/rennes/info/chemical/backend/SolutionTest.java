@@ -331,7 +331,7 @@ public class SolutionTest extends TestCase {
 			}
 			
 			public Multiplicity getMultiplicity() {
-				return Multiplicity.ONE_SHOT;
+				return Multiplicity.INFINITY_SHOT;
 			}
 			
 			public boolean computeSelect() {
@@ -340,6 +340,31 @@ public class SolutionTest extends TestCase {
 			
 			public Object[] computeResult() {
 				return new Object[]{a+b, a-b};
+			}
+		});
+		testSolution.add(new ReactionRule() {
+			
+			private ReactionRule a;
+			private String b;
+			
+			public void setA(ReactionRule aA){
+				this.a = aA;
+			}
+			
+			public void setB(String aB){
+				this.b = aB;
+			}
+			
+			public Multiplicity getMultiplicity() {
+				return Multiplicity.ONE_SHOT;
+			}
+			
+			public boolean computeSelect() {
+				return true;
+			}
+			
+			public Object[] computeResult() {
+				return new Object[]{};
 			}
 		});
 		testSolution.addInertEventListener(new InertEventListener() {
