@@ -135,11 +135,7 @@ public final class Solution implements Collection<Object>{
 			}
 		}
 		if(!classOK){
-			try {
-				throw new ChemicalException(errorMsg);
-			} catch (ChemicalException e) {
-				e.printStackTrace();
-			}
+			return false;
 		}else{
 			//If the reaction rule doesn't exist, we add it
 			if(!_threadTable.containsKey(reactionRuleObject)){
@@ -346,17 +342,17 @@ public final class Solution implements Collection<Object>{
 		//it means other reaction rules can react, so just make this thread wait
 		//This function ever deals with inner solutions. Awaken threads in relation with 
 		//ReactionRules of inner solutions are detected in nbAwaken.
-		if(nbAwaken > 1){
+		while(nbAwaken > 1){
 			try {
 				wait();
 			} catch (InterruptedException e) {
-				e.printStackTrace();
+				//Nothing, just loop
 			}
 			//If the current thread is the last one standing, kill all the threads by switching the
 			//boolean _keepOnReacting to false (all thread are in a loop on this boolean).
-		}else{
-			endOfReaction();
 		}
+		
+		endOfReaction();
 	}
 
 	/**
@@ -442,12 +438,11 @@ public final class Solution implements Collection<Object>{
 	 */
 	public boolean requestForParameters(ReactionRule r) {
 		synchronized (this) {
-			if(!_reactionInProgress){
+			while(!_reactionInProgress){
 				try {
 					wait();
 				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					//Nothing, just loop
 				}
 			}
 		}
@@ -470,6 +465,10 @@ public final class Solution implements Collection<Object>{
 
 			} catch (ChemicalException e1) {
 				return false;
+			} catch(Exception e) {
+				//Just in case there is any other exception, and in order to avoid 
+				//to annoy the user with a stack trace, just return false 
+				return false;
 			}
 
 			//Once the index provider is created, we have to search for reactives matching,
@@ -481,16 +480,14 @@ public final class Solution implements Collection<Object>{
 			
 				//TODO : Gestion des exceptions
 			} catch (IllegalArgumentException e) {
-				e.printStackTrace();
 				return false;
 			} catch (IllegalAccessException e) {
-				e.printStackTrace();
 				return false;
 			} catch (InvocationTargetException e) {
-				e.printStackTrace();
 				return false;
 			} catch(Exception e) {
-				e.printStackTrace();
+				//Just in case there is any other exception, and in order to avoid 
+				//to annoy the user with a stack trace, just return false 
 				return false;
 			}
 		}
@@ -571,6 +568,7 @@ public final class Solution implements Collection<Object>{
 				if(react.get_second().getClass().getName().equals(Solution.class.getName())){
 					Solution stemp = (Solution) react.get_second();
 					//System.err.println("!!!!!!!!!!!!!!!!!\n!!!!!!!!!!!!!!!!!!!!\n!!!!!!!!!!!!!!!!!\nOn a matché un solution "+stemp);
+					
 					//If among the reactives we try to use a solution object
 					//and that this solution is not inert, the matching fails (it is impossible to do that)
 					if(!stemp._inert){

@@ -7,8 +7,8 @@ import fr.insa.rennes.info.chemical.user.InertEventListener;
 public class Test2 {
 	public static void main(String[] args) {
 		final Solution mainSol = new Solution();
-		Solution innerSol= new Solution();
-		Solution innerSol2= new Solution();
+		Solution innerSol = new Solution();
+		Solution innerSol2 = new Solution();
 		innerSol.add(1);
 		innerSol.add(2);
 		innerSol.add(3);

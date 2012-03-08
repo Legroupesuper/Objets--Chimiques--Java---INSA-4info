@@ -1,6 +1,7 @@
 package fr.insa.rennes.info.chemical.backend;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
 import java.util.ArrayList;
@@ -101,18 +102,20 @@ public class BuilderSubIndexProviderSolution {
 				sipSolBuilder.build();
 
 				SubIndexProviderSolution sipSol = sipSolBuilder.getSubIndexProvider();
-				if(sipSol != null){
+				if(sipSol != null) {
 					if(sipSolAccumulation == null)
 						sipSolAccumulation = sipSol;
 					else
 						sipSolAccumulation.merge(sipSol);
 				}
-				
+
 				/*if(sipSol != null)
 					firstLevelList.add(sipSol.get_listElements());*/
 				//System.out.print("Le SOUS sipSol est: "+sipSol+" pour la solution "+subSubSol);
 			}
 			
+			//As we are in the recursion, this _sipSol is only a option among others
+			//Thus, the response CAN be null (it is just a wrong way, and we can "backtrack"-sort of)
 			if(sipSolAccumulation == null) {
 				_sipSol = null;
 			} else {
@@ -144,22 +147,26 @@ public class BuilderSubIndexProviderSolution {
 
 					if(_solution.getMapElements().get(c.getName()) == null)
 						throw new ChemicalException("There is no reactive of the type asked ("+c.getName()+"), aborting index provider building.");
-					
+
 					SubIndexProviderElement sipElmt = new SubIndexProviderElement(_solution.getMapElements().get(c.getName()).size());
 					secondLevelList.add(sipElmt);
 				}
 
 				//Here the first level list contains only one sub list of index providers
 				firstLevelList.add(secondLevelList);
-				
+
 				//Finally, generate the incompatible indexes list<list<integer>
 				List<List<Integer>> dependentIndexesList = this.buildDependantIndexesListWithTypes(typeList, _solution.getMapElements());
 
 				_sipSol = new SubIndexProviderSolution(firstLevelList, dependentIndexesList);
 			} catch(ChemicalException e1) {
 				throw e1;
-			} catch (Exception e2) {
-				e2.printStackTrace();
+			} catch (IllegalArgumentException e2) {
+				throw new ChemicalException("Error while building the index provider : invocation of the getter of a reaction rule SubSolution field failed.");
+			} catch (IllegalAccessException e3) {
+				throw new ChemicalException("Error while building the index provider : invocation of the getter of a reaction rule SubSolution field failed.");
+			} catch (InvocationTargetException e4) {
+				throw new ChemicalException("Error while building the index provider : invocation of the getter of a reaction rule SubSolution field failed.");
 			}
 		}
 	}
@@ -199,7 +206,7 @@ public class BuilderSubIndexProviderSolution {
 						sipSolBuilder.build();
 
 						SubIndexProviderSolution sipSol = sipSolBuilder.getSubIndexProvider();
-						if(sipSol != null){
+						if(sipSol != null) {
 							if(sipSolAccumulation == null)
 								sipSolAccumulation = sipSol;
 							else
@@ -208,20 +215,27 @@ public class BuilderSubIndexProviderSolution {
 						//System.out.print("Le sipSol est: "+sipSol+" pour la solution "+s);
 						//System.out.println(", son accumulation est: "+sipSolAccumulation);
 					}
+					
+					//The accumulation can not be null. 
+					//If it is, this mean the reactives will never be matched anyway
+					if(sipSolAccumulation == null) {
+						throw new ChemicalException("There is not enough solution nesting, impossible to match reactives, aborting index provider building.");
+					}
+					
 					sip = sipSolAccumulation;
 				}else{
 					//Else, the reaction rule attribute is a simple Java object,
 					//and a SubIndexProviderElement is sufficient
 					if(_solution.getMapElements().get(f.getType().getName()) == null)
 						throw new ChemicalException("There is no reactive of the type asked ("+f.getType().getName()+"), aborting index provider building.");
-					
+
 					sip = new SubIndexProviderElement(_solution.getMapElements().get(f.getType().getName()).size());
 				}
 
 				secondLevelList.add(sip);
 			}
 		}
-
+		
 		//The first level list only contains one sub-list (see why in the comment up there in this function)
 		firstLevelList.add(secondLevelList);
 
