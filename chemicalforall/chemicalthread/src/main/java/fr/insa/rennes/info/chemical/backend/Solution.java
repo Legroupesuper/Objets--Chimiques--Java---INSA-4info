@@ -116,6 +116,7 @@ public final class Solution implements Collection<Object>{
 		int numberOfMethods = rrClass.getDeclaredMethods().length;
 		boolean setterOK;
 		for(Field f : rrClass.getDeclaredFields()){
+			System.out.println("Bah merde."+f);
 			setterOK = false;
 
 			for(int  i = 0; i < numberOfMethods; i++){
@@ -135,7 +136,12 @@ public final class Solution implements Collection<Object>{
 			}
 		}
 		if(!classOK){
-			return false;
+			try {
+				throw new ChemicalException(errorMsg);
+			} catch (ChemicalException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}else{
 			//If the reaction rule doesn't exist, we add it
 			if(!_threadTable.containsKey(reactionRuleObject)){
