@@ -20,7 +20,7 @@ import fr.insa.rennes.info.chemical.user.ReactionRule;
 public class SolutionTest extends TestCase {
 
 	private Solution testSolution;
-	
+
 	/**
 	 * @param name
 	 */
@@ -76,7 +76,8 @@ public class SolutionTest extends TestCase {
 	 * Test method for {@link Solution#add(Object)}.
 	 */
 	public void testAddReactionRule() {
-		ReactionRule rr = new ReactionRule(){
+
+		ReactionRule rr = new ReactionRule() {
 			public Object[] computeResult(){
 				return null;
 			}
@@ -86,7 +87,12 @@ public class SolutionTest extends TestCase {
 			public ReactionRule.Multiplicity getMultiplicity(){
 				return ReactionRule.Multiplicity.ONE_SHOT;
 			}
+
+			public void setThis$0(Object t) {
+
+			}
 		};
+
 		testSolution.add(rr);
 		assertTrue(this.testSolution.contains(rr));
 	}
@@ -112,9 +118,9 @@ public class SolutionTest extends TestCase {
 		coll.add(new Object());
 		coll.add(new LinkedList<Byte>());
 		coll.add(new boolean[]{true, false, true, true});
-		
+
 		testSolution.addAll(coll);
-		
+
 		for(Object elem : coll){
 			test &= testSolution.contains(elem);
 		}
@@ -127,31 +133,31 @@ public class SolutionTest extends TestCase {
 	 */
 	public void testContains() {
 		Collection<Object> coll = new ArrayList<Object>();
-		
+
 		coll.add(12);
 		testSolution.add(12);
-		
+
 		Solution subSol = new Solution();
 		coll.add(subSol);
 		testSolution.add(subSol);
-		
+
 		Object foo = new Object();
 		coll.add(foo);
 		testSolution.add(foo);
-		
+
 		List<?> subColl = new LinkedList<Byte>();
 		coll.add(subColl);
 		testSolution.add(subColl);
-		
+
 		boolean[] subTab = new boolean[]{true, false, true, true};
 		coll.add(subTab);
 		testSolution.add(subTab);
-		
+
 		Iterator<Object> it = testSolution.iterator();
 		while(it.hasNext()){
 			assertTrue(coll.contains(it.next()));
 		}
-		
+
 	}
 
 	/**
@@ -159,26 +165,26 @@ public class SolutionTest extends TestCase {
 	 */
 	public void testContainsAll() {
 		Collection<Object> coll = new ArrayList<Object>();
-		
+
 		coll.add(12);
 		testSolution.add(12);
-		
+
 		Solution subSol = new Solution();
 		coll.add(subSol);
 		testSolution.add(subSol);
-		
+
 		Object foo = new Object();
 		coll.add(foo);
 		testSolution.add(foo);
-		
+
 		List<?> subColl = new LinkedList<Byte>();
 		coll.add(subColl);
 		testSolution.add(subColl);
-		
+
 		boolean[] subTab = new boolean[]{true, false, true, true};
 		coll.add(subTab);
 		testSolution.add(subTab);
-		
+
 		assertTrue(testSolution.containsAll(coll));
 	}
 
@@ -186,16 +192,16 @@ public class SolutionTest extends TestCase {
 	 * Test method for {@link Solution#addInertEventListener(InertEventListener)}.
 	 */
 	public void testAddInertEventListener() {
-		
+
 		testSolution.addInertEventListener(new InertEventListener() {
-			
+
 			public void isInert(InertEvent e) {
 				assertTrue(true);
 			}
 		});
-		
+
 		testSolution.react();
-		
+
 	}
 
 	/**
@@ -204,9 +210,9 @@ public class SolutionTest extends TestCase {
 	public void testClear() {
 		testSolution.add(12);
 		testSolution.clear();
-		
+
 		assertTrue(testSolution.isEmpty());
-		
+
 	}
 
 	/**
@@ -214,27 +220,30 @@ public class SolutionTest extends TestCase {
 	 */
 	public void testDeleteReaction() {
 		ReactionRule rr = new ReactionRule() {
-			
+
 			public Multiplicity getMultiplicity() {
 				return Multiplicity.ONE_SHOT;
 			}
-			
+
 			public boolean computeSelect() {
 				return true;
 			}
-			
+
 			public Object[] computeResult() {
 				return new Object[]{1, 2, 3};
+			}
+			public void setThis$0(Object t)  {
+
 			}
 		};
 		testSolution.add(rr);
 		testSolution.addInertEventListener(new InertEventListener() {
-			
+
 			public void isInert(InertEvent e) {
 				assertTrue(testSolution.isEmpty());
 			}
 		});
-		
+
 	}
 
 	/**
@@ -260,28 +269,31 @@ public class SolutionTest extends TestCase {
 		testSolution.add("toto");
 		testSolution.add(16);
 		testSolution.add(new ReactionRule() {
-			
+
 			private int a;
 			private int b;
-			
+
 			public void setA(int aA){
 				this.a = aA;
 			}
-			
+
 			public void setB(int aB){
 				this.b = aB;
 			}
-			
+
 			public Multiplicity getMultiplicity() {
 				return Multiplicity.ONE_SHOT;
 			}
-			
+
 			public boolean computeSelect() {
 				return true;
 			}
-			
+
 			public Object[] computeResult() {
 				return new Object[]{a+b, a-b};
+			}
+			public void setThis$0(Object t)  {
+
 			}
 		});
 		testSolution.addInertEventListener(new InertEventListener() {
@@ -318,53 +330,60 @@ public class SolutionTest extends TestCase {
 		testSolution.add("toto");
 		testSolution.add(16);
 		testSolution.add(new ReactionRule() {
-			
+
 			private int a;
 			private int b;
-			
+
 			public void setA(int aA){
 				this.a = aA;
 			}
-			
+
 			public void setB(int aB){
 				this.b = aB;
 			}
-			
+
 			public Multiplicity getMultiplicity() {
 				return Multiplicity.INFINITY_SHOT;
 			}
-			
+
 			public boolean computeSelect() {
 				return true;
 			}
-			
+
 			public Object[] computeResult() {
 				return new Object[]{a+b, a-b};
 			}
+			public void setThis$0(Object t)  {
+
+			}
 		});
 		testSolution.add(new ReactionRule() {
-			
+
 			private ReactionRule a;
 			private String b;
-			
+
 			public void setA(ReactionRule aA){
 				this.a = aA;
 			}
-			
+
 			public void setB(String aB){
 				this.b = aB;
 			}
-			
+
 			public Multiplicity getMultiplicity() {
 				return Multiplicity.ONE_SHOT;
 			}
-			
+
 			public boolean computeSelect() {
 				return true;
 			}
-			
+
 			public Object[] computeResult() {
 				return new Object[]{};
+			}
+
+			public void setThis$0(Object t)  {
+
 			}
 		});
 		testSolution.addInertEventListener(new InertEventListener() {
@@ -403,25 +422,25 @@ public class SolutionTest extends TestCase {
 		testSolution.add(12);
 		testSolution.add(16);
 		ReactionRule rr = new ReactionRule() {
-			
+
 			private int a;
 			private int b;
-			
+
 			public void setA(int aA){
 				this.a = aA;
 			}
 			public void setB(int aB){
 				this.b = aB;
 			}
-			
+
 			public Multiplicity getMultiplicity() {
 				return Multiplicity.ONE_SHOT;
 			}
-			
+
 			public boolean computeSelect() {
 				return true;
 			}
-			
+
 			public Object[] computeResult() {
 				return null;
 			}
@@ -446,7 +465,7 @@ public class SolutionTest extends TestCase {
 			e.printStackTrace();
 		}
 	}
-	*/
+	 */
 
 	/**
 	 * Test method for {@link Solution#retainAll(Collection)}.
@@ -464,15 +483,15 @@ public class SolutionTest extends TestCase {
 		ll.add(foo0);
 		testSolution.add(foo1);
 		ll.add(foo2);
-		
+
 		assertTrue(testSolution.retainAll(ll));
-		
+
 		assertFalse(testSolution.contains(foo1));
 		assertFalse(testSolution.contains(foo2));
 		assertTrue(testSolution.contains(foo0));
 	}
-	
-	
+
+
 
 
 }
