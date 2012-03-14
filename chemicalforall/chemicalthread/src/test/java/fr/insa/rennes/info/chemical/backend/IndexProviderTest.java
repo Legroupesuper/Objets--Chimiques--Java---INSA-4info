@@ -1,7 +1,6 @@
 package fr.insa.rennes.info.chemical.backend;
 
 import junit.framework.TestCase;
-import fr.insa.rennes.info.chemical.user.ReactionRule;
 
 /**
  * @author ArthurTemple

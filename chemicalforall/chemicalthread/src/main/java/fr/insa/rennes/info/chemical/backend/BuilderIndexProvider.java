@@ -1,8 +1,6 @@
 package fr.insa.rennes.info.chemical.backend;
 
 import java.lang.reflect.Field;
-import java.util.List;
-import java.util.Map;
 
 import fr.insa.rennes.info.chemical.backend.Solution.Strategy;
 import fr.insa.rennes.info.chemical.user.ReactionRule;

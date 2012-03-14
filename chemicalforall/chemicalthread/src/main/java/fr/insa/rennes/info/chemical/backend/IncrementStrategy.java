@@ -1,6 +1,5 @@
 package fr.insa.rennes.info.chemical.backend;
 
-import java.util.List;
 
 /**
  * Strategy design pattern

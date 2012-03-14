@@ -3,11 +3,7 @@ package fr.insa.rennes.info.chemical.backend;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map.Entry;
-
-import javax.swing.text.html.HTMLDocument.Iterator;
 
 
 /**
@@ -56,7 +52,6 @@ class RandomIncrementStrategy implements IncrementStrategy {
 	public SubIndexProviderSolution increment(SubIndexProviderSolution solution) throws ChemicalException{
 		solution.init();
 		
-		List<List<Integer>> result = new ArrayList<List<Integer>>();
 		java.util.Iterator<BigInteger> it = _shuffleList.iterator();
 		BigInteger position = BigInteger.valueOf(0);
 		BigInteger i = BigInteger.valueOf(0);

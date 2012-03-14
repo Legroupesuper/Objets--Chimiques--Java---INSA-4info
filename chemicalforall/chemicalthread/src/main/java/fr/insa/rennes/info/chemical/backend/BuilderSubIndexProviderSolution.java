@@ -75,6 +75,7 @@ public class BuilderSubIndexProviderSolution {
 
 
 
+	@SuppressWarnings("unchecked")
 	private void recursiveBuild() throws ChemicalException {
 		if(_paramType == null || _solution == null || _rrSubSolField == null)
 			throw new ChemicalException("The param type, sub solution and sub solution field name need to be given to build the IndexProvider.");
@@ -135,7 +136,7 @@ public class BuilderSubIndexProviderSolution {
 			Method getter = Utils.getMethodFromReactionRule(_rr, "get", _rrSubSolField);
 			try {
 				//The getter allows us to generate SubSolution element to access the type list
-				SubSolution<SubSolutionReactivesAccessor> subSolObject = (SubSolution<SubSolutionReactivesAccessor>) getter.invoke(_rr, null);
+				SubSolution<SubSolutionReactivesAccessor> subSolObject = (SubSolution<SubSolutionReactivesAccessor>) getter.invoke(_rr, new Object[0]);
 
 				//For each type in the SubSolutionReactivesAccessor type list, create
 				//a SubIndexProviderElement object.

@@ -4,8 +4,6 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.omg.CORBA._IDLTypeStub;
-
 /**
  * This class represents a specific case of IndexProviderElement.
  * It is used to represent a subsolution.

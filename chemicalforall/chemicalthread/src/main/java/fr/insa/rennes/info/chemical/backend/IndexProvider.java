@@ -1,13 +1,6 @@
 package fr.insa.rennes.info.chemical.backend;
 
-import java.lang.reflect.Array;
 import java.math.BigInteger;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
-
-import javax.naming.LimitExceededException;
 
 import fr.insa.rennes.info.chemical.backend.Solution.Strategy;
 
