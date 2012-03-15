@@ -19,15 +19,16 @@ import fr.insa.rennes.info.chemical.user.ReactionRule;
  * @author Andréolli Cédric, Boulanger Chloé, Cléro Olivier, Guellier Antoine, Guilloux Sébastien, Templé Arthur
  * @see IndexProvider
  */
-interface BuilderIndexProvider extends Builder<IndexProvider> {
+public interface BuilderIndexProvider extends Builder<IndexProvider> {
 	/**
 	 * Returns the built index provider, following the parameters given.
 	 * The different parameters are the solution, the reaction rule, the reaction rule's field, 
 	 * and the increment strategy of the index provider. See the associated setters for a detailed description.
+	 * @return The built index provider.
 	 * @see #setReactionRule(ReactionRule)
 	 * @see #setReactionRuleFields(Field[])
 	 * @see #setSolution(Solution)
-	 * @see #setStrategy(Strategy)
+	 * @see #setStrategy(Solution.Strategy)
 	 */
 	public IndexProvider getProduct() throws ChemicalException;
 	/**

@@ -31,12 +31,13 @@ import fr.insa.rennes.info.chemical.user.ReactionRule;
  * @see IndexProvider
  * @see SubIndexProviderSolution
  */
-public interface BuilderSubIndexProviderSolution extends Builder<SubIndexProviderSolution> {
+interface BuilderSubIndexProviderSolution extends Builder<SubIndexProviderSolution> {
 	/**
 	 * Returns the built SubIndexProviderSolution, following the parameters given.
 	 * The different parameters are the solution, the reaction rule, the reaction rule's field, 
 	 * the parameterized type, and the {@link SubSolution} field. See the associated setters 
 	 * for a detailed description.
+	 * @return The built SubIndexProviderSolution object.
 	 * @see #setParamType(ParameterizedType)
 	 * @see #setReactionRule(ReactionRule)
 	 * @see #setReactionRuleFields(Field[])

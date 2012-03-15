@@ -12,15 +12,47 @@ import java.util.Map;
 import fr.insa.rennes.info.chemical.user.Dontreact;
 import fr.insa.rennes.info.chemical.user.ReactionRule;
 
+/**
+ * Standard implementation of {@link BuilderSubIndexProviderSolution}. Another implementation can be created
+ * by implementing {@link BuilderSubIndexProviderSolution}.
+ * @author Andréolli Cédric, Boulanger Chloé, Cléro Olivier, Guellier Antoine, Guilloux Sébastien, Templé Arthur
+ */
 class BuilderSubIndexProviderSolutionImpl implements BuilderSubIndexProviderSolution {
+	/**
+	 * The product built, here a {@link SubIndexProviderSolution}.
+	 */
 	private SubIndexProviderSolution _sipSol;
+	/**
+	 * The reaction rule parameter.
+	 */
 	private ReactionRule _rr;
+	/**
+	 * The reaction rule's fields parameter.
+	 */
 	private Field[] _rrFields;
+	/**
+	 * The parameterized type parameter.
+	 */
 	private ParameterizedType _paramType;
+	/**
+	 * The solution parameter.
+	 */
 	private Solution _solution;
+	/**
+	 * The {@link SubSolution} field of the reaction rule;
+	 */
 	private Field _rrSubSolField;
+	/**
+	 * Indicates if the product's building is finished. 
+	 * Allows a check before sending the product when the user requests for it as it is not built yet. 
+	 */
 	private boolean _complete;
-
+	
+	/**
+	 * Constructs a standard builder for a {@link SubIndexProviderSolution}.
+	 * Initializes all the builder's parameters to <code>null</code> and the {@link #_complete} field
+	 * to false.
+	 */
 	public BuilderSubIndexProviderSolutionImpl() {
 		_rr = null;
 		_rrFields = null;
@@ -29,14 +61,14 @@ class BuilderSubIndexProviderSolutionImpl implements BuilderSubIndexProviderSolu
 		_rrSubSolField = null;
 		_complete = false;
 	}
-
+	
 	public SubIndexProviderSolution getProduct() throws ChemicalException {
 		if(!_complete)
 			throw new ChemicalException("The element index provider is not entirely built yet.");
 
 		return _sipSol;
 	}
-
+	
 	public void setReactionRule(ReactionRule rr) {
 		this._rr = rr;
 	}
@@ -44,7 +76,7 @@ class BuilderSubIndexProviderSolutionImpl implements BuilderSubIndexProviderSolu
 	public void setReactionRuleFields(Field[] rrFields) {
 		this._rrFields = rrFields;
 	}
-
+	
 	public void setParamType(ParameterizedType paramType) {
 		this._paramType = paramType;
 	}
@@ -52,12 +84,25 @@ class BuilderSubIndexProviderSolutionImpl implements BuilderSubIndexProviderSolu
 	public void setSolution(Solution sol) {
 		this._solution = sol;
 	}
-
+	
 	public void setSubSolutionField(Field subSolField) {
 		this._rrSubSolField = subSolField;
 	}
 
-
+	/**
+	 * Processes to the building of the index provider.
+	 * This functions first checks if the solution and reaction rule parameters are instantiated, if not a ChemicalException
+	 * explaining the issue is thrown.<br />
+	 * Depending on the other parameters instanciation, this function will then call 
+	 * a root build (see {@link #rootBuild()}) or a recursive build ({@link #recursiveBuild()}).
+	 * Root build is used only once, for the root SubIndexProviderSolution of 
+	 * the IndexProvider object, then the recursive function is always called (see {@link IndexProvider} structure).
+	 * At the end, the product is declared as complete ({@link #_complete} is set to <code>true</code>).<br />
+	 * Note: the implementation used to build every {@link SubIndexProviderSolution} is the standard implementation.
+	 * @see IndexProvider
+	 * @see SubIndexProviderSolution
+	 * @see BuilderIndexProvider
+	 */
 	public void build() throws ChemicalException {
 		if(_solution == null || _rr == null)
 			throw new ChemicalException("The map element and the reaction rule need to be given to build the IndexProvider.");
@@ -74,7 +119,17 @@ class BuilderSubIndexProviderSolutionImpl implements BuilderSubIndexProviderSolu
 	}
 
 
-
+	/**
+	 * This building version needs the following parameters to be correctly instantiated : 
+	 * solution, reaction rule, parameterized type, SubSolution field of the reaction rule. If at least
+	 * one of these parameters is not instantiated, a ChemicalException is thrown.
+	 * Depending on the parameterized type ( {@link SubSolution} or {@link SubSolutionElements} )
+	 * the processing differs. In the first case, a recursion is done in order to reach
+	 * the desired solution overlapping level; in the second this precise overlapping level is reached,
+	 * the recursion ends and a {@link SubIndexProviderElement} is created for each desired 
+	 * reactive given in the type list (see {@link SubSolutionReactivesAccessor} an the {@link SubSolutionElements} type list field).
+	 * @throws ChemicalException
+	 */
 	@SuppressWarnings("unchecked")
 	private void recursiveBuild() throws ChemicalException {
 		if(_paramType == null || _solution == null || _rr == null || _rrSubSolField == null)
@@ -168,7 +223,20 @@ class BuilderSubIndexProviderSolutionImpl implements BuilderSubIndexProviderSolu
 		}
 	}
 
-
+	
+	/**
+	 * Builds a root {@link SubIndexProviderSolution} for a {@link IndexProvider}, normally called only once.<br />
+	 * This building version needs the following parameters to be correctly instantiated : 
+	 * solution, reaction rule and reaction rule's fields. If at least
+	 * one of these parameters is not instantiated, a ChemicalException is thrown.<br />
+	 * This function basically goes through the reaction rule (given in parameter of the builder)
+	 * and for each field/reactive, it creates a {@link SubIndexProviderSolution} (if the field is a {@link SubSolution} object)
+	 * or a {@link SubIndexProviderElement} (if the field is a simple java object).
+	 * All sub {@link SubIndexProviderSolution} will be built with the {@link #recursiveBuild()} function.
+	 * @throws ChemicalException
+	 * @see IndexProvider
+	 * @see BuilderIndexProvider
+	 */
 	private void rootBuild() throws ChemicalException {
 		if(_rrFields == null || _solution == null || _rr == null)
 			throw new ChemicalException("The reaction rule's fields parameters need to be given to build the IndexProvider.");
@@ -241,7 +309,18 @@ class BuilderSubIndexProviderSolutionImpl implements BuilderSubIndexProviderSolu
 	}
 
 
-
+	/**
+	 * Builds the list of dependent indexes for a the specified reaction rule fields.
+	 * Basically two indexes are dependent if they correspond to reactives that have the same type.
+	 * And when two indexes are dependent, their HAVE to be different in the index provider, else
+	 * that would mean a solution element is selected twice for the same reaction
+	 * This function builds a list containing list of integers; a sub-list represents a 
+	 * set of dependent indexes, and there can be several sets of dependent indexes.
+	 * @param rrFields The reaction rule fields (that do not specify the {@link Dontreact} annotation).
+	 * @param mapElements The solution elements.
+	 * @return The list of sets of dependent indexes.
+	 * @throws ChemicalException
+	 */
 	private List<List<Integer>> buildDependantIndexesListWithFields(Field[] rrFields, Map<String, List<Object>> mapElements) throws ChemicalException {
 
 		Map<String, List<Integer>> dependantIndexesMap = new HashMap<String, List<Integer>>();
@@ -279,7 +358,19 @@ class BuilderSubIndexProviderSolutionImpl implements BuilderSubIndexProviderSolu
 
 		return dependantIndexesList;
 	}
-
+	
+	/**
+	 * Builds the list of dependent indexes for the specified list of reactive type.
+	 * Basically two indexes are dependent if they correspond to reactives that have the same type.
+	 * And when two indexes are dependent, their HAVE to be different in the index provider, else
+	 * that would mean a solution element is selected twice for the same reaction.
+	 * This function builds a list containing list of integers; a sub-list represents a 
+	 * set of dependent indexes, and there can be several sets of dependent indexes.
+	 * @param typeList The list of reactive type.
+	 * @param mapElements The solution elements.
+	 * @return The list of sets of dependent indexes.
+	 * @throws ChemicalException
+	 */
 	private List<List<Integer>> buildDependantIndexesListWithTypes(List<String> typeList, Map<String, List<Object>> mapElements) throws ChemicalException {
 
 		Map<String, List<Integer>> dependantIndexesMap = new HashMap<String, List<Integer>>();

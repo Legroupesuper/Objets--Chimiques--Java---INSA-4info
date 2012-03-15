@@ -7,11 +7,12 @@ package fr.insa.rennes.info.chemical.backend;
  *
  * @param <T> The type of the product to be built by this builder.
  */
-public interface Builder<T> {
+interface Builder<T> {
 	/**
 	 * This function must build the product of the <em>builder design pattern</em>.
 	 * This function may throw a ChemicalException if the builder needs more parameters before 
-	 * processing to the effective building. These parameters depend on the product built, and the builder
+	 * processing to the effective building or if these parameters are incorrect. 
+	 * These parameters depend on the product built, and the builder
 	 * implementation class have to provide the director a setter for each parameter.
 	 * @throws ChemicalException
 	 */
