@@ -233,7 +233,7 @@ public final class Solution implements Collection<Object>{
 	 * @param c Collection containing elements to be added to this solution.
 	 * @return <code>true</code> (as specified by Collection.addAll(Collection<? extends E))
 	 * @see Solution#add(Object)
-	 * @see java.util.Collection#addAll(java.lang.Object)
+	 * @see Collection#addAll(Collection)
 	 */
 	public boolean addAll(Collection<?> c) {
 		synchronized (_mapElements) {
@@ -295,7 +295,7 @@ public final class Solution implements Collection<Object>{
 	 * Deletes the specified reaction rule from this solution.
 	 * If this solution does not contain the specified reaction rule, nothing is done. 
 	 * Else, the thread associated to the reaction rule is also stopped. 
-	 * In the case where the reaction rule removed is the last one in this solution, 
+	 * In case the reaction rule removed is the last one in this solution, 
 	 * the end of the reaction is detected. 
 	 * @param r The reaction rule to be removed from this solution.
 	 * @see ReactionRule
@@ -471,7 +471,7 @@ public final class Solution implements Collection<Object>{
 	 * <br />
 	 * This function begins by launching the reactions in this solution's inner solutions and declares itself as non inert.
 	 * All the threads of the reaction rules from this solutions and its inner solutions are started all together.
-	 * In the case where this solution does not contain any inner solution nor reaction rule, nothing happens.
+	 * In case this solution does not contain any inner solution nor reaction rule, nothing happens.
 	 */
 	public void react() {
 		synchronized (this) {
@@ -580,13 +580,13 @@ public final class Solution implements Collection<Object>{
 			//Instantiate the IndexProvider object
 			IndexProvider indexProvider = null;
 			try {
-				BuilderIndexProvider ipBuilder = new BuilderIndexProvider();
+				BuilderIndexProvider ipBuilder = new BuilderIndexProviderImpl();
 				ipBuilder.setSolution(this);
 				ipBuilder.setReactionRule(r);
 				ipBuilder.setReactionRuleFields(rrFields);
 				ipBuilder.setStrategy(_strategy);
 				ipBuilder.build();
-				indexProvider = ipBuilder.getIndexProvider();
+				indexProvider = ipBuilder.getProduct();
 
 			} catch (ChemicalException e1) {
 				return false;
@@ -834,7 +834,7 @@ public final class Solution implements Collection<Object>{
 	
 	/**
 	 * Returns an array containing all of the elements in this solution.
-	 * @returns An array containing all of the elements in this solution in any order.
+	 * @return An array containing all of the elements in this solution in any order.
 	 */
 	public Object[] toArray() {
 		List<Object> res = new LinkedList<Object>();
@@ -850,7 +850,7 @@ public final class Solution implements Collection<Object>{
 	/**
 	 * Returns an array containing all of the elements in this solution; the runtime type of the returned array is that of the specified array. 
 	 * @param a the array into which the elements of this solution are to be stored, if it is big enough; otherwise, a new array of the same runtime type is allocated for this purpose.  
-	 * @returns An array containing all of the elements in this solution in any order.
+	 * @return An array containing all of the elements in this solution in any order.
 	 */
 	@SuppressWarnings("unchecked")
 	public <T> T[] toArray(T[] a) {
