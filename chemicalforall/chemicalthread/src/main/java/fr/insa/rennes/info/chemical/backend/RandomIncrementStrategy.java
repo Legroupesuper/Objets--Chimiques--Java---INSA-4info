@@ -7,9 +7,10 @@ import java.util.List;
 
 
 /**
- * This class implements an random strategy: the elements are randomly selected in order
- * to simulate a chemical reaction.
- * @author Cédric Andreolli, Chloé Boulanger, Olivier Cléro, Antoine Guellier, Sébastien Guilloux, Arthur Templé
+ * This class implements an random strategy iteration on reactives: 
+ * the elements are randomly selected in order to simulate the non-determinism 
+ * of a chemical reaction.
+ * @author Andréolli Cédric, Boulanger Chloé, Cléro Olivier, Guellier Antoine, Guilloux Sébastien, Templé Arthur
  */
 class RandomIncrementStrategy implements IncrementStrategy {
 	/**
@@ -49,13 +50,13 @@ class RandomIncrementStrategy implements IncrementStrategy {
 	 * @return A table of integers that is the new value of the indexes
 	 * @throws ChemicalException
 	 */	
-	public SubIndexProviderSolution increment(SubIndexProviderSolution solution) throws ChemicalException{
+	public void increment(SubIndexProviderSolution solution) throws ChemicalException{
 		solution.init();
 		
 		java.util.Iterator<BigInteger> it = _shuffleList.iterator();
 		BigInteger position = BigInteger.valueOf(0);
 		BigInteger i = BigInteger.valueOf(0);
-		//System.out.println(_currentIndex+"/"+solution.getNumberOfElements());
+		
 		if(_currentIndex.equals(_numberOfIndex))
 			throw new ChemicalException("Overflow reached first");
 		
@@ -75,8 +76,6 @@ class RandomIncrementStrategy implements IncrementStrategy {
 		for(i=BigInteger.valueOf(0); position.add(i.negate()).signum()>0; i=i.add(BigInteger.valueOf(1))){
 			solution.increment();
 		}
-		
-		return solution;
 	}
 
 }

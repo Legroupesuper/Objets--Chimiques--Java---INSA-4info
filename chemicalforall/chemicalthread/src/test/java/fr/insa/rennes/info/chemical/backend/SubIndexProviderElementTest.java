@@ -43,15 +43,15 @@ public class SubIndexProviderElementTest extends TestCase {
 	public void testGet_nummberElementsInSolution() {
 		assertTrue(numberElementsInSolution == testIndexProviderSimpleElement.get_nummberOfElementsInSolution());
 	}
-
+	
 	/**
 	 * Test method for {@link IndexProviderSimpleElement#set_nummberElementsInSolution(int)}.
 	 */
-	public void testSet_nummberElementsInSolution() {
+	/*public void testSet_nummberElementsInSolution() {
 		int testInt = 42;
 		testIndexProviderSimpleElement.set_nummberOfElementsInSolution(testInt);
 		assertTrue(testInt == testIndexProviderSimpleElement.get_nummberOfElementsInSolution());
-	}
+	}*/
 
 	/**
 	 * Test method for {@link IndexProviderSimpleElement#getValue()}.
