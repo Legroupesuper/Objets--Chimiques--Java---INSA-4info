@@ -59,12 +59,15 @@ public class ChemicalThread extends Thread {
 				//add the results to the solution
 				if(obj != null)
 					_solutionContainer.addAll(Arrays.asList(obj));
-				//If the reaction rule is ONE SHOT, we must delete it !
-				if(_reactionRule.getMultiplicity()==Multiplicity.ONE_SHOT){
-					_solutionContainer.deleteReaction(_reactionRule);
-				}
-				//then wake all ReactionRules (as the solution has been modified)
+				
+				//Then wake all ReactionRules (as the solution has been modified)
 				_solutionContainer.wakeAll();
+				
+				//If the reaction rule is ONE SHOT, we must delete it and stop this thread
+				if(_reactionRule.getMultiplicity().equals(Multiplicity.ONE_SHOT)){
+					_solutionContainer.deleteReaction(_reactionRule);
+					break;
+				}
 			}else{
 				//If we do not find valid parameters, the reaction goes to sleep
 				//A sleeping reaction waits for the solution to go inert or to see its inner elements modified

@@ -6,7 +6,7 @@ import functionnaltests.DeleteRuleMax;
 
 
 public class Test {
-	public static final Solution s = new Solution(Solution.Strategy.ORDERED);
+	public static final Solution s = new Solution(Solution.Strategy.RANDOM);
 	public static Solution s2 = new Solution();
 	public static Solution s3 = new Solution();
 	public static Solution s4 = new Solution();
@@ -50,7 +50,6 @@ public class Test {
 		s3.add(6);
 		s3.add(21);
 		s3.add(786);
-		s3.add(77);
 //		s2.add(5);
 //		s2.add(5);
 //		s2.add(6);
@@ -115,8 +114,8 @@ public class Test {
 		s.add(" Gros ");
 		s.add(" Eléphant ");
 		s.add(new MaxIntRR(0));
-		s2.add(new DeleteRuleMax());
-		//s.add(new MaxIntSubSolRR());
+		//s2.add(new DeleteRuleMax());
+		s.add(new MaxIntSubSolRR());
 		s.add(new ConcatRR());
 		//s.add(new RandomNumberRR());
 		//	s.add(new TrucRR());
@@ -141,5 +140,7 @@ public class Test {
 		} catch (IllegalArgumentException e) {
 			e.printStackTrace();
 		}
+		
+		
 	}
 }

@@ -15,6 +15,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Semaphore;
 import java.util.logging.FileHandler;
 
 import fr.insa.rennes.info.chemical.user.Dontreact;
@@ -79,7 +80,12 @@ public final class Solution implements Collection<Object>{
 	 * The thread group, common to all the threads
 	 */
 	private ThreadGroup _threadGroup;
-
+	
+	/**
+	 * The table of semaphore to lock on reactive types, and not the whole element table.
+	 */
+	private Map<String, Semaphore> _semaphoreTable;
+	
 	/**
 	 * The reactive iteration strategy, chosen by the user. The chosen strategy will apply 
 	 * to every reaction rule added in this solution. 
@@ -94,7 +100,8 @@ public final class Solution implements Collection<Object>{
 	 * @see InertEventListener
 	 */
 	private InertEventListener _listener = null;
-
+	
+	
 	/**
 	 * Default constructor for a Chemical Programming-powered Solution.<br />
 	 * Uses random strategy as default behavior
@@ -116,6 +123,7 @@ public final class Solution implements Collection<Object>{
 		_mapReactionRulesSetters = new HashMap<String, Integer>();
 		_threadGroup = new ThreadGroup("ChemicalGroup");
 		_threadTable = Collections.synchronizedMap(new HashMap<ReactionRule, ChemicalThread>());
+		_semaphoreTable = Collections.synchronizedMap(new HashMap<String, Semaphore>()); 
 		_strategy = s;
 		_inert = false;
 	}
@@ -190,9 +198,8 @@ public final class Solution implements Collection<Object>{
 	private void processAddSubSolution(Object solutionObject) {
 		Solution sol = (Solution) solutionObject;
 		sol.addInertEventListener(new InertEventListener() {
-
 			public void isInert(InertEvent e) {
-				Solution.this.wakeAll();
+				Solution.this.checkTrivialEndOfReaction();
 			}
 		});
 		if(_reactionInProgress)
@@ -213,6 +220,7 @@ public final class Solution implements Collection<Object>{
 
 			//At first we determine whether it is a ReactionRule or not
 			String className = getReactiveType(newReactive);
+			String rawClassName = newReactive.getClass().getName();
 			boolean addElement = true;
 
 			//It is a ReactionRule, hence special treatment
@@ -222,19 +230,22 @@ public final class Solution implements Collection<Object>{
 				processAddSubSolution(newReactive);
 			}
 
-			//TODO: (Message de Antoine) Pas la peine le premier test, de toute facon l'utilisateur peut pas acc�der � SubSolutionReactivesAccessor
 			if(!className.equals(SubSolutionReactivesAccessor.class.getName()) && addElement){
 				boolean result;
 				//When you add an element in the solution, the solution is no more inert
 				_inert = false;
+				
 				//There is already an entry in the map for this reactive, so we just add the element
-				if(_mapElements.get(className) != null){
-					result = _mapElements.get(className).add(newReactive);
-					//There is no entry for the moment : we init the list
-				}else{
+				if(_mapElements.get(rawClassName) != null){
+					result = _mapElements.get(rawClassName).add(newReactive);
+				}
+				//There is no entry for the moment : we init the list and the semaphore for this type of reactives
+				else{
 					List<Object> l =new ArrayList<Object>();
 					result = l.add(newReactive);
-					_mapElements.put(className, l);
+					_mapElements.put(rawClassName, l);
+					
+					_semaphoreTable.put(rawClassName, new Semaphore(1, true));
 				}
 				return result;
 			}else{
@@ -285,7 +296,7 @@ public final class Solution implements Collection<Object>{
 	 * @see java.util.Collection#contains(java.lang.Object)
 	 */
 	public boolean contains(Object reactive) {
-		String reactiveType = getReactiveType(reactive);
+		String reactiveType = reactive.getClass().getName();
 
 		//If the hash map doesn't even know the type, return false
 		if(_mapElements.get(reactiveType) == null) {
@@ -320,20 +331,33 @@ public final class Solution implements Collection<Object>{
 	 */
 	void deleteReaction(ReactionRule r){
 		synchronized (_mapElements) {
-			List<Object> l = _mapElements.get(ReactionRule.class.getName());
-			if(l.remove(r)) {
+			if(_mapElements.remove(r.getClass().getName()) != null) {
 				synchronized (_threadTable) {
 					_threadTable.get(r).stopTheThread();
 					_threadTable.remove(r);
 				}
-				int nbAwake = getNumberOfActiveThreads();
-				if(nbAwake == 0){
-					endOfReaction();
-				}
+				
+				checkTrivialEndOfReaction();
 			}
 		}
 	}
-
+	
+	/**
+	 * Checks if the end of the reaction is reached. 
+	 * The end of the reaction is reached when there is no longer any active thread and 
+	 * that there is no non inert inner solution. In the contrary, 
+	 * if the end of the reaction isn't reached, this function wakes all the reaction
+	 * rule threads. 
+	 */
+	private void checkTrivialEndOfReaction() {
+		if(_threadTable.size() == 0 && !containsNonInertSubSol())
+			endOfReaction();
+		else {
+			wakeAll();
+		}
+	}
+	
+	
 	/**
 	 * Ends and stops the reaction.
 	 * The _inert and _reactionInProgress booleans are switched, and the InertEvent is fired.
@@ -379,7 +403,8 @@ public final class Solution implements Collection<Object>{
 	private int getNumberOfActiveThreads(){
 		int nb = 0;
 		synchronized (_threadTable) {
-			//Count the number of thread that are awaken right now
+			//Count the number of thread that are awaken right now, 
+			//apart from the one running this function
 			for(Thread t : _threadTable.values()){
 				if(!t.getState().equals(Thread.State.WAITING)){
 					nb++;
@@ -432,7 +457,7 @@ public final class Solution implements Collection<Object>{
 	 * Note: to be inert, all the solution's inner solutions must be inert as well.
 	 * @return <code>true</code> if this solution is inert.
 	 */
-	public synchronized boolean is_inert() {
+	public boolean is_inert() {
 		return _inert;
 	}
 
@@ -471,7 +496,7 @@ public final class Solution implements Collection<Object>{
 	synchronized void makeSleep(){
 		int nbThreadAwaken = getNumberOfActiveThreads();
 		boolean containsNonInertSubSolutions = containsNonInertSubSol();
-
+		
 		//If there is more than one thread alive (including the current one)
 		//it means other reaction rules may still be reacting, so just make this thread wait.
 		//Same thing with the number of inert solution: a solution can't be inert if one or more
@@ -519,16 +544,14 @@ public final class Solution implements Collection<Object>{
 					 */
 					s.addInertEventListener(new InertEventListener() {
 						public void isInert(InertEvent e) {
-							if(getNumberOfActiveThreads() == 0 && !containsNonInertSubSol())
-								endOfReaction();
-							else
-								Solution.this.wakeAll();
+							Solution.this.checkTrivialEndOfReaction();
 						}
 					});
 					s.react();
 				}
-			}else if(_mapElements.get(ReactionRule.class.getName()) == null || _mapElements.get(ReactionRule.class.getName()).size() == 0){
-				//If there is no ReactionRule in the _mapElements, the solution can not react.
+			}else if(_threadTable.size() == 0){
+				//If there is no ReactionRule (thus no thread) in the solution, 
+				//the solution can not react.
 				endOfReaction();
 				return;
 			}
@@ -549,7 +572,7 @@ public final class Solution implements Collection<Object>{
 		//To remove the object, we have to find its type
 		//and check that it is present in the hash map
 
-		String reactiveType = getReactiveType(reactive);
+		String reactiveType = reactive.getClass().getName();
 		boolean res = false;
 		//For the same reason as in add, synchronized have to be declared on the hash map
 		synchronized(_mapElements) {
@@ -609,6 +632,11 @@ public final class Solution implements Collection<Object>{
 
 		//Get the reaction rule fields
 		Field[] rrFields = r.getClass().getDeclaredFields();
+		/*for(Field f : rrFields) {
+			if(f.getAnnotation(Dontreact.class) == null) {
+				_semaphoreTable.get(f.getType().getName());
+			}
+		}*/
 
 		//The access to the main atom map is restricted to 1 thread at a time
 		synchronized(_mapElements) {
@@ -753,7 +781,10 @@ public final class Solution implements Collection<Object>{
 				for(Object o : s.getElements()){;
 				react.get_first()._mapElements.get(o.getClass().getName()).remove(o);
 				}
-			}else{
+			} else if(getReactiveType(react.get_second()).equals(ReactionRule.class.getName())) {
+				//For a reaction rule, use the dedicated function
+				react.get_first().deleteReaction((ReactionRule)react.get_second());
+			} else{
 				//For a simple reactive (not a SubSolution object), just delete it from its solution
 				react.get_first()._mapElements.get(react.get_second().getClass().getName()).remove(react.get_second());
 			}
@@ -952,5 +983,4 @@ public final class Solution implements Collection<Object>{
 		Utils.logger.addHandler(new FileHandler(fileName, 10000, 5, false));
 
 	}
-
 }

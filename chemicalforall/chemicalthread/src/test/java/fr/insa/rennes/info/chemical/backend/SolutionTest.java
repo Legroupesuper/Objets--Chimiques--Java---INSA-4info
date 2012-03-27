@@ -386,12 +386,30 @@ public class SolutionTest extends TestCase {
 
 			}
 		});
+		
 		testSolution.addInertEventListener(new InertEventListener() {
 			public void isInert(InertEvent e) {
 				assertTrue(testSolution.size() == 1);
 			}
 		});
 		testSolution.react();
+		
+		
+		/*
+		 * Hey, c'est antoine.
+		 * Ce qui selon moi devrait marcher: attente active obligatoire pour rester dans le thread
+		 * "main".
+		 * Et supprimer listener carrément. Comme ca en tout cas, ca fait failure.
+		while(!testSolution.is_inert()) {
+			try {
+				Thread.sleep(200);
+			} catch (InterruptedException e1) {
+				//Loop
+			}
+		}
+		
+		assertTrue(testSolution.size() == 1);*/
+		
 	}
 
 	/**
