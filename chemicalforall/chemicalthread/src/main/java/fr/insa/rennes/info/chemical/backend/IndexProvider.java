@@ -32,7 +32,7 @@ class IndexProvider {
 	 * The main {@link SubIndexProviderSolution}, iterating on the main solution. Actually
 	 * does (almost) all the job.
 	 */
-	private SubIndexProviderSolution _indexProviderSubSolution;
+	private SubIndexProviderSolution _subIndexProviderSub;
 	/**
 	 * The increment strategy, chosen by the user of the library. Can be random or ordered.
 	 * @see IncrementStrategy
@@ -45,7 +45,7 @@ class IndexProvider {
 	
 	public IndexProvider(SubIndexProviderSolution ipss, Strategy s) throws ChemicalException {
 		super();
-		this._indexProviderSubSolution = ipss;
+		this._subIndexProviderSub = ipss;
 		_overflowReached = false;
 		if (s==Strategy.RANDOM){
 			_strategy = new RandomIncrementStrategy(ipss);
@@ -54,16 +54,16 @@ class IndexProvider {
 			_strategy = new RandomIncrementStrategy(ipss);
 		}
 		
-		_indexProviderSubSolution.init();
-		while(!_indexProviderSubSolution.isValid()){
+		_subIndexProviderSub.init();
+		while(!_subIndexProviderSub.isValid()){
 			increment();
 			if(_overflowReached)
 				throw new ChemicalException("It's not possible to create the IndexProvider");
 		}
 	}
 	
-	public SubIndexProviderSolution getSubSolution(){
-		return _indexProviderSubSolution;
+	public SubIndexProviderSolution getSubIndexProvider(){
+		return _subIndexProviderSub;
 	}
 	
 	public IndexProvider(SubIndexProviderSolution solution) throws ChemicalException {
@@ -73,19 +73,19 @@ class IndexProvider {
 	public SubIndexProviderSolution increment(){		
 		do{
 			try{
-				_strategy.increment(_indexProviderSubSolution);
+				_strategy.increment(_subIndexProviderSub);
 			} catch (ChemicalException e) {
 				_overflowReached = true;
 				return null;
 			}
-		}while(!_indexProviderSubSolution.isValid());
+		}while(!_subIndexProviderSub.isValid());
 		
-		return _indexProviderSubSolution;
+		return _subIndexProviderSub;
 	}
 	
 	
 	public String toString(){
-		return _indexProviderSubSolution.toString();
+		return _subIndexProviderSub.toString();
 	}
 	
 	public boolean is_overflowReached(){
@@ -93,6 +93,6 @@ class IndexProvider {
 	}
 	
 	public BigInteger getNumberOfElements(){
-		return _indexProviderSubSolution.getNumberOfElements();
+		return _subIndexProviderSub.getNumberOfElements();
 	}
 }

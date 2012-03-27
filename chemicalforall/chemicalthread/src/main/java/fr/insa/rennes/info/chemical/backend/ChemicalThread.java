@@ -49,10 +49,8 @@ public class ChemicalThread extends Thread {
 
 	@Override
 	public void run() {
-		//TODO Following line looks irrelevant... What about that ?
-		//		_solutionContainer.firstSleep(_reactionRule.getClass().getName());
-
-		//Run as long as the solution is not inert
+		//Run as long as the solution is not inert AND as long
+		//as we didn't stop the thread "manually"
 		while(!_solutionContainer.is_inert() && _continue){
 			//If we find enough valid parameters...
 			if(_solutionContainer.requestForParameters(_reactionRule)){

@@ -86,8 +86,14 @@ public final class Solution implements Collection<Object>{
 	 */
 	private Strategy _strategy;
 
+	/**
+	 * The inert event listener of this solution. Might be an other solution
+	 * or a listener defined by the user. ONly one inert listener can be used a a time.
+	 * @see InertEvent
+	 * @see InertEventListener
+	 */
 	private InertEventListener _listener = null;
-	
+
 	/**
 	 * Default constructor for a Chemical Programming-powered Solution.<br />
 	 * Uses random strategy as default behavior
@@ -95,7 +101,6 @@ public final class Solution implements Collection<Object>{
 	 */
 	public Solution() {
 		this(Strategy.RANDOM);
-		_inert = false;
 	}
 
 	/**
@@ -131,10 +136,10 @@ public final class Solution implements Collection<Object>{
 		boolean setterOK;
 		for(Field f : rrClass.getDeclaredFields()){
 			setterOK = false;
-			
+
 			if(f.getAnnotation(Dontreact.class) != null) 
 				continue;
-			
+
 			for(int  i = 0; i < numberOfMethods; i++){
 				Method m = rrClass.getDeclaredMethods()[i];
 				if(m.getName().toLowerCase().equals("set"+f.getName().toLowerCase())){
@@ -151,15 +156,25 @@ public final class Solution implements Collection<Object>{
 					errorMsg+="class "+rrClass.getName()+" lacks a setter for attribute "+f+"\n";
 			}
 		}
+
 		if(!classOK){
 			return false;
-		}else{
-			//If the reaction rule doesn't exist, we add it
-			if(!_threadTable.containsKey(reactionRuleObject)){
-				launchThread((ReactionRule) reactionRuleObject);
-			}else
-				return false;
-		}
+		} 
+
+
+		//If the reaction rule doesn't exist, we add it in the table
+		if(!_threadTable.containsKey(reactionRuleObject)){
+			ReactionRule r = (ReactionRule)reactionRuleObject;
+			
+			ChemicalThread t = new ChemicalThread(r, this, _threadGroup);
+			_threadTable.put(r, t);
+			
+			//Only if the reaction is in progress, we start the thread
+			if(_reactionInProgress)
+				t.start();
+		} else 
+			return false;
+
 		return true;
 	}
 
@@ -243,7 +258,7 @@ public final class Solution implements Collection<Object>{
 		}
 		return true;
 	}
-	
+
 	/**
 	 * Adds the specified inert event listener to receive inert events from this solution.<br />
 	 * Note: only one listener can be set at once.
@@ -261,7 +276,7 @@ public final class Solution implements Collection<Object>{
 	public void clear() {
 		_mapElements.clear();
 	}
-	
+
 	/**
 	 * Returns true if this solution contains the specified element/reactive.
 	 * @param reactive Reactive whose presence in this list is to be tested 
@@ -290,7 +305,7 @@ public final class Solution implements Collection<Object>{
 		}
 		return true;
 	}
-	
+
 	/**
 	 * Deletes the specified reaction rule from this solution.
 	 * If this solution does not contain the specified reaction rule, nothing is done. 
@@ -316,7 +331,7 @@ public final class Solution implements Collection<Object>{
 			}
 		}
 	}
-	
+
 	/**
 	 * Ends and stops the reaction.
 	 * The _inert and _reactionInProgress booleans are switched, and the InertEvent is fired.
@@ -327,12 +342,12 @@ public final class Solution implements Collection<Object>{
 	 */
 	private synchronized void endOfReaction(){
 		_reactionInProgress = false;
+		_inert = true;
 
 		notifyAll();
-		_inert = true;
 		fireInertEvent(new InertEvent(new Object()));
 	}
-	
+
 	/**
 	 * Fires the inert event notifying this solution's inert event listeners
 	 * that this solution is now inert.
@@ -344,7 +359,7 @@ public final class Solution implements Collection<Object>{
 		if(_listener != null)
 			_listener.isInert(e);
 	}
-	
+
 	/**
 	 * Returns <code>true</code> if this solution is still reacting (similar to <code>! _inert</code>).
 	 * @return <code>true</code> if the reaction is in progress.
@@ -352,7 +367,7 @@ public final class Solution implements Collection<Object>{
 	synchronized boolean get_reactionInProgress() {
 		return _reactionInProgress;
 	}
-	
+
 	/**
 	 * Gives the number of thread that are awaken in this solution.
 	 * Each thread corresponds to a reaction rule.
@@ -362,7 +377,7 @@ public final class Solution implements Collection<Object>{
 	private int getNumberOfActiveThreads(){
 		int nb = 0;
 		synchronized (_threadTable) {
-			//Count the number of thread that are awaken right nowcollection synchron
+			//Count the number of thread that are awaken right now
 			for(Thread t : _threadTable.values()){
 				if(!t.getState().equals(Thread.State.WAITING)){
 					nb++;
@@ -370,6 +385,25 @@ public final class Solution implements Collection<Object>{
 			}
 		}
 		return nb;
+	}
+
+	/**
+	 * Returns the number of non inert sub solutions in this solution
+	 * @return The number of non inert sub solutions in this solution
+	 */
+	private int getNumberOfNonInertSubSol() {
+		List<Object> subSols = _mapElements.get(Solution.class.getName());
+		if(subSols == null)
+			return 0;
+		
+		int res = 0;
+		for(Object o : subSols) {
+			Solution s = (Solution)o;
+			if(!s.is_inert()) {
+				res++;
+			}
+		}
+		return res;
 	}
 
 	/**
@@ -408,7 +442,7 @@ public final class Solution implements Collection<Object>{
 	public boolean isEmpty() {
 		return _mapElements.isEmpty();
 	}
-	
+
 	/**
 	 * Returns an iterator over the elements/reactives in this solution. 
 	 * As this solution can contain any type of element, the function returns an iterator of Object objects.
@@ -425,17 +459,6 @@ public final class Solution implements Collection<Object>{
 	}
 
 	/**
-	 * Creates and launches a thread that will run the specified reaction rule.
-	 * Every reaction rule has its own thread, and all the threads are in the same thread group.
-	 * @param r The reaction rule to be launched.
-	 */
-	private void launchThread(ReactionRule r){
-		ChemicalThread t = new ChemicalThread(r, this, _threadGroup);
-		_threadTable.put(r, t);
-		t.start();
-	}
-
-	/**
 	 * Called by a thread, makes the thread wait until a <code>notify</code> is called.
 	 * When a reaction rule did not find any reactives, it calls this function that will "make" it sleep.
 	 * It checks if this reaction rule's thread is the last standing. If it is,
@@ -445,23 +468,30 @@ public final class Solution implements Collection<Object>{
 	 * @see Solution#_inert
 	 */
 	synchronized void makeSleep(){
-		int nbAwaken = getNumberOfActiveThreads();
+		int nbThreadAwaken = getNumberOfActiveThreads();
+		int nbNonInertSubSolutions = getNumberOfNonInertSubSol();
 
 		//If there is more than one thread alive (including the current one)
-		//it means other reaction rules can react, so just make this thread wait
-		//This function ever deals with inner solutions. Awaken threads in relation with 
-		//ReactionRules of inner solutions are detected in nbAwaken.
-		while(nbAwaken > 1){
-			try {
-				wait();
-			} catch (InterruptedException e) {
-				//Nothing, just loop
-			}
+		//it means other reaction rules may still be reacting, so just make this thread wait.
+		//Same thing with the number of inert solution: a solution can't be inert if one or more
+		//of its inner solutions isn't inert.
+		if(nbThreadAwaken > 1 || nbNonInertSubSolutions > 0){
+			//Loop on the wait (always)
+			boolean interrupted;
+			do {
+				interrupted = false;
+				try {
+					wait();
+				} catch (InterruptedException e) {
+					interrupted = true;
+				}
+			} while(interrupted);
+
+		} else {
 			//If the current thread is the last one standing, kill all the threads by switching the
 			//boolean _keepOnReacting to false (all thread are in a loop on this boolean).
+			endOfReaction();
 		}
-		
-		endOfReaction();
 	}
 
 	/**
@@ -476,31 +506,35 @@ public final class Solution implements Collection<Object>{
 	public void react() {
 		synchronized (this) {
 			_reactionInProgress = true;
+			_inert = false;
 			//We try to launch all the inner solutions
-			if(_mapElements.get(Solution.class.getName()) != null){//Go through all the inner solutions
+			if(_mapElements.get(Solution.class.getName()) != null){
 				for(Object o : _mapElements.get(Solution.class.getName())){
 					Solution s = (Solution) o;
-					if(!s.is_inert()){
-						/**
-						 * If the solution is not inert, we add an InertEvenListener that will notify this
-						 * when s will become inert. The notification will awake all the ReactionRules which are
-						 * included in _mapElements.
-						 */
-						s.addInertEventListener(new InertEventListener() {
-							public void isInert(InertEvent e) {
+					/*
+					 * We add an InertEvenListener that will notify this
+					 * when s will become inert. The notification will awake all the ReactionRules which are
+					 * included in _mapElements.
+					 */
+					s.addInertEventListener(new InertEventListener() {
+						public void isInert(InertEvent e) {
+							if(getNumberOfActiveThreads() == 0 && getNumberOfNonInertSubSol() == 0)
+								endOfReaction();
+							else
 								Solution.this.wakeAll();
-							}
-						});
-						s.react();
-					}
+						}
+					});
+					s.react();
 				}
-			}else if(_mapElements.get(ReactionRule.class.getName()) == null){
-				/**
-				 * If there is no ReactionRule in the _mapElements, the solution can not react.
-				 */
+			}else if(_mapElements.get(ReactionRule.class.getName()) == null || _mapElements.get(ReactionRule.class.getName()).size() == 0){
+				//If there is no ReactionRule in the _mapElements, the solution can not react.
 				endOfReaction();
+				return;
 			}
-			notifyAll();
+
+			//Finally, launch all the reaction rule threads
+			for(ChemicalThread t : _threadTable.values())
+				t.start();
 		}
 	}
 
@@ -513,7 +547,7 @@ public final class Solution implements Collection<Object>{
 	public boolean remove(Object reactive) {
 		//To remove the object, we have to find its type
 		//and check that it is present in the hash map
-		
+
 		String reactiveType = getReactiveType(reactive);
 		boolean res = false;
 		//For the same reason as in add, synchronized have to be declared on the hash map
@@ -530,7 +564,7 @@ public final class Solution implements Collection<Object>{
 			return res;
 		}
 	}
-	
+
 	/**
 	 * Removes all of this solution's elements that are also contained in the specified collection. 
 	 * @param c Collection containing elements to be removed from this solution. 
@@ -599,11 +633,18 @@ public final class Solution implements Collection<Object>{
 			//Once the index provider is created, we have to search for reactives matching,
 			//Meanwhile, we have to catch every Exception before the user get them
 			try {
-				boolean reactivesFound = searchForReactives(r, rrFields, indexProvider);
-				
-				return reactivesFound;
-			
-				//TODO : Gestion des exceptions
+				List<Pair<Solution, Object>> reactives = searchForReactives(r, rrFields, indexProvider);
+
+				//If a valid set of reactive was found, erase the reactives from the solutions
+				//and return true
+				if(reactives != null) {
+					extractReactivesFromSolutions(reactives);
+					return true;
+				} else {
+					//Else, no reactives where found, return false
+					return false;
+				}
+
 			} catch (IllegalArgumentException e) {
 				return false;
 			} catch (IllegalAccessException e) {
@@ -617,48 +658,55 @@ public final class Solution implements Collection<Object>{
 			}
 		}
 	}
-	
+
 	/**
 	 * Searches for reactives for the specified reaction rule.
 	 * The difference with {@link Solution#requestForParameters(ReactionRule)} is that this functions is given
 	 * a fully instanciated index provider.
-	 * If a set of reactives is found following the types only, the {@link ReactionRule#computeSelect()}
-	 * is tested. In case of success, the reaction rule's fields are instantiated
+	 * If a set of reactives is found following the types, the {@link ReactionRule#computeSelect()}
+	 * is tested. In case of success, the reaction rule's fields are instantiated.
+	 * Returns the set of reactives one was found that passes the {@link ReactionRule#computeSelect()} function.
+	 * If no valid set of reactives was found, returns null.
 	 * @param rr The reaction rule asking for reactives
 	 * @param rrFields The fields of the reaction rule
 	 * @param indexProvider The index provider, 
-	 * @return <code>true</code> if reactives where found and instantiated.
+	 * @return The set of reactives if a valid one was found, else null.
 	 * @throws IllegalArgumentException
 	 * @throws IllegalAccessException
 	 * @throws InvocationTargetException
 	 * @see IndexProvider
 	 */
-	private boolean searchForReactives(ReactionRule rr, Field[] rrFields, IndexProvider indexProvider) throws IllegalArgumentException, IllegalAccessException, InvocationTargetException {
+	private List<Pair<Solution, Object>> searchForReactives(ReactionRule rr, Field[] rrFields, IndexProvider indexProvider) throws IllegalArgumentException, IllegalAccessException, InvocationTargetException {
 		//Effectively research a valid set of reactives for the reaction rule
 		//given all the tools
 		List<Pair<Solution, Object>> reactives = new ArrayList<Pair<Solution,Object>>();
 		int setterNumber;
 		Method setter;
 		Pair<Solution, Object> reactiveObject = null;
+		int i;
+		boolean tryComputeSelect;
 
 		//Loop until the reactives has been found OR all combination have been tested
 		while(!indexProvider.is_overflowReached()) {
-			SubIndexProviderSolution sipSol = indexProvider.increment();
+			SubIndexProviderSolution sipSol = indexProvider.getSubIndexProvider();
 
-			//If the increment returns null, means that the overflow is reached
-			//We return false to mean no reactives were found
-			if(indexProvider.is_overflowReached())
-				return false;
-
-			int i = 0;
+			i = 0;
+			tryComputeSelect = true;
 			for(Field f : rrFields) {
 				if(f.getAnnotation(Dontreact.class) == null){
 					//Find the setter for this field...
 					setterNumber = _mapReactionRulesSetters.get(rr.getClass().getName()+"."+f.getName());
 					setter = rr.getClass().getDeclaredMethods()[setterNumber];
 
-					//...and invoke the setter
+					//..instanciate the (value) of the field...
 					reactiveObject = instanciateField(f, sipSol.get_listElements().get(i), rr);
+					//If instanciateField returned false, an error occured, go on the the next increment of the index provider
+					if(reactiveObject == null) {
+						tryComputeSelect = false;
+						break;
+					}
+
+					//...and invoke the setter
 					setter.invoke(rr, new Object[]{reactiveObject.get_second()});
 
 					reactives.add(reactiveObject);
@@ -667,72 +715,48 @@ public final class Solution implements Collection<Object>{
 			}
 
 			//When we get here, the right types have been found, now test the selection rule
-			if(rr.computeSelect()) {
-				//If the computeSelect says OK, 
-				//TRY to delete the reactives from their respective solutions (this operation can fail)
-				boolean reactivesDeleted = extractReactivesFromSolutions(reactives);
-				if(reactivesDeleted) {
-					//If all went well, the set of reactives was fitting, return ok
-					return true;
-				}
+			if(tryComputeSelect && rr.computeSelect()) {
+				//If the computeSelect says OK, return the found set of reactives
+				return reactives;
 			}
-			
+
 			//If we did not leave the function, it means something is 
-			//wrong with the set of reactives, erase it and loop
+			//wrong with the set of reactives
 			reactives.clear();
+
+			//Increment the index provider and loop
+			indexProvider.increment();
 		}
-		
+
 		//If we reach this line, it means we tried every combination and all failed
-		return false;
+		return null;
 	}
-	
+
 	/**
 	 * Extracts the given reactives from this solution (and inner solutions).
-	 * This function is called right after finding reactives for a reaction rule that match
+	 * This function is called right after finding reactives for a reaction rule that matches
 	 * the types and the {@link ReactionRule#computeSelect()}. They have to be deleted from this solution, just like 
-	 * chemical reactives.
-	 * Returns <code>true</code> if the reactives where deleted. This operation can fail because some
+	 * chemical reactives in real chemistry.
 	 * reactives can possibly be in a non inert inner solution (using sch a reactive is not allowed by chemical programming). 
 	 * @param reactives The list of reactives to be deleted. Reactives can possibly be in inner solutions.
-	 * @return <code>true</code> if the reactives where deleted. 
 	 */
 	@SuppressWarnings("unchecked")
-	private boolean extractReactivesFromSolutions(List<Pair<Solution, Object>> reactives) {
-		//remove the selected reactives from the solution
+	private void extractReactivesFromSolutions(List<Pair<Solution, Object>> reactives) {
+		//Remove the selected reactives from the solution
 		for(Pair<Solution, Object> react : reactives){
-			//If one of the reactives is in a non inert sub-solution, reaction is forbidden
-			if(!react.get_first().is_inert() && react.get_first() != this){
-				return false;
-			}
-
+			//If the reactive is a SubSolution object, a different treatment is needed
 			if(react.get_second().getClass().getName().equals(SubSolution.class.getName())){
 				SubSolution<SubSolutionReactivesAccessor> s = (SubSolution<SubSolutionReactivesAccessor>) react.get_second();
-				//System.err.println("Solution temp = "+react.get_first()._mapElements);
-				for(Object o : s.getElements()){
-					//System.err.println("react - "+react);
-					//System.err.println("react.get_first() - "+react.get_first());
-					//System.err.println("elem - "+o);
-					react.get_first()._mapElements.get(o.getClass().getName()).remove(o);
+
+				//Delete each object in the sub-solution
+				for(Object o : s.getElements()){;
+				react.get_first()._mapElements.get(o.getClass().getName()).remove(o);
 				}
 			}else{
-				//If the reactive is a solution, we have to see that this solution is inert
-				if(react.get_second().getClass().getName().equals(Solution.class.getName())){
-					Solution stemp = (Solution) react.get_second();
-					//System.err.println("!!!!!!!!!!!!!!!!!\n!!!!!!!!!!!!!!!!!!!!\n!!!!!!!!!!!!!!!!!\nOn a match� un solution "+stemp);
-					
-					//If among the reactives we try to use a solution object
-					//and that this solution is not inert, the matching fails (it is impossible to do that)
-					if(!stemp._inert){
-						//System.err.println("?????????????\n????????????????????\n?????????????????\nOn a match� un solution");
-						return false;
-					}
-				}
-				//System.err.println("On supprime "+react.get_second());
+				//For a simple reactive (not a SubSolution object), just delete it from its solution
 				react.get_first()._mapElements.get(react.get_second().getClass().getName()).remove(react.get_second());
-
 			}
 		}
-		return true;
 	}
 
 	/**
@@ -759,7 +783,7 @@ public final class Solution implements Collection<Object>{
 		else{
 			Method getter = Utils.getMethodFromReactionRule(r, "get", f);
 			SubSolution<SubSolutionReactivesAccessor> subSolObject = (SubSolution<SubSolutionReactivesAccessor>) getter.invoke(r, new Object[0]);
-			
+
 			//In order to instanciate a SubSolution object, we have to go down the 
 			//nested solutions... (recursion)
 			SubIndexProviderSolution sipSol = (SubIndexProviderSolution)sip;
@@ -768,7 +792,12 @@ public final class Solution implements Collection<Object>{
 				nextSol = (Solution) nextSol._mapElements.get(Solution.class.getName()).get(sipSol.get_listElements().get(0).getValue());
 				sipSol = (SubIndexProviderSolution) sipSol.get_listElements().get(0);
 			}
-			
+
+			//If the solution in which the reactives are going to be selected
+			//isn't inert, then return null to mean an error occured
+			if(!nextSol.is_inert())
+				return null;
+
 			//...until we reach the level in which the reactives have to be found,
 			//so that we can instanciate the elementList of the SubSolution object
 			List<Object> l = new ArrayList<Object>();
@@ -777,12 +806,12 @@ public final class Solution implements Collection<Object>{
 				l.add(nextSol._mapElements.get(c.getName()).get(sipSol.get_listElements().get(i).getValue()));
 				i++;
 			}
-			
+
 			//Finally, we use the setter of SubSolution
 			subSolObject.setElements(l);
 			subSolObject.setSolution(nextSol);
-			
-			
+
+
 			return new Pair<Solution, Object>(nextSol, subSolObject);
 		}
 	}
@@ -816,7 +845,7 @@ public final class Solution implements Collection<Object>{
 
 		return res;
 	}
-	
+
 	/**
 	 * Returns the number of elements/reactives in this solution. 
 	 * If this collection contains more than <code>Integer.MAX_VALUE</code> elements, returns <code>Integer.MAX_VALUE</code>.
@@ -831,7 +860,7 @@ public final class Solution implements Collection<Object>{
 
 		return res;
 	}
-	
+
 	/**
 	 * Returns an array containing all of the elements in this solution.
 	 * @return An array containing all of the elements in this solution in any order.
@@ -846,7 +875,7 @@ public final class Solution implements Collection<Object>{
 
 		return res.toArray();
 	}
-	
+
 	/**
 	 * Returns an array containing all of the elements in this solution; the runtime type of the returned array is that of the specified array. 
 	 * @param a the array into which the elements of this solution are to be stored, if it is big enough; otherwise, a new array of the same runtime type is allocated for this purpose.  
@@ -859,7 +888,7 @@ public final class Solution implements Collection<Object>{
 		else
 			return null;
 	}
-	
+
 	/**
 	 * Returns a string representation of this solution.
 	 * The string representation consists of a list of the elements indexed by their type. Here is an example:<br />
@@ -888,7 +917,7 @@ public final class Solution implements Collection<Object>{
 	public synchronized void wakeAll() {
 		notifyAll();
 	}
-	
+
 	/**
 	 * Returns a list containing all the innner solutions of this solution
 	 * @return A list containing all the innner solutions of this solution
@@ -899,7 +928,7 @@ public final class Solution implements Collection<Object>{
 			res = new ArrayList<Object>();
 		return res;
 	}
-	
+
 	/**
 	 * Returns the map of elements containing all this solution's elements/reactives.
 	 * @return The map of elements containing all this solution's elements/reactives.
