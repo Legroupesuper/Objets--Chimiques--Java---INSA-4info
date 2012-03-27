@@ -64,7 +64,7 @@ public final class Solution implements Collection<Object>{
 	private boolean _inert = false;
 
 	/**
-	 * Indicates tha the reaction is still in progress. Useful for the reaction rules threads. If it is set at false,
+	 * Indicates that the reaction is still in progress. Useful for the reaction rules threads. If it is set at false,
 	 * all the thread stop. Difference with _inert is that _inert is used for the user, and _reactionInProgress is 
 	 * used internally and is not always synchronized with _inert.
 	 */
@@ -78,10 +78,11 @@ public final class Solution implements Collection<Object>{
 	/**
 	 * The thread group, common to all the threads
 	 */
-	private ThreadGroup _threadGroup = new ThreadGroup("ChemicalGroup");
+	private ThreadGroup _threadGroup;
 
 	/**
-	 * The reactive iteration strategy, chosen by the user.
+	 * The reactive iteration strategy, chosen by the user. The chosen strategy will apply 
+	 * to every reaction rule added in this solution. 
 	 * @see Solution.Strategy
 	 */
 	private Strategy _strategy;
@@ -113,6 +114,7 @@ public final class Solution implements Collection<Object>{
 		_mapElements = new HashMap<String, List<Object>>();
 		_mapElements = Collections.synchronizedMap(_mapElements);
 		_mapReactionRulesSetters = new HashMap<String, Integer>();
+		_threadGroup = new ThreadGroup("ChemicalGroup");
 		_threadTable = Collections.synchronizedMap(new HashMap<ReactionRule, ChemicalThread>());
 		_strategy = s;
 		_inert = false;
@@ -388,22 +390,21 @@ public final class Solution implements Collection<Object>{
 	}
 
 	/**
-	 * Returns the number of non inert sub solutions in this solution
-	 * @return The number of non inert sub solutions in this solution
+	 * Returns <code>true</code> if this solution contains at least one non inert inner solution.
+	 * @return <code>true</code> if this solution contains at least one non inert inner solution.
 	 */
-	private int getNumberOfNonInertSubSol() {
+	private boolean containsNonInertSubSol() {
 		List<Object> subSols = _mapElements.get(Solution.class.getName());
 		if(subSols == null)
-			return 0;
+			return false;
 		
-		int res = 0;
 		for(Object o : subSols) {
 			Solution s = (Solution)o;
 			if(!s.is_inert()) {
-				res++;
+				return true;
 			}
 		}
-		return res;
+		return false;
 	}
 
 	/**
@@ -469,13 +470,13 @@ public final class Solution implements Collection<Object>{
 	 */
 	synchronized void makeSleep(){
 		int nbThreadAwaken = getNumberOfActiveThreads();
-		int nbNonInertSubSolutions = getNumberOfNonInertSubSol();
+		boolean containsNonInertSubSolutions = containsNonInertSubSol();
 
 		//If there is more than one thread alive (including the current one)
 		//it means other reaction rules may still be reacting, so just make this thread wait.
 		//Same thing with the number of inert solution: a solution can't be inert if one or more
 		//of its inner solutions isn't inert.
-		if(nbThreadAwaken > 1 || nbNonInertSubSolutions > 0){
+		if(nbThreadAwaken > 1 || containsNonInertSubSolutions){
 			//Loop on the wait (always)
 			boolean interrupted;
 			do {
@@ -518,7 +519,7 @@ public final class Solution implements Collection<Object>{
 					 */
 					s.addInertEventListener(new InertEventListener() {
 						public void isInert(InertEvent e) {
-							if(getNumberOfActiveThreads() == 0 && getNumberOfNonInertSubSol() == 0)
+							if(getNumberOfActiveThreads() == 0 && !containsNonInertSubSol())
 								endOfReaction();
 							else
 								Solution.this.wakeAll();
@@ -925,7 +926,7 @@ public final class Solution implements Collection<Object>{
 	List<Object> getSubSolutions() {
 		List<Object> res = _mapElements.get(Solution.class.getName());
 		if(res == null)
-			res = new ArrayList<Object>();
+			res = new LinkedList<Object>();
 		return res;
 	}
 

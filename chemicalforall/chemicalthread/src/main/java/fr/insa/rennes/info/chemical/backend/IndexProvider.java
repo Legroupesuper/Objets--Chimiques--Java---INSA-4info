@@ -43,15 +43,20 @@ class IndexProvider {
 	 */
 	private boolean _overflowReached;
 	
+	public IndexProvider(SubIndexProviderSolution solution) throws ChemicalException {
+		this(solution, Strategy.RANDOM);
+	}
+	
 	public IndexProvider(SubIndexProviderSolution ipss, Strategy s) throws ChemicalException {
 		super();
-		this._subIndexProviderSub = ipss;
+		_subIndexProviderSub = ipss;
 		_overflowReached = false;
-		if (s==Strategy.RANDOM){
-			_strategy = new RandomIncrementStrategy(ipss);
+		
+		if (s.equals(Strategy.ORDERED)){
+			_strategy = new OrderedIncrementStrategy(_subIndexProviderSub.getNumberOfElements());
 		}
 		else {
-			_strategy = new RandomIncrementStrategy(ipss);
+			_strategy = new RandomIncrementStrategy(_subIndexProviderSub.getNumberOfElements());
 		}
 		
 		_subIndexProviderSub.init();
@@ -66,9 +71,7 @@ class IndexProvider {
 		return _subIndexProviderSub;
 	}
 	
-	public IndexProvider(SubIndexProviderSolution solution) throws ChemicalException {
-		this(solution, Strategy.RANDOM);
-	}
+	
 	
 	public SubIndexProviderSolution increment(){		
 		do{

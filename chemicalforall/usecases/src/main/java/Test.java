@@ -6,7 +6,7 @@ import functionnaltests.DeleteRuleMax;
 
 
 public class Test {
-	public static final Solution s = new Solution(Solution.Strategy.RANDOM);
+	public static final Solution s = new Solution(Solution.Strategy.ORDERED);
 	public static Solution s2 = new Solution();
 	public static Solution s3 = new Solution();
 	public static Solution s4 = new Solution();

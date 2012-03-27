@@ -3,6 +3,7 @@ package fr.insa.rennes.info.chemical.backend;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
 
@@ -13,27 +14,18 @@ import java.util.List;
  * @author Andréolli Cédric, Boulanger Chloé, Cléro Olivier, Guellier Antoine, Guilloux Sébastien, Templé Arthur
  */
 class RandomIncrementStrategy implements IncrementStrategy {
-	/**
-	 * This interface is used to get an association between a real index and a false index.
-	 * It's designed to work with a List<IndexProviderElement>
-	 * @author Cédric Andreolli, Chloé Boulanger, Olivier Cléro, Antoine Guellier, Sébastien Guilloux, Arthur Templé
-	 *
-	 */
-	/**
-	 * A boolean needed for the first execution of increment
-	 */
-	boolean firstRun = true;
 	private BigInteger _currentIndex;
 	private BigInteger _numberOfIndex;
 	private List<BigInteger> _shuffleList;
+	
 	/**
 	 * Sole constructor, with the maxIndex array that is needed to know how many 
 	 * columns there is for this index provider.
 	 * @param maxIndex The maximum index array
 	 */
-	public RandomIncrementStrategy(SubIndexProviderSolution sipSol){
+	public RandomIncrementStrategy(BigInteger maxI){
 		_currentIndex = BigInteger.valueOf(0);
-		_numberOfIndex = sipSol.getNumberOfElements();
+		_numberOfIndex = maxI;
 		_shuffleList = new ArrayList<BigInteger>();
 		
 		for(BigInteger i= BigInteger.valueOf(0); _numberOfIndex.add(i.negate()).signum()>0; i=i.add(BigInteger.valueOf(1))){
@@ -53,7 +45,7 @@ class RandomIncrementStrategy implements IncrementStrategy {
 	public void increment(SubIndexProviderSolution solution) throws ChemicalException{
 		solution.init();
 		
-		java.util.Iterator<BigInteger> it = _shuffleList.iterator();
+		Iterator<BigInteger> it = _shuffleList.iterator();
 		BigInteger position = BigInteger.valueOf(0);
 		BigInteger i = BigInteger.valueOf(0);
 		
