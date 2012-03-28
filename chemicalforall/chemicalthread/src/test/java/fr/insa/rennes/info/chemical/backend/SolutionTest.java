@@ -326,9 +326,9 @@ public class SolutionTest extends TestCase {
 				this.a = aA;
 			}
 			
-			public void setB(int aB){
-				this.b = aB;
-			}
+//			public void setB(int aB){
+//				this.b = aB;
+//			}
 			
 			public Multiplicity getMultiplicity() {
 				return Multiplicity.INFINITY_SHOT;

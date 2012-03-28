@@ -107,11 +107,10 @@ public final class Solution implements Collection<Object>{
 	}
 
 	//REFACTORING
-	private boolean checkReactionRuleReactive(Object reactionRuleObject) {
-		Class<? extends Object> rrClass = reactionRuleObject.getClass();
-		String errorMsg = "";
+	private boolean checkReactionRuleReactive(ReactionRule reactionRuleObject) {
+		Class<? extends ReactionRule> rrClass = reactionRuleObject.getClass();
 
-		//We check that every field has an appropriate setter
+		//We check that every field has an appropriate setter, else we add it then re-check
 		boolean classOK = true;
 		int numberOfMethods = rrClass.getDeclaredMethods().length;
 		boolean setterOK;
@@ -130,8 +129,12 @@ public final class Solution implements Collection<Object>{
 
 			if(!(setterOK)){
 				classOK = false;
-				if(!setterOK)
-					errorMsg+="class "+rrClass.getName()+" lacks a setter for attribute "+f+"\n";
+				SetterAdder sa = new SetterAdder(reactionRuleObject, new Field[]{f});
+				System.out.println(f.getName()+" - "+f.getType());
+				System.out.println(sa.addSetters());
+				Utils.logger.warning("class "+rrClass.getName()+" lacks a setter for attribute "+f+"\nAutomatic setters will be generated...\n");
+				//return checkReactionRuleReactive(reactionRuleObject);
+//				classOK = true;
 			}
 		}
 		if(!classOK){
@@ -139,7 +142,7 @@ public final class Solution implements Collection<Object>{
 		}else{
 			//If the reaction rule doesn't exist, we add it
 			if(!_threadTable.containsKey(reactionRuleObject)){
-				launchThread((ReactionRule) reactionRuleObject);
+				launchThread(reactionRuleObject);
 			}else
 				return false;
 		}
@@ -174,7 +177,7 @@ public final class Solution implements Collection<Object>{
 
 			//It is a ReactionRule, hence special treatment
 			if(className.equals(ReactionRule.class.getName())) {
-				addElement = checkReactionRuleReactive(newReactive);
+				addElement = checkReactionRuleReactive((ReactionRule)newReactive);
 			} else if(className.equals(Solution.class.getName())){
 				processAddSubSolution(newReactive);
 			}

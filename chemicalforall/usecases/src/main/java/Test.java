@@ -1,6 +1,8 @@
 import fr.insa.rennes.info.chemical.backend.Solution;
 import fr.insa.rennes.info.chemical.user.InertEvent;
 import fr.insa.rennes.info.chemical.user.InertEventListener;
+import fr.insa.rennes.info.chemical.user.ReactionRule;
+import fr.insa.rennes.info.chemical.user.ReactionRule.Multiplicity;
 import functionnaltests.DeleteRuleMax;
 
 
@@ -114,6 +116,22 @@ public class Test {
 		s2.add(new DeleteRuleMax());
 		//s.add(new MaxIntSubSolRR());
 		s.add(new ConcatRR());
+		s.add(new ReactionRule() {
+			
+			int a;
+			
+			public Multiplicity getMultiplicity() {
+				return Multiplicity.ONE_SHOT;
+			}
+			
+			public boolean computeSelect() {
+				return a>200000;
+			}
+			
+			public Object[] computeResult() {
+				return null;
+			}
+		});
 		//s.add(new RandomNumberRR());
 		//	s.add(new TrucRR());
 		System.out.println("AVANT : ");
