@@ -82,11 +82,6 @@ public final class Solution implements Collection<Object>{
 	private ThreadGroup _threadGroup;
 	
 	/**
-	 * The table of semaphore to lock on reactive types, and not the whole element table.
-	 */
-	private Map<String, Semaphore> _semaphoreTable;
-	
-	/**
 	 * The reactive iteration strategy, chosen by the user. The chosen strategy will apply 
 	 * to every reaction rule added in this solution. 
 	 * @see Solution.Strategy
@@ -100,8 +95,8 @@ public final class Solution implements Collection<Object>{
 	 * @see InertEventListener
 	 */
 	private InertEventListener _listener = null;
-	
-	
+
+
 	/**
 	 * Default constructor for a Chemical Programming-powered Solution.<br />
 	 * Uses random strategy as default behavior
@@ -123,7 +118,6 @@ public final class Solution implements Collection<Object>{
 		_mapReactionRulesSetters = new HashMap<String, Integer>();
 		_threadGroup = new ThreadGroup("ChemicalGroup");
 		_threadTable = Collections.synchronizedMap(new HashMap<ReactionRule, ChemicalThread>());
-		_semaphoreTable = Collections.synchronizedMap(new HashMap<String, Semaphore>()); 
 		_strategy = s;
 		_inert = false;
 	}
@@ -175,10 +169,10 @@ public final class Solution implements Collection<Object>{
 		//If the reaction rule doesn't exist, we add it in the table
 		if(!_threadTable.containsKey(reactionRuleObject)){
 			ReactionRule r = (ReactionRule)reactionRuleObject;
-			
+
 			ChemicalThread t = new ChemicalThread(r, this, _threadGroup);
 			_threadTable.put(r, t);
-			
+
 			//Only if the reaction is in progress, we start the thread
 			if(_reactionInProgress)
 				t.start();
@@ -234,18 +228,16 @@ public final class Solution implements Collection<Object>{
 				boolean result;
 				//When you add an element in the solution, the solution is no more inert
 				_inert = false;
-				
+
 				//There is already an entry in the map for this reactive, so we just add the element
 				if(_mapElements.get(rawClassName) != null){
 					result = _mapElements.get(rawClassName).add(newReactive);
 				}
-				//There is no entry for the moment : we init the list and the semaphore for this type of reactives
+				//There is no entry for the moment : we init the list
 				else{
 					List<Object> l =new ArrayList<Object>();
 					result = l.add(newReactive);
 					_mapElements.put(rawClassName, l);
-					
-					_semaphoreTable.put(rawClassName, new Semaphore(1, true));
 				}
 				return result;
 			}else{
@@ -336,12 +328,12 @@ public final class Solution implements Collection<Object>{
 					_threadTable.get(r).stopTheThread();
 					_threadTable.remove(r);
 				}
-				
+
 				checkTrivialEndOfReaction();
 			}
 		}
 	}
-	
+
 	/**
 	 * Checks if the end of the reaction is reached. 
 	 * The end of the reaction is reached when there is no longer any active thread and 
@@ -356,8 +348,8 @@ public final class Solution implements Collection<Object>{
 			wakeAll();
 		}
 	}
-	
-	
+
+
 	/**
 	 * Ends and stops the reaction.
 	 * The _inert and _reactionInProgress booleans are switched, and the InertEvent is fired.
@@ -422,7 +414,7 @@ public final class Solution implements Collection<Object>{
 		List<Object> subSols = _mapElements.get(Solution.class.getName());
 		if(subSols == null)
 			return false;
-		
+
 		for(Object o : subSols) {
 			Solution s = (Solution)o;
 			if(!s.is_inert()) {
@@ -496,7 +488,7 @@ public final class Solution implements Collection<Object>{
 	synchronized void makeSleep(){
 		int nbThreadAwaken = getNumberOfActiveThreads();
 		boolean containsNonInertSubSolutions = containsNonInertSubSol();
-		
+
 		//If there is more than one thread alive (including the current one)
 		//it means other reaction rules may still be reacting, so just make this thread wait.
 		//Same thing with the number of inert solution: a solution can't be inert if one or more
@@ -632,11 +624,6 @@ public final class Solution implements Collection<Object>{
 
 		//Get the reaction rule fields
 		Field[] rrFields = r.getClass().getDeclaredFields();
-		/*for(Field f : rrFields) {
-			if(f.getAnnotation(Dontreact.class) == null) {
-				_semaphoreTable.get(f.getType().getName());
-			}
-		}*/
 
 		//The access to the main atom map is restricted to 1 thread at a time
 		synchronized(_mapElements) {
