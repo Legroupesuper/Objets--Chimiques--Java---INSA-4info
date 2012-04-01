@@ -1,5 +1,7 @@
 package org.chemicalmozart.model.implementations.reactionrules;
 
+import org.chemicalmozart.model.implementations.solutionindentification.Temporary;
+
 import fr.insa.rennes.info.chemical.backend.Solution;
 import fr.insa.rennes.info.chemical.user.ReactionRule;
 
@@ -17,14 +19,21 @@ public class GarbageRR implements ReactionRule{
 	 *  @return It returns an empty array
 	 */
 	public Object[] computeResult() {
-		return null;
+		return new Object[1];
 	}
 
 	/**
 	 * It succeed only if the solution contains a Temporary object
 	 */
 	public boolean computeSelect() {
-		return false;
+		boolean found = false;
+		for(Object o : this._temporarySolution){
+			if(o instanceof Temporary){
+				found = true;
+			}
+		}
+		//return _temporarySolution.containsType(Temporary.class);
+		return found;
 	}
 
 	/**
@@ -34,7 +43,7 @@ public class GarbageRR implements ReactionRule{
 		return this._temporarySolution;
 	}
 	public Multiplicity getMultiplicity() {
-		return null;
+		return ReactionRule.Multiplicity.INFINITY_SHOT;
 	}
 
 	/**
