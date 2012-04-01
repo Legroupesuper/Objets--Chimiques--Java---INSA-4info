@@ -17,10 +17,10 @@ public class Number {
 		super();
 		this._value = _value;
 	}
-	
+
 	public Number(Number n){
 		super();
-		_value = n._value;
+		this._value = n._value;
 	}
 
 	/**
@@ -29,7 +29,15 @@ public class Number {
 	 * @return null
 	 */
 	public int getValue() {
-		return _value;
+		return this._value;
+	}
+
+	/**
+	 * Description of the method increment.
+	 *
+	 */
+	public void increment() {
+		this._value++;
 	}
 
 	/**
@@ -38,8 +46,7 @@ public class Number {
 	 * @param value
 	 */
 	public void setValue(int value) {
-
+		this._value = value;
 	}
-
 
 }
