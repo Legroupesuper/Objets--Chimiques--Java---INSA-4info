@@ -10,6 +10,7 @@ import org.chemicalmozart.model.implementations.BarNumber;
 import org.chemicalmozart.model.implementations.DegreeImpl;
 import org.chemicalmozart.model.implementations.QuaterLeft;
 import org.chemicalmozart.model.implementations.solutionindentification.BarInCreation;
+import org.chemicalmozart.model.implementations.solutionindentification.BarInCreation.BarInCreationState;
 import org.junit.Test;
 
 import fr.insa.rennes.info.chemical.backend.Solution;
@@ -73,7 +74,7 @@ public class HarmonicRR6Test extends TestCase{
 		assertFalse("The computeSelect shouldn't accept this configuration", rr.computeSelect());
 		Solution sol = new Solution();
 		BarInCreation bic = new BarInCreation();
-
+		bic.set_state(BarInCreationState.HARMONICRR);
 		//Instanciate a SubSolution object for the RR
 		SubSolutionElements e = new  SubSolutionElements();
 		List<Class<? extends Object>> l = new ArrayList<Class<? extends Object>>();
@@ -119,6 +120,32 @@ public class HarmonicRR6Test extends TestCase{
 		sol.add(new QuaterLeft(4));
 		sol.add(new BarNumber(1));
 		assertTrue("The computeSelect doesn't validate some good parameters", rr.computeSelect());
+	}
+
+	@Test
+	public void testComputeSelectFail2() {
+		HarmonicRR6 rr = new HarmonicRR6();
+		assertFalse("The computeSelect shouldn't accept this configuration", rr.computeSelect());
+
+		//We instantiate the RR with a valid DegreeImpl and a valid Solution which represents a BarInCreation
+		//We test some different configurations
+		rr.set_degree(new DegreeImpl(1));
+
+		Solution sol = new Solution();
+		BarInCreation bic = new BarInCreation();
+		bic.set_state(BarInCreationState.RYTHMEHRR);
+		//Instanciate a SubSolution object for the RR
+		SubSolutionElements e = new  SubSolutionElements();
+		List<Class<? extends Object>> l = new ArrayList<Class<? extends Object>>();
+		l.add(BarInCreation.class);
+		e.setTypeList(l);
+		List<Object> ll = new ArrayList<Object>();
+		ll.add(sol);
+		ll.add(bic);
+		e.setElements(ll);
+		SubSolution<SubSolutionElements> subsol = new SubSolution<SubSolutionElements>(e);
+		rr.set_barInCreationSolution(subsol);
+		assertFalse("The computeSelect shouldn't accept this configuration (state is not valid in BarInCreation)", rr.computeSelect());
 	}
 
 	@Test

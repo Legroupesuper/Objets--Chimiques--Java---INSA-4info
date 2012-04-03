@@ -20,56 +20,7 @@ public class RythmicRR implements ReactionRule{
 	private ChordNumber _chordNumber;
 	private int _num;
 	public Max _max;
-	
-	/**
-	 * @return the chordImpl
-	 */
-	public ChordImpl getChordImpl() {
-		return _chordImpl;
-	}
-	/**
-	 * @param chordImpl the chordImpl to set
-	 */
-	public void setChordImpl(ChordImpl chordImpl) {
-		this._chordImpl = chordImpl;
-	}
-	/**
-	 * @return the chordNumber
-	 */
-	public ChordNumber getChordNumber() {
-		return _chordNumber;
-	}
-	/**
-	 * @param chordNumber the chordNumber to set
-	 */
-	public void setChordNumber(ChordNumber chordNumber) {
-		this._chordNumber = chordNumber;
-	}
-	/**
-	 * @return the num
-	 */
-	public int getNum() {
-		return _num;
-	}
-	/**
-	 * @param num the num to set
-	 */
-	public void setNum(int num) {
-		this._num = num;
-	}
-	/**
-	 * @return the max
-	 */
-	public Max getMax() {
-		return _max;
-	}
-	/**
-	 * @param max the max to set
-	 */
-	public void setMax(Max max) {
-		this._max = max;
-	}
-	
+
 	public Object[] computeResult() {
 		// TODO Auto-generated method stub
 		return null;
@@ -78,9 +29,58 @@ public class RythmicRR implements ReactionRule{
 		// TODO Auto-generated method stub
 		return false;
 	}
+	/**
+	 * @return the chordImpl
+	 */
+	public ChordImpl getChordImpl() {
+		return this._chordImpl;
+	}
+	/**
+	 * @return the chordNumber
+	 */
+	public ChordNumber getChordNumber() {
+		return this._chordNumber;
+	}
+	/**
+	 * @return the max
+	 */
+	public Max getMax() {
+		return this._max;
+	}
 	public Multiplicity getMultiplicity() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	/**
+	 * @return the num
+	 */
+	public int getNum() {
+		return this._num;
+	}
+	/**
+	 * @param chordImpl the chordImpl to set
+	 */
+	public void setChordImpl(ChordImpl chordImpl) {
+		this._chordImpl = chordImpl;
+	}
+
+	/**
+	 * @param chordNumber the chordNumber to set
+	 */
+	public void setChordNumber(ChordNumber chordNumber) {
+		this._chordNumber = chordNumber;
+	}
+	/**
+	 * @param max the max to set
+	 */
+	public void setMax(Max max) {
+		this._max = max;
+	}
+	/**
+	 * @param num the num to set
+	 */
+	public void setNum(int num) {
+		this._num = num;
 	}
 
 
