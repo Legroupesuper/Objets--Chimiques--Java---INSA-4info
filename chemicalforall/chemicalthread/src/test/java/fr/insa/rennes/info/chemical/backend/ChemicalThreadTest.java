@@ -53,21 +53,21 @@ public class ChemicalThreadTest extends TestCase {
 	/**
 	 * Test method for {@link ChemicalThread#get_reactionRule()}.
 	 */
-	public void testGet_reactionRule() {
+	/*public void testGet_reactionRule() {
 		assertTrue(testReactionRule == testChemicalThread.get_reactionRule());
-	}
+	}*/
 
 	/**
 	 * Test method for {@link ChemicalThread#get_solutionContainer()}.
 	 */
-	public void testGet_solutionContainer() {
+	/*public void testGet_solutionContainer() {
 		assertTrue(testSolution == testChemicalThread.get_solutionContainer());
-	}
+	}*/
 
 	/**
 	 * Test method for {@link ChemicalThread#set_reactionRule(ReactionRule)}.
 	 */
-	public void testSet_reactionRule() {
+	/*public void testSet_reactionRule() {
 		ReactionRule rr = new ReactionRule(){
 			public Object[] computeResult(){
 				return null;
@@ -81,14 +81,14 @@ public class ChemicalThreadTest extends TestCase {
 		};
 		testChemicalThread.set_reactionRule(rr);
 		assertTrue(rr == testChemicalThread.get_reactionRule());
-	}
+	}*/
 
 	/**
 	 * Test method for {@link ChemicalThread#set_solutionContainer(Solution)}.
 	 */
-	public void testSet_solutionContainer() {
+	/*public void testSet_solutionContainer() {
 		Solution s = new Solution();
 		testChemicalThread.set_solutionContainer(s);
 		assertTrue(s == testChemicalThread.get_solutionContainer());
-	}
+	}*/
 }

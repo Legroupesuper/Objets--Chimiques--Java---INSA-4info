@@ -14,8 +14,19 @@ import java.util.List;
  * @author Andréolli Cédric, Boulanger Chloé, Cléro Olivier, Guellier Antoine, Guilloux Sébastien, Templé Arthur
  */
 class RandomIncrementStrategy implements IncrementStrategy {
+	/**
+	 * The current index (corresponding to an "ordered" index)
+	 */
 	private BigInteger _currentIndex;
-	private BigInteger _numberOfIndex;
+	/**
+	 * The maximum value of the index
+	 */
+	private BigInteger _maxIndex;
+	/**
+	 * The list that transforms the "normal" (ordered) index in a random index.
+	 * It will be used with {@link #_currentIndex} to translate it to a "random" index:
+	 * randomIndex = _shuffleList.get(_currentIndex)
+	 */
 	private List<BigInteger> _shuffleList;
 	
 	/**
@@ -25,31 +36,34 @@ class RandomIncrementStrategy implements IncrementStrategy {
 	 */
 	public RandomIncrementStrategy(BigInteger maxI){
 		_currentIndex = BigInteger.valueOf(0);
-		_numberOfIndex = maxI;
+		_maxIndex = maxI;
 		_shuffleList = new ArrayList<BigInteger>();
 		
-		for(BigInteger i= BigInteger.valueOf(0); _numberOfIndex.add(i.negate()).signum()>0; i=i.add(BigInteger.valueOf(1))){
+		for(BigInteger i= BigInteger.valueOf(0); _maxIndex.add(i.negate()).signum()>0; i=i.add(BigInteger.valueOf(1))){
 			_shuffleList.add(new BigInteger(i.toByteArray()));
 		}
+		
+		//Then shuffle the list
 		Collections.shuffle(_shuffleList);
 	}
 	
 	/**
-	 * The function is pretty much the same as the one in the OrderedIncrementStrategy class
-	 * but it "translates" the ordered value to the "random" value with the map
-	 * @param _index The index array: the values of the index
-	 * @param _maxIndex The maximum values of the indexes
-	 * @return A table of integers that is the new value of the indexes
+	 * Increments the specified sub index provider of one step. Does not check
+	 * the validity of the index provider, this is done in {@link IndexProvider#increment()}.
+	 * This function basically process to the same operation as {@link OrderedIncrementStrategy#increment(SubIndexProviderSolution)},
+	 * but it "translates" the ordered value to the "random" value with the list {@link #_shuffleList}.
+	 * @param sipSol The sub index provider on solution that has to be incremented.
 	 * @throws ChemicalException
 	 */	
-	public void increment(SubIndexProviderSolution solution) throws ChemicalException{
-		solution.init();
+	public void increment(SubIndexProviderSolution sipSol) throws ChemicalException{
+		//At every increment, we start all over again...
+		sipSol.init();
 		
 		Iterator<BigInteger> it = _shuffleList.iterator();
 		BigInteger position = BigInteger.valueOf(0);
 		BigInteger i = BigInteger.valueOf(0);
 		
-		if(_currentIndex.equals(_numberOfIndex))
+		if(_currentIndex.equals(_maxIndex))
 			throw new ChemicalException("Overflow reached first");
 		
 		//We can't use the simple _shuffleList.get(_currentIndex) because we need to use BigInteger
@@ -64,9 +78,10 @@ class RandomIncrementStrategy implements IncrementStrategy {
 			it.next();
 		}
 		
-		
+		//...and we increment n times the sub index provider
+		//n being the value of _shuffleList.get(_currentValue)
 		for(i=BigInteger.valueOf(0); position.add(i.negate()).signum()>0; i=i.add(BigInteger.valueOf(1))){
-			solution.increment();
+			sipSol.increment();
 		}
 	}
 
