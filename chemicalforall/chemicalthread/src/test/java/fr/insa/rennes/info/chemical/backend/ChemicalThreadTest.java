@@ -1,6 +1,9 @@
 package fr.insa.rennes.info.chemical.backend;
 
 import junit.framework.TestCase;
+
+import org.junit.Test;
+
 import fr.insa.rennes.info.chemical.user.ReactionRule;
 
 /**
@@ -13,7 +16,7 @@ public class ChemicalThreadTest extends TestCase {
 	private ChemicalThread testChemicalThread;
 	private ReactionRule testReactionRule;
 	private Solution testSolution;
-	
+
 	/**
 	 * @param name
 	 */
@@ -24,6 +27,7 @@ public class ChemicalThreadTest extends TestCase {
 	/* (non-Javadoc)
 	 * @see junit.framework.TestCase#setUp()
 	 */
+	@Override
 	protected void setUp() throws Exception {
 		super.setUp();
 		this.testSolution = new Solution();
@@ -38,16 +42,22 @@ public class ChemicalThreadTest extends TestCase {
 				return ReactionRule.Multiplicity.ONE_SHOT;
 			}
 		};
-		testSolution.add(testReactionRule);
-		
-		this.testChemicalThread = new ChemicalThread(testReactionRule, testSolution, new ThreadGroup("test"));
+		this.testSolution.add(this.testReactionRule);
+
+		this.testChemicalThread = new ChemicalThread(this.testReactionRule, this.testSolution, new ThreadGroup("test"));
 	}
 
 	/* (non-Javadoc)
 	 * @see junit.framework.TestCase#tearDown()
 	 */
+	@Override
 	protected void tearDown() throws Exception {
 		super.tearDown();
+	}
+
+	@Test
+	public void testPourCompiler(){
+		assertTrue(true);
 	}
 
 	/**
