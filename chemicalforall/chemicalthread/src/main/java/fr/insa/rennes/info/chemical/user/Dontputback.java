@@ -5,9 +5,11 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+
 /**
- * This annotation is use to tell that the next field is not a reactive of the reactionrule
- * @author Le groupe super
+ * This annotation exists for testing purpose only, and therefore should not be used.
+ * 
+ * @author Andréolli Cédric, Boulanger Chloé, Cléro Olivier, Guellier Antoine, Guilloux Sébastien, Templé Arthur
  *
  */
 

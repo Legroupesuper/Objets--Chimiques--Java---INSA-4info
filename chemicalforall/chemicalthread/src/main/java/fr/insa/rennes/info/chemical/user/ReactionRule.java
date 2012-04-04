@@ -1,31 +1,89 @@
 package fr.insa.rennes.info.chemical.user;
 
+
+
+import fr.insa.rennes.info.chemical.backend.Solution;
+
 /**
- * Interface nécéssaire à l'implémentation d'une réaction rule.
- * @author cedric
+ * This interface describes a ReactionRule which can be added and react in a solution.
+ * A ReactionRule is mainly composed of a selection rule ({@link #computeSelect() computeSelect}), a reaction process
+ * ({@link #computeResult() computeResult()}, and reactives which are the attributes of the implementation class.<br/>
+ * The different reactives of the reaction can be represented by creating attributes in the implementation class. 
+ * They can be any kind of Java Objects (primitive or created ones). For each attribute X created, two methods should be present,
+ * where X represents the attribute name and typeX its type (eg. Integer, String...):<br/>
+ * It takes two reactives :<br />
+ * <ul>
+ * 	<li><code>public void setX(typeX x)</code> </li>
+ *  <li><code>public typeX getX()</code></li>
+ *  </ul>
+ *  <br/>
+ *  These are classic setters and getters, and should be implemented as usual. Refer to usecases for examples.</br>
+ *  The attributes can then be used in the ({@link #computeResult() computeResult()} method for the reaction process and the 
+ *  ({@link #computeSelect() computeSelect}) method fot the selection process.
+ *  During the execution, random reactives will be choosen in the solution to fit with the attributes present in the 
+ *  ReactionRule implementation. If a reactive should not be instanciated during execution, the annotation <code>@Dontreact</code> can be used
+ *  before declaration of this reactive.
  *
+ * 
+ * @author Andréolli Cédric, Boulanger Chloé, Cléro Olivier, Guellier Antoine, Guilloux Sébastien, Templé Arthur
  */
 public interface ReactionRule {
 
-	/**
-	 * Possible multiplicities for a reaction :
-	 * 1-shot (reaction runs once)
-	 * Infinity-shot (reaction runs until solution inertia)
-	 */
-	public static enum Multiplicity{ONE_SHOT, INFINITY_SHOT};
+	/** 
+	 * Enumerates the different possible multiplicities for a reaction.<br/>
+	 * <p> <code>ONE_SHOT</code> indicates that the reaction will happen only once, 
+	 * the ReactionRule will then be removed from the solution.</p>
+	 *  <p><code>INFINITY_SHOT</code> indicates that the reaction will always happen if reactives are present,
+	 * until solution inertia. 
+	 * Contrary to OneShot, the ReactionRule will not be removed from the solution after reaction.</p>
+	 */  
+	public static enum Multiplicity{
+		/*
+		 * Indicates that the reaction will happen only once, 
+		 * the ReactionRule will then be removed from the solution.
+		 */
+		ONE_SHOT, 
+		/*
+		 * Indicates that the reaction will always happen if reactives are present,
+		 * until solution inertia. 
+		 * Contrary to OneShot, the ReactionRule will not be removed from the solution after reaction.
+		 */
+		INFINITY_SHOT};
 
 	/**
-	 * Cette méthode est appellée par la librairie et effectue un traitement.
-	 * A la fin du traitement, elle retourne un tableau d'objets qui seront réajoutés au multi-ensemble.
-	 * L'appel de cette méthode a consomé les paramètres de la classe implémentée dans le multi-ensemble.
-	 * @return Les objets à réinjecter dans le multi-ensemble après la réaction
+	 * This method describes the reaction process. If reactives are needed, attributes can be created in 
+	 * the ReactionRule implementation and used there.<br/>
+	 * Any kind of operations with (or without) reactives can be done in this method. However, it must
+	 * returns a Java <code>Object</code> array containing the results of the reaction. For example, if a 
+	 * reaction processes a choice between two reactives in order to keep only one, this one should be returned
+	 * in an Object array at the end. A reaction that simply consumes its reactives should return an empty Object array.<br/>
+	 * At the end of the reaction process during the execution, every reactive is consumed and then disappear from the solution,
+	 * unless it is returned in the result array.
+	 * Refer to usecases for examples.
+	 * @return an Object array containing what should be reinjected in the solution at the end of the reaction.
 	 */
 	public Object[] computeResult();
 	/**
-	 * Permet d'éffectuer une sélection sur les attributs avant d'appeler computeResult.
-	 * @return computeResult peut être appelé avec les paramètres choisis par la librairie
+	 * This method describes conditions of reactives selection. During execution, the attributes of the ReactionRule are
+	 * instanciated with matching-type reactives from the solution. This method is then called to check if the instanciated
+	 * reactives respect particular conditions.<br/>
+	 * This method should therefore contains every needed verification on the reactives. For example if the reaction should only
+	 * react with integers higher than 0, it must be checked there.<br/>
+	 * In case no selection is necessary, the annotation <code>@Dontuse</code> can be used before declaration. It is then equivalent
+	 * to simply returning true, but treated differently in order to speed up the execution.
+	 * Refer to usecases for examples.  
+	 * @return <code>true</code> if the present reactives are compatible with the reaction.
 	 */
 	public boolean computeSelect();
 
+	/**
+	 * This method must return the multiplicity of the reaction. Two of them exist:<br/>
+	 * <p> <code>ONE_SHOT</code> indicates that the reaction will happen only once, 
+	 * the ReactionRule will then be removed from the solution.</p>
+	 *  <p><code>INFINITY_SHOT</code> indicates that the reaction will always happen if reactives are present,
+	 * until solution inertia. 
+	 * Contrary to OneShot, the ReactionRule will not be removed from the solution after reaction.</p>
+	 * @return the multiplicity of the reaction (<code>ONE_SHOT</code> or <code>INFINITY_SHOT</code>). 
+	 */
 	public Multiplicity getMultiplicity();
 }
