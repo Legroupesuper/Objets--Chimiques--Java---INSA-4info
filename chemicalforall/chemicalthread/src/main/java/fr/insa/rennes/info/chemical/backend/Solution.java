@@ -107,46 +107,48 @@ public final class Solution implements Collection<Object>{
 	}
 
 	//REFACTORING
-	private boolean checkReactionRuleReactive(ReactionRule reactionRuleObject) {
+	private Object checkReactionRuleReactive(ReactionRule reactionRuleObject) {
 		Class<? extends ReactionRule> rrClass = reactionRuleObject.getClass();
 
 		//We check that every field has an appropriate setter, else we add it then re-check
 		boolean classOK = true;
 		int numberOfMethods = rrClass.getDeclaredMethods().length;
 		boolean setterOK;
+		List<Field> fieldsMissingSetter = new LinkedList<Field>();
+		Map<String, Integer> tmpMapRRSetters = new HashMap<String, Integer>();
 		for(Field f : rrClass.getDeclaredFields()){
 			setterOK = false;
 
 			for(int  i = 0; i < numberOfMethods; i++){
 				Method m = rrClass.getDeclaredMethods()[i];
 				if(m.getName().toLowerCase().equals("set"+f.getName().toLowerCase())){
-					//Remember the setter name by putting it in the reaction rules' setters map
-					_mapReactionRulesSetters.put(rrClass.getName()+"."+f.getName(), i);
-
+					//Remember the setter name by putting it in a temporary setters map
+					tmpMapRRSetters.put(rrClass.getName()+"."+f.getName(), i);
 					setterOK = true;
 				}
 			}
 
-			if(!(setterOK)){
+			if(!setterOK){
 				classOK = false;
-				SetterAdder sa = new SetterAdder(reactionRuleObject, new Field[]{f});
-				System.out.println(f.getName()+" - "+f.getType());
-				System.out.println(sa.addSetters());
+				fieldsMissingSetter.add(f);
 				Utils.logger.warning("class "+rrClass.getName()+" lacks a setter for attribute "+f+"\nAutomatic setters will be generated...\n");
-				//return checkReactionRuleReactive(reactionRuleObject);
-//				classOK = true;
 			}
 		}
 		if(!classOK){
-			return false;
+			// If all fields don't have their respective setter, setters are dynamically added
+			// WARNING : if SetterAdder.addSetters ever comes to be inefficient, you will be awarded a nice infinite loop
+			return checkReactionRuleReactive(new SetterAdder(reactionRuleObject, fieldsMissingSetter).addSetters());
 		}else{
+			// Remember permanently the setters by putting them in the reaction rules' setters map
+			_mapReactionRulesSetters.putAll(tmpMapRRSetters);
+			
 			//If the reaction rule doesn't exist, we add it
 			if(!_threadTable.containsKey(reactionRuleObject)){
 				launchThread(reactionRuleObject);
 			}else
-				return false;
+				return null;
 		}
-		return true;
+		return reactionRuleObject;
 	}
 
 	//REFACTORING
@@ -168,32 +170,34 @@ public final class Solution implements Collection<Object>{
 	 * @return The reactive has been added
 	 */
 	public boolean add(Object newReactive) {
+		
 		//The map (container of our elements) must NOT be accessed concurrently
 		synchronized (_mapElements) {
 
 			//At first we determine whether it is a ReactionRule or not
 			String className = getReactiveType(newReactive);
-			boolean addElement = true;
-
+//			boolean addElement = true;
+			Object target = newReactive;	// FOO value, but different from null :-)
 			//It is a ReactionRule, hence special treatment
 			if(className.equals(ReactionRule.class.getName())) {
-				addElement = checkReactionRuleReactive((ReactionRule)newReactive);
+				target = checkReactionRuleReactive((ReactionRule)newReactive);
+//				addElement = checkReactionRuleReactive((ReactionRule)newReactive);
 			} else if(className.equals(Solution.class.getName())){
-				processAddSubSolution(newReactive);
+				processAddSubSolution(target);
 			}
 
 			//TODO: (Message de Antoine) Pas la peine le premier test, de toute facon l'utilisateur peut pas accéder à SubSolutionReactivesAccessor
-			if(!className.equals(SubSolutionReactivesAccessor.class.getName()) && addElement){
+			if(!className.equals(SubSolutionReactivesAccessor.class.getName()) && target != null){
 				boolean result;
 				//When you add an element in the solution, the solution is no more inert
 				_inert = false;
 				//There is already an entry in the map for this reactive, so we just add the element
 				if(_mapElements.get(className) != null){
-					result = _mapElements.get(className).add(newReactive);
+					result = _mapElements.get(className).add(target);
 					//There is no entry for the moment : we init the list
 				}else{
 					List<Object> l =new ArrayList<Object>();
-					result = l.add(newReactive);
+					result = l.add(target);
 					_mapElements.put(className, l);
 				}
 				return result;

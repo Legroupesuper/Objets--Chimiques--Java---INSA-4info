@@ -24,12 +24,12 @@ public class ConcatRR implements ReactionRule{
 		return t;
 	}
 
-	public void setS(String s) {
-		this.s = s;
-	}
+//	public void setS(String s) {
+//		this.s = s;
+//	}
 
-	public void setT(String t) {
-		this.t = t;
-	}
+//	public void setT(String t) {
+//		this.t = t;
+//	}
 
 }

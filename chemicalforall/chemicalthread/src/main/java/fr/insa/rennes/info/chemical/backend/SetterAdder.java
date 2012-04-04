@@ -2,12 +2,14 @@ package fr.insa.rennes.info.chemical.backend;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
+import java.util.List;
 
 import javassist.CannotCompileException;
 import javassist.ClassPool;
 import javassist.CtClass;
 import javassist.CtField;
 import javassist.CtMethod;
+import javassist.CtNewMethod;
 import javassist.NotFoundException;
 import fr.insa.rennes.info.chemical.user.ReactionRule;
 
@@ -17,10 +19,13 @@ public class SetterAdder {
 	private Field[] fieldsToSet;	// The fields which setters will be created
 	private ClassPool pool;
 
-	public SetterAdder(ReactionRule rr, Field[] fieldsToSet) {
+	public SetterAdder(ReactionRule rr, List<Field> fieldsToSet) {
 		super();
 		this.rule = rr;
-		this.fieldsToSet = fieldsToSet;
+		this.fieldsToSet = new Field[fieldsToSet.size()];
+		for(int i = 0 ; i < fieldsToSet.size() ; i++){
+			this.fieldsToSet[i] = fieldsToSet.get(i);
+		}
 		this.pool = ClassPool.getDefault();
 	}
 
@@ -28,45 +33,30 @@ public class SetterAdder {
 	 * 
 	 * @return The modified ReactionRule
 	 */
-	public Object addSetters(){
+	public ReactionRule addSetters(){
 		CtClass cc = null;
 		try {
 			cc = pool.get(rule.getClass().getName());
 		} catch (NotFoundException e) {
 			e.printStackTrace();
 		}
-		cc.setName(cc.getName()+"autogen");
-		cc.setModifiers(Modifier.PUBLIC);
-		for(CtField f : cc.getFields()){
-			if(f.getModifiers() != Modifier.PUBLIC){
-				f.setModifiers(Modifier.PUBLIC);
-			}
-		}
-//		try {
-//			cc.addConstructor(CtNewConstructor.make(new CtClass[]{}, new CtClass[]{}, CtNewConstructor.PASS_NONE, null, null, cc));
-//		} catch (CannotCompileException e1) {
-//			// TODO Auto-generated catch block
-//			e1.printStackTrace();
-//		}
-//		cc.getClassInitializer().setModifiers(Modifier.PUBLIC);
 
 		for(Field f : fieldsToSet){
-
-			CtMethod meth = null;
+			CtClass classType = null;
 			try {
-				meth = new CtMethod(CtClass.voidType, "set"+f.getName(), new CtClass[] { pool.get(f.getType().getName()) }, cc);
+				classType = pool.get(f.getType().getName());
+				CtField newField = new CtField(classType, f.getName(), cc);
+				CtMethod setter = CtNewMethod.setter("set"+f.getName(), newField);
+				cc.addMethod(setter);
 			} catch (NotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			}
-			try {
-				meth.setBody("this."+f.getName()+" = $1;");
-				cc.addMethod(meth);
 			} catch (CannotCompileException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
+		cc.setName(cc.getName()+"autogen");
 		Class<? extends ReactionRule> clazz;
 		try {
 			clazz = cc.toClass();
