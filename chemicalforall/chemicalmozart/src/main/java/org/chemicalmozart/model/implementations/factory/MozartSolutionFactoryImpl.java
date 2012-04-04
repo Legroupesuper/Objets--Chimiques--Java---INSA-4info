@@ -11,6 +11,7 @@ import org.chemicalmozart.model.implementations.rythme.QQ2;
 import org.chemicalmozart.model.implementations.rythme.QQEEQ4;
 import org.chemicalmozart.model.implementations.rythme.QQQEE4;
 import org.chemicalmozart.model.implementations.rythme.QQQQ4;
+import org.chemicalmozart.model.implementations.solutionindentification.RythmePull;
 import org.chemicalmozart.model.interfaces.factory.MozartSolutionFactory;
 
 import fr.insa.rennes.info.chemical.backend.Solution;
@@ -19,6 +20,7 @@ public class MozartSolutionFactoryImpl implements MozartSolutionFactory{
 
 	public Solution createRythmicPull() {
 		Solution result = new Solution();
+		result.add(new RythmePull());
 		result.add(new EEQ2());
 		result.add(new EEQQQ4());
 		result.add(new EQE2());

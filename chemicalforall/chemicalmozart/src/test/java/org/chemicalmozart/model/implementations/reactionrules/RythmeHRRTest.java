@@ -44,33 +44,48 @@ public class RythmeHRRTest extends TestCase{
 	public void testComputeResult1() {
 		List<Object> l = new ArrayList<Object>(Arrays.asList(this._tabResult));
 		boolean bool = false;
+		boolean valueCorrect = false;
 		for(Object o : l){
-			if(o instanceof Integer)
+			if(o instanceof Integer){
 				bool = true;
+				if((Integer)o == 1)
+					valueCorrect = true;
+			}
 		}
-		assertTrue("No integer was found in the computeResult", bool);
+		assertTrue("No integer wasn't found in the computeResult", bool);
+		assertTrue("The value of the integer is not correct", valueCorrect);
 	}
 
 	@Test
 	public void testComputeResult2() {
 		List<Object> l = new ArrayList<Object>(Arrays.asList(this._tabResult));
 		boolean bool = false;
+		boolean valueCorrect = false;
 		for(Object o : l){
-			if(o instanceof ChordImpl)
+			if(o instanceof ChordImpl){
 				bool = true;
+				if(((ChordImpl) o).get_position() == 0)
+					valueCorrect = true;
+			}
 		}
-		assertTrue("No ChordImpl was found in the computeResult", bool);
+		assertTrue("No ChordImpl wasn't found in the computeResult", bool);
+		assertTrue("The value of the position is not correct", valueCorrect);
 	}
 
 	@Test
 	public void testComputeResult3() {
 		List<Object> l = new ArrayList<Object>(Arrays.asList(this._tabResult));
 		boolean bool = false;
+		boolean valueCorrect = false;
 		for(Object o : l){
-			if(o instanceof QuaterLeft)
+			if(o instanceof QuaterLeft){
 				bool = true;
+				if(((QuaterLeft) o).getValue()<4)
+					valueCorrect = true;
+			}
 		}
-		assertTrue("No QuaterLeft was found in the computeResult", bool);
+		assertTrue("No QuaterLeft wasn't found in the computeResult", bool);
+		assertTrue("The value of the QuaterLeft is not correct", valueCorrect);
 	}
 
 	@Test
@@ -81,7 +96,7 @@ public class RythmeHRRTest extends TestCase{
 			if(o instanceof BarInCreation)
 				bool = true;
 		}
-		assertTrue("No BarInCreation was found in the computeResult", bool);
+		assertTrue("No BarInCreation wasn't	found in the computeResult", bool);
 	}
 
 	@Test

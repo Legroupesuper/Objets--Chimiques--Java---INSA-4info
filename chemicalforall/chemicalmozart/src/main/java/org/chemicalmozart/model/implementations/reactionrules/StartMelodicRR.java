@@ -51,8 +51,8 @@ public class StartMelodicRR implements ReactionRule{
 	}
 
 	/**
-	 * Adds to the solution contained in _sol a RythmicRR and a MelodicRR and _pitch. It also add the result of MozartSolutionFactory.createRythmicPull().<br />
-	 * There is no need to put back BarInCreation in _sol. We will not use it in the futur. At the contratry, it's important to
+	 * Adds to the solution contained in _sol a RythmicRR and a MelodicRR and _pitch. It also add the result of MozartSolutionFactory.createRythmicPull() to _sol.<br />
+	 * There is no need to put back BarInCreation in _sol. We will not use it in the future. At the contrary, it's important to
 	 * put back the BarNumer in _sol.<br />
 	 * It must also return directly a BarNumber after having increased its value.
 	 * @returns the solution contained in _sol as describe before, the increased BarNumber

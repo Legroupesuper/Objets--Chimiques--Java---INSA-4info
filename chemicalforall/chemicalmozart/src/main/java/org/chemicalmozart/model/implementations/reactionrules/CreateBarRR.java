@@ -36,7 +36,7 @@ public class CreateBarRR implements ReactionRule{
 	/**
 	 * Create a new solution which represents a new bar. This solution must contains a BarInCreation object to be easily identifiable.<br />
 	 * The computeResult must create a new Solution which contains a copy of _number and a copy of
-	 * _quater. Then it must increase _number by one. It must also contains an integer initialised to 0 which represents the current number of
+	 * _quater. Then it must increase _number by one. It must also contains an integer initialized to 0 which represents the current number of
 	 * ChordImpl in the bar<br />
 	 * It must also return a MoveToResultRR and a QuaterLeft
 	 * @return a table which contains the new solution described before, the initial _quater, and a new BarNumber with the value
