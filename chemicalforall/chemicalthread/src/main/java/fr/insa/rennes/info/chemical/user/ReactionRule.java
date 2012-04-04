@@ -38,12 +38,12 @@ public interface ReactionRule {
 	 * Contrary to OneShot, the ReactionRule will not be removed from the solution after reaction.</p>
 	 */  
 	public static enum Multiplicity{
-		/*
+		/**
 		 * Indicates that the reaction will happen only once, 
 		 * the ReactionRule will then be removed from the solution.
 		 */
 		ONE_SHOT, 
-		/*
+		/**
 		 * Indicates that the reaction will always happen if reactives are present,
 		 * until solution inertia. 
 		 * Contrary to OneShot, the ReactionRule will not be removed from the solution after reaction.
