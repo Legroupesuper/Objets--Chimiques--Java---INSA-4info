@@ -6,9 +6,12 @@ package org.chemicalmozart.model.implementations;
  *
  */
 public enum Rythme {
-    quater,
-        half,
-        whole,
-        eighth,
-        sixteenth
+	quater,
+	quaterdotted,
+	half,
+	halfdotted,
+	whole,
+	eighth,
+	eightdotted,
+	sixteenth
 }
