@@ -53,7 +53,7 @@ class IndexProvider {
 		_overflowReached = false;
 		
 		if (s.equals(Strategy.ORDERED)){
-			_strategy = new OrderedIncrementStrategy(_subIndexProviderSub.getNumberOfElements());
+			_strategy = new OrderedIncrementStrategy();
 		}
 		else {
 			_strategy = new RandomIncrementStrategy(_subIndexProviderSub.getNumberOfElements());
