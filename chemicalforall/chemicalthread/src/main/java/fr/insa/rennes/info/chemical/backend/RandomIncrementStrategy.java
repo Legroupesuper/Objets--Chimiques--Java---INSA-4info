@@ -3,65 +3,67 @@ package fr.insa.rennes.info.chemical.backend;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
-import java.util.Map.Entry;
-
-import javax.swing.text.html.HTMLDocument.Iterator;
 
 
 /**
- * This class implements an random strategy: the elements are randomly selected in order
- * to simulate a chemical reaction.
- * @author Cédric Andreolli, Chloé Boulanger, Olivier Cléro, Antoine Guellier, Sébastien Guilloux, Arthur Templé
+ * This class implements an random strategy iteration on reactives: 
+ * the elements are randomly selected in order to simulate the non-determinism 
+ * of a chemical reaction.
+ * @author Andréolli Cédric, Boulanger Chloé, Cléro Olivier, Guellier Antoine, Guilloux Sébastien, Templé Arthur
  */
 class RandomIncrementStrategy implements IncrementStrategy {
 	/**
-	 * This interface is used to get an association between a real index and a false index.
-	 * It's designed to work with a List<IndexProviderElement>
-	 * @author Cédric Andreolli, Chloé Boulanger, Olivier Cléro, Antoine Guellier, Sébastien Guilloux, Arthur Templé
-	 *
+	 * The current index (corresponding to an "ordered" index)
 	 */
-	/**
-	 * A boolean needed for the first execution of increment
-	 */
-	boolean firstRun = true;
 	private BigInteger _currentIndex;
-	private BigInteger _numberOfIndex;
+	/**
+	 * The maximum value of the index
+	 */
+	private BigInteger _maxIndex;
+	/**
+	 * The list that transforms the "normal" (ordered) index in a random index.
+	 * It will be used with {@link #_currentIndex} to translate it to a "random" index:
+	 * randomIndex = _shuffleList.get(_currentIndex)
+	 */
 	private List<BigInteger> _shuffleList;
+	
 	/**
 	 * Sole constructor, with the maxIndex array that is needed to know how many 
 	 * columns there is for this index provider.
 	 * @param maxIndex The maximum index array
 	 */
-	public RandomIncrementStrategy(SubIndexProviderSolution sipSol){
+	public RandomIncrementStrategy(BigInteger maxI){
 		_currentIndex = BigInteger.valueOf(0);
-		_numberOfIndex = sipSol.getNumberOfElements();
+		_maxIndex = maxI;
 		_shuffleList = new ArrayList<BigInteger>();
 		
-		for(BigInteger i= BigInteger.valueOf(0); _numberOfIndex.add(i.negate()).signum()>0; i=i.add(BigInteger.valueOf(1))){
+		for(BigInteger i= BigInteger.valueOf(0); _maxIndex.add(i.negate()).signum()>0; i=i.add(BigInteger.valueOf(1))){
 			_shuffleList.add(new BigInteger(i.toByteArray()));
 		}
+		
+		//Then shuffle the list
 		Collections.shuffle(_shuffleList);
 	}
 	
 	/**
-	 * The function is pretty much the same as the one in the OrderedIncrementStrategy class
-	 * but it "translates" the ordered value to the "random" value with the map
-	 * @param _index The index array: the values of the index
-	 * @param _maxIndex The maximum values of the indexes
-	 * @return A table of integers that is the new value of the indexes
+	 * Increments the specified sub index provider of one step. Does not check
+	 * the validity of the index provider, this is done in {@link IndexProvider#increment()}.
+	 * This function basically process to the same operation as {@link OrderedIncrementStrategy#increment(SubIndexProviderSolution)},
+	 * but it "translates" the ordered value to the "random" value with the list {@link #_shuffleList}.
+	 * @param sipSol The sub index provider on solution that has to be incremented.
 	 * @throws ChemicalException
 	 */	
-	public SubIndexProviderSolution increment(SubIndexProviderSolution solution) throws ChemicalException{
-		solution.init();
+	public void increment(SubIndexProviderSolution sipSol) throws ChemicalException{
+		//At every increment, we start all over again...
+		sipSol.init();
 		
-		List<List<Integer>> result = new ArrayList<List<Integer>>();
-		java.util.Iterator<BigInteger> it = _shuffleList.iterator();
+		Iterator<BigInteger> it = _shuffleList.iterator();
 		BigInteger position = BigInteger.valueOf(0);
 		BigInteger i = BigInteger.valueOf(0);
-		//System.out.println(_currentIndex+"/"+solution.getNumberOfElements());
-		if(_currentIndex.equals(_numberOfIndex))
+		
+		if(_currentIndex.equals(_maxIndex))
 			throw new ChemicalException("Overflow reached first");
 		
 		//We can't use the simple _shuffleList.get(_currentIndex) because we need to use BigInteger
@@ -76,12 +78,11 @@ class RandomIncrementStrategy implements IncrementStrategy {
 			it.next();
 		}
 		
-		
+		//...and we increment n times the sub index provider
+		//n being the value of _shuffleList.get(_currentValue)
 		for(i=BigInteger.valueOf(0); position.add(i.negate()).signum()>0; i=i.add(BigInteger.valueOf(1))){
-			solution.increment();
+			sipSol.increment();
 		}
-		
-		return solution;
 	}
 
 }

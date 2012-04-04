@@ -8,7 +8,16 @@ import functionnaltests.DeleteRuleMax;
 
 
 public class Test {
-
+	public static final Solution s = new Solution(Solution.Strategy.RANDOM);
+	public static Solution s2 = new Solution();
+	public static Solution s3 = new Solution();
+	public static Solution s4 = new Solution();
+	public static Solution s5 = new Solution();
+	public static Solution s6 = new Solution();
+	
+	public static boolean _finit = false;
+	
+	
 	/**
 	 * @param args
 	 */
@@ -22,12 +31,7 @@ public class Test {
 //		if(true)
 //			return;
 		
-		final Solution s = new Solution(Solution.Strategy.RANDOM);
-		Solution s2 = new Solution();
-		Solution s3 = new Solution();
-		Solution s4 = new Solution();
-		Solution s5 = new Solution();
-		Solution s6 = new Solution();
+		
 		
 		s4.add(12);
 		s4.add(12);
@@ -48,7 +52,6 @@ public class Test {
 		s3.add(6);
 		s3.add(21);
 		s3.add(786);
-		s3.add(77);
 //		s2.add(5);
 //		s2.add(5);
 //		s2.add(6);
@@ -113,8 +116,8 @@ public class Test {
 		s.add(" Gros ");
 		s.add(" Eléphant ");
 		s.add(new MaxIntRR(0));
-		s2.add(new DeleteRuleMax());
-		//s.add(new MaxIntSubSolRR());
+		//s2.add(new DeleteRuleMax());
+		s.add(new MaxIntSubSolRR());
 		s.add(new ConcatRR());
 		//s.add(new RandomNumberRR());
 		//	s.add(new TrucRR());
@@ -127,13 +130,19 @@ public class Test {
 				System.out.println("Time : "+(System.currentTimeMillis()-time)+" millisecondes");
 				System.out.println("Resultat : ");
 				System.out.println(s);
+				
+				Test._finit = true;
 			}
 		});
-
+	
+		
+		
 		try {
 			s.react();
 		} catch (IllegalArgumentException e) {
 			e.printStackTrace();
 		}
+		
+		
 	}
 }

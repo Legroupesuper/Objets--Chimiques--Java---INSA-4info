@@ -33,7 +33,7 @@ public class DeleteRuleMax implements ReactionRule{
 	public Object[] computeResult() {
 		List<Object> l = _subSol.getElements();
 		int a = (Integer) l.get(0);
-		int b = (Integer) l.get(0);
+		int b = (Integer) l.get(1);
 		if(a<b){
 			return new Object[]{b};
 		}

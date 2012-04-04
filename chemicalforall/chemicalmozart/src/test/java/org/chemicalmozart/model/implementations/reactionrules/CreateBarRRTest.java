@@ -35,8 +35,10 @@ public class CreateBarRRTest extends TestCase {
 		_sol.add(measureNumber);
 		_sol.add(_quaterPerBar);
 		_sol.add(new CreateBarRR());
+		
 		_sol.react();
-		while(!_sol.is_inert());
+		while(!_sol.is_inert()) Thread.sleep(100);
+		
 		Iterator<Object> it = _sol.iterator();
 		while(it.hasNext()){
 			Object o = it.next();

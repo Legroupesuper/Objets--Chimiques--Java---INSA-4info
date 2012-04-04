@@ -1,6 +1,7 @@
 package org.chemicalmozart.model.implementations.reactionrules;
 
 import org.chemicalmozart.model.implementations.DegreeImpl;
+import org.chemicalmozart.model.implementations.solutionindentification.BarInCreation.BarInCreationState;
 
 import fr.insa.rennes.info.chemical.backend.SubSolution;
 import fr.insa.rennes.info.chemical.backend.SubSolutionElements;
@@ -61,11 +62,12 @@ public class HarmonicRR1 implements ReactionRule{
 	 * Temporary object into the solution. This object will be used later.
 	 * <br /><br />
 	 * It also add the _degree in the solution identified by a BarInCreationObject. It must also put back the BarInCreation object into
-	 *  _barInCreationSolution because, due to the reaction, it's no longer in _barInCreationSolution.
+	 *  _barInCreationSolution because, due to the reaction, it's no longer in _barInCreationSolution. Before adding the BarInCreation object,
+	 *  it's important to change it's state to RYTHMEHRR.<br />
 	 * <br /><br />
 	 * @return a Solution identified by a HarmonicSol object with a proportional number of each possible degrees, <br />
 	 * a PickOneRR and a RythmeHRR.<br />
-
+	 * @see BarInCreationState
 	 */
 	public Object[] computeResult() {
 		/*
@@ -76,7 +78,7 @@ public class HarmonicRR1 implements ReactionRule{
 
 	/**
 	 * This method must succeed if :<br />
-	 *  _barInCreationSolution is a bar in creation solution <br />
+	 *  _barInCreationSolution has a valid BarInCreation element. This means that the state of the BarInCreation object is set to HARMONICRR <br />
 	 *  && _degree.getValue() is equal to 1 (This is HarmonicRR1)
 	 */
 	public boolean computeSelect() {

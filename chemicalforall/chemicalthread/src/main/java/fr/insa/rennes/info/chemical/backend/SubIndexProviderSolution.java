@@ -4,8 +4,6 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.omg.CORBA._IDLTypeStub;
-
 /**
  * This class represents a specific case of IndexProviderElement.
  * It is used to represent a subsolution.
@@ -13,7 +11,7 @@ import org.omg.CORBA._IDLTypeStub;
  * @author Cédric Andreolli, Chloé Boulanger, Olivier Cléro, Antoine Guellier, Sébastien Guilloux, Arthur Templé
  *
  */
-class SubIndexProviderSolution implements SubIndexProvider{
+public class SubIndexProviderSolution implements SubIndexProvider{
 	private List<List<SubIndexProvider>> _listElements;
 	private int _currentValue;
 	private int _currentSubSol;
