@@ -5,12 +5,12 @@ import java.math.BigInteger;
 /**
  * This class represents a sub index provider over a simple element. On contrary to a sub index provider 
  * over a solution ({@link SubIndexProviderSolution}), this index provider does not contain
- * any other sub index provider, the bottom of the recursion is reached with an object
+ * any other sub index provider: the bottom of the recursion is reached with an object
  * of this class.<br />
- * As the iteration is done on a simple type of element (in a given solution), 1 index
- * is sufficient to describe the internal state of this sub index provider. This index (a simple 
- * integer) gives the rank of the object in the solution that must be tested 
- * (and maybe chosen to react within a reaction rule).
+ * As the iteration is done on a simple type of object in a given solution (like {@link String}, or {@link Double}), 
+ * 1 index is sufficient to describe the internal state of this sub index provider. This index (a simple 
+ * integer) gives the rank of the object that must be tested to react within a reaction rule.
+ * This index refers to an object of a certain type in a given solution.
  * 
  * 
  * @author Andréolli Cédric, Boulanger Chloé, Cléro Olivier, Guellier Antoine, Guilloux Sébastien, Templé Arthur
@@ -21,7 +21,7 @@ import java.math.BigInteger;
  */
 class SubIndexProviderElement  implements SubIndexProvider{
 	/**
-	 * The number of elements of the type searched in the concerned solution. The is actually
+	 * The number of elements of the object type searched in the concerned solution. The is actually
 	 * the maximum value of {@link #_currentValue}.
 	 */
 	private int _numberOfElementsInSolution;
@@ -34,13 +34,12 @@ class SubIndexProviderElement  implements SubIndexProvider{
 	private int _currentValue;
 	
 	/**
-	 * Constructs a sub index provider over a simple reactive, with the specified maximum value
+	 * Constructs a sub index provider on a simple reactive/element, with the specified maximum value
 	 * for the index.<br />
 	 * Note that the index value is not set in this constructor, {@link #init()} has to be called.
-	 * @param _nummberOfElementsInSolution
+	 * @param _nummberOfElementsInSolution the maximum value for the index
 	 */
 	public SubIndexProviderElement(int _nummberOfElementsInSolution) {
-		super();
 		this._numberOfElementsInSolution = _nummberOfElementsInSolution;
 	}
 	
@@ -56,7 +55,7 @@ class SubIndexProviderElement  implements SubIndexProvider{
 
 	
 	/**
-	 * Initializes the sub index provider: sets the index value to 0.
+	 * Initializes the sub index provider: sets the current index value to 0.
 	 */
 	public void init() {
 		_currentValue = 0;
@@ -69,7 +68,12 @@ class SubIndexProviderElement  implements SubIndexProvider{
 	public int getValue(){
 		return _currentValue;
 	}
-
+	
+	/**
+	 * Increments the current value of the index, and checks if the overflow was 
+	 * reached or not.
+	 * @return <code>true</code> if the overflow was reached.
+	 */
 	public boolean increment(){
 		if(++_currentValue >= _numberOfElementsInSolution){
 			_currentValue = 0;
@@ -88,17 +92,9 @@ class SubIndexProviderElement  implements SubIndexProvider{
 	}
 	
 	/**
-	 * Forces the current index value to the specified value.
-	 * @param v The new value of the index.
-	 */
-	public void setValue(int v) {
-		_currentValue = v;
-	}
-	
-	/**
 	 * Returns the number of elements/reactive of the given type in the concerned solution.
 	 * A cast in BigInteger is done.
-	 * @returns The number of elements/reactive of the given type in the concerned solution.
+	 * @return The number of elements/reactive of the given type in the concerned solution.
 	 */
 	public BigInteger getNumberOfElements() {
 		return BigInteger.valueOf(_numberOfElementsInSolution);
@@ -106,9 +102,9 @@ class SubIndexProviderElement  implements SubIndexProvider{
 	
 	/**
 	 * Returns <code>true</code> if the sub index provider is valid. In this
-	 * case it can not be invalid, as the can't be any conflict on indexes: there is
+	 * case it can not be invalid, as there can't be any conflict on indexes: there is
 	 * only one index.
-	 * @returns <code>true</code>
+	 * @return <code>true</code>
 	 */
 	public boolean isValid() {
 		return true;

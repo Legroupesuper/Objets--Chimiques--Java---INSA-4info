@@ -2,14 +2,14 @@ package fr.insa.rennes.info.chemical.backend;
 
 
 /**
- * This interface describes an increment strategy of an index provider. Represents a strategy 
+ * This interface describes an increment strategy of an index provider. Implements a strategy 
  * design pattern, where the <em>context</em> is the index provider, and the target
  * algorithm is the <code>increment</code> function. This class, invisible to the library user,
  * is represented by an enum type in the {@link Solution} class.<br />
  * This increment strategy defines the way to iterate on the reactives of a solution
  * when processing to the research of reactives for a reaction rule. Basically, the 
  * two different strategies are <em>ordered</em> (first elements first), and <em>random</em>.<br /> 
- * Other strategies could be implemented, as a round robin on the reactives. 
+ * Other strategies could be implemented, as a round robin. 
  * @author Andréolli Cédric, Boulanger Chloé, Cléro Olivier, Guellier Antoine, Guilloux Sébastien, Templé Arthur
  */
 interface IncrementStrategy {

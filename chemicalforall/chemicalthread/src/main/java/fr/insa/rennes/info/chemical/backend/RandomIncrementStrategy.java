@@ -32,7 +32,7 @@ class RandomIncrementStrategy implements IncrementStrategy {
 	/**
 	 * Sole constructor, with the maxIndex array that is needed to know how many 
 	 * columns there is for this index provider.
-	 * @param maxIndex The maximum index array
+	 * @param maxI The maximum index array
 	 */
 	public RandomIncrementStrategy(BigInteger maxI){
 		_currentIndex = BigInteger.valueOf(0);

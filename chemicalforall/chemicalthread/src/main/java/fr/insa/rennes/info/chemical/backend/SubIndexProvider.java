@@ -19,10 +19,8 @@ import java.math.BigInteger;
  */
 public interface SubIndexProvider {
 	/**
-	 * Initiates the sub index provider. Basically, it sets the index provider on its
-	 * first index combination and, if some indexes are in conflict, increments the values 
-	 * until a valid state (or overflow) is reached.
-	 * @see #isValid()
+	 * Initiates the sub index provider. Basically, it sets the sub index provider on its
+	 * first index combination.
 	 */
 	public void init();
 	
@@ -39,9 +37,8 @@ public interface SubIndexProvider {
 	/**
 	 * Returns the number of elements on which the sub index provider is iterating.
 	 * Depending on the implementation, the computing of this value differs, but the meaning is basically 
-	 * the number resulting of multiplication of the number of each reactive that could be matched. 
-	 * Note that it is also the number of combination of the sub index provider.<br />
-	 * The {@link BigInteger} is justified by the possibly great number of combination. For instance,
+	 * the number resulting of multiplication of the number of each reactive that could be matched.<br />
+	 * The {@link BigInteger} is justified by the possibly great number of combinations. For instance,
 	 * a sub index provider for 6 reactives in a solution containing 70 instances of each of these 4 object,
 	 * there is 70^6 combination (> 10^11).
 	 * @return The number of elements on which the sub index provider is iterating.
@@ -51,24 +48,18 @@ public interface SubIndexProvider {
 	/**
 	 * Returns <code>true</code> if the current state of the sub index provider is valid.
 	 * A valid state is a state where there is no conflict between two dependent indexes. Two indexes
-	 * are said dependent when they have the same type and are pointing in the same solution.
-	 * For example, two indexes pointing on the same integer in a given solution
-	 * can not be valid.
+	 * are said dependent when they are pointing on the same type of object, in the same solution.
+	 * For example, an index provider having two indexes pointing on the same integer in a given solution
+	 * can not be valid (this integer would be considered as two integers in the reaction !).
 	 * @return <code>true</code> if the current combination of the sub index provider is valid.
 	 */
 	public boolean isValid();
 	
 	/**
-	 * Set the current value of the sub index provider.
-	 * @param v The new value of the sub index provider.
-	 */
-	public void setValue(int v);
-	
-	/**
 	 * Increments the sub index provider's value. This function is the most
 	 * important one of the interface. It is supposed to go on to the next combination of
-	 * reactives. At the end of this function, the sub index provider either is valid 
-	 * (see {@link #isValid()}) or has reached an overflow (i.e all combination have been tested).
+	 * indexes of reactives. At the end of this function, the sub index provider can
+	 * be in a non valid state (this verification is done in {@link IndexProvider#increment()}).
 	 * @return <code>true</code> if an overflow was reached.
 	 */
 	public boolean increment();

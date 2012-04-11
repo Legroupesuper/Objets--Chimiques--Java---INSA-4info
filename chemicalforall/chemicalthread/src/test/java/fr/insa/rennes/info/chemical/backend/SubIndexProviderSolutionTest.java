@@ -94,7 +94,7 @@ public class SubIndexProviderSolutionTest extends TestCase {
 //	}
 	
 	/**
-	 * Test method for {@link IndexProviderSimpleElement#fooTest()}.
+	 * Test method for {@link SubIndexProviderElement#fooTest()}.
 	 */
 	public void testFooTest() {
 		assertTrue(true);
