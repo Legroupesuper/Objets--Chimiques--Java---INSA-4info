@@ -13,16 +13,18 @@ import fr.insa.rennes.info.chemical.user.ReactionRule;
  * an interface is used so that the implementation can be easily changed.
  * </p>
  * <p>
- * The different parameters of the builder are the solution, the reaction rule, the reaction rule's field, 
+ * The different parameters to give to the builder are the solution, the reaction rule, the reaction rule's fields, 
  * and the increment strategy of the index provider. See the associated setters for a detailed descrition.
  * </p>
  * @author Andréolli Cédric, Boulanger Chloé, Cléro Olivier, Guellier Antoine, Guilloux Sébastien, Templé Arthur
+ * 
  * @see IndexProvider
+ * @see IncrementStrategy
  */
 public interface BuilderIndexProvider extends Builder<IndexProvider> {
 	/**
 	 * Returns the built index provider, following the parameters given.
-	 * The different parameters are the solution, the reaction rule, the reaction rule's field, 
+	 * The different parameters are the solution, the reaction rule, the reaction rule's fields, 
 	 * and the increment strategy of the index provider. See the associated setters for a detailed description.
 	 * @return The built index provider.
 	 * @see #setReactionRule(ReactionRule)
@@ -33,15 +35,17 @@ public interface BuilderIndexProvider extends Builder<IndexProvider> {
 	public IndexProvider getProduct() throws ChemicalException;
 	/**
 	 * Sets the solution parameter to build the index provider.
-	 * The specified solution is the solution in which the index provider has to rely to provide 
-	 * indexes on the reactives asked by the reaction rule parameter. 
+	 * The specified solution is the solution on which the index provider has to base itself
+	 * to provide indexes on the reactives asked by the reaction rule. 
 	 * @param sol The solution on which the index provider has to iterate.
 	 */
 	public void setSolution(Solution sol);
 	/**
 	 * Sets the reaction rule parameter to build the index provider.
-	 * The reaction rule parameter specifies which reaction rule needs reactives.
-	 * @param rr The reaction rule that needs the index provider.
+	 * The reaction rule parameter specifies what is the reaction rule that needs reactives.
+	 * Indeed, an index provider is always created in order to find reactives for a 
+	 * specific reaction rule.
+	 * @param rr The reaction rule that needs reactives.
 	 */
 	public void setReactionRule(ReactionRule rr);
 	/**

@@ -3,7 +3,7 @@ package fr.insa.rennes.info.chemical.backend;
 import java.util.List;
 
 /**
- * This class implements {@link SubSolutionReactivesAccessor}, and is actually the bottom of the recursive structure formed with an interlocking of
+ * This class implements {@link SubSolutionReactivesAccessor}, and is actually the bottom of the recursive structure formed with an overlapping of
  * {@link SubSolution} instances. This class really contains the type list (set by the user), the element list (set internally) and the 
  * reference of the sub solution object containing the elements/reactives selected. This class is not supposed to be used alone, it should
  * be within a {@link SubSolution} object, as parameterized type.
