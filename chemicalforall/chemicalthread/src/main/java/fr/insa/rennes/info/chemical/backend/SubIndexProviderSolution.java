@@ -11,8 +11,7 @@ import java.util.List;
  * solutions, using a recursive structure (based on {@link SubIndexProviderSolution} and 
  * {@link SubIndexProviderElement}). Like all index providers, this sub index provider iterates
  * overs elements in a given solution that we will call <em>main solution</em>. Note that a main
- * solution can also be another solution's inner solution. A solution is considered <em>main</em>
- * considering an index provider instance.<br />
+ * solution can also be another solution's inner solution.<br />
  * </p>
  * <p>
  * On contrary to a sub index provider on a simple element, this sub index provider has 
@@ -24,10 +23,10 @@ import java.util.List;
  * is requesting 2 integers and a string in a sub solution, if we consider that the main 
  * solution contains 2 sub solution, the list of list will be: <br />
  * [ [SubIndexProviderElement(int), SubIndexProvider(int), SubIndexProvider(string)], [SubIndexProviderElement(int), SubIndexProvider(int), SubIndexProvider(string)] ]<br />
- * In the general case, a {@link SubIndexProviderSolution} object can be in the list. 
+ * In the general case, one or several {@link SubIndexProviderSolution} objects can be in the list. 
  * This case occurs when searching for elements in sub-sub-solutions (or deeper).
  * The recursion then appears and everything is transparent for this sub index provider:
- * the function called on the elements of the lists is {@link SubIndexProvider#increment()},
+ * the function called on the sub index providers of the lists is {@link SubIndexProvider#increment()},
  * and it will be called until it reaches an overflow. The implementation does not matter.<br /> 
  * </p>
  * <p>
@@ -46,7 +45,8 @@ public class SubIndexProviderSolution implements SubIndexProvider{
 	/**
 	 * The main structure of the class: the list of list of sub index provider.
 	 * In the first list, each entry corresponds to a sub solution in the main solution. 
-	 * For each one of these sub solution, a list of sub index provider is given
+	 * For each one of these sub solution, there is a list of sub index provider. See
+	 * the class description for more details.
 	 */
 	private List<List<SubIndexProvider>> _listSubIP;
 	/**
@@ -65,7 +65,7 @@ public class SubIndexProviderSolution implements SubIndexProvider{
 	 *  is a list of list of integer because the is several set of dependent indexes.
 	 */
 	private List<List<Integer>> _dependentIndexes;
-	
+
 	/**
 	 * Builds a sub index provider on a solution, with the given list of list of sub index provider,  
 	 * and the specified dependent indexes.
@@ -86,7 +86,7 @@ public class SubIndexProviderSolution implements SubIndexProvider{
 	public List<SubIndexProvider> get_listSubIP() {
 		return _listSubIP.get(_currentSubSol);
 	}
-	
+
 	/**
 	 * Initializes the sub index provider. Sets the 
 	 * lists indexes to 0, and call {@link SubIndexProvider#init()}
@@ -110,27 +110,35 @@ public class SubIndexProviderSolution implements SubIndexProvider{
 
 	/**
 	 * Increments the configuration of the indexes by one step.
+	 * Tries to increment the sub index provider at [0] of the list [_currentSubSol],
+	 * and if an overflow is detected on this sub index provider, it is is reported on the next sub 
+	 * index provider (just like a carry).
+	 * When the "carry" has been reported correctly (that may take several steps/increments), 
+	 * just return false.When the carry can not be reported (_currentSubSol > number of sub solutions),
+	 * that means a "general" overflow is detected: this sub index provider raises an overflow, and 
+	 * this function returns <code>true</code>
 	 * @return <code>true</code> if an overflow was reached.
 	 */
 	public boolean increment() {
 		boolean overflow = false;
-		
+
 		/*
-		 * The following loop tries to increment the _currentValue of the _currentList as long as an
-		 * overflow is detected.
-		 * The condition of the loop fails when no overflow is detected or when the _currentValue is
-		 * greater than number of elements in the _currentList.
+		 * The following loop tries to increment the sub index provider at [0] (_currentSubIP is always 0 
+		 * when entering this function)of the list [_currentSubSol], and if an overflow is detected, 
+		 * the overflow is reported on the next sub index provider (just like a carry).
+		 * The condition of the loop fails when no overflow is detected or when the _currentSubIP is
+		 * greater than number of elements in the _currentSubSol.
 		 */
 		while(_currentSubIP < _listSubIP.get(_currentSubSol).size() && (overflow = _listSubIP.get(_currentSubSol).get(_currentSubIP).increment())
 				){
 			_currentSubIP++;
 		}
-		
+
 		/*
 		 * When an overflow is detected there are some configurations to check :
-		 * 	- can we try to increment a first level list (which correspond to an other subsolution)
-		 *  - if we already are on the last element of the first level list, we must return an overflow
-		 *  otherwise, no overflow is detected and the next call to increment will try to increment _currentValue = 0.
+		 * 	- can we try to increment _currentSubSol (hat means try another sub solution)
+		 *  - if we already are on the last element of the first level list, we must return an overflow (there is no more sub solution to test).
+		 *  otherwise, no overflow is detected and the next call to increment will try to increment one more time.
 		 *  This algorithm work like the +1 algorithm. You always start to increment the least significant number.
 		 */
 		if(overflow && _currentSubSol<_listSubIP.size()-1){//Increment the first level list
@@ -145,7 +153,7 @@ public class SubIndexProviderSolution implements SubIndexProvider{
 			return false;
 		}
 	}
-	
+
 	/**
 	 * Constructs and returns a string representing the sub index provider. The string 
 	 * representation consists in a list of the lists of sub index provider. 
@@ -163,10 +171,10 @@ public class SubIndexProviderSolution implements SubIndexProvider{
 				result += sip.toString();
 			}
 			result += "]";
-			
+
 			i++;
 		}
-		
+
 		/*String result = "("+_currentSubSol+"/"+_listElements.size();
 		//result += _currentValue;
 		result += ") {"+_dependantIndexes+"}";
@@ -174,8 +182,8 @@ public class SubIndexProviderSolution implements SubIndexProvider{
 			result+= (e.toString()+" ");*/
 		return result;
 	}
-	
-	
+
+
 	/**
 	 * Computes the number of different combination of reactives possible.
 	 * This number can be consequent (thus the {@link BigInteger} value returned).
@@ -186,14 +194,14 @@ public class SubIndexProviderSolution implements SubIndexProvider{
 	 */
 	public BigInteger getNumberOfElements() {
 		BigInteger result = BigInteger.valueOf(0);
-		
+
 		for(List<SubIndexProvider> l : _listSubIP){
 			BigInteger aux = BigInteger.valueOf(1);
 			for(SubIndexProvider e : l){
 				try{
-				aux = aux.
-						multiply(
-						e.getNumberOfElements());
+					aux = aux.
+							multiply(
+									e.getNumberOfElements());
 				}catch(Exception ex){
 					return BigInteger.valueOf(0);
 				}
@@ -202,7 +210,7 @@ public class SubIndexProviderSolution implements SubIndexProvider{
 		}
 		return result;
 	}
-	
+
 	/**
 	 * Returns <code>true</code> if the current state of the sub index provider is valid.
 	 * A valid state is a state where there is no conflict between two dependent indexes. Two indexes
@@ -214,21 +222,21 @@ public class SubIndexProviderSolution implements SubIndexProvider{
 	public boolean isValid() {
 		List<Integer> valuesIndexProvider;
 		boolean isCurrentIndexValid;
-		
+
 		for(SubIndexProvider e : _listSubIP.get(_currentSubSol)){
-			
+
 			if(!e.isValid())
 				return false;
 		}
-		
+
 		for(List<Integer> l : _dependentIndexes){
 			valuesIndexProvider = new ArrayList<Integer>();
 			isCurrentIndexValid = true;
 			//TODO : Vérifier le l != null
-			
+
 			if(l!=null){
 				for(int n : l){
-					
+
 					if(valuesIndexProvider.contains(_listSubIP.
 							get(_currentSubSol).
 							get(n).getValue())){
@@ -239,15 +247,15 @@ public class SubIndexProviderSolution implements SubIndexProvider{
 					}
 				}
 				if(!isCurrentIndexValid){
-					
+
 					return false;
 				}
 			}
 		}
-		
+
 		return true;
 	}
-	
+
 	/**
 	 * Merges two sub index provider on a solution in one. Used when
 	 * building the whole index provider structure. Actually

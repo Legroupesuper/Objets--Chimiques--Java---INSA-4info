@@ -15,11 +15,11 @@ import java.util.List;
  */
 class RandomIncrementStrategy implements IncrementStrategy {
 	/**
-	 * The current index (corresponding to an "ordered" index)
+	 * The current number of increments already done.
 	 */
 	private BigInteger _currentIndex;
 	/**
-	 * The maximum value of the index
+	 * The maximum increments that the sub index provider can do.
 	 */
 	private BigInteger _maxIndex;
 	/**
@@ -30,9 +30,9 @@ class RandomIncrementStrategy implements IncrementStrategy {
 	private List<BigInteger> _shuffleList;
 	
 	/**
-	 * Sole constructor, with the maxIndex array that is needed to know how many 
-	 * columns there is for this index provider.
-	 * @param maxI The maximum index array
+	 * Sole constructor, with the maxI that is needed to know the
+	 * maximum increments that the sub index provider can do.
+	 * @param maxI The maximum index
 	 */
 	public RandomIncrementStrategy(BigInteger maxI){
 		_currentIndex = BigInteger.valueOf(0);

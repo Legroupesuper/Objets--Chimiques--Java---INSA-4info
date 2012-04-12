@@ -7,11 +7,9 @@ import java.math.BigInteger;
  * over a solution ({@link SubIndexProviderSolution}), this index provider does not contain
  * any other sub index provider: the bottom of the recursion is reached with an object
  * of this class.<br />
- * As the iteration is done on a simple type of object in a given solution (like {@link String}, or {@link Double}), 
- * 1 index is sufficient to describe the internal state of this sub index provider. This index (a simple 
+ * As the iteration is done on a simple type of object (like {@link String}, or {@link Double}) in a given solution, 
+ * one index is sufficient to describe the internal state of this sub index provider. This index (a simple 
  * integer) gives the rank of the object that must be tested to react within a reaction rule.
- * This index refers to an object of a certain type in a given solution.
- * 
  * 
  * @author Andréolli Cédric, Boulanger Chloé, Cléro Olivier, Guellier Antoine, Guilloux Sébastien, Templé Arthur
  * @see IndexProvider
@@ -21,7 +19,7 @@ import java.math.BigInteger;
  */
 class SubIndexProviderElement  implements SubIndexProvider{
 	/**
-	 * The number of elements of the object type searched in the concerned solution. The is actually
+	 * The number of elements of the object type searched in the concerned solution. This is actually
 	 * the maximum value of {@link #_currentValue}.
 	 */
 	private int _numberOfElementsInSolution;
@@ -71,7 +69,8 @@ class SubIndexProviderElement  implements SubIndexProvider{
 	
 	/**
 	 * Increments the current value of the index, and checks if the overflow was 
-	 * reached or not.
+	 * reached or not. The overflow is reached when the current value is greater
+	 * 
 	 * @return <code>true</code> if the overflow was reached.
 	 */
 	public boolean increment(){
@@ -92,9 +91,9 @@ class SubIndexProviderElement  implements SubIndexProvider{
 	}
 	
 	/**
-	 * Returns the number of elements/reactive of the given type in the concerned solution.
+	 * Returns the number of elements/reactives of the given type in the concerned solution.
 	 * A cast in BigInteger is done.
-	 * @return The number of elements/reactive of the given type in the concerned solution.
+	 * @return The number of elements/reactives of the given type in the concerned solution.
 	 */
 	public BigInteger getNumberOfElements() {
 		return BigInteger.valueOf(_numberOfElementsInSolution);

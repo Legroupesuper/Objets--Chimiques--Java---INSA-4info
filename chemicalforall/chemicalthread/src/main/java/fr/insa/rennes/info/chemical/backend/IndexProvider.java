@@ -8,23 +8,24 @@ import fr.insa.rennes.info.chemical.backend.Solution.Strategy;
 
 /**
  * <p>
- * This class represents an index counter on set of reactives of a given solution.
+ * This class represents an index counter on a set of reactives of a given solution.
  * This class is used during the reactives research process (function {@link Solution#requestForParameters(fr.insa.rennes.info.chemical.user.ReactionRule)} ).
- * When searching for a certain set of reactives for a reaction rule (using the type of the reactives objects) in a given solution,
+ * When searching for a certain set of reactives for a reaction rule (using the type of the reactive objects) in a given solution,
  * all possible set of reactives must be tested. The main purpose of this class is to ensure that EVERY possibility is considered.
  * </p>
  * <p>
  * The concept of index provider is detached from the notion of solution: internally, only integers are handled. These integers represent
- * the index of the reactives in a given solution. This class "provide" a set of index, corresponding to a set of reactives in the solution.<br />
+ * the indexes pointing to reactives in a given solution. This class "provides" a set of index corresponding to a set of reactives in the solution.<br />
  * There is several ways to iterate over the reactives: ordered, random, round robin... (see {@link OrderedIncrementStrategy}, {@link RandomIncrementStrategy}).
  * This strategy of iteration is specified by {@link IncrementStrategy}, and the default is random (the reactives are selected in a random order).
  * </p>
  * <p>
  * With the concept of inner solutions, a reaction rule can fetch reactives in sub solutions (see {@link SubSolution}). Therefore, a structure is needed 
- * to iterate over reactives in the main solution on one hand, and inner solutions and their reactives in the other hand. This structure is realized
+ * to iterate on reactives in the main solution on one hand, and on inner solutions and their own reactives in the other hand. This structure is realized
  * with the implementations of the interface {@link SubIndexProvider} (see the description of the class). 
- * This class basically handle a {@link SubIndexProviderSolution} object, iterating over the main solution (the solution
- * in which the reaction rule have been inserted) and does only very little by itself.
+ * This class basically handles a {@link SubIndexProviderSolution} object, that iterates over the main solution and does only very little by itself.
+ * The term "main solution" is relative: we call "main" the solution in which was added the reaction rule that requested for reactives - and lead to 
+ * the creation of this index provider.
  * </p>
  * 
  * @author Andréolli Cédric, Boulanger Chloé, Cléro Olivier, Guellier Antoine, Guilloux Sébastien, Templé Arthur
