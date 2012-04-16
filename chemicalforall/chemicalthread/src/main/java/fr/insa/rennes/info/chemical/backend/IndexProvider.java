@@ -8,17 +8,24 @@ import fr.insa.rennes.info.chemical.backend.Solution.Strategy;
 
 /**
  * <p>
- * This class represents an index counter on set of reactives of a given solution.
+ * This class represents an index counter on a set of reactives of a given solution.
  * This class is used during the reactives research process (function {@link Solution#requestForParameters(fr.insa.rennes.info.chemical.user.ReactionRule)} ).
- * When searching for a certain set of reactives for a reaction rule (using the type of the reactives objects),
- * all possible set of object must be tested. The main purpose of this class is to ensure that EVERY
- * one of these possibilities is considered.
+ * When searching for a certain set of reactives for a reaction rule (using the type of the reactive objects) in a given solution,
+ * all possible set of reactives must be tested. The main purpose of this class is to ensure that EVERY possibility is considered.
  * </p>
  * <p>
- * c'est fait exprès qu'il soit détaché de la solution, c'est un concept à part
+ * The concept of index provider is detached from the notion of solution: internally, only integers are handled. These integers represent
+ * the indexes pointing to reactives in a given solution. This class "provides" a set of index corresponding to a set of reactives in the solution.<br />
+ * There is several ways to iterate over the reactives: ordered, random, round robin... (see {@link OrderedIncrementStrategy}, {@link RandomIncrementStrategy}).
+ * This strategy of iteration is specified by {@link IncrementStrategy}, and the default is random (the reactives are selected in a random order).
  * </p>
  * <p>
- * 
+ * With the concept of inner solutions, a reaction rule can fetch reactives in sub solutions (see {@link SubSolution}). Therefore, a structure is needed 
+ * to iterate on reactives in the main solution on one hand, and on inner solutions and their own reactives in the other hand. This structure is realized
+ * with the implementations of the interface {@link SubIndexProvider} (see the description of the class). 
+ * This class basically handles a {@link SubIndexProviderSolution} object, that iterates over the main solution and does only very little by itself.
+ * The term "main solution" is relative: we call "main" the solution in which was added the reaction rule that requested for reactives - and lead to 
+ * the creation of this index provider.
  * </p>
  * 
  * @author Andréolli Cédric, Boulanger Chloé, Cléro Olivier, Guellier Antoine, Guilloux Sébastien, Templé Arthur
@@ -43,10 +50,24 @@ class IndexProvider {
 	 */
 	private boolean _overflowReached;
 	
-	public IndexProvider(SubIndexProviderSolution solution) throws ChemicalException {
-		this(solution, Strategy.RANDOM);
+	/**
+	 * Builds an index provider, with the specified initial sub index provider on a solution. 
+	 * The default strategy is random.
+	 * @param ipss the initial (and fully built) sub index provider on a solution.
+	 * @throws ChemicalException
+	 * @see IncrementStrategy
+	 */
+	public IndexProvider(SubIndexProviderSolution ipss) throws ChemicalException {
+		this(ipss, Strategy.RANDOM);
 	}
 	
+	/**
+	 * Builds an index provider, with the specified initial sub index provider on a solution and the chosen 
+	 * increment strategy.
+	 * @param ipss the initial (and fully built) sub index provider on a solution.
+	 * @param s the chosen strategy.
+	 * @throws ChemicalException
+	 */
 	public IndexProvider(SubIndexProviderSolution ipss, Strategy s) throws ChemicalException {
 		super();
 		_subIndexProviderSub = ipss;
@@ -59,6 +80,7 @@ class IndexProvider {
 			_strategy = new RandomIncrementStrategy(_subIndexProviderSub.getNumberOfElements());
 		}
 		
+		//Initialize the sub index provider, and increment it until it reaches a valid state
 		_subIndexProviderSub.init();
 		while(!_subIndexProviderSub.isValid()){
 			increment();
@@ -67,13 +89,23 @@ class IndexProvider {
 		}
 	}
 	
+	/**
+	 * Returns the sub index provider on a solution contained in this index provider.
+	 * @return the sub index provider on a solution contained in this index provider.
+	 */
 	public SubIndexProviderSolution getSubIndexProvider(){
 		return _subIndexProviderSub;
 	}
 	
 	
-	
+	/**
+	 * Increments the index and gives the next set of index on reactives. Actually
+	 * this functions only calls {@link IncrementStrategy#increment(SubIndexProviderSolution)} 
+	 * on the {@link SubIndexProviderSolution} object.<br />
+	 * @return the new sub index provider on a solution (with the new indexes).
+	 */
 	public SubIndexProviderSolution increment(){		
+		//Loop until we reach a valid state or an overflow is detected
 		do{
 			try{
 				_strategy.increment(_subIndexProviderSub);
@@ -86,15 +118,27 @@ class IndexProvider {
 		return _subIndexProviderSub;
 	}
 	
-	
+	/**
+	 * Returns a string description of the index provider.
+	 * @return a string description of the index provider.
+	 */
 	public String toString(){
 		return _subIndexProviderSub.toString();
 	}
 	
+	/**
+	 * Returns <code>true</code> if an overflow was reached.
+	 * @return <code>true</code> if an overflow was reached.
+	 */
 	public boolean is_overflowReached(){
 		return _overflowReached;
 	}
 	
+	/**
+	 * Returns the number of elements/reactives on which this index provider is iterating.<br />
+	 * Note: this method returns a {@link BigInteger} because of the possibly great number of elements in the solutions.
+	 * @return the number of elements/reactives on which this index provider is iterating
+	 */
 	public BigInteger getNumberOfElements(){
 		return _subIndexProviderSub.getNumberOfElements();
 	}

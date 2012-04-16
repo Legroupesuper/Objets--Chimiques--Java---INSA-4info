@@ -44,7 +44,8 @@ class BuilderSubIndexProviderSolutionImpl implements BuilderSubIndexProviderSolu
 	private Field _rrSubSolField;
 	/**
 	 * Indicates if the product's building is finished. 
-	 * Allows a check before sending the product when the user requests for it as it is not built yet. 
+	 * Allows to perform a check before sending the product when the user 
+	 * calls {@link #getProduct()} although it is not built yet.  
 	 */
 	private boolean _complete;
 	
@@ -91,12 +92,12 @@ class BuilderSubIndexProviderSolutionImpl implements BuilderSubIndexProviderSolu
 
 	/**
 	 * Processes to the building of the index provider.
-	 * This functions first checks if the solution and reaction rule parameters are instantiated, if not a ChemicalException
+	 * This functions first checks if the solution and reaction rule parameters are instantiated, otherwise a ChemicalException
 	 * explaining the issue is thrown.<br />
-	 * Depending on the other parameters instanciation, this function will then call 
+	 * Depending on the other parameters instantiation, this function will then call 
 	 * a root build (see {@link #rootBuild()}) or a recursive build ({@link #recursiveBuild()}).
 	 * Root build is used only once, for the root SubIndexProviderSolution of 
-	 * the IndexProvider object, then the recursive function is always called (see {@link IndexProvider} structure).
+	 * a IndexProvider object, then the recursive function is always called (see the {@link SubIndexProviderSolution} structure).
 	 * At the end, the product is declared as complete ({@link #_complete} is set to <code>true</code>).<br />
 	 * Note: the implementation used to build every {@link SubIndexProviderSolution} is the standard implementation.
 	 * @see IndexProvider
@@ -121,14 +122,18 @@ class BuilderSubIndexProviderSolutionImpl implements BuilderSubIndexProviderSolu
 
 	/**
 	 * This building version needs the following parameters to be correctly instantiated : 
-	 * solution, reaction rule, parameterized type, SubSolution field of the reaction rule. If at least
+	 * solution, reaction rule, parameterized type, {@link SubSolution} field of the reaction rule. If at least
 	 * one of these parameters is not instantiated, a ChemicalException is thrown.
 	 * Depending on the parameterized type ( {@link SubSolution} or {@link SubSolutionElements} )
 	 * the processing differs. In the first case, a recursion is done in order to reach
 	 * the desired solution overlapping level; in the second this precise overlapping level is reached,
 	 * the recursion ends and a {@link SubIndexProviderElement} is created for each desired 
-	 * reactive given in the type list (see {@link SubSolutionReactivesAccessor} an the {@link SubSolutionElements} type list field).
+	 * reactive given in the type list (see {@link SubSolutionReactivesAccessor} and 
+	 * the {@link SubIndexProviderSolution} structure).
 	 * @throws ChemicalException
+	 * @see SubSolution
+	 * @see SubIndexProviderSolution
+	 * 
 	 */
 	@SuppressWarnings("unchecked")
 	private void recursiveBuild() throws ChemicalException {
@@ -225,7 +230,7 @@ class BuilderSubIndexProviderSolutionImpl implements BuilderSubIndexProviderSolu
 
 	
 	/**
-	 * Builds a root {@link SubIndexProviderSolution} for a {@link IndexProvider}, normally called only once.<br />
+	 * Builds a root {@link SubIndexProviderSolution} for a {@link IndexProvider}; normally called only once.<br />
 	 * This building version needs the following parameters to be correctly instantiated : 
 	 * solution, reaction rule and reaction rule's fields. If at least
 	 * one of these parameters is not instantiated, a ChemicalException is thrown.<br />
