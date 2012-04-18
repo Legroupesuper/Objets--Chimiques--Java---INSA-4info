@@ -715,7 +715,7 @@ public final class Solution implements Collection<Object>{
 					setter = rr.getClass().getDeclaredMethods()[setterNumber];
 
 					//..instanciate the (value) of the field...
-					reactiveObject = instanciateField(f, sipSol.get_listElements().get(i), rr);
+					reactiveObject = instanciateField(f, sipSol.get_listSubIP().get(i), rr);
 					//If instanciateField returned false, an error occured, go on the the next increment of the index provider
 					if(reactiveObject == null) {
 						tryComputeSelect = false;
@@ -807,9 +807,9 @@ public final class Solution implements Collection<Object>{
 			//nested solutions... (recursion)
 			SubIndexProviderSolution sipSol = (SubIndexProviderSolution)sip;
 			Solution nextSol = (Solution)this._mapElements.get(Solution.class.getName()).get(sip.getValue());
-			while(sipSol.get_listElements().size() == 1 && sipSol.get_listElements().get(0) instanceof SubIndexProviderSolution){
-				nextSol = (Solution) nextSol._mapElements.get(Solution.class.getName()).get(sipSol.get_listElements().get(0).getValue());
-				sipSol = (SubIndexProviderSolution) sipSol.get_listElements().get(0);
+			while(sipSol.get_listSubIP().size() == 1 && sipSol.get_listSubIP().get(0) instanceof SubIndexProviderSolution){
+				nextSol = (Solution) nextSol._mapElements.get(Solution.class.getName()).get(sipSol.get_listSubIP().get(0).getValue());
+				sipSol = (SubIndexProviderSolution) sipSol.get_listSubIP().get(0);
 			}
 
 			//If the solution in which the reactives are going to be selected
@@ -822,7 +822,7 @@ public final class Solution implements Collection<Object>{
 			List<Object> l = new ArrayList<Object>();
 			int i = 0;
 			for(Class<?> c : subSolObject.getTypeList()){
-				l.add(nextSol._mapElements.get(c.getName()).get(sipSol.get_listElements().get(i).getValue()));
+				l.add(nextSol._mapElements.get(c.getName()).get(sipSol.get_listSubIP().get(i).getValue()));
 				i++;
 			}
 

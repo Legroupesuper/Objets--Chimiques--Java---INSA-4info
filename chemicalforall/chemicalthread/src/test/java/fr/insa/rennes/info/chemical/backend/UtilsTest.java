@@ -46,7 +46,7 @@ public class UtilsTest extends TestCase {
 	}
 
 	/**
-	 * Test method for {@link Utils#getMethodFromReactionRule()}.
+	 * Test method for {@link Utils#getMethodFromReactionRule(ReactionRule, String, Field).
 	 */
 	public void testGetMethodFromReactionRule() {
 		ReactionRule rr = new ReactionRule() {

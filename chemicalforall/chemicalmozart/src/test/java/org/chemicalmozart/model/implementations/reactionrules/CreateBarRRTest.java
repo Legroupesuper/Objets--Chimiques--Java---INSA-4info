@@ -37,6 +37,7 @@ public class CreateBarRRTest extends TestCase {
 		_sol.add(new CreateBarRR());
 		
 		_sol.react();
+		
 		while(!_sol.is_inert()) Thread.sleep(100);
 		
 		Iterator<Object> it = _sol.iterator();
