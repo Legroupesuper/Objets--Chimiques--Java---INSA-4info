@@ -45,7 +45,7 @@ public class HarmonicRR1 implements ReactionRule{
 		 */
 	}
 	/**
-	 * It musn't return _degree into the main solution !<br />
+	 * It must not return _degree into the main solution !<br />
 	 * After a 1st degree, you can go :<br />
 	 * <ul>
 	 * <li> On a 1nd degree on 10%</li>
