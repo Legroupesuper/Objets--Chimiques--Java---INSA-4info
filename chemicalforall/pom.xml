@@ -19,7 +19,7 @@
   	<module>usecases</module>
 	<module>chemicalmozart</module>
 	<module>sentenceCreator</module>
-	<module>uyuiyui</module>
+	
   </modules>
   <dependencies>
   	<dependency>

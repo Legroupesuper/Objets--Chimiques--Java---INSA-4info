@@ -23,6 +23,7 @@ public class MelodicRR implements ReactionRule{
 	private Note _note;
 	private Pitch _pitch;
 	private MelodicNumber _melodicNumber;
+	private boolean RythmicRRAllowedtoReact;
 
 	public Object[] computeResult() {
 		return null;
@@ -32,5 +33,17 @@ public class MelodicRR implements ReactionRule{
 	}
 	public Multiplicity getMultiplicity() {
 		return null;
+	}
+	public int get_max() {
+		return _max;
+	}
+	public void set_max(int _max) {
+		this._max = _max;
+	}
+	public boolean isRythmicRRAllowedtoReact() {
+		return RythmicRRAllowedtoReact;
+	}
+	public void setRythmicRRAllowedtoReact(boolean rythmicRRAllowedtoReact) {
+		RythmicRRAllowedtoReact = rythmicRRAllowedtoReact;
 	}
 }

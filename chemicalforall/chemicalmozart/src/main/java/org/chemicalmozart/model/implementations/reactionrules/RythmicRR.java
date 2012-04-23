@@ -1,7 +1,9 @@
 package org.chemicalmozart.model.implementations.reactionrules;
 
 import org.chemicalmozart.model.implementations.ChordImpl;
+import org.chemicalmozart.model.implementations.Rythme;
 
+import fr.insa.rennes.info.chemical.backend.Solution;
 import fr.insa.rennes.info.chemical.backend.SubSolution;
 import fr.insa.rennes.info.chemical.backend.SubSolutionElements;
 import fr.insa.rennes.info.chemical.user.Dontreact;
@@ -54,12 +56,21 @@ public class RythmicRR implements ReactionRule{
 
 	/**
 	 * It starts to become META ! :)<br />
-	 * _melodicRR contains a parameter that is set to false (activated). This ReactionRule can't react as long it as not be setted to activated.
+	 * _melodicRR contains a parameter that is set to false (activated). This ReactionRule can't react as long as it has not be set to activated.
 	 * <br />
 	 * Each time the rythmicRR will react, it will increase the max parameter of the MelodicRR.
 	 */
 	private MelodicRR _melodicRR;
 
+	/**
+	 * Constructor
+	 */
+	public RythmicRR() {
+		super();
+		this._num = 0;
+		this._max = 0;
+	}
+	
 	/**
 	 * This method will be processed in 2 steps whereas the position of the ChordImpl is smaller than _num or not.
 	 * <br /><br />
@@ -86,15 +97,38 @@ public class RythmicRR implements ReactionRule{
 	 */
 	public Object[] computeResult() {
 		Object[] result = null;
-
+		Rythme chosenRythm = (Rythme) _rythmeSolution.getElements().get(1);
+		int nbNotesInChosenElement = 0; // comment savoir le nb de notes à ajouter ?
+		
+		int chordImplPosition = _chordImpl.get_position();
+		
+		Solution temp = _rythmeSolution.getSolution();
+		temp.add(chosenRythm);
+		_rythmeSolution.setSolution(temp);
+		int melodicRRmax = _melodicRR.get_max();
+		_melodicRR.set_max(melodicRRmax + nbNotesInChosenElement);
+		
 		/*
 		 * If the position of the ChordImpl is smaller than _num
 		 */
+		if( chordImplPosition < _num-1){
+			_max += nbNotesInChosenElement; 
+			_chordNumber++;
+			_chordImpl.set_position(_chordImpl.get_position()+_max);
+			result = new Object[]{_num,_chordImpl,_rythmeSolution,_melodicRR};
+		}
 
 
 		/*
 		 * If the position of the ChordImpl is equal to _num
 		 */
+		if ( chordImplPosition == _num-1){
+			_melodicRR.setRythmicRRAllowedtoReact(true);
+			_chordImpl.set_position(_chordImpl.get_position()+_max);
+			_max += nbNotesInChosenElement; 
+			_chordNumber++;
+			result = new Object[]{_num,_chordImpl,_melodicRR};
+		}
 
 		return result;
 	}
@@ -103,7 +137,7 @@ public class RythmicRR implements ReactionRule{
 	 * Must check that _chordNumber correspond to the position of the _chordImpl
 	 */
 	public boolean computeSelect() {
-		return false;
+		return _chordNumber == _chordImpl.get_position();
 	}
 
 	/**
@@ -131,8 +165,7 @@ public class RythmicRR implements ReactionRule{
 	 * One-shot
 	 */
 	public Multiplicity getMultiplicity() {
-		// TODO Auto-generated method stub
-		return null;
+		return Multiplicity.ONE_SHOT;
 	}
 
 	/**

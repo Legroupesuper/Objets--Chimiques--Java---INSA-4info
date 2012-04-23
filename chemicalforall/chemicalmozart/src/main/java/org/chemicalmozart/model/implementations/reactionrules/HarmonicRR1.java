@@ -45,13 +45,10 @@ public class HarmonicRR1 implements ReactionRule{
 	 */
 	public HarmonicRR1() {
 		super();
-		
-		SubSolutionElements e = new SubSolutionElements();
-		_barInCreationSolution = new SubSolution<SubSolutionElements>(e);
+		_barInCreationSolution = new SubSolution<SubSolutionElements>(new SubSolutionElements());
 		List<Class<? extends Object>> l = new ArrayList<Class<? extends Object>>();
 		l.add(BarInCreation.class);
 		_barInCreationSolution.setTypeList(l);
-		
 	}
 	/**
 	 * It must not return _degree into the main solution !<br />
@@ -84,10 +81,12 @@ public class HarmonicRR1 implements ReactionRule{
 		temporarySolution.add(temporaryID);
 		temporarySolution.add(_degree);
 		
-		Solution s1 = _barInCreationSolution.getSolution();
+		Solution barInCreationSolution = _barInCreationSolution.getSolution();
 		BarInCreation babar = new BarInCreation();
 		babar.set_state(BarInCreationState.RYTHMEHRR);
-		s1.add(babar);
+		barInCreationSolution.add(babar);
+		barInCreationSolution.add(_degree);
+		_barInCreationSolution.setSolution(barInCreationSolution);
 		
 		Solution harmonicSolution = new Solution();
 		ArrayList<DegreeImpl> degreeList = new ArrayList<DegreeImpl>();
@@ -111,7 +110,7 @@ public class HarmonicRR1 implements ReactionRule{
 		harmonicSolution.add(new PickOneRR());
 		harmonicSolution.add(new RythmeHRR());
 		
-		return new Object[]{harmonicSolution};
+		return new Object[]{harmonicSolution,temporarySolution};
 
 	}
 
@@ -122,7 +121,11 @@ public class HarmonicRR1 implements ReactionRule{
 	 */
 	public boolean computeSelect() {
 		List<Object> barInCreationSolutionElements = _barInCreationSolution.getElements();
-		
+		for(Object o : barInCreationSolutionElements){
+			   if(o instanceof BarInCreation){
+			      return _degree.get_value() == 1;
+			   }
+			}
 		return false;
 	}
 

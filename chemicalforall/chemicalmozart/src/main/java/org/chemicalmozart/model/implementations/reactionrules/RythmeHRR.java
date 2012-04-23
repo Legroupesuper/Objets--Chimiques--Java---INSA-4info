@@ -1,6 +1,12 @@
 package org.chemicalmozart.model.implementations.reactionrules;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.chemicalmozart.model.implementations.ChordImpl;
+import org.chemicalmozart.model.implementations.DegreeImpl;
+import org.chemicalmozart.model.implementations.QuaterLeft;
+import org.chemicalmozart.model.implementations.solutionindentification.BarInCreation;
 
 import fr.insa.rennes.info.chemical.backend.SubSolution;
 import fr.insa.rennes.info.chemical.backend.SubSolutionElements;
@@ -40,33 +46,60 @@ public class RythmeHRR implements ReactionRule{
 	 */
 	public RythmeHRR() {
 		super();
-		/*
-		 * Must be completed
-		 */
+		_sol = new SubSolution<SubSolutionElements>(new SubSolutionElements());
+		List<Class<? extends Object>> l = new ArrayList<Class<? extends Object>>();
+		l.add(BarInCreation.class);
+		l.add(Integer.class);
+		l.add(DegreeImpl.class);
+		l.add(QuaterLeft.class);
+		_sol.setTypeList(l);
 	}
 
 	/**
-	 * The compute result must choose a duration for the ChordImpl that we are going to generate.
+	 * The computeResult must choose a duration for the ChordImpl that we are going to generate.
 	 * It must be a random choice between 2 or 4 quaters. It must take in consideration the elapsed time in QuaterLeft.
-	 * Once the duration is chosen, it creates a ChordImpl based on the current DegreeImpl. The position of the DegreeImpl must be setted correctly
+	 * Once the duration is chosen, it creates a ChordImpl based on the current DegreeImpl. The position of the DegreeImpl must be set correctly
 	 *  (value of the int before it has been incremented).
 	 * @return The new ChordImpl well initialized @see {@link ChordImpl}, the int increased by one, the QuaterLeft decreased by the duration.
 	 */
 	public Object[] computeResult() {
-		/*
-		 * Must be completed
-		 */
-		return null;
+		QuaterLeft qLeft = (QuaterLeft)_sol.getElements().get(3);
+		int chosenDuration;
+		int position;
+		if (qLeft.getValue() ==2){
+			chosenDuration = 2;
+			position = 1;
+		}
+		else{
+			position = 0;
+			int choice = (int)Math.random()*2;
+			if (choice == 0){
+				chosenDuration = 2;
+			}else{
+				chosenDuration = 4;
+			}
+		}
+		ChordImpl chordImpl = new ChordImpl();
+		QuaterLeft newQLeft = new QuaterLeft(4-chosenDuration);
+		chordImpl.set_degrees((DegreeImpl)_sol.getElements().get(2));
+		chordImpl.set_position(position);
+		return new Object[]{chordImpl, position+1, newQLeft, (BarInCreation)_sol.getElements().get(0)};
 	}
 
 	/**
 	 * Must check that the BarInCreation object is in the good state and that all objects are present.
 	 */
 	public boolean computeSelect() {
-		/*
-		 * Must be completed
-		 */
-		return false;
+		boolean barInCreationPresent = _sol.getElements().get(0) instanceof BarInCreation;
+		boolean barInCreationInGoodState = false;
+		if(barInCreationPresent){
+			barInCreationInGoodState = 
+			((BarInCreation)_sol.getElements().get(0)).get_state().equals(BarInCreation.BarInCreationState.RYTHMEHRR);
+		}
+		boolean intPresent = _sol.getElements().get(1) instanceof Integer;
+		boolean DegreeImplPresent = _sol.getElements().get(2) instanceof DegreeImpl;
+		boolean QuaterLeftPresent = _sol.getElements().get(3) instanceof QuaterLeft;
+		return barInCreationInGoodState && intPresent && DegreeImplPresent && QuaterLeftPresent;
 	}
 
 	public Multiplicity getMultiplicity() {
