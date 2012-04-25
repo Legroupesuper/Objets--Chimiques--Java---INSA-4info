@@ -14,18 +14,19 @@ import fr.insa.rennes.info.chemical.user.ReactionRule;
  * </p>
  * <p>
  *  The only use of this builder is supposed to be in the {@link BuilderIndexProvider}. 
- * Indeed, an index provider possesses several {@link SubIndexProvider}, 
- * themselves recursively containing {@link SubIndexProvider}.The recursion ends on a 
- * {@link SubIndexProviderElement}. See {@link IndexProvider} documentation for more.<br />
+ * Indeed, an index provider possesses a {@link SubIndexProvider}, itself  
+ * recursively containing several {@link SubIndexProvider}. The recursion ends on a 
+ * {@link SubIndexProviderElement}. See {@link SubIndexProviderSolution} documentation for more
+ * details.<br />
  * </p>
  * <p>
- * The different parameters of the builder are the solution, the reaction rule, the reaction rule's field, 
- * the parameterized type, and the {@link SubSolution} field. See the associated setters for a detailed descrition.<br />
+ * The different parameters of this builder are the solution, the reaction rule, the reaction rule's fields, 
+ * the parameterized type, and the {@link SubSolution} field. See the associated setters for a detailed description.<br />
  * The only mandatory parameters are the solution and the reaction rule. You then have the choice between
  * giving either the reaction rule's fields (see {@link #setReactionRuleFields(Field[])}), 
  * or the parameterized type ({@link #setParamType(ParameterizedType)} and the {@link SubSolution} 
  * field ({@link #setSubSolutionField(Field)}). The first case is used to build the root {@link SubIndexProviderSolution} of 
- * a {@link IndexProvider}, and the second one is used to recursively build {@link SubIndexProviderSolution}.
+ * a {@link IndexProvider}, and the second one is used to recursively build {@link SubIndexProviderSolution} objects.
  * </p>
  * @author Andréolli Cédric, Boulanger Chloé, Cléro Olivier, Guellier Antoine, Guilloux Sébastien, Templé Arthur
  * @see IndexProvider
@@ -34,7 +35,7 @@ import fr.insa.rennes.info.chemical.user.ReactionRule;
 interface BuilderSubIndexProviderSolution extends Builder<SubIndexProviderSolution> {
 	/**
 	 * Returns the built SubIndexProviderSolution, following the parameters given.
-	 * The different parameters are the solution, the reaction rule, the reaction rule's field, 
+	 * The different parameters are the solution, the reaction rule, the reaction rule's fields, 
 	 * the parameterized type, and the {@link SubSolution} field. See the associated setters 
 	 * for a detailed description.
 	 * @return The built SubIndexProviderSolution object.
@@ -48,6 +49,8 @@ interface BuilderSubIndexProviderSolution extends Builder<SubIndexProviderSoluti
 	/**
 	 * Sets the reaction rule parameter to build the sub index provider.
 	 * The reaction rule parameter specifies which reaction rule needs reactives.
+	 * Indeed, an sub index provider is always created in order to find reactives for a 
+	 * specific reaction rule, exactly like an index provider.
 	 * @param rr The reaction rule that needs the index provider.
 	 */
 	public void setReactionRule(ReactionRule rr);
@@ -71,8 +74,8 @@ interface BuilderSubIndexProviderSolution extends Builder<SubIndexProviderSoluti
 	public void setParamType(ParameterizedType paramType);
 	/**
 	 * Sets the solution parameter to build the sub index provider.
-	 * The specified solution is the solution in which the sub index provider has to rely to provide 
-	 * indexes on the reactives asked by the reaction rule parameter. 
+	 * The specified solution is the solution on which the sub index provider has to base itself
+	 * to provide indexes on the reactives asked by the reaction rule.  
 	 * @param sol The solution on which the sub index provider has to iterate.
 	 */
 	public void setSolution(Solution sol);

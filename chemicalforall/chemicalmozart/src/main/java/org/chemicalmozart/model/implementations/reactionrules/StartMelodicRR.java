@@ -1,8 +1,17 @@
 package org.chemicalmozart.model.implementations.reactionrules;
 
-import org.chemicalmozart.model.implementations.BarNumber;
-import org.chemicalmozart.model.implementations.Pitch;
+import java.util.ArrayList;
+import java.util.List;
 
+import org.chemicalmozart.model.implementations.BarNumber;
+import org.chemicalmozart.model.implementations.DegreeImpl;
+import org.chemicalmozart.model.implementations.Pitch;
+import org.chemicalmozart.model.implementations.QuaterLeft;
+import org.chemicalmozart.model.implementations.factory.MozartSolutionFactoryImpl;
+import org.chemicalmozart.model.implementations.solutionindentification.BarInCreation;
+import org.chemicalmozart.model.interfaces.factory.MozartSolutionFactory;
+
+import fr.insa.rennes.info.chemical.backend.Solution;
 import fr.insa.rennes.info.chemical.backend.SubSolution;
 import fr.insa.rennes.info.chemical.backend.SubSolutionElements;
 import fr.insa.rennes.info.chemical.user.ReactionRule;
@@ -22,7 +31,11 @@ import fr.insa.rennes.info.chemical.user.ReactionRule;
  *  <li>Pitch : Represents the last note played.</li>
  * </ul>
  * <br />
+<<<<<<< HEAD
  * This reaction rule add to the bar in creation a RythmicRR and a MelodicRR. It must also add a Solution which contains some
+=======
+ * This reaction rule adds to the bar in creation a RythmicRR and a MelodicRR. It must also add a Solution which contains some
+>>>>>>> branch 'master' of https://candreolli@github.com/antoineguay/Objets--Chimiques--Java---INSA-4info.git
  * available rhythm for 2 and 4 quater per time. This solution can be obtained by the MozartSolutionFactory.createRythmicPull().
  * <br />
  * The pitch must also be added to the BarInCreation. It will be used to determine the last note played.
@@ -45,23 +58,33 @@ public class StartMelodicRR implements ReactionRule{
 	 * The default constructor initialize the type list of the Subsolution.
 	 */
 	public StartMelodicRR() {
-		/*
-		 * TODO: Compléter ici
-		 */
+		super();
+		_sol = new SubSolution<SubSolutionElements>(new SubSolutionElements());
+		List<Class<? extends Object>> l = new ArrayList<Class<? extends Object>>();
+		l.add(BarInCreation.class);
+		_sol.setTypeList(l);
 	}
 
 	/**
-	 * Adds to the solution contained in _sol a RythmicRR and a MelodicRR and _pitch. It also add the result of MozartSolutionFactory.createRythmicPull() to _sol.<br />
-	 * There is no need to put back BarInCreation in _sol. We will not use it in the future. At the contrary, it's important to
-	 * put back the BarNumer in _sol.<br />
+	 * Adds to the solution contained in _sol a RythmicRR and a MelodicRR and _pitch.
+	 * It also add the result of MozartSolutionFactory.createRythmicPull() to _sol.<br />
+	 * There is no need to put back BarInCreation in _sol. We will not use it in the future. On the contrary, it's important to
+	 * put back the BarNumber in _sol.<br />
 	 * It must also return directly a BarNumber after having increased its value.
 	 * @returns the solution contained in _sol as describe before, the increased BarNumber
 	 */
 	public Object[] computeResult() {
-		/*
-		 * TODO: Compléter ici
-		 */
-		return null;
+		Solution temp = _sol.getSolution();
+		temp.add(new RythmicRR());
+		temp.add(new MelodicRR());
+		temp.add(_pitch);
+		MozartSolutionFactory factory = new MozartSolutionFactoryImpl();
+		temp.add(factory.createRythmicPull());
+		temp.add(_sol.getElements().get(1));
+		_sol.setSolution(temp);
+		BarNumber tempBarNumber = _measureNumber;
+		tempBarNumber.increment();
+		return new Object[]{_sol, tempBarNumber};
 	}
 
 	/**
@@ -69,10 +92,11 @@ public class StartMelodicRR implements ReactionRule{
 	 * BarNumber object in the subsolution. If this is the case, the function returns true.
 	 */
 	public boolean computeSelect() {
-		/*
-		 * TODO: Completer ici
-		 */
-		return false;
+		boolean solContainsBarInCreationIn0 = _sol.getElements().get(0) instanceof BarInCreation;
+		boolean barNumbersHaveSameValue = false;
+		if (_sol.getElements().get(1) instanceof BarNumber)
+			barNumbersHaveSameValue = _measureNumber.getValue() == ((BarNumber)_sol.getElements().get(1)).getValue();
+		return solContainsBarInCreationIn0 && barNumbersHaveSameValue;
 	}
 	/**
 	 * @return the _measureNumber
@@ -96,8 +120,7 @@ public class StartMelodicRR implements ReactionRule{
 	 * This rule is in infinity-shot
 	 */
 	public Multiplicity getMultiplicity() {
-		// TODO Auto-generated method stub
-		return null;
+		return Multiplicity.INFINITY_SHOT;
 	}
 	/**
 	 * @param _measureNumber the _measureNumber to set

@@ -34,7 +34,8 @@ public class BuilderIndexProviderImpl implements BuilderIndexProvider {
 	
 	/**
 	 * Indicates if the product's building is finished. 
-	 * Allows a check before sending the product when the user requests for it as it is not built yet. 
+	 * Allows to perform a check before sending the product when the user 
+	 * calls {@link #getProduct()} although it is not built yet. 
 	 */
 	private boolean _complete;
 	
@@ -75,10 +76,10 @@ public class BuilderIndexProviderImpl implements BuilderIndexProvider {
 	}
 	
 	/**
-	 * Processes to the building of the index provider.
-	 * This functions first checks if all the parameters are instantiated, if not a ChemicalException
+	 * Proceeds to the building of the index provider.
+	 * This functions first checks if all the parameters are instantiated, otherwise a ChemicalException
 	 * explaining the issue is thrown.<br />
-	 * The only operation is then to create a {@link SubIndexProviderSolution} builder 
+	 * The only operation in this function is then to create a {@link SubIndexProviderSolution} builder 
 	 * to build the root {@link SubIndexProviderSolution} (see {@link IndexProvider} structure). 
 	 * If any error occurs during the building of the {@link SubIndexProviderSolution}, the error is 
 	 * directly reported. At the end, the product is declared as complete 

@@ -11,7 +11,7 @@ import junit.framework.TestCase;
 
 public class SubIndexProviderElementTest extends TestCase {
 
-	private SubIndexProviderElement testIndexProviderSimpleElement;
+	private SubIndexProviderElement testSubIndexProviderElement;
 	private final int numberElementsInSolution;
 	
 	/**
@@ -27,7 +27,7 @@ public class SubIndexProviderElementTest extends TestCase {
 	 */
 	protected void setUp() throws Exception {
 		super.setUp();
-		this.testIndexProviderSimpleElement = new SubIndexProviderElement(numberElementsInSolution);
+		this.testSubIndexProviderElement = new SubIndexProviderElement(numberElementsInSolution);
 	}
 
 	/* (non-Javadoc)
@@ -38,75 +38,75 @@ public class SubIndexProviderElementTest extends TestCase {
 	}
 
 	/**
-	 * Test method for {@link IndexProviderSimpleElement#get_nummberElementsInSolution()}.
+	 * Test method for {@link SubIndexProviderElement#get_nummberOfElementsInSolution()}.
 	 */
 	public void testGet_nummberElementsInSolution() {
-		assertTrue(numberElementsInSolution == testIndexProviderSimpleElement.get_nummberOfElementsInSolution());
+		assertTrue(numberElementsInSolution == testSubIndexProviderElement.get_nummberOfElementsInSolution());
 	}
 	
 	/**
-	 * Test method for {@link IndexProviderSimpleElement#set_nummberElementsInSolution(int)}.
+	 * Test method for {@link SubIndexProviderElement#set_nummberElementsInSolution(int)}.
 	 */
 	/*public void testSet_nummberElementsInSolution() {
 		int testInt = 42;
-		testIndexProviderSimpleElement.set_nummberOfElementsInSolution(testInt);
-		assertTrue(testInt == testIndexProviderSimpleElement.get_nummberOfElementsInSolution());
+		testSubIndexProviderElement.set_nummberOfElementsInSolution(testInt);
+		assertTrue(testInt == testSubIndexProviderElement.get_nummberOfElementsInSolution());
 	}*/
 
 	/**
-	 * Test method for {@link IndexProviderSimpleElement#getValue()}.
+	 * Test method for {@link SubIndexProviderElement#getValue()}.
 	 */
 	public void testGetValue() {
-		assertNotNull(testIndexProviderSimpleElement.getValue());
+		assertNotNull(testSubIndexProviderElement.getValue());
 	}
 
 	/**
-	 * Test method for {@link IndexProviderSimpleElement#init()}.
+	 * Test method for {@link SubIndexProviderElement#init()}.
 	 */
 	public void testInit() {
-		testIndexProviderSimpleElement.init();
-		assertTrue(0 == testIndexProviderSimpleElement.getValue());
+		testSubIndexProviderElement.init();
+		assertTrue(0 == testSubIndexProviderElement.getValue());
 	}
 
 	/**
-	 * Test method for {@link IndexProviderSimpleElement#increment()}.
+	 * Test method for {@link SubIndexProviderElement#increment()}.
 	 */
 	public void testIncrement() {
 		boolean overflow = false;
 		for(int i = 0 ; i < numberElementsInSolution ; i++){
-			overflow |= testIndexProviderSimpleElement.increment();
+			overflow |= testSubIndexProviderElement.increment();
 		}
 		assertTrue(overflow);
 		overflow = false;
-		testIndexProviderSimpleElement.init();
+		testSubIndexProviderElement.init();
 		int localMax = numberElementsInSolution-1;	//Maximum acceptable value without overflow
 		for(int i = 0 ; i < localMax ; i++){
-			overflow |= testIndexProviderSimpleElement.increment();
+			overflow |= testSubIndexProviderElement.increment();
 		}
 		assertFalse(overflow);
-		assertTrue(localMax == testIndexProviderSimpleElement.getValue());
+		assertTrue(localMax == testSubIndexProviderElement.getValue());
 	}
 
 	/**
-	 * Test method for {@link IndexProviderSimpleElement#setValue(int)}.
+	 * Test method for {@link SubIndexProviderElement#setValue(int)}.
 	 */
-	public void testSetValue() {
+	/*public void testSetValue() {
 		int test = 42;
-		testIndexProviderSimpleElement.setValue(test);
-		assertTrue(test == testIndexProviderSimpleElement.getValue());
-	}
+		testSubIndexProviderElement.setValue(test);
+		assertTrue(test == testSubIndexProviderElement.getValue());
+	}*/
 
 	/**
-	 * Test method for {@link IndexProviderSimpleElement#getNumberOfElements()}.
+	 * Test method for {@link SubIndexProviderElement#getNumberOfElements()}.
 	 */
 	public void testGetNumberOfElements() {
-		assertTrue(BigInteger.valueOf(numberElementsInSolution) == testIndexProviderSimpleElement.getNumberOfElements());
+		assertTrue(BigInteger.valueOf(numberElementsInSolution) == testSubIndexProviderElement.getNumberOfElements());
 	}
 
 	/**
-	 * Test method for {@link IndexProviderSimpleElement#isValid()}.
+	 * Test method for {@link SubIndexProviderElement#isValid()}.
 	 */
 	public void testIsValid() {
-		assertTrue(testIndexProviderSimpleElement.isValid());
+		assertTrue(testSubIndexProviderElement.isValid());
 	}
 }

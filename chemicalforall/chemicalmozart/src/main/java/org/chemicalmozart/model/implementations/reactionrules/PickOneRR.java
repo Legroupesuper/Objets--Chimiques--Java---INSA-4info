@@ -4,8 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.chemicalmozart.model.implementations.DegreeImpl;
+import org.chemicalmozart.model.implementations.QuaterLeft;
+import org.chemicalmozart.model.implementations.solutionindentification.BarInCreation;
 import org.chemicalmozart.model.implementations.solutionindentification.Temporary;
 
+import fr.insa.rennes.info.chemical.backend.Solution;
 import fr.insa.rennes.info.chemical.backend.SubSolution;
 import fr.insa.rennes.info.chemical.backend.SubSolutionElements;
 import fr.insa.rennes.info.chemical.user.ReactionRule;
@@ -47,9 +50,10 @@ public class PickOneRR implements ReactionRule{
 		l.add(DegreeImpl.class);
 		this._temporaryBar.setTypeList(l);
 
-		/*
-		 * Do quite the same thing to get the bar in creation solution
-		 */
+		this._barInCreation = new SubSolution<SubSolutionElements>(new SubSolutionElements());
+		List<Class<? extends Object>> l2 = new ArrayList<Class<? extends Object>>();
+		l2.add(BarInCreation.class);
+		this._temporaryBar.setTypeList(l2);
 	}
 
 	/**
@@ -58,10 +62,14 @@ public class PickOneRR implements ReactionRule{
 	 * @return the Choosen DegreeImpl, a GarbageRR
 	 */
 	public Object[] computeResult() {
-		/*
-		 * must be completed
-		 */
-		return null;
+		DegreeImpl chosenDegree = (DegreeImpl)_temporaryBar.getElements().get(1);
+		
+		Solution inCreationSolution = _barInCreation.getSolution();
+		BarInCreation babar = new BarInCreation();
+		inCreationSolution.add(babar);
+		_barInCreation.setSolution(inCreationSolution);
+		
+		return new Object[]{chosenDegree, new GarbageRR()};
 	}
 
 	/**
