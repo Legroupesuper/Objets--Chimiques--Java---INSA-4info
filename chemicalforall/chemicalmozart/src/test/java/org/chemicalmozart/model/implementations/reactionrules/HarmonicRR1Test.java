@@ -44,7 +44,7 @@ public class HarmonicRR1Test extends TestCase{
 		e.setElements(ll);
 		SubSolution<SubSolutionElements> subsol = new SubSolution<SubSolutionElements>(e);
 		rr.set_barInCreationSolution(subsol);
-
+		subsol.setSolution(sol);
 		return sol;
 	}
 

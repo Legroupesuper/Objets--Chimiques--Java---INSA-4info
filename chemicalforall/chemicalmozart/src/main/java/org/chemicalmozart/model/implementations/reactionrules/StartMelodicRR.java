@@ -31,7 +31,11 @@ import fr.insa.rennes.info.chemical.user.ReactionRule;
  *  <li>Pitch : Represents the last note played.</li>
  * </ul>
  * <br />
+<<<<<<< HEAD
+ * This reaction rule add to the bar in creation a RythmicRR and a MelodicRR. It must also add a Solution which contains some
+=======
  * This reaction rule adds to the bar in creation a RythmicRR and a MelodicRR. It must also add a Solution which contains some
+>>>>>>> branch 'master' of https://candreolli@github.com/antoineguay/Objets--Chimiques--Java---INSA-4info.git
  * available rhythm for 2 and 4 quater per time. This solution can be obtained by the MozartSolutionFactory.createRythmicPull().
  * <br />
  * The pitch must also be added to the BarInCreation. It will be used to determine the last note played.

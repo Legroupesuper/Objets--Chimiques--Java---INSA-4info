@@ -19,7 +19,7 @@ import fr.insa.rennes.info.chemical.user.ReactionRule;
  * 	<li>SubSolution "RythmePull"
  * 		<ul>
  * 			<li>RythmePull : Object that identify the solution</li>
- * 			<li>org.chemicalmozart.model.interfaces.Rythme : A rhythme</li>
+ * 			<li>org.chemicalmozart.model.interfaces.Rythme : A rhythm</li>
  * 		</ul>
  * </li>
  * <li>ChordImpl : the current chordImpl</li>
@@ -56,9 +56,13 @@ public class RythmicRR implements ReactionRule{
 
 	/**
 	 * It starts to become META ! :)<br />
+<<<<<<< HEAD
+	 * _melodicRR contains a parameter that is set to false (not activated). This ReactionRule (melodicRR) can't react as long it has not been set to activated.
+=======
 	 * _melodicRR contains a parameter that is set to false (activated). This ReactionRule can't react as long as it has not be set to activated.
+>>>>>>> branch 'master' of https://candreolli@github.com/antoineguay/Objets--Chimiques--Java---INSA-4info.git
 	 * <br />
-	 * Each time the rythmicRR will react, it will increase the max parameter of the MelodicRR.
+	 * Each time the rythmicRR react, it increases the max parameter of the MelodicRR.
 	 */
 	private MelodicRR _melodicRR;
 
@@ -70,7 +74,7 @@ public class RythmicRR implements ReactionRule{
 		this._num = 0;
 		this._max = 0;
 	}
-	
+
 	/**
 	 * This method will be processed in 2 steps whereas the position of the ChordImpl is smaller than _num or not.
 	 * <br /><br />
@@ -82,7 +86,7 @@ public class RythmicRR implements ReactionRule{
 	 * 	<li>_melodicRR with his max parameter increased by the number of notes returned by the chosen element in _rythmeSolution</li>
 	 * 	<li>this</li>
 	 * </ul>
-	 * For each note returned by the chosen element in _rythmeSolution, it needs to increase the position by the value of _max. Once it's done,
+	 * For each note returned by the chosen element in _rythmeSolution, it needs to increase its position by the value of _max and set its chordimpl to the current chordimpl. Once it's done,
 	 * it must also set properly _chordNumber (increment by 1) and _max (increment by the number of notes returned by the chosen element in _rythmeSolution).
 	 * <br />
 	 * <br />
@@ -92,52 +96,53 @@ public class RythmicRR implements ReactionRule{
 	 * 	<li>_chordImpl</li>
 	 * 	<li>_melodicRR with his max parameter increased by the number of notes returned by the chosen element in _rythmeSolution and <b>activated</b> set to true</li>
 	 * </ul>
-	 * For each note returned by the chosen element in _rythmeSolution, it needs to increase the position by the value of _max. Once it's done,
+	 * For each note returned by the chosen element in _rythmeSolution, it needs to increase the position by the value of _max and set its chordimpl to the current chordimpl. Once it's done,
 	 * it must also set properly _chordNumber (increment by 1) and _max (increment by the number of notes returned by the chosen element in _rythmeSolution).
 	 */
 	public Object[] computeResult() {
 		Object[] result = null;
-		Rythme chosenRythm = (Rythme) _rythmeSolution.getElements().get(1);
+		Rythme chosenRythm = (Rythme) this._rythmeSolution.getElements().get(1);
 		int nbNotesInChosenElement = 0; // comment savoir le nb de notes à ajouter ?
-		
-		int chordImplPosition = _chordImpl.get_position();
-		
-		Solution temp = _rythmeSolution.getSolution();
+
+		int chordImplPosition = this._chordImpl.get_position();
+
+		Solution temp = this._rythmeSolution.getSolution();
 		temp.add(chosenRythm);
-		_rythmeSolution.setSolution(temp);
-		int melodicRRmax = _melodicRR.get_max();
-		_melodicRR.set_max(melodicRRmax + nbNotesInChosenElement);
-		
+		this._rythmeSolution.setSolution(temp);
+		int melodicRRmax = this._melodicRR.get_max();
+		this._melodicRR.set_max(melodicRRmax + nbNotesInChosenElement);
+
 		/*
 		 * If the position of the ChordImpl is smaller than _num
 		 */
-		if( chordImplPosition < _num-1){
-			_max += nbNotesInChosenElement; 
-			_chordNumber++;
-			_chordImpl.set_position(_chordImpl.get_position()+_max);
-			result = new Object[]{_num,_chordImpl,_rythmeSolution,_melodicRR};
+		if( chordImplPosition < this._num-1){
+			this._max += nbNotesInChosenElement;
+			this._chordNumber++;
+			this._chordImpl.set_position(this._chordImpl.get_position()+this._max);
+			result = new Object[]{this._num,this._chordImpl,this._rythmeSolution,this._melodicRR};
 		}
 
 
 		/*
 		 * If the position of the ChordImpl is equal to _num
 		 */
-		if ( chordImplPosition == _num-1){
-			_melodicRR.setRythmicRRAllowedtoReact(true);
-			_chordImpl.set_position(_chordImpl.get_position()+_max);
-			_max += nbNotesInChosenElement; 
-			_chordNumber++;
-			result = new Object[]{_num,_chordImpl,_melodicRR};
+		if ( chordImplPosition == this._num-1){
+			this._melodicRR.set_activated(true);
+			this._chordImpl.set_position(this._chordImpl.get_position()+this._max);
+			this._max += nbNotesInChosenElement;
+			this._chordNumber++;
+			result = new Object[]{this._num,this._chordImpl,this._melodicRR};
 		}
 
 		return result;
 	}
 
 	/**
-	 * Must check that _chordNumber correspond to the position of the _chordImpl
+	 * Must check that _chordNumber correspond to the position of the _chordImpl. It must also check that the selected rythm of the subsolution
+	 * has the same duration than _chordImpl.
 	 */
 	public boolean computeSelect() {
-		return _chordNumber == _chordImpl.get_position();
+		return this._chordNumber == this._chordImpl.get_position();
 	}
 
 	/**

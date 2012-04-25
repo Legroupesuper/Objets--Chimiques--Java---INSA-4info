@@ -76,7 +76,6 @@ public class RythmicRRTest extends TestCase{
 	public void testComputeResult2() {
 		List<Object> l = new ArrayList<Object>(Arrays.asList(this._tabResult));
 		boolean bool = false;
-		boolean valueCorrect = false;
 		for(Object o : l){
 			if(o instanceof ChordImpl){
 				bool = true;
@@ -100,7 +99,7 @@ public class RythmicRRTest extends TestCase{
 
 			}
 		}
-		assertTrue("No solution wasn't found in the computeResult", bool);
+		assertTrue("No solution was found in the computeResult", bool);
 		assertTrue("The RythmicPull solution wasn't found in the computeResult ", valueCorrect);
 	}
 
@@ -174,7 +173,7 @@ public class RythmicRRTest extends TestCase{
 				bool = true;
 			}
 		}
-		assertTrue("No RythmicRR wasn't found in the computeResult", bool);
+		assertTrue("No RythmicRR was found in the computeResult", bool);
 	}
 
 	@Test
