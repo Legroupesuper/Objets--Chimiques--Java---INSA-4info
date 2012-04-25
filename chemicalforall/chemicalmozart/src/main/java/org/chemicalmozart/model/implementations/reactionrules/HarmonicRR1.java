@@ -14,12 +14,12 @@ import fr.insa.rennes.info.chemical.user.ReactionRule;
 
 
 /**
- * This rule compute the degree of harmony that will be played after the current degree.
+ * This rule computes the degree of harmony that will be played after the current degree.
  * It creates a temporary solution in which all the possible degrees are present. The created solution is identified with a Temporary object.
  * It also creates a PickOneRR and a RythmeHRR.
  * <br />
  * Here is how it works :<br />
- * It takes two reactives :<br />
+ * It takes two reagents :<br />
  * <ul>
  * 	<li>DegreeImpl _degree</li>
  *  <li>SubSolution _barInCreationSolution</li>
@@ -45,10 +45,12 @@ public class HarmonicRR1 implements ReactionRule{
 	 */
 	public HarmonicRR1() {
 		super();
-		_barInCreationSolution = new SubSolution<SubSolutionElements>(new SubSolutionElements());
+		SubSolutionElements elts = new SubSolutionElements();
 		List<Class<? extends Object>> l = new ArrayList<Class<? extends Object>>();
 		l.add(BarInCreation.class);
-		_barInCreationSolution.setTypeList(l);
+		elts.setTypeList(l);
+		_barInCreationSolution = new SubSolution<SubSolutionElements>(elts);
+		
 	}
 	/**
 	 * It must not return _degree into the main solution !<br />
@@ -67,7 +69,7 @@ public class HarmonicRR1 implements ReactionRule{
 	 * The computResult add a temporary solution into the main solution. To identify this solution, you must add a
 	 * Temporary object into the solution. This object will be used later.
 	 * <br /><br />
-	 * It also add the _degree in the solution identified by a BarInCreationObject. It must also put back the BarInCreation object into
+	 * It also add the _degree in the solution identified by a BarInCreation Object. It must also put back the BarInCreation object into
 	 *  _barInCreationSolution because, due to the reaction, it's no longer in _barInCreationSolution. Before adding the BarInCreation object,
 	 *  it's important to change it's state to RYTHMEHRR.<br />
 	 * <br /><br />
@@ -76,41 +78,54 @@ public class HarmonicRR1 implements ReactionRule{
 	 * @see BarInCreationState
 	 */
 	public Object[] computeResult() {
+		//Temporary Solution which will be in the return statement
 		Solution temporarySolution = new Solution();
 		Temporary temporaryID = new Temporary();
 		temporarySolution.add(temporaryID);
 		temporarySolution.add(_degree);
 		
+		//Percentages
+		int chancesOfGoingOnADegree1 = 10;
+		int chancesOfGoingOnADegree2 = 10;
+		int chancesOfGoingOnADegree3 = 10;
+		int chancesOfGoingOnADegree4 = 25;
+		int chancesOfGoingOnADegree5 = 30;
+		int chancesOfGoingOnADegree6 = 15;
+		
+		//Modification of _barInCreationSolution
 		Solution barInCreationSolution = _barInCreationSolution.getSolution();
 		BarInCreation babar = new BarInCreation();
 		babar.set_state(BarInCreationState.RYTHMEHRR);
 		barInCreationSolution.add(babar);
 		barInCreationSolution.add(_degree);
-		_barInCreationSolution.setSolution(barInCreationSolution);
 		
+		//Creation of the harmonicSolution which will be in the return statement
 		Solution harmonicSolution = new Solution();
 		ArrayList<DegreeImpl> degreeList = new ArrayList<DegreeImpl>();
-		for(int i1 = 0; i1<10;i1++){
-			degreeList.add(new DegreeImpl(1));
+		for(int i = 0; i<chancesOfGoingOnADegree1;i++){
+			degreeList.add(new DegreeImpl(1));	
+		}
+		for(int i = 0; i<chancesOfGoingOnADegree2;i++){
 			degreeList.add(new DegreeImpl(2));
+		}
+		for(int i = 0; i<chancesOfGoingOnADegree3;i++){
 			degreeList.add(new DegreeImpl(3));
 		}
-		for(int i2 = 0; i2<25;i2++){
+		for(int i = 0; i<chancesOfGoingOnADegree4;i++){
 			degreeList.add(new DegreeImpl(4));
 		}
-		for(int i3 = 0; i3<25;i3++){
+		for(int i = 0; i<chancesOfGoingOnADegree5;i++){
 			degreeList.add(new DegreeImpl(5));
 		}
-		for(int i4 = 0; i4<25;i4++){
+		for(int i = 0; i<chancesOfGoingOnADegree6;i++){
 			degreeList.add(new DegreeImpl(6));
 		}
 		for (DegreeImpl deg : degreeList) {
 			harmonicSolution.add(deg);
 		}
-		harmonicSolution.add(new PickOneRR());
-		harmonicSolution.add(new RythmeHRR());
 		
-		return new Object[]{harmonicSolution,temporarySolution};
+		//Return statement
+		return new Object[]{harmonicSolution,temporarySolution,new PickOneRR(),new RythmeHRR()};
 
 	}
 
@@ -120,13 +135,13 @@ public class HarmonicRR1 implements ReactionRule{
 	 *  && _degree.getValue() is equal to 1 (This is HarmonicRR1)
 	 */
 	public boolean computeSelect() {
-		List<Object> barInCreationSolutionElements = _barInCreationSolution.getElements();
-		for(Object o : barInCreationSolutionElements){
-			   if(o instanceof BarInCreation){
-			      return _degree.get_value() == 1;
-			   }
-			}
-		return false;
+		boolean containsABarInCreationElement = _barInCreationSolution.getElements().get(0) instanceof BarInCreation;
+		boolean barInCreationInGoodState = false;
+		if(containsABarInCreationElement){
+			barInCreationInGoodState = 
+			((BarInCreation)_barInCreationSolution.getElements().get(0)).get_state().equals(BarInCreation.BarInCreationState.HARMONICRR);
+		}
+		return barInCreationInGoodState && (_degree.get_value()==1);
 	}
 
 	/**

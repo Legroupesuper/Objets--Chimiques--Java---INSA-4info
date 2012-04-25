@@ -77,40 +77,54 @@ public class HarmonicRR2 implements ReactionRule{
 
 	 */
 	public Object[] computeResult() {
+		//Temporary Solution which will be in the return statement
 		Solution temporarySolution = new Solution();
 		Temporary temporaryID = new Temporary();
 		temporarySolution.add(temporaryID);
+		temporarySolution.add(_degree);
 		
+		//Percentages
+		int chancesOfGoingOnADegree1 = 10;
+		int chancesOfGoingOnADegree2 = 10;
+		int chancesOfGoingOnADegree3 = 10;
+		int chancesOfGoingOnADegree4 = 25;
+		int chancesOfGoingOnADegree5 = 30;
+		int chancesOfGoingOnADegree6 = 15;
+		
+		//Modification of _barInCreationSolution
 		Solution barInCreationSolution = _barInCreationSolution.getSolution();
 		BarInCreation babar = new BarInCreation();
 		babar.set_state(BarInCreationState.RYTHMEHRR);
 		barInCreationSolution.add(babar);
 		barInCreationSolution.add(_degree);
-		_barInCreationSolution.setSolution(barInCreationSolution);
 		
+		//Creation of the harmonicSolution which will be in the return statement
 		Solution harmonicSolution = new Solution();
 		ArrayList<DegreeImpl> degreeList = new ArrayList<DegreeImpl>();
-		for(int i1 = 0; i1<10;i1++){
-			degreeList.add(new DegreeImpl(1));
+		for(int i = 0; i<chancesOfGoingOnADegree1;i++){
+			degreeList.add(new DegreeImpl(1));	
+		}
+		for(int i = 0; i<chancesOfGoingOnADegree2;i++){
 			degreeList.add(new DegreeImpl(2));
+		}
+		for(int i = 0; i<chancesOfGoingOnADegree3;i++){
 			degreeList.add(new DegreeImpl(3));
 		}
-		for(int i2 = 0; i2<25;i2++){
+		for(int i = 0; i<chancesOfGoingOnADegree4;i++){
 			degreeList.add(new DegreeImpl(4));
 		}
-		for(int i3 = 0; i3<25;i3++){
+		for(int i = 0; i<chancesOfGoingOnADegree5;i++){
 			degreeList.add(new DegreeImpl(5));
 		}
-		for(int i4 = 0; i4<25;i4++){
+		for(int i = 0; i<chancesOfGoingOnADegree6;i++){
 			degreeList.add(new DegreeImpl(6));
 		}
 		for (DegreeImpl deg : degreeList) {
 			harmonicSolution.add(deg);
 		}
-		harmonicSolution.add(new PickOneRR());
-		harmonicSolution.add(new RythmeHRR());
 		
-		return new Object[]{harmonicSolution,temporarySolution};
+		//Return statement
+		return new Object[]{harmonicSolution,temporarySolution,new PickOneRR(),new RythmeHRR()};
 	}
 
 	/**

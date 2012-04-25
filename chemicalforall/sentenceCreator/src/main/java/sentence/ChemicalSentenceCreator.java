@@ -44,8 +44,8 @@ public class ChemicalSentenceCreator {
 		complementSolution.add(placesSolution);
 		
 		mainSolution.add(new ChooseComplementRR());
-		mainSolution.add(new ChooseSubject());
-		mainSolution.add(new ChooseVerb());
+		mainSolution.add(new ChooseSubjectRR());
+		mainSolution.add(new ChooseVerbRR());
 		mainSolution.add(complementSolution);
 		mainSolution.add(verbsSolution);
 		mainSolution.add(subjectsSolution);

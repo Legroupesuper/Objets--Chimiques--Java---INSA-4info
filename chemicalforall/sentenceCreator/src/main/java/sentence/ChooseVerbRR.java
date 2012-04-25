@@ -9,7 +9,7 @@ import fr.insa.rennes.info.chemical.user.Dontuse;
 import fr.insa.rennes.info.chemical.user.ReactionRule;
 import fr.insa.rennes.info.chemical.user.ReactionRule.Multiplicity;
 
-public class ChooseVerb implements ReactionRule{
+public class ChooseVerbRR implements ReactionRule{
 	
 	/*
 	 * ChooseSubject prend un element dans la solution qui contient l'identificateur SubjectType
@@ -17,7 +17,7 @@ public class ChooseVerb implements ReactionRule{
 
 	private SubSolution<SubSolutionElements> _subSol;
 	
-	public ChooseVerb() {
+	public ChooseVerbRR() {
 		super();
 		SubSolutionElements e = new SubSolutionElements();
 		_subSol = new SubSolution<SubSolutionElements>(e);

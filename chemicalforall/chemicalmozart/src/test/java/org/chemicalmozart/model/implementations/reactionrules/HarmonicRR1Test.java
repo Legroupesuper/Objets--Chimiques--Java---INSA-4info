@@ -75,7 +75,7 @@ public class HarmonicRR1Test extends TestCase{
 		Solution sol = new Solution();
 		BarInCreation bic = new BarInCreation();
 		bic.set_state(BarInCreationState.HARMONICRR);
-		//Instanciate a SubSolution object for the RR
+		//Instantiate a SubSolution object for the RR
 		SubSolutionElements e = new  SubSolutionElements();
 		List<Class<? extends Object>> l = new ArrayList<Class<? extends Object>>();
 		l.add(BarInCreation.class);
@@ -105,7 +105,7 @@ public class HarmonicRR1Test extends TestCase{
 		Solution sol = new Solution();
 		BarInCreation bic = new BarInCreation();
 
-		//Instanciate a SubSolution object for the RR
+		//Instantiate a SubSolution object for the RR
 		SubSolutionElements e = new  SubSolutionElements();
 		List<Class<? extends Object>> l = new ArrayList<Class<? extends Object>>();
 		l.add(BarInCreation.class);
@@ -134,7 +134,7 @@ public class HarmonicRR1Test extends TestCase{
 		Solution sol = new Solution();
 		BarInCreation bic = new BarInCreation();
 		bic.set_state(BarInCreationState.RYTHMEHRR);
-		//Instanciate a SubSolution object for the RR
+		//Instantiate a SubSolution object for the RR
 		SubSolutionElements e = new  SubSolutionElements();
 		List<Class<? extends Object>> l = new ArrayList<Class<? extends Object>>();
 		l.add(BarInCreation.class);

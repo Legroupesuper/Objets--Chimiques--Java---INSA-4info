@@ -7,9 +7,8 @@ import fr.insa.rennes.info.chemical.backend.SubSolution;
 import fr.insa.rennes.info.chemical.backend.SubSolutionElements;
 import fr.insa.rennes.info.chemical.user.Dontuse;
 import fr.insa.rennes.info.chemical.user.ReactionRule;
-import fr.insa.rennes.info.chemical.user.ReactionRule.Multiplicity;
 
-public class ChooseSubject implements ReactionRule{
+public class ChooseSubjectRR implements ReactionRule{
 	
 	/*
 	 * ChooseSubject prend un élément dans la solution qui contient l'identificateur SubjectType
@@ -17,7 +16,7 @@ public class ChooseSubject implements ReactionRule{
 
 	private SubSolution<SubSolutionElements> _subSol;
 	
-	public ChooseSubject() {
+	public ChooseSubjectRR() {
 		super();
 		SubSolutionElements e = new SubSolutionElements();
 		_subSol = new SubSolution<SubSolutionElements>(e);
