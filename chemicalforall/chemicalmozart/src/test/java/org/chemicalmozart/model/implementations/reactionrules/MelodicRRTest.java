@@ -16,7 +16,7 @@ public class MelodicRRTest extends TestCase{
 		pitch.setOctave(3);
 		pitch.setDegree(new DegreeImpl(1));
 		Note note = new Note();
-		note.set_chord(_chord)
+		//note.set_chord(_chord)
 		rr.set_activated(true);
 		rr.set_max(5);
 		rr.set_melodicNumber(0);
