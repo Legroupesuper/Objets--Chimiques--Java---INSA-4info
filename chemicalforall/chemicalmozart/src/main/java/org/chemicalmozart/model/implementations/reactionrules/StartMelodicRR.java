@@ -23,7 +23,7 @@ import fr.insa.rennes.info.chemical.user.ReactionRule;
  * </ul>
  * <br />
  * This reaction rule add to the bar in creation a RythmicRR and a MelodicRR. It must also add a Solution which contains some
- * available rythme for 2 and 4 quater per time. This solution can be obtained by the MozartSolutionFactory.createRythmicPull().
+ * available rhythm for 2 and 4 quater per time. This solution can be obtained by the MozartSolutionFactory.createRythmicPull().
  * <br />
  * The pitch must also be added to the BarInCreation. It will be used to determine the last note played.
  */

@@ -20,6 +20,10 @@ public class ChordImpl {
 	 */
 	private int _position;
 	/**
+	 * The duration of a chordimpl
+	 */
+	private int duration;
+	/**
 	 * @return the _degrees
 	 */
 	public DegreeImpl get_degrees() {
@@ -32,6 +36,12 @@ public class ChordImpl {
 		return this._position;
 	}
 	/**
+	 * @return the duration
+	 */
+	public int getDuration() {
+		return this.duration;
+	}
+	/**
 	 * @param _degrees the _degrees to set
 	 */
 	public void set_degrees(DegreeImpl _degrees) {
@@ -42,6 +52,12 @@ public class ChordImpl {
 	 */
 	public void set_position(int _position) {
 		this._position = _position;
+	}
+	/**
+	 * @param duration the duration to set
+	 */
+	public void setDuration(int duration) {
+		this.duration = duration;
 	}
 
 }

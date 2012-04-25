@@ -9,30 +9,74 @@ package org.chemicalmozart.model.implementations;
  *
  */
 public class Note {
+	/**
+	 * This enumeration defines the type of a note. A STRONG note is define as a note on the 1st or the 3rd quater.<br />
+	 * A BEFORE_STRONG note is defined as the note that appears just before a strong note. All the other notes are defined as NONE.
+	 */
+	public enum Type{STRONG, BEFORE_STRONG, NONE};
 
-	private DegreeImpl _degreeImpl;
+	private Type _type;
 	private int _octave;
 	private Rythme _rythme;
 	private int _position;
 	private Pitch _pitch;
-	private DegreeImpl _degree;
-	/**
-	 * @return the degreeImpl
-	 */
-	public DegreeImpl getDegreeImpl() {
-		return _degreeImpl;
+	private ChordImpl _chord;
+	public Note() {
+		this._type = Type.NONE;
 	}
+	public Note(int position, Type type, Rythme rythme){
+		this._position = position;
+		this._type = type;
+		this._rythme = rythme;
+	}
+
+	public Note(Type type){
+		this._type = type;
+	}
+
+
 	/**
-	 * @param degreeImpl the degreeImpl to set
+	 * @return the _chord
 	 */
-	public void setDegreeImpl(DegreeImpl degreeImpl) {
-		this._degreeImpl = degreeImpl;
+	public ChordImpl get_chord() {
+		return this._chord;
 	}
 	/**
 	 * @return the octave
 	 */
 	public int get_octave() {
-		return _octave;
+		return this._octave;
+	}
+	/**
+	 * @return the pitch
+	 */
+	public Pitch get_pitch() {
+		return this._pitch;
+	}
+
+	/**
+	 * @return the position
+	 */
+	public int get_position() {
+		return this._position;
+	}
+	/**
+	 * @return the rythme
+	 */
+	public Rythme get_rythme() {
+		return this._rythme;
+	}
+	/**
+	 * @return the _type
+	 */
+	public Type get_type() {
+		return this._type;
+	}
+	/**
+	 * @param _chord the _chord to set
+	 */
+	public void set_chord(ChordImpl _chord) {
+		this._chord = _chord;
 	}
 	/**
 	 * @param octave the octave to set
@@ -41,22 +85,10 @@ public class Note {
 		this._octave = octave;
 	}
 	/**
-	 * @return the rythme
+	 * @param pitch the pitch to set
 	 */
-	public Rythme get_rythme() {
-		return _rythme;
-	}
-	/**
-	 * @param rythme the rythme to set
-	 */
-	public void set_rythme(Rythme rythme) {
-		this._rythme = rythme;
-	}
-	/**
-	 * @return the position
-	 */
-	public int get_position() {
-		return _position;
+	public void set_pitch(Pitch pitch) {
+		this._pitch = pitch;
 	}
 	/**
 	 * @param position the position to set
@@ -65,29 +97,16 @@ public class Note {
 		this._position = position;
 	}
 	/**
-	 * @return the pitch
+	 * @param rythme the rythme to set
 	 */
-	public Pitch get_pitch() {
-		return _pitch;
+	public void set_rythme(Rythme rythme) {
+		this._rythme = rythme;
 	}
 	/**
-	 * @param pitch the pitch to set
+	 * @param _type the _type to set
 	 */
-	public void set_pitch(Pitch pitch) {
-		this._pitch = pitch;
-	}
-	/**
-	 * @return the degree
-	 */
-	public DegreeImpl get_degree() {
-		return _degree;
-	}
-	/**
-	 * @param degree the degree to set
-	 */
-	public void set_degree(DegreeImpl degree) {
-		this._degree = degree;
+	public void set_type(Type _type) {
+		this._type = _type;
 	}
 
-	
 }

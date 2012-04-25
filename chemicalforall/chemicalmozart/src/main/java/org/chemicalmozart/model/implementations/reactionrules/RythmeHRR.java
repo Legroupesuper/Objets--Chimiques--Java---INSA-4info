@@ -47,9 +47,10 @@ public class RythmeHRR implements ReactionRule{
 
 	/**
 	 * The compute result must choose a duration for the ChordImpl that we are going to generate.
-	 * It must be a random choice between 2 or 4 quaters. It must take in consideration the elapsed time in QuaterLeft.
+	 * It must be a random choice between 2 or 4 quaters. It must take in consideration the elapsed time in QuaterLeft. The chosen rhythm must be setted in
+	 * the returned Chordimpl.
 	 * Once the duration is chosen, it creates a ChordImpl based on the current DegreeImpl. The position of the DegreeImpl must be setted correctly
-	 *  (value of the int before it has been incremented).
+	 *  (value of the int before it has been incremented) and it's duration must be set to the correct value.
 	 * @return The new ChordImpl well initialized @see {@link ChordImpl}, the int increased by one, the QuaterLeft decreased by the duration.
 	 */
 	public Object[] computeResult() {

@@ -17,7 +17,7 @@ import fr.insa.rennes.info.chemical.user.ReactionRule;
  * 	<li>SubSolution "RythmePull"
  * 		<ul>
  * 			<li>RythmePull : Object that identify the solution</li>
- * 			<li>org.chemicalmozart.model.interfaces.Rythme : A rhythme</li>
+ * 			<li>org.chemicalmozart.model.interfaces.Rythme : A rhythm</li>
  * 		</ul>
  * </li>
  * <li>ChordImpl : the current chordImpl</li>
@@ -54,9 +54,9 @@ public class RythmicRR implements ReactionRule{
 
 	/**
 	 * It starts to become META ! :)<br />
-	 * _melodicRR contains a parameter that is set to false (activated). This ReactionRule can't react as long it as not be setted to activated.
+	 * _melodicRR contains a parameter that is set to false (not activated). This ReactionRule (melodicRR) can't react as long it has not been set to activated.
 	 * <br />
-	 * Each time the rythmicRR will react, it will increase the max parameter of the MelodicRR.
+	 * Each time the rythmicRR react, it increases the max parameter of the MelodicRR.
 	 */
 	private MelodicRR _melodicRR;
 
@@ -71,7 +71,7 @@ public class RythmicRR implements ReactionRule{
 	 * 	<li>_melodicRR with his max parameter increased by the number of notes returned by the chosen element in _rythmeSolution</li>
 	 * 	<li>this</li>
 	 * </ul>
-	 * For each note returned by the chosen element in _rythmeSolution, it needs to increase the position by the value of _max. Once it's done,
+	 * For each note returned by the chosen element in _rythmeSolution, it needs to increase its position by the value of _max and set its chordimpl to the current chordimpl. Once it's done,
 	 * it must also set properly _chordNumber (increment by 1) and _max (increment by the number of notes returned by the chosen element in _rythmeSolution).
 	 * <br />
 	 * <br />
@@ -81,7 +81,7 @@ public class RythmicRR implements ReactionRule{
 	 * 	<li>_chordImpl</li>
 	 * 	<li>_melodicRR with his max parameter increased by the number of notes returned by the chosen element in _rythmeSolution and <b>activated</b> set to true</li>
 	 * </ul>
-	 * For each note returned by the chosen element in _rythmeSolution, it needs to increase the position by the value of _max. Once it's done,
+	 * For each note returned by the chosen element in _rythmeSolution, it needs to increase the position by the value of _max and set its chordimpl to the current chordimpl. Once it's done,
 	 * it must also set properly _chordNumber (increment by 1) and _max (increment by the number of notes returned by the chosen element in _rythmeSolution).
 	 */
 	public Object[] computeResult() {
@@ -100,7 +100,8 @@ public class RythmicRR implements ReactionRule{
 	}
 
 	/**
-	 * Must check that _chordNumber correspond to the position of the _chordImpl
+	 * Must check that _chordNumber correspond to the position of the _chordImpl. It must also check that the selected rythm of the subsolution
+	 * has the same duration than _chordImpl.
 	 */
 	public boolean computeSelect() {
 		return false;
