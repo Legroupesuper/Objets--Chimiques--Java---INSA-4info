@@ -1,5 +1,8 @@
 package org.chemicalmozart.model.implementations.reactionrules;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.chemicalmozart.model.implementations.ChordImpl;
 import org.chemicalmozart.model.implementations.QuaterLeft;
 import org.chemicalmozart.model.implementations.solutionindentification.BarInCreation;
@@ -14,7 +17,7 @@ import fr.insa.rennes.info.chemical.user.ReactionRule;
 
 /**
  * This ReactionRule is used to put a bar into the result solution.
- * It takes the following reactives: (they must appear in this order)
+ * It takes the following reagents: (they must appear in this order)
  * <ul>
  * 	<li>SubSolution "barInCreaction"
  * 		<ul>
@@ -42,7 +45,26 @@ public class MoveToResultRR implements ReactionRule{
 	private SubSolution<SubSolutionElements> _subSolResult;
 
 	/**
-	 * The compute result must add the BarInCreation solution into the Result solution.
+	 * The constructor is used by the library to instantiate _subSolInCreation and _subSolResult.
+	 */
+	public MoveToResultRR() {
+		super();
+
+		SubSolutionElements eltsSolInCreation = new SubSolutionElements();
+		List<Class<? extends Object>> typeListSolInCreation = new ArrayList<Class<? extends Object>>();
+		typeListSolInCreation.add(BarInCreation.class);
+		eltsSolInCreation.setTypeList(typeListSolInCreation);
+		_subSolInCreation = new SubSolution<SubSolutionElements>(eltsSolInCreation);
+
+		SubSolutionElements eltsSolResult = new SubSolutionElements();
+		List<Class<? extends Object>> typeListSolResult = new ArrayList<Class<? extends Object>>();
+		typeListSolResult.add(Result.class);
+		eltsSolResult.setTypeList(typeListSolResult);
+		_subSolResult = new SubSolution<SubSolutionElements>(eltsSolResult);
+	}
+
+	/**
+	 * The computeResult must add the BarInCreation solution into the Result solution.
 	 * <br />
 	 * It must put back the BarInCreation and the QuaterLeft in the BarInCreation solution and then add the BarInCreationSolution into
 	 * the Result solution. It must also put back the Result object into the Result solution.
@@ -54,13 +76,12 @@ public class MoveToResultRR implements ReactionRule{
 		QuaterLeft qLeft = new QuaterLeft(0);
 		inCreationSolution.add(babar);
 		inCreationSolution.add(qLeft);
-		_subSolInCreation.setSolution(inCreationSolution);
-		
+
 		Solution resultSolution = _subSolResult.getSolution();
 		Result resultID = new Result();
 		resultSolution.add(resultID);
 		resultSolution.add(inCreationSolution);
-		
+
 		return new Object[]{resultSolution};
 	}
 
@@ -70,18 +91,35 @@ public class MoveToResultRR implements ReactionRule{
 	 * one or several ChordImpl.
 	 */
 	public boolean computeSelect() {
-		boolean containsQuaterLeftWithAValue0 = false;
-		boolean containsAtLeastOneChodImpl = false;
-		Solution sol = _subSolInCreation.getSolution();
-		for (Object o : sol){
-			   if(o instanceof QuaterLeft){
-				   containsQuaterLeftWithAValue0 = ((QuaterLeft) o).getValue() == 0;
-			   }
-			   if(o instanceof ChordImpl){
-				   containsAtLeastOneChodImpl = true;
-			   }
+		List<Object> subSolInCreationElements = _subSolInCreation.getElements();
+		List<Object> subSolResultElements = _subSolResult.getElements();
+		boolean subSolInCreation_ContainsBarInCreation = false;
+		boolean subSolInCreation_ContainsQuaterLeft = false;
+		boolean subSolInCreation_quaterLeftWithAValue0 = false;
+		boolean subSolInCreation_containsAtLeastOneChodImpl = false;
+		boolean subSolResult_containsResult = false;
+		if(subSolInCreationElements != null && subSolResultElements != null){
+			if(subSolInCreationElements.size()>=2){
+				subSolInCreation_ContainsBarInCreation = subSolInCreationElements.get(0) instanceof BarInCreation;
+				subSolInCreation_ContainsQuaterLeft = subSolInCreationElements.get(1) instanceof QuaterLeft;
+				if(subSolInCreation_ContainsQuaterLeft){
+					subSolInCreation_quaterLeftWithAValue0 = ((QuaterLeft)subSolInCreationElements.get(1)).getValue() == 0;
+				}
+				for (Object o : subSolInCreationElements){
+					if(o instanceof ChordImpl){
+						subSolInCreation_containsAtLeastOneChodImpl = true;
+					}
+				}
+
+			}
+			if(subSolResultElements.size()>=1){
+				subSolResult_containsResult = subSolResultElements.get(0) instanceof Result;
+			}
 		}
-		return containsAtLeastOneChodImpl && containsQuaterLeftWithAValue0 ;
+			return subSolInCreation_ContainsBarInCreation && 
+					subSolInCreation_quaterLeftWithAValue0 && 
+					subSolInCreation_containsAtLeastOneChodImpl &&
+					subSolResult_containsResult;
 	}
 
 	public SubSolution<SubSolutionElements> get_subSolInCreation() {

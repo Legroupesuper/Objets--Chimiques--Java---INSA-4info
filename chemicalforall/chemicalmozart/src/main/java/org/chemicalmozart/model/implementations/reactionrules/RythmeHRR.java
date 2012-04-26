@@ -59,7 +59,7 @@ public class RythmeHRR implements ReactionRule{
 <<<<<<< HEAD
 	 * The compute result must choose a duration for the ChordImpl that we are going to generate.
 	 * It must be a random choice between 2 or 4 quaters. It must take in consideration the elapsed time in QuaterLeft. The chosen rhythm must be setted in
-	 * the returned Chordimpl.
+	 * the returned ChordImpl.
 	 * Once the duration is chosen, it creates a ChordImpl based on the current DegreeImpl. The position of the DegreeImpl must be setted correctly
 	 *  (value of the int before it has been incremented) and it's duration must be set to the correct value.
 =======
@@ -74,7 +74,7 @@ public class RythmeHRR implements ReactionRule{
 		QuaterLeft qLeft = (QuaterLeft)_sol.getElements().get(3);
 		int chosenDuration;
 		int position;
-		if (qLeft.getValue() ==2){
+		if (qLeft.getValue() == 2){
 			chosenDuration = 2;
 			position = 1;
 		}
@@ -88,6 +88,7 @@ public class RythmeHRR implements ReactionRule{
 			}
 		}
 		ChordImpl chordImpl = new ChordImpl();
+		chordImpl.setDuration(chosenDuration);
 		QuaterLeft newQLeft = new QuaterLeft(4-chosenDuration);
 		chordImpl.set_degrees((DegreeImpl)_sol.getElements().get(2));
 		chordImpl.set_position(position);
@@ -98,16 +99,25 @@ public class RythmeHRR implements ReactionRule{
 	 * Must check that the BarInCreation object is in the good state and that all objects are present.
 	 */
 	public boolean computeSelect() {
-		boolean barInCreationPresent = _sol.getElements().get(0) instanceof BarInCreation;
+		List<Object> solElements = _sol.getElements();
+		boolean barInCreationPresent = false;
 		boolean barInCreationInGoodState = false;
-		if(barInCreationPresent){
-			barInCreationInGoodState = 
-			((BarInCreation)_sol.getElements().get(0)).get_state().equals(BarInCreation.BarInCreationState.RYTHMEHRR);
+		boolean intPresent = false;
+		boolean QuaterLeftPresent = false;
+		boolean DegreeImplPresent = false;
+		if (solElements != null){
+			if (solElements.size()>=4){
+				barInCreationPresent = solElements.get(0) instanceof BarInCreation;
+				if(barInCreationPresent){
+					barInCreationInGoodState = 
+							((BarInCreation)solElements.get(0)).get_state().equals(BarInCreation.BarInCreationState.RYTHMEHRR);
+				}
+				intPresent = solElements.get(1) instanceof Integer;
+				DegreeImplPresent = solElements.get(2) instanceof DegreeImpl;
+				QuaterLeftPresent = solElements.get(3) instanceof QuaterLeft;
+			}
 		}
-		boolean intPresent = _sol.getElements().get(1) instanceof Integer;
-		boolean DegreeImplPresent = _sol.getElements().get(2) instanceof DegreeImpl;
-		boolean QuaterLeftPresent = _sol.getElements().get(3) instanceof QuaterLeft;
-		return barInCreationInGoodState && intPresent && DegreeImplPresent && QuaterLeftPresent;
+			return (barInCreationInGoodState && intPresent && DegreeImplPresent && QuaterLeftPresent);
 	}
 
 	public Multiplicity getMultiplicity() {

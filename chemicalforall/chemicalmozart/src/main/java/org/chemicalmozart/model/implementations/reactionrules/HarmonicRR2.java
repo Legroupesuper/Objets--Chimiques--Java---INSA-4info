@@ -46,10 +46,11 @@ public class HarmonicRR2 implements ReactionRule{
 	 */
 	public HarmonicRR2() {
 		super();
-		_barInCreationSolution = new SubSolution<SubSolutionElements>(new SubSolutionElements());
+		SubSolutionElements elts = new SubSolutionElements();
 		List<Class<? extends Object>> l = new ArrayList<Class<? extends Object>>();
 		l.add(BarInCreation.class);
-		_barInCreationSolution.setTypeList(l);
+		elts.setTypeList(l);
+		_barInCreationSolution = new SubSolution<SubSolutionElements>(elts);
 	}
 
 	/**
@@ -133,13 +134,19 @@ public class HarmonicRR2 implements ReactionRule{
 	 *  && _degree.getValue() is equal to 2 (This is HarmonicRR2)
 	 */
 	public boolean computeSelect() {
-		List<Object> barInCreationSolutionElements = _barInCreationSolution.getElements();
-		for(Object o : barInCreationSolutionElements){
-			   if(o instanceof BarInCreation){
-			      return _degree.get_value() == 2;
-			   }
+		List<Object> barInCreationElements = _barInCreationSolution.getElements();
+		boolean containsABarInCreationElement = false;
+		boolean barInCreationInGoodState = false;
+		if(barInCreationElements != null){
+			if(barInCreationElements.size()>=1){
+				containsABarInCreationElement = barInCreationElements.get(0) instanceof BarInCreation;
+				if(containsABarInCreationElement){
+					barInCreationInGoodState = 
+					((BarInCreation)barInCreationElements.get(0)).get_state().equals(BarInCreation.BarInCreationState.HARMONICRR);
+				}
 			}
-		return false;
+		}
+		return barInCreationInGoodState && (_degree.get_value()==2);
 	}
 
 	/**

@@ -50,8 +50,8 @@ public class HarmonicRR1 implements ReactionRule{
 		l.add(BarInCreation.class);
 		elts.setTypeList(l);
 		_barInCreationSolution = new SubSolution<SubSolutionElements>(elts);
-		
 	}
+	
 	/**
 	 * It must not return _degree into the main solution !<br />
 	 * After a 1st degree, you can go :<br />
@@ -135,11 +135,17 @@ public class HarmonicRR1 implements ReactionRule{
 	 *  && _degree.getValue() is equal to 1 (This is HarmonicRR1)
 	 */
 	public boolean computeSelect() {
-		boolean containsABarInCreationElement = _barInCreationSolution.getElements().get(0) instanceof BarInCreation;
+		List<Object> barInCreationElements = _barInCreationSolution.getElements();
+		boolean containsABarInCreationElement = false;
 		boolean barInCreationInGoodState = false;
-		if(containsABarInCreationElement){
-			barInCreationInGoodState = 
-			((BarInCreation)_barInCreationSolution.getElements().get(0)).get_state().equals(BarInCreation.BarInCreationState.HARMONICRR);
+		if(barInCreationElements != null){
+			if(barInCreationElements.size()>=1){
+				containsABarInCreationElement = barInCreationElements.get(0) instanceof BarInCreation;
+				if(containsABarInCreationElement){
+					barInCreationInGoodState = 
+					((BarInCreation)barInCreationElements.get(0)).get_state().equals(BarInCreation.BarInCreationState.HARMONICRR);
+				}
+			}
 		}
 		return barInCreationInGoodState && (_degree.get_value()==1);
 	}

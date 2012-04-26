@@ -44,30 +44,33 @@ public class PickOneRR implements ReactionRule{
 	 * the subsolutions _temporaryBar and _barInCreation.
 	 */
 	public PickOneRR(){
-		this._temporaryBar = new SubSolution<SubSolutionElements>(new SubSolutionElements());
-		List<Class<? extends Object>> l = new ArrayList<Class<? extends Object>>();
-		l.add(Temporary.class);
-		l.add(DegreeImpl.class);
-		this._temporaryBar.setTypeList(l);
-
-		this._barInCreation = new SubSolution<SubSolutionElements>(new SubSolutionElements());
-		List<Class<? extends Object>> l2 = new ArrayList<Class<? extends Object>>();
-		l2.add(BarInCreation.class);
-		this._temporaryBar.setTypeList(l2);
+		super();
+		
+		SubSolutionElements eltsSolTemporary = new SubSolutionElements();
+		List<Class<? extends Object>> typeListSolTemporary = new ArrayList<Class<? extends Object>>();
+		typeListSolTemporary.add(Temporary.class);
+		typeListSolTemporary.add(DegreeImpl.class);
+		eltsSolTemporary.setTypeList(typeListSolTemporary);
+		_temporaryBar = new SubSolution<SubSolutionElements>(eltsSolTemporary);
+		
+		SubSolutionElements eltsSolInCreation = new SubSolutionElements();
+		List<Class<? extends Object>> typeListSolInCreation = new ArrayList<Class<? extends Object>>();
+		typeListSolInCreation.add(BarInCreation.class);
+		eltsSolInCreation.setTypeList(typeListSolInCreation);
+		_barInCreation = new SubSolution<SubSolutionElements>(eltsSolInCreation);
 	}
 
 	/**
 	 * It just returns the chosen DegreeImpl into the parent solution and a GarbageRR to remove the temporary solution.<br />
 	 * It must also put back the BarInCreation into the concerned solution because due to the reaction, it will be consumed.
-	 * @return the Choosen DegreeImpl, a GarbageRR
+	 * @return the chosen DegreeImpl, a GarbageRR
 	 */
 	public Object[] computeResult() {
-		DegreeImpl chosenDegree = (DegreeImpl)_temporaryBar.getElements().get(1);
+		Object chosenDegree = _temporaryBar.getElements().get(1);
 		
 		Solution inCreationSolution = _barInCreation.getSolution();
 		BarInCreation babar = new BarInCreation();
 		inCreationSolution.add(babar);
-		_barInCreation.setSolution(inCreationSolution);
 		
 		return new Object[]{chosenDegree, new GarbageRR()};
 	}

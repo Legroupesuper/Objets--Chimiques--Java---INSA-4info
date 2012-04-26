@@ -33,7 +33,7 @@ public class HarmonicRR1Test extends TestCase{
 		sol.add(new QuaterLeft(4));
 		sol.add(new BarNumber(1));
 
-		//Instanciate a SubSolution object for the RR
+		//Instantiate a SubSolution object for the RR
 		SubSolutionElements e = new  SubSolutionElements();
 		List<Class<? extends Object>> l = new ArrayList<Class<? extends Object>>();
 		l.add(BarInCreation.class);

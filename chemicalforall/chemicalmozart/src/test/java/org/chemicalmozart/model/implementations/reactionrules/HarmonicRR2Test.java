@@ -33,7 +33,7 @@ public class HarmonicRR2Test extends TestCase{
 		sol.add(new QuaterLeft(4));
 		sol.add(new BarNumber(1));
 
-		//Instanciate a SubSolution object for the RR
+		//Instantiate a SubSolution object for the RR
 		SubSolutionElements e = new  SubSolutionElements();
 		List<Class<? extends Object>> l = new ArrayList<Class<? extends Object>>();
 		l.add(BarInCreation.class);
@@ -44,7 +44,7 @@ public class HarmonicRR2Test extends TestCase{
 		e.setElements(ll);
 		SubSolution<SubSolutionElements> subsol = new SubSolution<SubSolutionElements>(e);
 		rr.set_barInCreationSolution(subsol);
-
+		subsol.setSolution(sol);
 		return sol;
 	}
 
@@ -75,7 +75,7 @@ public class HarmonicRR2Test extends TestCase{
 		Solution sol = new Solution();
 		BarInCreation bic = new BarInCreation();
 		bic.set_state(BarInCreationState.HARMONICRR);
-		//Instanciate a SubSolution object for the RR
+		//Instantiate a SubSolution object for the RR
 		SubSolutionElements e = new  SubSolutionElements();
 		List<Class<? extends Object>> l = new ArrayList<Class<? extends Object>>();
 		l.add(BarInCreation.class);
@@ -105,7 +105,7 @@ public class HarmonicRR2Test extends TestCase{
 		Solution sol = new Solution();
 		BarInCreation bic = new BarInCreation();
 
-		//Instanciate a SubSolution object for the RR
+		//Instantiate a SubSolution object for the RR
 		SubSolutionElements e = new  SubSolutionElements();
 		List<Class<? extends Object>> l = new ArrayList<Class<? extends Object>>();
 		l.add(BarInCreation.class);
@@ -134,7 +134,7 @@ public class HarmonicRR2Test extends TestCase{
 		Solution sol = new Solution();
 		BarInCreation bic = new BarInCreation();
 		bic.set_state(BarInCreationState.RYTHMEHRR);
-		//Instanciate a SubSolution object for the RR
+		//Instantiate a SubSolution object for the RR
 		SubSolutionElements e = new  SubSolutionElements();
 		List<Class<? extends Object>> l = new ArrayList<Class<? extends Object>>();
 		l.add(BarInCreation.class);
@@ -147,6 +147,7 @@ public class HarmonicRR2Test extends TestCase{
 		rr.set_barInCreationSolution(subsol);
 		assertFalse("The computeSelect shouldn't accept this configuration (state is not valid in BarInCreation)", rr.computeSelect());
 	}
+	
 	@Test
 	public void testPickOneRRPresent(){
 		HarmonicRR2 rr = new HarmonicRR2();

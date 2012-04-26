@@ -1,7 +1,12 @@
 package org.chemicalmozart.model.implementations.reactionrules;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.chemicalmozart.model.implementations.ChordImpl;
 import org.chemicalmozart.model.implementations.Rythme;
+import org.chemicalmozart.model.implementations.solutionindentification.BarInCreation;
+import org.chemicalmozart.model.implementations.solutionindentification.RythmePull;
 
 import fr.insa.rennes.info.chemical.backend.Solution;
 import fr.insa.rennes.info.chemical.backend.SubSolution;
@@ -71,6 +76,11 @@ public class RythmicRR implements ReactionRule{
 	 */
 	public RythmicRR() {
 		super();
+		SubSolutionElements elts = new SubSolutionElements();
+		List<Class<? extends Object>> l = new ArrayList<Class<? extends Object>>();
+		l.add(RythmePull.class);
+		elts.setTypeList(l);
+		_rythmeSolution = new SubSolution<SubSolutionElements>(elts);
 		this._num = 0;
 		this._max = 0;
 	}
@@ -138,11 +148,26 @@ public class RythmicRR implements ReactionRule{
 	}
 
 	/**
-	 * Must check that _chordNumber correspond to the position of the _chordImpl. It must also check that the selected rythm of the subsolution
+	 * Must check that _chordNumber correspond to the position of the _chordImpl. It must also check that the selected subsolution rhythm
 	 * has the same duration than _chordImpl.
 	 */
 	public boolean computeSelect() {
-		return this._chordNumber == this._chordImpl.get_position();
+		List<Object> rythmeSolutionElements = _rythmeSolution.getElements();
+		boolean rythmeSolution_containsARythmePull = false;
+		boolean rythmeSolution_RythmHasSameDurationThanChordImpl = false;
+		boolean chordNumberCorrespondToChordImplPosition = this._chordNumber == this._chordImpl.get_position();
+		if (rythmeSolutionElements != null){
+			if(rythmeSolutionElements.size()>=1){
+				rythmeSolution_containsARythmePull = rythmeSolutionElements.get(0) instanceof RythmePull;
+				if(rythmeSolution_containsARythmePull){
+					rythmeSolution_RythmHasSameDurationThanChordImpl = (rythmeSolutionElements.get(0)).equals(_chordImpl.getDuration());
+							
+				}
+			}
+		}
+		return rythmeSolution_containsARythmePull &&
+				rythmeSolution_RythmHasSameDurationThanChordImpl &&
+				chordNumberCorrespondToChordImplPosition;
 	}
 
 	/**
