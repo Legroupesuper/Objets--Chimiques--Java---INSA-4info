@@ -128,7 +128,7 @@ class BuilderSubIndexProviderSolutionImpl implements BuilderSubIndexProviderSolu
 	 * the processing differs. In the first case, a recursion is done in order to reach
 	 * the desired solution overlapping level; in the second this precise overlapping level is reached,
 	 * the recursion ends and a {@link SubIndexProviderElement} is created for each desired 
-	 * reactive given in the type list (see {@link SubSolutionReactivesAccessor} and 
+	 * reagent given in the type list (see {@link SubSolutionReagentsAccessor} and 
 	 * the {@link SubIndexProviderSolution} structure).
 	 * @throws ChemicalException
 	 * @see SubSolution
@@ -187,14 +187,14 @@ class BuilderSubIndexProviderSolutionImpl implements BuilderSubIndexProviderSolu
 		}catch(ClassCastException e){
 			//This exception is caught when the cast fails. It means that we are on an SubSolutionElements.
 			//We need to get the type list to try to create the IndexProvider.
-			//At this point, this._subSol is the Solution in which we are going to try to find our reactives.
+			//At this point, this._subSol is the Solution in which we are going to try to find our reagents.
 			//In other words, we are at the end of the recursion
 			Method getter = Utils.getMethodFromReactionRule(_rr, "get", _rrSubSolField);
 			try {
 				//The getter allows us to generate SubSolution element to access the type list
-				SubSolution<SubSolutionReactivesAccessor> subSolObject = (SubSolution<SubSolutionReactivesAccessor>) getter.invoke(_rr, new Object[0]);
+				SubSolution<SubSolutionReagentsAccessor> subSolObject = (SubSolution<SubSolutionReagentsAccessor>) getter.invoke(_rr, new Object[0]);
 
-				//For each type in the SubSolutionReactivesAccessor type list, create
+				//For each type in the SubSolutionReagentsAccessor type list, create
 				//a SubIndexProviderElement object.
 				List<List<SubIndexProvider>> firstLevelList = new ArrayList<List<SubIndexProvider>>();
 				List<SubIndexProvider> secondLevelList = new ArrayList<SubIndexProvider>();
@@ -203,7 +203,7 @@ class BuilderSubIndexProviderSolutionImpl implements BuilderSubIndexProviderSolu
 					typeList.add(c.getName());
 
 					if(_solution.getMapElements().get(c.getName()) == null)
-						throw new ChemicalException("There is no reactive of the type asked ("+c.getName()+"), aborting index provider building.");
+						throw new ChemicalException("There is no reagent of the type asked ("+c.getName()+"), aborting index provider building.");
 
 					SubIndexProviderElement sipElmt = new SubIndexProviderElement(_solution.getMapElements().get(c.getName()).size());
 					secondLevelList.add(sipElmt);
@@ -235,7 +235,7 @@ class BuilderSubIndexProviderSolutionImpl implements BuilderSubIndexProviderSolu
 	 * solution, reaction rule and reaction rule's fields. If at least
 	 * one of these parameters is not instantiated, a ChemicalException is thrown.<br />
 	 * This function basically goes through the reaction rule (given in parameter of the builder)
-	 * and for each field/reactive, it creates a {@link SubIndexProviderSolution} (if the field is a {@link SubSolution} object)
+	 * and for each field/reagent, it creates a {@link SubIndexProviderSolution} (if the field is a {@link SubSolution} object)
 	 * or a {@link SubIndexProviderElement} (if the field is a simple java object).
 	 * All sub {@link SubIndexProviderSolution} will be built with the {@link #recursiveBuild()} function.
 	 * @throws ChemicalException
@@ -252,7 +252,7 @@ class BuilderSubIndexProviderSolutionImpl implements BuilderSubIndexProviderSolu
 		List<List<SubIndexProvider>> firstLevelList = new ArrayList<List<SubIndexProvider>>();
 		List<SubIndexProvider> secondLevelList = new ArrayList<SubIndexProvider>();
 		for(Field f : _rrFields){
-			//Always consider the reaction rule field as a reactive 
+			//Always consider the reaction rule field as a reagent 
 			//Unless the user specified @Dontreact above it
 			if(f.getAnnotation(Dontreact.class) == null){
 				SubIndexProvider sip = null;
@@ -260,11 +260,11 @@ class BuilderSubIndexProviderSolutionImpl implements BuilderSubIndexProviderSolu
 				if(f.getType().getName().contains(SubSolution.class.getSimpleName())){
 					//If the reaction rule attribute is a SubSolution... difficult
 					//We have to consider ALL the sub-solution in the mother solution
-					//Each one of them is an alternative to find the desired reactives
+					//Each one of them is an alternative to find the desired reagents
 					SubIndexProviderSolution sipSolAccumulation = null;
 					ParameterizedType p = (ParameterizedType)f.getGenericType();
 
-					for(Object o : _solution.getMapElements().get(Solution.class.getName())){
+					for(Object o : _solution.getSubSolutions()){
 						Solution s = (Solution) o;
 
 						//Recursion : create sub sub index providers
@@ -285,9 +285,9 @@ class BuilderSubIndexProviderSolutionImpl implements BuilderSubIndexProviderSolu
 					}
 					
 					//The accumulation can not be null. 
-					//If it is, this mean the reactives will never be matched anyway
+					//If it is, this mean the reagents will never be matched anyway
 					if(sipSolAccumulation == null) {
-						throw new ChemicalException("There is not enough solution nesting, impossible to match reactives, aborting index provider building.");
+						throw new ChemicalException("There is not enough solution nesting, impossible to match reagents, aborting index provider building.");
 					}
 					
 					sip = sipSolAccumulation;
@@ -295,7 +295,7 @@ class BuilderSubIndexProviderSolutionImpl implements BuilderSubIndexProviderSolu
 					//Else, the reaction rule attribute is a simple Java object,
 					//and a SubIndexProviderElement is sufficient
 					if(_solution.getMapElements().get(f.getType().getName()) == null)
-						throw new ChemicalException("There is no reactive of the type asked ("+f.getType().getName()+"), aborting index provider building.");
+						throw new ChemicalException("There is no reagent of the type asked ("+f.getType().getName()+"), aborting index provider building.");
 
 					sip = new SubIndexProviderElement(_solution.getMapElements().get(f.getType().getName()).size());
 				}
@@ -316,7 +316,7 @@ class BuilderSubIndexProviderSolutionImpl implements BuilderSubIndexProviderSolu
 
 	/**
 	 * Builds the list of dependent indexes for a the specified reaction rule fields.
-	 * Basically two indexes are dependent if they correspond to reactives that have the same type.
+	 * Basically two indexes are dependent if they correspond to reagents that have the same type.
 	 * And when two indexes are dependent, their HAVE to be different in the index provider, else
 	 * that would mean a solution element is selected twice for the same reaction
 	 * This function builds a list containing list of integers; a sub-list represents a 
@@ -329,25 +329,25 @@ class BuilderSubIndexProviderSolutionImpl implements BuilderSubIndexProviderSolu
 	private List<List<Integer>> buildDependantIndexesListWithFields(Field[] rrFields, Map<String, List<Object>> mapElements) throws ChemicalException {
 
 		Map<String, List<Integer>> dependantIndexesMap = new HashMap<String, List<Integer>>();
-		String reactiveTypeName;
+		String reagentTypeName;
 		for(int i = 0; i < rrFields.length; i++){
 			if(rrFields[i].getAnnotation(Dontreact.class) == null) {
 				if(rrFields[i].getType().getName().contains(SubSolution.class.getName())){
-					reactiveTypeName = Solution.class.getName();
+					reagentTypeName = Solution.class.getName();
 				}else{
-					reactiveTypeName = rrFields[i].getType().getName();
+					reagentTypeName = rrFields[i].getType().getName();
 				}
 
 				//If the type isn't even an entry of the hash map, don't bother
-				if(mapElements.get(reactiveTypeName) == null)
-					throw new ChemicalException("rrFields There is no reactive of this type, aborting IndexProvider instanciation.");
+				if(mapElements.get(reagentTypeName) == null)
+					throw new ChemicalException("rrFields There is no reagent of this type, aborting IndexProvider instanciation.");
 
-				if(dependantIndexesMap.containsKey(reactiveTypeName)){
-					dependantIndexesMap.get(reactiveTypeName).add(i);
+				if(dependantIndexesMap.containsKey(reagentTypeName)){
+					dependantIndexesMap.get(reagentTypeName).add(i);
 				}else{
 					List<Integer> l = new ArrayList<Integer>();
 					l.add(i);
-					dependantIndexesMap.put(reactiveTypeName, l);
+					dependantIndexesMap.put(reagentTypeName, l);
 				}
 			}
 		}
@@ -365,13 +365,13 @@ class BuilderSubIndexProviderSolutionImpl implements BuilderSubIndexProviderSolu
 	}
 	
 	/**
-	 * Builds the list of dependent indexes for the specified list of reactive type.
-	 * Basically two indexes are dependent if they correspond to reactives that have the same type.
+	 * Builds the list of dependent indexes for the specified list of reagent type.
+	 * Basically two indexes are dependent if they correspond to reagents that have the same type.
 	 * And when two indexes are dependent, their HAVE to be different in the index provider, else
 	 * that would mean a solution element is selected twice for the same reaction.
 	 * This function builds a list containing list of integers; a sub-list represents a 
 	 * set of dependent indexes, and there can be several sets of dependent indexes.
-	 * @param typeList The list of reactive type.
+	 * @param typeList The list of reagent type.
 	 * @param mapElements The solution elements.
 	 * @return The list of sets of dependent indexes.
 	 * @throws ChemicalException
@@ -379,20 +379,20 @@ class BuilderSubIndexProviderSolutionImpl implements BuilderSubIndexProviderSolu
 	private List<List<Integer>> buildDependantIndexesListWithTypes(List<String> typeList, Map<String, List<Object>> mapElements) throws ChemicalException {
 
 		Map<String, List<Integer>> dependantIndexesMap = new HashMap<String, List<Integer>>();
-		String reactiveTypeName;
+		String reagentTypeName;
 		for(int i = 0; i < typeList.size(); i++){
-			reactiveTypeName = typeList.get(i);
-			if(dependantIndexesMap.containsKey(reactiveTypeName)){
-				dependantIndexesMap.get(reactiveTypeName).add(i);
+			reagentTypeName = typeList.get(i);
+			if(dependantIndexesMap.containsKey(reagentTypeName)){
+				dependantIndexesMap.get(reagentTypeName).add(i);
 			}else{
 				List<Integer> l = new ArrayList<Integer>();
 				l.add(i);
-				dependantIndexesMap.put(reactiveTypeName, l);
+				dependantIndexesMap.put(reagentTypeName, l);
 			}
 
-			//If the type isn't even an entry of the hash map, return false (didn't find any reactive)
+			//If the type isn't even an entry of the hash map, return false (didn't find any reagent)
 			if(mapElements.get(typeList.get(i))== null)
-				throw new ChemicalException("There is no reactive of this type, aborting IndexProvider instanciation.");
+				throw new ChemicalException("There is no reagent of this type, aborting IndexProvider instanciation.");
 		}
 
 		//We have to provide the IndexProvider a list of a list of int, so

@@ -47,6 +47,7 @@ public class MaxIntRR implements ReactionRule{
 		c = val;
 	}
 	public Object[] computeResult() {
+		
 		if(a>b)
 			return new Object[]{a};
 

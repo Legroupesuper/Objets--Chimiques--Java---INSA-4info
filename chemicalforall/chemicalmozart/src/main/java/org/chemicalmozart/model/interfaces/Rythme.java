@@ -10,6 +10,11 @@ import org.chemicalmozart.model.implementations.Note;
  */
 public interface Rythme {
 	/**
+	 * 
+	 * @return The duration of a rythme
+	 */
+	int getDuration();
+	/**
 	 * It returns a list of notes
 	 * @return a list of notes with a specific rythme
 	 */

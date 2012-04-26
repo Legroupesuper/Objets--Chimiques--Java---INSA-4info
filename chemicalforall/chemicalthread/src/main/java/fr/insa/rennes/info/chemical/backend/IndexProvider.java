@@ -8,23 +8,23 @@ import fr.insa.rennes.info.chemical.backend.Solution.Strategy;
 
 /**
  * <p>
- * This class represents an index counter on a set of reactives of a given solution.
- * This class is used during the reactives research process (function {@link Solution#requestForParameters(fr.insa.rennes.info.chemical.user.ReactionRule)} ).
- * When searching for a certain set of reactives for a reaction rule (using the type of the reactive objects) in a given solution,
- * all possible set of reactives must be tested. The main purpose of this class is to ensure that EVERY possibility is considered.
+ * This class represents an index counter on a set of reagents of a given solution.
+ * This class is used during the reagents research process (function {@link Solution#requestForParameters(fr.insa.rennes.info.chemical.user.ReactionRule)} ).
+ * When searching for a certain set of reagents for a reaction rule (using the type of the reagent objects) in a given solution,
+ * all possible set of reagents must be tested. The main purpose of this class is to ensure that EVERY possibility is considered.
  * </p>
  * <p>
  * The concept of index provider is detached from the notion of solution: internally, only integers are handled. These integers represent
- * the indexes pointing to reactives in a given solution. This class "provides" a set of index corresponding to a set of reactives in the solution.<br />
- * There is several ways to iterate over the reactives: ordered, random, round robin... (see {@link OrderedIncrementStrategy}, {@link RandomIncrementStrategy}).
- * This strategy of iteration is specified by {@link IncrementStrategy}, and the default is random (the reactives are selected in a random order).
+ * the indexes pointing to reagents in a given solution. This class "provides" a set of index corresponding to a set of reagents in the solution.<br />
+ * There is several ways to iterate over the reagents: ordered, random, round robin... (see {@link OrderedIncrementStrategy}, {@link RandomIncrementStrategy}).
+ * This strategy of iteration is specified by {@link IncrementStrategy}, and the default is random (the reagents are selected in a random order).
  * </p>
  * <p>
- * With the concept of inner solutions, a reaction rule can fetch reactives in sub solutions (see {@link SubSolution}). Therefore, a structure is needed 
- * to iterate on reactives in the main solution on one hand, and on inner solutions and their own reactives in the other hand. This structure is realized
+ * With the concept of inner solutions, a reaction rule can fetch reagents in sub solutions (see {@link SubSolution}). Therefore, a structure is needed 
+ * to iterate on reagents in the main solution on one hand, and on inner solutions and their own reagents in the other hand. This structure is realized
  * with the implementations of the interface {@link SubIndexProvider} (see the description of the class). 
  * This class basically handles a {@link SubIndexProviderSolution} object, that iterates over the main solution and does only very little by itself.
- * The term "main solution" is relative: we call "main" the solution in which was added the reaction rule that requested for reactives - and lead to 
+ * The term "main solution" is relative: we call "main" the solution in which was added the reaction rule that requested for reagents - and lead to 
  * the creation of this index provider.
  * </p>
  * 
@@ -99,7 +99,7 @@ class IndexProvider {
 	
 	
 	/**
-	 * Increments the index and gives the next set of index on reactives. Actually
+	 * Increments the index and gives the next set of index on reagents. Actually
 	 * this functions only calls {@link IncrementStrategy#increment(SubIndexProviderSolution)} 
 	 * on the {@link SubIndexProviderSolution} object.<br />
 	 * @return the new sub index provider on a solution (with the new indexes).
@@ -135,9 +135,9 @@ class IndexProvider {
 	}
 	
 	/**
-	 * Returns the number of elements/reactives on which this index provider is iterating.<br />
+	 * Returns the number of elements/reagents on which this index provider is iterating.<br />
 	 * Note: this method returns a {@link BigInteger} because of the possibly great number of elements in the solutions.
-	 * @return the number of elements/reactives on which this index provider is iterating
+	 * @return the number of elements/reagents on which this index provider is iterating
 	 */
 	public BigInteger getNumberOfElements(){
 		return _subIndexProviderSub.getNumberOfElements();

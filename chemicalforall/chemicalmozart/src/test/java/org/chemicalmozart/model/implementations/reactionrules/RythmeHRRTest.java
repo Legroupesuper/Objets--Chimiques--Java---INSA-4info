@@ -99,6 +99,36 @@ public class RythmeHRRTest extends TestCase{
 		assertTrue("No BarInCreation wasn't	found in the computeResult", bool);
 	}
 
+	public void testComputeResult5(){
+		RythmeHRR rr = new RythmeHRR();
+		SubSolutionElements e = new SubSolutionElements();
+		List<Class<? extends Object>> listType = rr.getSol().getTypeList();
+		e.setTypeList(listType);
+		List<Object> l = new ArrayList<Object>();
+		BarInCreation b = new BarInCreation();
+		b.set_state(BarInCreationState.RYTHMEHRR);
+		l.add(b);
+		l.add(0);
+		l.add(new DegreeImpl(1));
+		l.add(new QuaterLeft(4));
+		e.setElements(l);
+		SubSolution<SubSolutionElements> subsol = new SubSolution<SubSolutionElements>(e);
+		rr.setSol(subsol);
+		Object[] result = rr.computeResult();
+
+		ChordImpl ch=null;
+		QuaterLeft ql=null;
+		for(Object o : result){
+			if(o instanceof ChordImpl){
+				ch = (ChordImpl) o;
+			}else if(o instanceof QuaterLeft){
+				ql = (QuaterLeft) o;
+			}
+		}
+		assertTrue("Problem with the duration of ChordImpl", 4-ql.getValue()==ch.getDuration());
+	}
+
+
 	@Test
 	public void testComputeSelect1() {
 		RythmeHRR rr = new RythmeHRR();

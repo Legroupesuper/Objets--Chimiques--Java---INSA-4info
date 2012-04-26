@@ -8,7 +8,7 @@ import java.util.List;
 
 
 /**
- * This class implements an random strategy iteration on reactives: 
+ * This class implements an random strategy iteration on reagents: 
  * the elements are randomly selected in order to simulate the non-determinism 
  * of a chemical reaction.
  * @author Andréolli Cédric, Boulanger Chloé, Cléro Olivier, Guellier Antoine, Guilloux Sébastien, Templé Arthur

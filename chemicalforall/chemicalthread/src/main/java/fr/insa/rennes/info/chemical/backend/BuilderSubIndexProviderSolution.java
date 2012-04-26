@@ -48,15 +48,15 @@ interface BuilderSubIndexProviderSolution extends Builder<SubIndexProviderSoluti
 	public SubIndexProviderSolution getProduct() throws ChemicalException;
 	/**
 	 * Sets the reaction rule parameter to build the sub index provider.
-	 * The reaction rule parameter specifies which reaction rule needs reactives.
-	 * Indeed, an sub index provider is always created in order to find reactives for a 
+	 * The reaction rule parameter specifies which reaction rule needs reagents.
+	 * Indeed, an sub index provider is always created in order to find reagents for a 
 	 * specific reaction rule, exactly like an index provider.
 	 * @param rr The reaction rule that needs the index provider.
 	 */
 	public void setReactionRule(ReactionRule rr);
 	/**
 	 * Sets the reaction rule's fields parameter to build the sub index provider.
-	 * These fields are the reactives needed by the reaction rule. Basically, these are the attributes 
+	 * These fields are the reagents needed by the reaction rule. Basically, these are the attributes 
 	 * of the reaction rule class, without the ones annotated {@link Dontreact}.
 	 * @param rrFields The reaction rule's fields
 	 * @see Dontreact
@@ -66,27 +66,27 @@ interface BuilderSubIndexProviderSolution extends Builder<SubIndexProviderSoluti
 	 * Sets the parameterized type parameter to build the sub index provider.
 	 * This type is the parameterized type of a {@link SubSolution} object. This {@link SubSolution}
 	 * object is an attribute of the reaction rule given to the builder. This class is used
-	 * to go down in the inner solutions of the reaction rule's main solution. See {@link SubSolutionReactivesAccessor}.
+	 * to go down in the inner solutions of the reaction rule's main solution. See {@link SubSolutionReagentsAccessor}.
 	 * @param paramType The parameterized type of a {@link SubSolution} object attribute of the specified reaction rule.
 	 * @see SubSolution
-	 * @see SubSolutionReactivesAccessor
+	 * @see SubSolutionReagentsAccessor
 	 */
 	public void setParamType(ParameterizedType paramType);
 	/**
 	 * Sets the solution parameter to build the sub index provider.
 	 * The specified solution is the solution on which the sub index provider has to base itself
-	 * to provide indexes on the reactives asked by the reaction rule.  
+	 * to provide indexes on the reagents asked by the reaction rule.  
 	 * @param sol The solution on which the sub index provider has to iterate.
 	 */
 	public void setSolution(Solution sol);
 	/**
 	 * Sets the {@link SubSolution} field parameter to build the sub index provider.
 	 * This parameter is actually a field of the reaction rule parameter. 
-	 * See {@link SubSolutionReactivesAccessor}.
+	 * See {@link SubSolutionReagentsAccessor}.
 	 * @param subSolField The {@link SubSolution} field of the reaction rule.
 	 * @see #setParamType(ParameterizedType)
 	 * @see SubSolution
-	 * @see SubSolutionReactivesAccessor
+	 * @see SubSolutionReagentsAccessor
 	 */
 	public void setSubSolutionField(Field subSolField);
 }

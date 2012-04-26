@@ -1,5 +1,11 @@
 package org.chemicalmozart.model.implementations.reactionrules;
 
+import org.chemicalmozart.model.implementations.ChordImpl;
+import org.chemicalmozart.model.implementations.QuaterLeft;
+import org.chemicalmozart.model.implementations.solutionindentification.BarInCreation;
+import org.chemicalmozart.model.implementations.solutionindentification.Result;
+
+import fr.insa.rennes.info.chemical.backend.Solution;
 import fr.insa.rennes.info.chemical.backend.SubSolution;
 import fr.insa.rennes.info.chemical.backend.SubSolutionElements;
 import fr.insa.rennes.info.chemical.user.ReactionRule;
@@ -8,7 +14,7 @@ import fr.insa.rennes.info.chemical.user.ReactionRule;
 
 /**
  * This ReactionRule is used to put a bar into the result solution.
- * It takes the following reactives: (they must appear in this order)
+ * It takes the following reagents: (they must appear in this order)
  * <ul>
  * 	<li>SubSolution "barInCreaction"
  * 		<ul>
@@ -43,7 +49,19 @@ public class MoveToResultRR implements ReactionRule{
 	 * @return The Result solution as describe
 	 */
 	public Object[] computeResult() {
-		return null;
+		Solution inCreationSolution = _subSolInCreation.getSolution();
+		BarInCreation babar = new BarInCreation();
+		QuaterLeft qLeft = new QuaterLeft(0);
+		inCreationSolution.add(babar);
+		inCreationSolution.add(qLeft);
+		_subSolInCreation.setSolution(inCreationSolution);
+		
+		Solution resultSolution = _subSolResult.getSolution();
+		Result resultID = new Result();
+		resultSolution.add(resultID);
+		resultSolution.add(inCreationSolution);
+		
+		return new Object[]{resultSolution};
 	}
 
 	/**
@@ -52,7 +70,18 @@ public class MoveToResultRR implements ReactionRule{
 	 * one or several ChordImpl.
 	 */
 	public boolean computeSelect() {
-		return false;
+		boolean containsQuaterLeftWithAValue0 = false;
+		boolean containsAtLeastOneChodImpl = false;
+		Solution sol = _subSolInCreation.getSolution();
+		for (Object o : sol){
+			   if(o instanceof QuaterLeft){
+				   containsQuaterLeftWithAValue0 = ((QuaterLeft) o).getValue() == 0;
+			   }
+			   if(o instanceof ChordImpl){
+				   containsAtLeastOneChodImpl = true;
+			   }
+		}
+		return containsAtLeastOneChodImpl && containsQuaterLeftWithAValue0 ;
 	}
 
 	public SubSolution<SubSolutionElements> get_subSolInCreation() {

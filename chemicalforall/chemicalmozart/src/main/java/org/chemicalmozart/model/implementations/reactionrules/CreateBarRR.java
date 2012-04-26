@@ -11,12 +11,12 @@ import fr.insa.rennes.info.chemical.user.ReactionRule;
 
 
 /**
- * This ReactionRule is used to create a new measure into the main Solution.
- * This is a one-shot rule. This means that once it has react, the CreateMeasureRR
- * is no more in the Solution.<br />
+ * This ReactionRule is used to create a new bar into the main Solution.
+ * This is a one-shot rule, which means once it has reacted, the CreateBarRR
+ * is no longer in the Solution.<br />
  * <br />
  * Here is how it works :<br />
- * It takes two reactives :<br />
+ * It takes two reagents :<br />
  * <ul>
  * 	<li>BarNumber _number</li>
  *  <li>QuaterPerBar _quater</li>
@@ -25,11 +25,11 @@ import fr.insa.rennes.info.chemical.user.ReactionRule;
  */
 public class CreateBarRR implements ReactionRule{
 	/**
-	 * _number represents the position of the measure to create.
+	 * _number represents the position of the bar to create.
 	 */
 	private BarNumber _number;
 	/**
-	 * _quater represents the number of quater per measure of the current music.
+	 * _quater represents the number of quater per bar of the current music.
 	 */
 	private QuaterPerBar _quater;
 
