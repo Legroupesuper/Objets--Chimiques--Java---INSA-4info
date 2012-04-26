@@ -36,21 +36,21 @@ public interface BuilderIndexProvider extends Builder<IndexProvider> {
 	/**
 	 * Sets the solution parameter to build the index provider.
 	 * The specified solution is the solution on which the index provider has to base itself
-	 * to provide indexes on the reactives asked by the reaction rule. 
+	 * to provide indexes on the reagents asked by the reaction rule. 
 	 * @param sol The solution on which the index provider has to iterate.
 	 */
 	public void setSolution(Solution sol);
 	/**
 	 * Sets the reaction rule parameter to build the index provider.
-	 * The reaction rule parameter specifies what is the reaction rule that needs reactives.
-	 * Indeed, an index provider is always created in order to find reactives for a 
+	 * The reaction rule parameter specifies what is the reaction rule that needs reagents.
+	 * Indeed, an index provider is always created in order to find reagents for a 
 	 * specific reaction rule.
-	 * @param rr The reaction rule that needs reactives.
+	 * @param rr The reaction rule that needs reagents.
 	 */
 	public void setReactionRule(ReactionRule rr);
 	/**
 	 * Sets the reaction rule's fields parameter to build the index provider.
-	 * These fields are the reactives needed by the reaction rule. Basically, these are the attributes 
+	 * These fields are the reagents needed by the reaction rule. Basically, these are the attributes 
 	 * of the reaction rule class, without the ones annotated {@link Dontreact}.
 	 * @param rrFields The reaction rule's fields
 	 * @see Dontreact
@@ -58,7 +58,7 @@ public interface BuilderIndexProvider extends Builder<IndexProvider> {
 	public void setReactionRuleFields(Field[] rrFields);
 	/**
 	 * Sets the iteration strategy parameter to build the index provider.
-	 * The strategy determines in which order the reactives are given to the reaction rule.
+	 * The strategy determines in which order the reagents are given to the reaction rule.
 	 * An ordered strategy will always give the same order of iteration and lead to the same execution result.
 	 * A random strategy will allow indeterminism and possibly different results between two executions. 
 	 * @param strategy The iteration's order/strategy.
