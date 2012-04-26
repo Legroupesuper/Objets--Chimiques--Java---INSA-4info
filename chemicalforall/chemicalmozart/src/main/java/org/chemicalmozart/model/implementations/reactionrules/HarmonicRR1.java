@@ -19,7 +19,7 @@ import fr.insa.rennes.info.chemical.user.ReactionRule;
  * It also creates a PickOneRR and a RythmeHRR.
  * <br />
  * Here is how it works :<br />
- * It takes two reactives :<br />
+ * It takes two reagents :<br />
  * <ul>
  * 	<li>DegreeImpl _degree</li>
  *  <li>SubSolution _barInCreationSolution</li>

@@ -25,14 +25,14 @@ class SubIndexProviderElement  implements SubIndexProvider{
 	private int _numberOfElementsInSolution;
 	/**
 	 * The current value of this sub index provider. A simple integer is sufficient, as
-	 * this index provider iterates on ONE reactive in ONE solution. This integer varies from 
-	 * 0 to {@link #_numberOfElementsInSolution}-1 and is the index of the target reactive in 
+	 * this index provider iterates on ONE reagent in ONE solution. This integer varies from 
+	 * 0 to {@link #_numberOfElementsInSolution}-1 and is the index of the target reagent in 
 	 * the target solution.
 	 */
 	private int _currentValue;
 	
 	/**
-	 * Constructs a sub index provider on a simple reactive/element, with the specified maximum value
+	 * Constructs a sub index provider on a simple reagent/element, with the specified maximum value
 	 * for the index.<br />
 	 * Note that the index value is not set in this constructor, {@link #init()} has to be called.
 	 * @param _nummberOfElementsInSolution the maximum value for the index
@@ -43,8 +43,8 @@ class SubIndexProviderElement  implements SubIndexProvider{
 	
 	
 	/**
-	 * Returns the number of elements/reactives of the given type in the concerned solution.
-	 * @return The number of elements/reactives of the given type in the concerned solution.
+	 * Returns the number of elements/reagents of the given type in the concerned solution.
+	 * @return The number of elements/reagents of the given type in the concerned solution.
 	 */
 	public int get_nummberOfElementsInSolution() {
 		return _numberOfElementsInSolution;
@@ -91,9 +91,9 @@ class SubIndexProviderElement  implements SubIndexProvider{
 	}
 	
 	/**
-	 * Returns the number of elements/reactives of the given type in the concerned solution.
+	 * Returns the number of elements/reagents of the given type in the concerned solution.
 	 * A cast in BigInteger is done.
-	 * @return The number of elements/reactives of the given type in the concerned solution.
+	 * @return The number of elements/reagents of the given type in the concerned solution.
 	 */
 	public BigInteger getNumberOfElements() {
 		return BigInteger.valueOf(_numberOfElementsInSolution);

@@ -25,9 +25,9 @@ import fr.insa.rennes.info.chemical.user.ReactionRule;
 
 
 /**
- * Central class of the library. The solution is a set of reactives and ReactionRules.
- * A reactive can be any kind of object or primitive type. It can also be an other Solution.
- * The ReactionRules are objects that implements the interface ReactiveRule.
+ * Central class of the library. The solution is a set of reagents and ReactionRules.
+ * A reagent can be any kind of object or primitive type. It can also be an other Solution.
+ * The ReactionRules are objects that implements the interface ReactionRule.
  * 
  * @see ReactionRule
  * 
@@ -37,17 +37,17 @@ import fr.insa.rennes.info.chemical.user.ReactionRule;
 public final class Solution implements Collection<Object>{
 
 	/**
-	 * Different strategies available for reactive selection sequence.
+	 * Different strategies available for reagent selection sequence.
 	 * <p>
-	 * ORDERED Iterates on the elements of the solution and tries to use reactives in order of appearance. Each execution will give the same result.<br />
+	 * ORDERED Iterates on the elements of the solution and tries to use reagents in order of appearance. Each execution will give the same result.<br />
 	 * RANDOM The iteration is randomized and each execution is different (indeterminism).
 	 *</p>
 	 */
 	public static enum Strategy{RANDOM, ORDERED};
 
 	/**
-	 * The map containing all the reactives. The keys of the map are the type (i.e java.lang.String)
-	 * and the values are a list of object containing all the reactives of this type.
+	 * The map containing all the reagents. The keys of the map are the type (i.e java.lang.String)
+	 * and the values are a list of object containing all the reagents of this type.
 	 */
 	private Map<String, List<Object>> _mapElements;
 
@@ -82,7 +82,7 @@ public final class Solution implements Collection<Object>{
 	private ThreadGroup _threadGroup;
 	
 	/**
-	 * The reactive iteration strategy, chosen by the user. The chosen strategy will apply 
+	 * The reagent iteration strategy, chosen by the user. The chosen strategy will apply 
 	 * to every reaction rule added in this solution. 
 	 * @see Solution.Strategy
 	 */
@@ -108,7 +108,7 @@ public final class Solution implements Collection<Object>{
 
 	/**
 	 * Constructor for a Chemical Programming-powered Solution, with a Strategy parameter.
-	 * @param s The desired strategy to iterate over the solution's reactives.
+	 * @param s The desired strategy to iterate over the solution's reagents.
 	 * @see Solution.Strategy
 	 */
 	public Solution(Strategy s) {
@@ -123,7 +123,7 @@ public final class Solution implements Collection<Object>{
 	}
 
 	/**
-	 * Used in add function when a ReactionRule object is added as a reactive. Checks if the ReactionRule class is valid.<br />
+	 * Used in add function when a ReactionRule object is added as a reagent. Checks if the ReactionRule class is valid.<br />
 	 * A valid ReactionRule class implements setters for its attributes that do not specify the Dontreact annotation.
 	 * @param reactionRuleObject The reaction rule object added in the solution.
 	 * @return <code>true</code> if the reaction rule object is valid
@@ -183,8 +183,8 @@ public final class Solution implements Collection<Object>{
 	}
 
 	/**
-	 * Used in add function to add a sub-solution as a reactive in the solution.<br />
-	 * Applies a special treatment to the solution reactive : sets a InertEventListener on the sub-solution,
+	 * Used in add function to add a sub-solution as a reagent in the solution.<br />
+	 * Applies a special treatment to the solution reagent : sets a InertEventListener on the sub-solution,
 	 * and begin the reaction of the sub-solution.
 	 * @param solutionObject The sub-solution added.
 	 * @see InertEventListener
@@ -202,9 +202,9 @@ public final class Solution implements Collection<Object>{
 
 	/**
 	 * Adds any type of object to this solution.<br />
-	 * Every object inserted in the solution will be considered as a reactive, 
+	 * Every object inserted in the solution will be considered as a reagent, 
 	 * included Solution objects and ReactionRule objects, and can be used by any ReactionRule object.
-	 * @param newReactive The new reactive to add to the solution.
+	 * @param newReactive The new reagent to add to the solution.
 	 * @return <code>true</code> (as specified by Collection.add(E))
 	 * @see java.util.Collection#add(java.lang.Object)
 	 */
@@ -224,12 +224,12 @@ public final class Solution implements Collection<Object>{
 				processAddSubSolution(newReactive);
 			}
 
-			if(!className.equals(SubSolutionReactivesAccessor.class.getName()) && addElement){
+			if(!className.equals(SubSolutionReagentsAccessor.class.getName()) && addElement){
 				boolean result;
 				//When you add an element in the solution, the solution is no more inert
 				_inert = false;
 
-				//There is already an entry in the map for this reactive, so we just add the element
+				//There is already an entry in the map for this reagent, so we just add the element
 				if(_mapElements.get(rawClassName) != null){
 					result = _mapElements.get(rawClassName).add(newReactive);
 				}
@@ -276,31 +276,31 @@ public final class Solution implements Collection<Object>{
 	}
 
 	/**
-	 * Removes all of the reactives from this solution.
+	 * Removes all of the reagents from this solution.
 	 */
 	public void clear() {
 		_mapElements.clear();
 	}
 
 	/**
-	 * Returns true if this solution contains the specified element/reactive.
-	 * @param reactive Reactive whose presence in this list is to be tested 
+	 * Returns true if this solution contains the specified element/reagent.
+	 * @param reagent Reactive whose presence in this list is to be tested 
 	 * @see java.util.Collection#contains(java.lang.Object)
 	 */
-	public boolean contains(Object reactive) {
-		String reactiveType = reactive.getClass().getName();
+	public boolean contains(Object reagent) {
+		String reagentType = reagent.getClass().getName();
 
 		//If the hash map doesn't even know the type, return false
-		if(_mapElements.get(reactiveType) == null) {
+		if(_mapElements.get(reagentType) == null) {
 			return false;
 		}
 
-		return _mapElements.get(reactiveType).contains(reactive);
+		return _mapElements.get(reagentType).contains(reagent);
 	}
 
 	/**
-	 * Returns <code>true</code> if this solution all of the elements/reactives in the specified collection.
-	 * @return <code>true</code> if this solution all of the elements/reactives in the specified collection.
+	 * Returns <code>true</code> if this solution all of the elements/reagents in the specified collection.
+	 * @return <code>true</code> if this solution all of the elements/reagents in the specified collection.
 	 * @see java.util.Collection#containsAll(java.util.Collection)
 	 */
 	public boolean containsAll(Collection<?> c) {
@@ -425,22 +425,22 @@ public final class Solution implements Collection<Object>{
 	}
 
 	/**
-	 * Gives the type of the specified reactive.
+	 * Gives the type of the specified reagent.
 	 * For most of the object, the value returned is it's raw name (<code>object.getClass().getName()</code>), 
 	 * but for the Solution and ReactionRule object, a special name is returned.
-	 * @param reactive Object whose type is to be determined.
-	 * @return The java type of the specified reactive.
+	 * @param reagent Object whose type is to be determined.
+	 * @return The java type of the specified reagent.
 	 */
-	private String getReactiveType(Object reactive) {
-		for(Class<?> s : reactive.getClass().getInterfaces()){
+	private String getReactiveType(Object reagent) {
+		for(Class<?> s : reagent.getClass().getInterfaces()){
 			if(s.getName().equals(ReactionRule.class.getName())) {
 				return ReactionRule.class.getName();
-			}else if(s.getName().equals(SubSolutionReactivesAccessor.class.getName())){
-				return SubSolutionReactivesAccessor.class.getName();
+			}else if(s.getName().equals(SubSolutionReagentsAccessor.class.getName())){
+				return SubSolutionReagentsAccessor.class.getName();
 			}
 		}
 
-		return reactive.getClass().getName();
+		return reagent.getClass().getName();
 	}
 
 	/**
@@ -454,31 +454,31 @@ public final class Solution implements Collection<Object>{
 	}
 
 	/**
-	 * Returns <code>true</code> if this solution contains no elements/reactives.
-	 * @return <code>true</code> if this solution contains no elements/reactives.
+	 * Returns <code>true</code> if this solution contains no elements/reagents.
+	 * @return <code>true</code> if this solution contains no elements/reagents.
 	 */
 	public boolean isEmpty() {
 		return _mapElements.isEmpty();
 	}
 
 	/**
-	 * Returns an iterator over the elements/reactives in this solution. 
+	 * Returns an iterator over the elements/reagents in this solution. 
 	 * As this solution can contain any type of element, the function returns an iterator of Object objects.
 	 * There are no guarantees concerning the order in which the elements are returned
 	 * @return an <code>Iterator</code> over the elements in this solution.
 	 * @see Iterator
 	 */
 	public Iterator<Object> iterator() {
-		List<Object> reactivesCopy = new LinkedList<Object>();
-		for(List<Object> reactiveList : _mapElements.values()) {
-			reactivesCopy.addAll(reactiveList);
+		List<Object> reagentsCopy = new LinkedList<Object>();
+		for(List<Object> reagentList : _mapElements.values()) {
+			reagentsCopy.addAll(reagentList);
 		}
-		return Collections.unmodifiableList(reactivesCopy).iterator();
+		return Collections.unmodifiableList(reagentsCopy).iterator();
 	}
 
 	/**
 	 * Called by a thread, makes the thread wait until a <code>notify</code> is called.
-	 * When a reaction rule did not find any reactives, it calls this function that will "make" it sleep.
+	 * When a reaction rule did not find any reagents, it calls this function that will "make" it sleep.
 	 * It checks if this reaction rule's thread is the last standing. If it is,
 	 * it stops all the reaction and declares the solution inert.
 	 * This function is called by the main function of a chemical thread.
@@ -555,27 +555,27 @@ public final class Solution implements Collection<Object>{
 	}
 
 	/**
-	 * Removes a single instance of the specified element/reactive from this solution, if it is present.
-	 * Returns <code>true</code> if this solution contained the specified element/reactive (or equivalently, if this solution changed as a result of the call). 
-	 * @param reactive Element to be removed from this solution, if present. 
+	 * Removes a single instance of the specified element/reagent from this solution, if it is present.
+	 * Returns <code>true</code> if this solution contained the specified element/reagent (or equivalently, if this solution changed as a result of the call). 
+	 * @param reagent Element to be removed from this solution, if present. 
 	 * @return <code>true</code> if an element was removed as a result of this call 
 	 */
-	public boolean remove(Object reactive) {
+	public boolean remove(Object reagent) {
 		//To remove the object, we have to find its type
 		//and check that it is present in the hash map
 
-		String reactiveType = reactive.getClass().getName();
+		String reagentType = reagent.getClass().getName();
 		boolean res = false;
 		//For the same reason as in add, synchronized have to be declared on the hash map
 		synchronized(_mapElements) {
 			//If the hash map doesn't even know the type, return false
-			if(_mapElements.get(reactiveType) == null) {
+			if(_mapElements.get(reagentType) == null) {
 				return false;
 			}
 
-			res = _mapElements.get(reactiveType).remove(reactive);
-			if(_mapElements.get(reactiveType).size() == 0){
-				_mapElements.remove(reactiveType);
+			res = _mapElements.get(reagentType).remove(reagent);
+			if(_mapElements.get(reagentType).size() == 0){
+				_mapElements.remove(reagentType);
 			}
 			return res;
 		}
@@ -602,12 +602,12 @@ public final class Solution implements Collection<Object>{
 
 
 	/**
-	 * Called by every thread-reaction rule to get its reactives.
-	 * It returns true if a set of parameter has been found, else false. The reactives are set directly
+	 * Called by every thread-reaction rule to get its reagents.
+	 * It returns true if a set of parameter has been found, else false. The reagents are set directly
 	 * in the reaction rule instance by reflexivity, there is no need to return them.
 	 * This function is synchronized on the _mapElements attribute.
 	 * @param r The reaction rule requesting for parameters;
-	 * @return <code>true</code> if parameters/reactives where found.
+	 * @return <code>true</code> if parameters/reagents where found.
 	 * @see ReactionRule
 	 * @see Solution#_mapElements
 	 */
@@ -646,18 +646,18 @@ public final class Solution implements Collection<Object>{
 				return false;
 			}
 
-			//Once the index provider is created, we have to search for reactives matching,
+			//Once the index provider is created, we have to search for reagents matching,
 			//Meanwhile, we have to catch every Exception before the user get them
 			try {
-				List<Pair<Solution, Object>> reactives = searchForReactives(r, rrFields, indexProvider);
+				List<Pair<Solution, Object>> reagents = searchForReactives(r, rrFields, indexProvider);
 
-				//If a valid set of reactive was found, erase the reactives from the solutions
+				//If a valid set of reagent was found, erase the reagents from the solutions
 				//and return true
-				if(reactives != null) {
-					extractReactivesFromSolutions(reactives);
+				if(reagents != null) {
+					extractReactivesFromSolutions(reagents);
 					return true;
 				} else {
-					//Else, no reactives where found, return false
+					//Else, no reagents where found, return false
 					return false;
 				}
 
@@ -676,33 +676,33 @@ public final class Solution implements Collection<Object>{
 	}
 
 	/**
-	 * Searches for reactives for the specified reaction rule.
+	 * Searches for reagents for the specified reaction rule.
 	 * The difference with {@link Solution#requestForParameters(ReactionRule)} is that this functions is given
 	 * a fully instanciated index provider.
-	 * If a set of reactives is found following the types, the {@link ReactionRule#computeSelect()}
+	 * If a set of reagents is found following the types, the {@link ReactionRule#computeSelect()}
 	 * is tested. In case of success, the reaction rule's fields are instantiated.
-	 * Returns the set of reactives one was found that passes the {@link ReactionRule#computeSelect()} function.
-	 * If no valid set of reactives was found, returns null.
-	 * @param rr The reaction rule asking for reactives
+	 * Returns the set of reagents one was found that passes the {@link ReactionRule#computeSelect()} function.
+	 * If no valid set of reagents was found, returns null.
+	 * @param rr The reaction rule asking for reagents
 	 * @param rrFields The fields of the reaction rule
 	 * @param indexProvider The index provider, 
-	 * @return The set of reactives if a valid one was found, else null.
+	 * @return The set of reagents if a valid one was found, else null.
 	 * @throws IllegalArgumentException
 	 * @throws IllegalAccessException
 	 * @throws InvocationTargetException
 	 * @see IndexProvider
 	 */
 	private List<Pair<Solution, Object>> searchForReactives(ReactionRule rr, Field[] rrFields, IndexProvider indexProvider) throws IllegalArgumentException, IllegalAccessException, InvocationTargetException {
-		//Effectively research a valid set of reactives for the reaction rule
+		//Effectively research a valid set of reagents for the reaction rule
 		//given all the tools
-		List<Pair<Solution, Object>> reactives = new ArrayList<Pair<Solution,Object>>();
+		List<Pair<Solution, Object>> reagents = new ArrayList<Pair<Solution,Object>>();
 		int setterNumber;
 		Method setter;
-		Pair<Solution, Object> reactiveObject = null;
+		Pair<Solution, Object> reagentObject = null;
 		int i;
 		boolean tryComputeSelect;
 
-		//Loop until the reactives has been found OR all combination have been tested
+		//Loop until the reagents has been found OR all combination have been tested
 		while(!indexProvider.is_overflowReached()) {
 			SubIndexProviderSolution sipSol = indexProvider.getSubIndexProvider();
 
@@ -715,30 +715,30 @@ public final class Solution implements Collection<Object>{
 					setter = rr.getClass().getDeclaredMethods()[setterNumber];
 
 					//..instanciate the (value) of the field...
-					reactiveObject = instanciateField(f, sipSol.get_listSubIP().get(i), rr);
+					reagentObject = instanciateField(f, sipSol.get_listSubIP().get(i), rr);
 					//If instanciateField returned false, an error occured, go on the the next increment of the index provider
-					if(reactiveObject == null) {
+					if(reagentObject == null) {
 						tryComputeSelect = false;
 						break;
 					}
 
 					//...and invoke the setter
-					setter.invoke(rr, new Object[]{reactiveObject.get_second()});
+					setter.invoke(rr, new Object[]{reagentObject.get_second()});
 
-					reactives.add(reactiveObject);
+					reagents.add(reagentObject);
 					i++;
 				}
 			}
 
 			//When we get here, the right types have been found, now test the selection rule
 			if(tryComputeSelect && rr.computeSelect()) {
-				//If the computeSelect says OK, return the found set of reactives
-				return reactives;
+				//If the computeSelect says OK, return the found set of reagents
+				return reagents;
 			}
 
 			//If we did not leave the function, it means something is 
-			//wrong with the set of reactives
-			reactives.clear();
+			//wrong with the set of reagents
+			reagents.clear();
 
 			//Increment the index provider and loop
 			indexProvider.increment();
@@ -749,20 +749,20 @@ public final class Solution implements Collection<Object>{
 	}
 
 	/**
-	 * Extracts the given reactives from this solution (and inner solutions).
-	 * This function is called right after finding reactives for a reaction rule that matches
+	 * Extracts the given reagents from this solution (and inner solutions).
+	 * This function is called right after finding reagents for a reaction rule that matches
 	 * the types and the {@link ReactionRule#computeSelect()}. They have to be deleted from this solution, just like 
-	 * chemical reactives in real chemistry.
-	 * reactives can possibly be in a non inert inner solution (using sch a reactive is not allowed by chemical programming). 
-	 * @param reactives The list of reactives to be deleted. Reactives can possibly be in inner solutions.
+	 * chemical reagents in real chemistry.
+	 * reagents can possibly be in a non inert inner solution (using sch a reagent is not allowed by chemical programming). 
+	 * @param reagents The list of reagents to be deleted. Reactives can possibly be in inner solutions.
 	 */
 	@SuppressWarnings("unchecked")
-	private void extractReactivesFromSolutions(List<Pair<Solution, Object>> reactives) {
-		//Remove the selected reactives from the solution
-		for(Pair<Solution, Object> react : reactives){
-			//If the reactive is a SubSolution object, a different treatment is needed
+	private void extractReactivesFromSolutions(List<Pair<Solution, Object>> reagents) {
+		//Remove the selected reagents from the solution
+		for(Pair<Solution, Object> react : reagents){
+			//If the reagent is a SubSolution object, a different treatment is needed
 			if(react.get_second().getClass().getName().equals(SubSolution.class.getName())){
-				SubSolution<SubSolutionReactivesAccessor> s = (SubSolution<SubSolutionReactivesAccessor>) react.get_second();
+				SubSolution<SubSolutionReagentsAccessor> s = (SubSolution<SubSolutionReagentsAccessor>) react.get_second();
 
 				//Delete each object in the sub-solution
 				for(Object o : s.getElements()){;
@@ -772,7 +772,7 @@ public final class Solution implements Collection<Object>{
 				//For a reaction rule, use the dedicated function
 				react.get_first().deleteReaction((ReactionRule)react.get_second());
 			} else{
-				//For a simple reactive (not a SubSolution object), just delete it from its solution
+				//For a simple reagent (not a SubSolution object), just delete it from its solution
 				react.get_first()._mapElements.get(react.get_second().getClass().getName()).remove(react.get_second());
 			}
 		}
@@ -780,14 +780,14 @@ public final class Solution implements Collection<Object>{
 
 	/**
 	 * This function is used to instantiate a field of a reaction rule in order to perform a reaction.
-	 * When a set of reactives matching the right types for the specified reaction rule are found, this function is
+	 * When a set of reagents matching the right types for the specified reaction rule are found, this function is
 	 * called (by {@link Solution#searchForReactives(ReactionRule, Field[], IndexProvider)} to instantiate the reaction rule's fields one by one.
-	 * To succeed this operation needs to use an SubIndexProvider which gives the index of the element/reactive
+	 * To succeed this operation needs to use an SubIndexProvider which gives the index of the element/reagent
 	 * to use in this solution or in its inner solutions.
 	 * @param f The ReactionRule field
 	 * @param sip The sub index provider
 	 * @param r The reaction rule that is concerned by the instanciation.
-	 * @return A pair of object containing the value to be set to the field, and a reference to the solution ('possibly an inner solution) in which this reactive is contained.
+	 * @return A pair of object containing the value to be set to the field, and a reference to the solution ('possibly an inner solution) in which this reagent is contained.
 	 * @throws InvocationTargetException 
 	 * @throws IllegalAccessException 
 	 * @throws IllegalArgumentException 
@@ -801,7 +801,7 @@ public final class Solution implements Collection<Object>{
 		//TIf the field is a set of elements in a subsolution, it will be more complex
 		else{
 			Method getter = Utils.getMethodFromReactionRule(r, "get", f);
-			SubSolution<SubSolutionReactivesAccessor> subSolObject = (SubSolution<SubSolutionReactivesAccessor>) getter.invoke(r, new Object[0]);
+			SubSolution<SubSolutionReagentsAccessor> subSolObject = (SubSolution<SubSolutionReagentsAccessor>) getter.invoke(r, new Object[0]);
 
 			//In order to instanciate a SubSolution object, we have to go down the 
 			//nested solutions... (recursion)
@@ -812,12 +812,12 @@ public final class Solution implements Collection<Object>{
 				sipSol = (SubIndexProviderSolution) sipSol.get_listSubIP().get(0);
 			}
 
-			//If the solution in which the reactives are going to be selected
+			//If the solution in which the reagents are going to be selected
 			//isn't inert, then return null to mean an error occured
 			if(!nextSol.is_inert())
 				return null;
 
-			//...until we reach the level in which the reactives have to be found,
+			//...until we reach the level in which the reagents have to be found,
 			//so that we can instanciate the elementList of the SubSolution object
 			List<Object> l = new ArrayList<Object>();
 			int i = 0;
@@ -838,14 +838,14 @@ public final class Solution implements Collection<Object>{
 
 
 	/**
-	 * Retains only the elements/reactives in this solution that are contained in the specified collection. 
+	 * Retains only the elements/reagents in this solution that are contained in the specified collection. 
 	 * In other words, removes from this solution all of its elements that are not contained in the specified collection.
 	 * @param c Collection containing elements to be retained in this solution.
 	 * @return <code>true</code> if this collection changed as a result of the call. 
 	 */
 	public boolean retainAll(Collection<?> c) {
 		boolean res = false;
-		String reactiveName;
+		String reagentName;
 
 		//The write/remove operations on the hash map have to be atomic
 		synchronized (_mapElements) {
@@ -855,8 +855,8 @@ public final class Solution implements Collection<Object>{
 				obj = it.next();
 
 				if(!c.contains(obj)) {
-					reactiveName = getReactiveType(obj);
-					_mapElements.get(reactiveName).remove(obj);
+					reagentName = getReactiveType(obj);
+					_mapElements.get(reagentName).remove(obj);
 					res = true;
 				}
 			}
@@ -866,15 +866,15 @@ public final class Solution implements Collection<Object>{
 	}
 
 	/**
-	 * Returns the number of elements/reactives in this solution. 
+	 * Returns the number of elements/reagents in this solution. 
 	 * If this collection contains more than <code>Integer.MAX_VALUE</code> elements, returns <code>Integer.MAX_VALUE</code>.
 	 * @return The number of elements in this solution. 
 	 */
 	public int size() {
 		int res = 0;
 
-		for(List<Object> reactiveList : _mapElements.values()) {
-			res += reactiveList.size();
+		for(List<Object> reagentList : _mapElements.values()) {
+			res += reagentList.size();
 		}
 
 		return res;
@@ -887,8 +887,8 @@ public final class Solution implements Collection<Object>{
 	public Object[] toArray() {
 		List<Object> res = new LinkedList<Object>();
 
-		for(List<Object> reactiveList : _mapElements.values()) {
-			res.addAll(reactiveList);
+		for(List<Object> reagentList : _mapElements.values()) {
+			res.addAll(reagentList);
 
 		}
 
@@ -949,8 +949,8 @@ public final class Solution implements Collection<Object>{
 	}
 
 	/**
-	 * Returns the map of elements containing all this solution's elements/reactives.
-	 * @return The map of elements containing all this solution's elements/reactives.
+	 * Returns the map of elements containing all this solution's elements/reagents.
+	 * @return The map of elements containing all this solution's elements/reagents.
 	 */
 	Map<String, List<Object>> getMapElements() {
 		return _mapElements;

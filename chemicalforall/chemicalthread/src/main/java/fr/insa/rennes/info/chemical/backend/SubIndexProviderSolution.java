@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * <p>
  * This class represents a sub index provider on a solution. That is to say that it does not simply
- * iterates over 1 reactive, but several reactives. Moreover, it can also iterate on reactives in inner
+ * iterates over 1 reagent, but several reagents. Moreover, it can also iterate on reagents in inner
  * solutions, using a recursive structure (based on {@link SubIndexProviderSolution} and 
  * {@link SubIndexProviderElement}). Like all index providers, this sub index provider iterates
  * overs elements in a given solution that we will call <em>main solution</em>. Note that a main
@@ -19,7 +19,7 @@ import java.util.List;
  * In the first list, each entry corresponds to a sub solution in the main solution. 
  * For each one of these sub solution, a list of sub index provider is given. In the basic case, 
  * this list contains only instances of the {@link SubIndexProviderElement} class, 
- * one for each type of reactive searched in the sub solution. For example, if a reaction rule
+ * one for each type of reagent searched in the sub solution. For example, if a reaction rule
  * is requesting 2 integers and a string in a sub solution, if we consider that the main 
  * solution contains 2 sub solution, the list of list will be: <br />
  * [ [SubIndexProviderElement(int), SubIndexProvider(int), SubIndexProvider(string)], [SubIndexProviderElement(int), SubIndexProvider(int), SubIndexProvider(string)] ]<br />
@@ -31,7 +31,7 @@ import java.util.List;
  * </p>
  * <p>
  * With this structure, this sub index provider is able to try EVERY combination
- * of reactives for the reaction rule. The first level of the list of list of sub index provider
+ * of reagents for the reaction rule. The first level of the list of list of sub index provider
  * is taken in order (that is to say, the sub solutions are considered one after the other), and
  * each element in the second level is incremented (with {@link SubIndexProvider#increment()})
  * in the right order, until all the sub index provider reach the overflow. Then the next sub solution
@@ -185,12 +185,12 @@ public class SubIndexProviderSolution implements SubIndexProvider{
 
 
 	/**
-	 * Computes the number of different combination of reactives possible.
+	 * Computes the number of different combination of reagents possible.
 	 * This number can be consequent (thus the {@link BigInteger} value returned).
 	 * Basically, this function multiplies the value returned by
 	 * {@link SubIndexProvider#getNumberOfElements()} for each sub index provider,
 	 * and sums these values for all the sub solutions.
-	 * @return the number of different combination of reactives possible
+	 * @return the number of different combination of reagents possible
 	 */
 	public BigInteger getNumberOfElements() {
 		BigInteger result = BigInteger.valueOf(0);

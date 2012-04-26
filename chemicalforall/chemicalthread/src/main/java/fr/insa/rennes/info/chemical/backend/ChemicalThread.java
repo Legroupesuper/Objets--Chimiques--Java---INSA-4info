@@ -12,7 +12,7 @@ import fr.insa.rennes.info.chemical.user.ReactionRule.Multiplicity;
  * This class executes a reaction, it uses a reaction rule object and its 
  * {@link ReactionRule#computeSelect()} and {@link ReactionRule#computeResult()} functions
  * to process to reactions. Each reaction rule in a solution is given a chemical thread that will execute its
- * reaction according to its specifications (reactives, products, ...).
+ * reaction according to its specifications (reagents, products, ...).
  * @author Andréolli Cédric, Boulanger Chloé, Cléro Olivier, Guellier Antoine, Guilloux Sébastien, Templé Arthur
  *
  */
@@ -51,7 +51,7 @@ public class ChemicalThread extends Thread {
 	 * reaction is re-inserted in the solution. Finally, it wakes all the chemical threads in the solution. If the 
 	 * reaction rule is one-shot, this thread stops and the reaction rule object is deleted from the solution.
 	 * In case where {@link Solution#requestForParameters(ReactionRule)} fails, {@link Solution#makeSleep()} is called
-	 * in order to wait until new reactives are added to the solution or until the solution becomes inert.
+	 * in order to wait until new reagents are added to the solution or until the solution becomes inert.
 	 * @see ReactionRule.Multiplicity
 	 */
 	@Override

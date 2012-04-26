@@ -14,7 +14,7 @@ import fr.insa.rennes.info.chemical.user.ReactionRule;
 
 /**
  * This ReactionRule is used to put a bar into the result solution.
- * It takes the following reactives: (they must appear in this order)
+ * It takes the following reagents: (they must appear in this order)
  * <ul>
  * 	<li>SubSolution "barInCreaction"
  * 		<ul>

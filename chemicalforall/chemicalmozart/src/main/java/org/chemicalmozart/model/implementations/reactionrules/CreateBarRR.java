@@ -16,7 +16,7 @@ import fr.insa.rennes.info.chemical.user.ReactionRule;
  * is no longer in the Solution.<br />
  * <br />
  * Here is how it works :<br />
- * It takes two reactives :<br />
+ * It takes two reagents :<br />
  * <ul>
  * 	<li>BarNumber _number</li>
  *  <li>QuaterPerBar _quater</li>

@@ -7,10 +7,10 @@ import fr.insa.rennes.info.chemical.user.ReactionRule;
 
 
 /**
- * This class implements {@link SubSolutionReactivesAccessor} and is part of a recursive structure constructed from {@link SubSolution} and
+ * This class implements {@link SubSolutionReagentsAccessor} and is part of a recursive structure constructed from {@link SubSolution} and
  * {@link SubSolutionElements} objects. The parameterized type of this class has to be one of those two types.<br />
- * This class is meant to be used as attribute (i.e as reactive) in an implementation class of {@link ReactionRule}, in order to specify
- * that the reaction rule needs reactives that are in an inner solution.<br />
+ * This class is meant to be used as attribute (i.e as reagent) in an implementation class of {@link ReactionRule}, in order to specify
+ * that the reaction rule needs reagents that are in an inner solution.<br />
  * For example, to find elements in a sub solution, use <code>SubSolution&lt;SubSolutionElements&gt;</code>; and to find elements in a sub-sub-solution, use
  * <code>SubSolution&lt;SubSolution&lt;SubSolutionElements&gt;&gt;</code> as attribute in a reaction rule class. 
  * <br />
@@ -19,17 +19,17 @@ import fr.insa.rennes.info.chemical.user.ReactionRule;
  * 
  * @author Andréolli Cédric, Boulanger Chloé, Cléro Olivier, Guellier Antoine, Guilloux Sébastien, Templé Arthur
  *
- * @param <T> A {@link SubSolutionReactivesAccessor} object: it has to be either {@link SubSolution} or {@link SubSolutionElements}.
+ * @param <T> A {@link SubSolutionReagentsAccessor} object: it has to be either {@link SubSolution} or {@link SubSolutionElements}.
  */
-public final class SubSolution<T extends SubSolutionReactivesAccessor> implements SubSolutionReactivesAccessor {
+public final class SubSolution<T extends SubSolutionReagentsAccessor> implements SubSolutionReagentsAccessor {
 	/**
-	 * An object implementing {@link SubSolutionReactivesAccessor}
+	 * An object implementing {@link SubSolutionReagentsAccessor}
 	 */
 	private T _element;
 	
 	/**
-	 * Builds a SubSolution object, with the specified {@link SubSolutionReactivesAccessor} implementation object.
-	 * @param e the {@link SubSolutionReactivesAccessor} implementation object.
+	 * Builds a SubSolution object, with the specified {@link SubSolutionReagentsAccessor} implementation object.
+	 * @param e the {@link SubSolutionReagentsAccessor} implementation object.
 	 */
 	public SubSolution(T e){
 		_element = e;

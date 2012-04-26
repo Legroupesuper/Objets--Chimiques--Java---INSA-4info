@@ -18,7 +18,7 @@ import fr.insa.rennes.info.chemical.user.ReactionRule;
  * This ReactionRule is used to generate the harmonic part of a measure.<br />
  * Starting from a DegreeImpl, it generates a ChordImpl. <br />
  * A ChordImpl is quite similar to a DegreeImpl but it also contains the notion of duration.<br />
- * Here is how it works, it takes the following reactives.<br />
+ * Here is how it works, it takes the following reagents.<br />
  * <ul>
  * 	<li>Subsolution : (the order must be respected for the tests)
  * 		<ul>
