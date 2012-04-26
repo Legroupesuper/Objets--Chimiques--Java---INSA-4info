@@ -1,10 +1,46 @@
-.directory
-Thumbs.db
-target
-.project
+# use glob syntax.
+syntax: glob
+*.ser
+*.class
+*~
+*.bak
+#*.off
+*.old
+
+# eclipse conf file
 .settings
 .classpath
+.project
+.manager
+.scala_dependencies
+
+# idea
+.idea
+*.iml
+
+# building
+target
+build
+null
+tmp*
+temp*
+dist
+test-output
+build.log
+
+# other scm
+.svn
+.CVS
+.hg*
+
+# custom stuff
+.directory
+Thumbs.db
 .metadata
+bin
+.cache
+*.kate-swp
+*.log
 .DS_Store
 
 # get rid of javadoc files
