@@ -264,7 +264,7 @@ class BuilderSubIndexProviderSolutionImpl implements BuilderSubIndexProviderSolu
 					SubIndexProviderSolution sipSolAccumulation = null;
 					ParameterizedType p = (ParameterizedType)f.getGenericType();
 
-					for(Object o : _solution.getMapElements().get(Solution.class.getName())){
+					for(Object o : _solution.getSubSolutions()){
 						Solution s = (Solution) o;
 
 						//Recursion : create sub sub index providers

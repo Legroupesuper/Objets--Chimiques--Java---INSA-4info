@@ -10,12 +10,12 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.Semaphore;
 import java.util.logging.FileHandler;
 
 import fr.insa.rennes.info.chemical.user.Dontreact;
@@ -35,7 +35,12 @@ import fr.insa.rennes.info.chemical.user.ReactionRule;
  *
  */
 public final class Solution implements Collection<Object>{
-
+	
+	public static int ID = 0;
+	
+	private int myId;
+	
+	
 	/**
 	 * Different strategies available for reagent selection sequence.
 	 * <p>
@@ -80,7 +85,7 @@ public final class Solution implements Collection<Object>{
 	 * The thread group, common to all the threads
 	 */
 	private ThreadGroup _threadGroup;
-	
+
 	/**
 	 * The reagent iteration strategy, chosen by the user. The chosen strategy will apply 
 	 * to every reaction rule added in this solution. 
@@ -120,6 +125,9 @@ public final class Solution implements Collection<Object>{
 		_threadTable = Collections.synchronizedMap(new HashMap<ReactionRule, ChemicalThread>());
 		_strategy = s;
 		_inert = false;
+		
+		myId = ID;
+		ID++;
 	}
 
 	/**
@@ -132,7 +140,6 @@ public final class Solution implements Collection<Object>{
 	 */
 	private boolean checkReactionRuleReagent(Object reactionRuleObject) {
 		Class<? extends Object> rrClass = reactionRuleObject.getClass();
-		String errorMsg = "";
 
 		//We check that every field has an appropriate setter
 		boolean classOK = true;
@@ -154,10 +161,8 @@ public final class Solution implements Collection<Object>{
 				}
 			}
 
-			if(!(setterOK)){
-				classOK = false;
-				if(!setterOK)
-					errorMsg+="class "+rrClass.getName()+" lacks a setter for attribute "+f+"\n";
+			if(!setterOK){
+				return false;
 			}
 		}
 

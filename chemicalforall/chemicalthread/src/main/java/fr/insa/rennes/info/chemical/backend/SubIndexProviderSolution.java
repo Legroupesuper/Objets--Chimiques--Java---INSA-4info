@@ -60,7 +60,7 @@ public class SubIndexProviderSolution implements SubIndexProvider{
 	 */
 	private int _currentSubIP;
 	/**
-	 * The list of dependant indexes. Two indexes are said dependent when they are
+	 * The list of dependent indexes. Two indexes are said dependent when they are
 	 *  pointing on the same type of object, in the same solution. The structure
 	 *  is a list of list of integer because the is several set of dependent indexes.
 	 */
@@ -174,12 +174,6 @@ public class SubIndexProviderSolution implements SubIndexProvider{
 
 			i++;
 		}
-
-		/*String result = "("+_currentSubSol+"/"+_listElements.size();
-		//result += _currentValue;
-		result += ") {"+_dependantIndexes+"}";
-		for(SubIndexProvider e : _listElements.get(_currentSubSol))
-			result+= (e.toString()+" ");*/
 		return result;
 	}
 
