@@ -924,10 +924,32 @@ public final class Solution implements Collection<Object>{
 	 */
 	@Override
 	public String toString(){
-		String res = "Solution is :\n";
+		String res = "Solution contains :\n"+this.prettyPrint(0);
+		return res;
+	}
+	
+	/*
+	 * A somewhat useful pretty printer...
+	 */
+	private String prettyPrint(int level){
+
+		String res = "";
+		String alinea = "";
+		// Prepare indentation
+		for(int i = 0 ; i < level ; i++){
+			alinea += "\t";
+		}
 
 		for(Map.Entry<String, List<Object>> entry : _mapElements.entrySet()) {
-			res += entry.getKey()+" -> "+entry.getValue()+"\n";
+			String type = entry.getKey();
+			if(type.equals(Solution.class.getName())){
+				res += alinea+type+" ->\n";
+				for(Object sol : entry.getValue()){
+					res += ((Solution)sol).prettyPrint(level+1);
+				}
+			} else {
+				res += alinea+type+" -> "+entry.getValue()+"\n";				
+			}
 		}
 
 		return res;
