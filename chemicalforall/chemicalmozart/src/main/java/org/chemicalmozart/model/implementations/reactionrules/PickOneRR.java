@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.chemicalmozart.model.implementations.DegreeImpl;
-import org.chemicalmozart.model.implementations.QuaterLeft;
 import org.chemicalmozart.model.implementations.solutionindentification.BarInCreation;
 import org.chemicalmozart.model.implementations.solutionindentification.Temporary;
 

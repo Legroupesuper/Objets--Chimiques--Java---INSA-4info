@@ -36,7 +36,7 @@ public class StartMelodicRRTest extends TestCase{
 		SubSolution<SubSolutionElements> subsol = new SubSolution<SubSolutionElements>(elements);
 
 		rr.set_pitch(pitch);
-		rr.set_measureNumber(new BarNumber(1));
+		rr.set_barNumber(new BarNumber(1));
 		rr.set_sol(subsol);
 
 		this._tabResult = rr.computeResult();
@@ -83,7 +83,7 @@ public class StartMelodicRRTest extends TestCase{
 		SubSolution<SubSolutionElements> subsol = new SubSolution<SubSolutionElements>(elements);
 
 		rr.set_pitch(pitch);
-		rr.set_measureNumber(new BarNumber(1));
+		rr.set_barNumber(new BarNumber(1));
 		rr.set_sol(subsol);
 
 		assertTrue("The test should pass, check the compute result or look at the other tests to have more informations", rr.computeSelect());
@@ -113,7 +113,7 @@ public class StartMelodicRRTest extends TestCase{
 		SubSolution<SubSolutionElements> subsol = new SubSolution<SubSolutionElements>(elements);
 
 		rr.set_pitch(pitch);
-		rr.set_measureNumber(new BarNumber(2));
+		rr.set_barNumber(new BarNumber(2));
 		rr.set_sol(subsol);
 
 		assertFalse("The test shouldn't pass, BarNumber must correspond", rr.computeSelect());
@@ -142,7 +142,7 @@ public class StartMelodicRRTest extends TestCase{
 		SubSolution<SubSolutionElements> subsol = new SubSolution<SubSolutionElements>(elements);
 
 		rr.set_pitch(pitch);
-		rr.set_measureNumber(new BarNumber(1));
+		rr.set_barNumber(new BarNumber(1));
 		rr.set_sol(subsol);
 
 		assertFalse("The test shouldn't pass, The sub solution dosen't contain a BarInCreation", rr.computeSelect());
@@ -171,7 +171,7 @@ public class StartMelodicRRTest extends TestCase{
 		SubSolution<SubSolutionElements> subsol = new SubSolution<SubSolutionElements>(elements);
 
 		rr.set_pitch(pitch);
-		rr.set_measureNumber(new BarNumber(1));
+		rr.set_barNumber(new BarNumber(1));
 		rr.set_sol(subsol);
 
 		assertFalse("The test shouldn't pass, The subsolution doesn't contain a BarNumber object", rr.computeSelect());

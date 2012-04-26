@@ -1,7 +1,14 @@
 package org.chemicalmozart.model.implementations.reactionrules;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.chemicalmozart.model.implementations.ChordImpl;
+import org.chemicalmozart.model.implementations.DegreeImpl;
 import org.chemicalmozart.model.implementations.Note;
+import org.chemicalmozart.model.implementations.Note.Type;
 import org.chemicalmozart.model.implementations.Pitch;
+import org.chemicalmozart.model.interfaces.Degree;
 
 import fr.insa.rennes.info.chemical.user.Dontreact;
 import fr.insa.rennes.info.chemical.user.ReactionRule;
@@ -41,7 +48,8 @@ public class MelodicRR implements ReactionRule{
 	@Dontreact	private boolean _activated;
 
 	/**
-	 * The compute result must assign the pitch of the Note. Let say that the degree of ChordImpl is named deg. There is for the moment 2 different cases :<br />
+	 * The compute result must assign the pitch of the Note. Let's say that the degree of ChordImpl is named deg. 
+	 * There is for the moment 2 different cases :<br />
 	 * - _note.get_type()==STRONG : The pitch must be chosen between the following degrees :
 	 * 		<ul>
 	 *	 		<li>deg</li>
@@ -54,6 +62,34 @@ public class MelodicRR implements ReactionRule{
 	 * 		-> Choose an octave close to the old one
 	 */
 	public Object[] computeResult() {
+		if(_note.get_type()==Type.STRONG){
+			DegreeImpl[] possibleDegrees;
+			int choicesNumber = 3;
+			
+			DegreeImpl deg = _note.get_chord().get_degrees();
+			possibleDegrees = new DegreeImpl[3];
+			possibleDegrees[0]=deg;
+			
+			int deg2value = (deg.get_value()+2)%8 + ((int)(deg.get_value()+2)/(int)8);
+			possibleDegrees[1]= new DegreeImpl(deg2value);
+			
+			int deg3value = (deg.get_value()+4)%8 + ((int)(deg.get_value()+4)/(int)8);
+			possibleDegrees[2]= new DegreeImpl(deg3value);
+
+			int degChosenIndex =  (int)(Math.random()*3);
+			DegreeImpl chosenDegree = (DegreeImpl) possibleDegrees[degChosenIndex];
+			ChordImpl chord = new ChordImpl();
+			chord.set_degrees(chosenDegree);
+			_note.set_chord(chord);
+			Pitch pitch = new Pitch();
+			pitch.setDegree(chosenDegree);
+			_note.set_pitch(pitch);
+		}
+		else{
+			int degChosenIndex =  (int)(Math.random()*6);
+			// J'pige que dalle au delbor ^^
+		}
+		
 		return null;
 	}
 	/**

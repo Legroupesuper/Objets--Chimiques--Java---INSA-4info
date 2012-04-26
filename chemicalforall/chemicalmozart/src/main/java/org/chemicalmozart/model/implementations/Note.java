@@ -21,6 +21,10 @@ public class Note {
 	private int _position;
 	private Pitch _pitch;
 	private ChordImpl _chord;
+	
+	/**
+	 * Constructors
+	 */
 	public Note() {
 		this._type = Type.NONE;
 	}

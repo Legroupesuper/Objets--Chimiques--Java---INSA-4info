@@ -16,6 +16,8 @@ public class StructuralRR {
 
 	private SubSolution _sol;
 	private Number _num;
+	
+	
 	/**
 	 * @return the sol
 	 */
