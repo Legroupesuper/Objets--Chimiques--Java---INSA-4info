@@ -208,9 +208,6 @@ public class RythmeHRRTest extends TestCase{
 		List<Class<? extends Object>> listType = rr.getSol().getTypeList();
 		e.setTypeList(listType);
 		List<Object> l = new ArrayList<Object>();
-		BarInCreation b = new BarInCreation();
-		b.set_state(BarInCreationState.RYTHMEHRR);
-		l.add(b);
 		l.add(0);
 		l.add(new DegreeImpl(1));
 		l.add(new QuaterLeft(4));
@@ -249,7 +246,6 @@ public class RythmeHRRTest extends TestCase{
 		l.add(b);
 		l.add(0);
 		l.add(new DegreeImpl(1));
-		l.add(new QuaterLeft(4));
 		e.setElements(l);
 		SubSolution<SubSolutionElements> subsol = new SubSolution<SubSolutionElements>(e);
 		rr.setSol(subsol);

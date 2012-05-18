@@ -2,6 +2,7 @@ package org.chemicalmozart;
 
 import javax.swing.JDialog;
 
+import org.chemicalmozart.model.implementations.export.CurrentFile;
 import org.chemicalmozart.view.implementations.MainView;
 
 /**
@@ -19,5 +20,7 @@ public class Main
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+    	CurrentFile currentFile = CurrentFile.getInstance();
+    	currentFile.addEvent(null);
     }
 }

@@ -64,65 +64,6 @@ public class HarmonicRR4Test extends TestCase{
 	}
 
 	@Test
-	public void testComputeSelect() {
-		HarmonicRR4 rr = new HarmonicRR4();
-		assertFalse("The computeSelect shouldn't accept this configuration", rr.computeSelect());
-
-		//We instantiate the RR with a valid DegreeImpl and a valid Solution which represents a BarInCreation
-		//We test some different configurations
-		rr.set_degree(new DegreeImpl(4));
-		assertFalse("The computeSelect shouldn't accept this configuration", rr.computeSelect());
-		Solution sol = new Solution();
-		BarInCreation bic = new BarInCreation();
-		bic.set_state(BarInCreationState.HARMONICRR);
-		//Instanciate a SubSolution object for the RR
-		SubSolutionElements e = new  SubSolutionElements();
-		List<Class<? extends Object>> l = new ArrayList<Class<? extends Object>>();
-		l.add(BarInCreation.class);
-		e.setTypeList(l);
-		List<Object> ll = new ArrayList<Object>();
-		ll.add(sol);
-		ll.add(bic);
-		e.setElements(ll);
-		SubSolution<SubSolutionElements> subsol = new SubSolution<SubSolutionElements>(e);
-		rr.set_barInCreationSolution(subsol);
-		assertFalse("The computeSelect shouldn't accept this configuration", rr.computeSelect());
-		sol.add(bic);
-		assertFalse("The computeSelect shouldn't accept this configuration", rr.computeSelect());
-		sol.add(new QuaterLeft(4));
-		assertFalse("The computeSelect shouldn't accept this configuration", rr.computeSelect());
-		sol.add(new BarNumber(1));
-		assertTrue("The computeSelect doesn't validate some good parameters", rr.computeSelect());
-	}
-
-	@Test
-	public void testComputeSelectFail() {
-		HarmonicRR4 rr = new HarmonicRR4();
-
-		//We instantiate the RR with a valid DegreeImpl and a valid Solution which represents a BarInCreation
-		//We test some different configurations
-		rr.set_degree(new DegreeImpl(12));
-		Solution sol = new Solution();
-		BarInCreation bic = new BarInCreation();
-
-		//Instanciate a SubSolution object for the RR
-		SubSolutionElements e = new  SubSolutionElements();
-		List<Class<? extends Object>> l = new ArrayList<Class<? extends Object>>();
-		l.add(BarInCreation.class);
-		e.setTypeList(l);
-		List<Object> ll = new ArrayList<Object>();
-		ll.add(sol);
-		ll.add(bic);
-		e.setElements(ll);
-		SubSolution<SubSolutionElements> subsol = new SubSolution<SubSolutionElements>(e);
-		rr.set_barInCreationSolution(subsol);
-		sol.add(bic);
-		sol.add(new QuaterLeft(4));
-		sol.add(new BarNumber(1));
-		assertTrue("The computeSelect doesn't validate some good parameters", rr.computeSelect());
-	}
-
-	@Test
 	public void testComputeSelectFail2() {
 		HarmonicRR4 rr = new HarmonicRR4();
 		assertFalse("The computeSelect shouldn't accept this configuration", rr.computeSelect());
