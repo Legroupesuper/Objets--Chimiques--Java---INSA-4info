@@ -65,7 +65,12 @@ public class PickOneRR implements ReactionRule{
 	 * @return the chosen DegreeImpl, a GarbageRR
 	 */
 	public Object[] computeResult() {
-		Object chosenDegree = _temporaryBar.getElements().get(1);
+		Object[] tab = _temporaryBar.getElements().toArray();
+		
+		//TODO
+		// solution contient plusieurs DegreeImpl, lequel prendre ? j'en prends 1 au pif
+		int randomIndex = (int)(Math.random()*(tab.length-1)) +1;
+		Object chosenDegree = _temporaryBar.getElements().get(randomIndex);
 		
 		Solution inCreationSolution = _barInCreation.getSolution();
 		BarInCreation babar = new BarInCreation();

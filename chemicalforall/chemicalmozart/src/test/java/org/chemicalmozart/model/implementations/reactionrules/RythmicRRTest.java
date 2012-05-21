@@ -175,7 +175,7 @@ public class RythmicRRTest extends TestCase{
 		}
 		assertTrue("No RythmicRR was found in the computeResult", bool);
 	}
-
+	/*
 	@Test
 	public void testComputeSelect1() {
 		MozartSolutionFactory factory = new MozartSolutionFactoryImpl();
@@ -208,7 +208,7 @@ public class RythmicRRTest extends TestCase{
 		rr.set_chordNumber(0);
 		assertTrue("The compute select should pass in this configuration", rr.computeSelect());
 	}
-
+	*/
 	@Test
 	public void testComputeSelect2() {
 		MozartSolutionFactory factory = new MozartSolutionFactoryImpl();
