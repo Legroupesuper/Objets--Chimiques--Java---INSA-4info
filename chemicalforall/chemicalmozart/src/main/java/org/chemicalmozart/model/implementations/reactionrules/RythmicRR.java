@@ -1,3 +1,21 @@
+/* 
+	Copyright (C) 2012 Andréolli Cédric, Boulanger Chloé, Cléro Olivier, Guellier Antoine, Guilloux Sébastien, Templé Arthur
+
+    This file is part of ChemicalLibSuper.
+
+    ChemicalLibSuper is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Lesser General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    ChemicalLibSuper is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Lesser General Public License for more details.
+	
+    You should have received a copy of the GNU Lesser General Public License
+    along with ChemicalLibSuper.  If not, see <http://www.gnu.org/licenses/>
+*/
 package org.chemicalmozart.model.implementations.reactionrules;
 
 import java.util.ArrayList;
@@ -76,6 +94,7 @@ public class RythmicRR implements ReactionRule{
 		SubSolutionElements elts = new SubSolutionElements();
 		List<Class<? extends Object>> l = new ArrayList<Class<? extends Object>>();
 		l.add(RythmePull.class);
+		l.add(org.chemicalmozart.model.interfaces.Rythme.class);
 		elts.setTypeList(l);
 		_rythmeSolution = new SubSolution<SubSolutionElements>(elts);
 		this._num = 0;
@@ -130,7 +149,7 @@ public class RythmicRR implements ReactionRule{
 			this._chordImpl.set_position(this._chordImpl.get_position()+this._max);
 			this._chordNumber++;
 			this._max += nbNotesInChosenRythm;
-			result = new Object[]{this._num,this._chordImpl,this._rythmeSolution,this._melodicRR};
+			result = new Object[]{this._num,this._chordImpl,rythmSol,this._melodicRR, this};
 		}
 
 
@@ -150,30 +169,37 @@ public class RythmicRR implements ReactionRule{
 		}
 		return result;
 	}
+ 
 
 	/**
-	 * Must check that _chordNumber correspond to the position of the _chordImpl. It must also check that the selected subsolution rhythm
-	 * has the same duration than _chordImpl.
+	 * Must check that _chordNumber correspond to the position of the _chordImpl.
+	 * It must also check that the selected subsolution rhythm has the same duration than _chordImpl.
 	 */
+	
 	public boolean computeSelect() {
 		List<Object> rythmeSolutionElements = _rythmeSolution.getElements();
 		boolean rythmeSolution_containsARythmePull = false;
 		boolean rythmeSolution_RythmHasSameDurationThanChordImpl = false;
 		boolean chordNumberCorrespondToChordImplPosition = this._chordNumber == this._chordImpl.get_position();
+		boolean rythmeSolution_containsARythm = false;
+		
 		if (rythmeSolutionElements != null){
-			if(rythmeSolutionElements.size()>=1){
+			if(rythmeSolutionElements.size()>=2){
 				rythmeSolution_containsARythmePull = rythmeSolutionElements.get(0) instanceof RythmePull;
-				if(rythmeSolution_containsARythmePull){
-					rythmeSolution_RythmHasSameDurationThanChordImpl = (rythmeSolutionElements.get(0)).equals(_chordImpl.getDuration());
-							
+				rythmeSolution_containsARythm = rythmeSolutionElements.get(1) instanceof org.chemicalmozart.model.interfaces.Rythme;
+				if(rythmeSolution_containsARythmePull && rythmeSolution_containsARythm){
+					org.chemicalmozart.model.interfaces.Rythme r = (Rythme) rythmeSolutionElements.get(1);
+					rythmeSolution_RythmHasSameDurationThanChordImpl = r.getDuration() == _chordImpl.getDuration();
 				}
 			}
 		}
 		return rythmeSolution_containsARythmePull &&
+				rythmeSolution_containsARythm &&
 				rythmeSolution_RythmHasSameDurationThanChordImpl &&
 				chordNumberCorrespondToChordImplPosition;
 	}
-
+	
+	
 	/**
 	 * @return the _melodicRR
 	 */

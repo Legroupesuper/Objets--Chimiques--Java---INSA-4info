@@ -1,3 +1,21 @@
+/* 
+	Copyright (C) 2012 Andréolli Cédric, Boulanger Chloé, Cléro Olivier, Guellier Antoine, Guilloux Sébastien, Templé Arthur
+
+    This file is part of ChemicalLibSuper.
+
+    ChemicalLibSuper is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Lesser General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    ChemicalLibSuper is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Lesser General Public License for more details.
+	
+    You should have received a copy of the GNU Lesser General Public License
+    along with ChemicalLibSuper.  If not, see <http://www.gnu.org/licenses/>
+*/
 package org.chemicalmozart.model.implementations.reactionrules;
 
 import java.util.ArrayList;
@@ -68,7 +86,7 @@ public class MoveToResultRR implements ReactionRule{
 	 * <br />
 	 * It must put back the BarInCreation and the QuaterLeft in the BarInCreation solution and then add the BarInCreationSolution into
 	 * the Result solution. It must also put back the Result object into the Result solution.
-	 * @return The Result solution as describe
+	 * @return The Result solution as described
 	 */
 	public Object[] computeResult() {
 		Solution inCreationSolution = _subSolInCreation.getSolution();
@@ -98,6 +116,7 @@ public class MoveToResultRR implements ReactionRule{
 		boolean subSolInCreation_quaterLeftWithAValue0 = false;
 		boolean subSolInCreation_containsAtLeastOneChodImpl = false;
 		boolean subSolResult_containsResult = false;
+		
 		if(subSolInCreationElements != null && subSolResultElements != null){
 			if(subSolInCreationElements.size()>=2){
 				subSolInCreation_ContainsBarInCreation = subSolInCreationElements.get(0) instanceof BarInCreation;

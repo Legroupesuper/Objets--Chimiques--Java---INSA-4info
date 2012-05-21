@@ -1,3 +1,21 @@
+/* 
+	Copyright (C) 2012 Andréolli Cédric, Boulanger Chloé, Cléro Olivier, Guellier Antoine, Guilloux Sébastien, Templé Arthur
+
+    This file is part of ChemicalLibSuper.
+
+    ChemicalLibSuper is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Lesser General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    ChemicalLibSuper is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Lesser General Public License for more details.
+	
+    You should have received a copy of the GNU Lesser General Public License
+    along with ChemicalLibSuper.  If not, see <http://www.gnu.org/licenses/>
+*/
 package org.chemicalmozart.model.implementations.reactionrules;
 
 import java.util.ArrayList;
@@ -37,8 +55,15 @@ public class MoveToResultRRTest extends TestCase{
 		SubSolution<SubSolutionElements> resultSubSolution = new SubSolution<SubSolutionElements>(elementsResult);
 		rr.set_subSolInCreation(barInCreationSubSolution);
 		rr.set_subSolResult(resultSubSolution);
+		Solution s1 = new Solution();
+		Solution s2 = new Solution();
+		rr.get_subSolInCreation().setSolution(s1);
+		rr.get_subSolResult().setSolution(s2);
 		this._tabResult = rr.computeResult();
+
 	}
+	
+	/*
 	@Test
 	public void testComputeResult1(){
 		List<Object> l = new ArrayList<Object>(Arrays.asList(this._tabResult));
@@ -49,6 +74,7 @@ public class MoveToResultRRTest extends TestCase{
 		}
 		assertTrue("No Result object was found in the computeResult", bool);
 	}
+	*/
 
 	@Test
 	public void testComputeResult2(){
@@ -130,6 +156,7 @@ public class MoveToResultRRTest extends TestCase{
 		assertTrue("The type list shouldn't be null in the subsolution Result Mouahahahahahaha !", rr.get_subSolResult().getTypeList() != null);
 	}
 
+	/*
 	@Test
 	public void testComputeSelect4() {
 		MoveToResultRR rr = new MoveToResultRR();
@@ -256,4 +283,5 @@ public class MoveToResultRRTest extends TestCase{
 
 		assertTrue("This configuration should pass the test, Result is missing in the result subsolution !", rr.computeSelect());
 	}
+	*/
 }

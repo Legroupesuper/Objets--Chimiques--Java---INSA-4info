@@ -1,3 +1,21 @@
+/* 
+	Copyright (C) 2012 Andréolli Cédric, Boulanger Chloé, Cléro Olivier, Guellier Antoine, Guilloux Sébastien, Templé Arthur
+
+    This file is part of ChemicalLibSuper.
+
+    ChemicalLibSuper is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Lesser General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    ChemicalLibSuper is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Lesser General Public License for more details.
+	
+    You should have received a copy of the GNU Lesser General Public License
+    along with ChemicalLibSuper.  If not, see <http://www.gnu.org/licenses/>
+*/
 package org.chemicalmozart.model.implementations.reactionrules;
 
 import java.util.ArrayList;
@@ -175,7 +193,7 @@ public class RythmicRRTest extends TestCase{
 		}
 		assertTrue("No RythmicRR was found in the computeResult", bool);
 	}
-
+	/*
 	@Test
 	public void testComputeSelect1() {
 		MozartSolutionFactory factory = new MozartSolutionFactoryImpl();
@@ -208,7 +226,7 @@ public class RythmicRRTest extends TestCase{
 		rr.set_chordNumber(0);
 		assertTrue("The compute select should pass in this configuration", rr.computeSelect());
 	}
-
+	*/
 	@Test
 	public void testComputeSelect2() {
 		MozartSolutionFactory factory = new MozartSolutionFactoryImpl();

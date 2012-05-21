@@ -1,3 +1,21 @@
+/* 
+	Copyright (C) 2012 Andréolli Cédric, Boulanger Chloé, Cléro Olivier, Guellier Antoine, Guilloux Sébastien, Templé Arthur
+
+    This file is part of ChemicalLibSuper.
+
+    ChemicalLibSuper is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Lesser General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    ChemicalLibSuper is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Lesser General Public License for more details.
+	
+    You should have received a copy of the GNU Lesser General Public License
+    along with ChemicalLibSuper.  If not, see <http://www.gnu.org/licenses/>
+*/
 package org.chemicalmozart.model.implementations.reactionrules;
 
 import java.util.ArrayList;
@@ -6,6 +24,7 @@ import java.util.List;
 import org.chemicalmozart.model.implementations.ChordImpl;
 import org.chemicalmozart.model.implementations.DegreeImpl;
 import org.chemicalmozart.model.implementations.QuaterLeft;
+import org.chemicalmozart.model.implementations.Rythme;
 import org.chemicalmozart.model.implementations.solutionindentification.BarInCreation;
 
 import fr.insa.rennes.info.chemical.backend.SubSolution;
@@ -72,24 +91,28 @@ public class RythmeHRR implements ReactionRule{
 	 */
 	public Object[] computeResult() {
 		QuaterLeft qLeft = (QuaterLeft)_sol.getElements().get(3);
-		int chosenDuration;
+		Rythme chosenDuration;
 		int position;
+		QuaterLeft newQLeft;
+		int valueLeft;
 		if (qLeft.getValue() == 2){
-			chosenDuration = 2;
+			chosenDuration = Rythme.half;
 			position = 1;
+			newQLeft = new QuaterLeft(0);
 		}
 		else{
 			position = 0;
 			int choice = (int)Math.random()*2;
 			if (choice == 0){
-				chosenDuration = 2;
+				chosenDuration = Rythme.whole;
+				newQLeft = new QuaterLeft(0);
 			}else{
-				chosenDuration = 4;
+				chosenDuration = Rythme.half;
+				newQLeft = new QuaterLeft(2);
 			}
 		}
 		ChordImpl chordImpl = new ChordImpl();
 		chordImpl.setDuration(chosenDuration);
-		QuaterLeft newQLeft = new QuaterLeft(4-chosenDuration);
 		chordImpl.set_degrees((DegreeImpl)_sol.getElements().get(2));
 		chordImpl.set_position(position);
 		return new Object[]{chordImpl, position+1, newQLeft, (BarInCreation)_sol.getElements().get(0)};
