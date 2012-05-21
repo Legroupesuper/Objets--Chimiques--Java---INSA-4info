@@ -1,0 +1,162 @@
+﻿<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta charset="utf-8" />
+
+		<link rel="stylesheet" href="default.css" />
+		<link rel="stylesheet" type="text/css" media="print" href="print.css" />
+
+        <title>Chemical Programming using Java - INSA Rennes Project</title>
+    </head>
+
+<body>
+    
+
+<div id="logo-wrap">
+<div id="logo">
+	<img src="images/logo.png" alt="" class="topleft"/>
+	<h2> A student project by Insa de Rennes</h2><br/><br/>
+	<h1><a href="index-en.html">Chemical Programming using Java </a></h1>	
+</div>
+
+</div>
+
+<!-- start header -->
+<div id="header">
+	<div id="menu">
+		<ul>
+			<li><a href="index.html">Français</a></li>
+			<li><a href="#">English</a></li>
+		</ul>
+	</div>
+</div>
+<!-- end header -->
+<!-- start page -->
+<div id="wrapper">
+<div id="wrapper-btm">
+<div id="page">
+	<!-- start content -->
+	<div id="content">
+		<div class="post">
+			<h1 class="title">Project presentation </h1>
+			<div class="entry">
+				<p><img src="images/petri.png" alt="" width="178" height="135" class="left" />
+				The main objective of this project is to design a chemical programming library for Java. Chemical programming is based on a paradigm where data is treated as chemical reagents in a chemical solution.  This project includes a technology showcase using the library : a random music generator.
+				</p>
+			</div>
+		</div>
+		<div class="post">
+		<a name="programmation"></a>
+			<h2 class="title">Chemical programming</h2>
+			<div class="entry">
+				<p>Chemical programming is inspired by the chemical reaction mechanism, which is characterized by its indeterminism.</p> 
+				<p>Calculations can be represented as reactions, controlled by a set of rules, and data as molecules. Both are present in a solution. When a reaction is started, it will proceed until the system becomes stable, and leads to a final solution.
+				</p>
+				
+				<div style="text-align:center;"><img src="images/schema.png" alt="" width="500" height="285" /></div>
+				
+				<p><br/>This diagram represents a reaction which permits to find a maximum number among a set of numbers. The reaction rule is called "Maximum" and reagents are 5, 8 and 3. As shown by blue arrows, the rule will firstly react with 5 and 8, and only 8 will remain in the solution. Then, it will react with 8 and 3, and only 8 will remain in the solution. This solution is now inert, reaction is over. During another execution, the different reagents may be choosen in a different order, as shown by red arrows.</p>
+			</div>
+		</div>
+		<div class="post">
+		<a name="bibliotheque"></a>
+			<h2 class="title">Java library</h2>
+			<div class="entry">
+				
+				<p> Until then, chemical programming was used in combination with a specific language called HOCL. In order to interest as many programmers as possible, our library can be used with Java, and respects every aspects of object-oriented programming (interfaces, inheritance, reflexivity).</p><p> For example with the previous diagram, programmers can write their own reaction rule (MaxRule), then use it this way : </p>
+				<p>
+				<!-- HTML generated using hilite.me --><div style="background: #ffffff;float:left; overflow:auto;width:auto;color:black;background:white;padding:.2em .6em;border:solid gray;border-width:.1em .1em .1em .1em;"><pre style="margin: 0; line-height: 125%"><span style="color: #008000; font-weight: bold">class</span> <span style="color: #B00060; font-weight: bold">RuleMax</span> <span style="color: #008000; font-weight: bold">implements</span> ReactionRule<span style="color: #303030">{</span>
+
+    <span style="color: #008000; font-weight: bold">private</span> <span style="color: #303090; font-weight: bold">int</span> a<span style="color: #303030">,</span>b<span style="color: #303030">;</span>
+
+    <span style="color: #008000; font-weight: bold">public</span> Object<span style="color: #303030">[]</span> <span style="color: #0060B0; font-weight: bold">computeResult</span><span style="color: #303030">(){</span>
+
+        <span style="color: #008000; font-weight: bold">if</span><span style="color: #303030">(</span>a<span style="color: #303030">&gt;=</span>b<span style="color: #303030">)</span> 
+            <span style="color: #008000; font-weight: bold">return</span> <span style="color: #008000; font-weight: bold">new</span> Object<span style="color: #303030">[]{</span>a<span style="color: #303030">};</span>
+        <span style="color: #008000; font-weight: bold">else</span> 
+            <span style="color: #008000; font-weight: bold">return</span> <span style="color: #008000; font-weight: bold">new</span> Object<span style="color: #303030">[]{</span>b<span style="color: #303030">};</span>
+    <span style="color: #303030">}</span>
+
+<span style="color: #303030">}</span>
+</pre></div>
+
+
+
+			
+			<!-- HTML generated using hilite.me --><div style="background: #ffffff; float:left; overflow:auto;width:auto;color:black;background:white;padding:.2em .6em;border:solid gray;border-width:.1em .1em .1em .1em;"><pre style="margin: 0; line-height: 125%"><span style="color: #008000; font-weight: bold">public</span> <span style="color: #008000; font-weight: bold">class</span> <span style="color: #B00060; font-weight: bold">MyChemicalProgram</span><span style="color: #303030">{</span>
+ 
+   <span style="color: #008000; font-weight: bold">public</span> <span style="color: #008000; font-weight: bold">static</span> <span style="color: #303090; font-weight: bold">void</span> <span style="color: #0060B0; font-weight: bold">main</span><span style="color: #303030">(</span><span style="color: #303030">){</span>
+ 
+      Solution sol <span style="color: #303030">=</span> <span style="color: #008000; font-weight: bold">new</span> Solution<span style="color: #303030">();</span>
+      sol<span style="color: #303030">.</span><span style="color: #0000C0">add</span><span style="color: #303030">(</span><span style="color: #0000D0; font-weight: bold">5</span><span style="color: #303030">);</span>
+      sol<span style="color: #303030">.</span><span style="color: #0000C0">add</span><span style="color: #303030">(</span><span style="color: #0000D0; font-weight: bold">8</span><span style="color: #303030">);</span>
+      sol<span style="color: #303030">.</span><span style="color: #0000C0">add</span><span style="color: #303030">(</span><span style="color: #0000D0; font-weight: bold">3</span><span style="color: #303030">);</span>
+      sol<span style="color: #303030">.</span><span style="color: #0000C0">add</span><span style="color: #303030">(</span><span style="color: #008000; font-weight: bold">new</span> RuleMax<span style="color: #303030">());</span>
+ 
+      sol<span style="color: #303030">.</span><span style="color: #0000C0">run</span><span style="color: #303030">();</span>
+  <span style="color: #303030">}</span>
+<span style="color: #303030">}</span>
+</pre></div>
+				
+				
+			</div>
+			</div>
+			<div class="post"  style="clear: left">
+			<br/>
+			<a name="vitrine"></a>
+			<h2 class="title">Technology showcase</h2>
+			<div class="entry">
+				<p>
+				In order to provide an example of what can be done with the library, we decided to design a random music generator using it.   We focused on a very theorical musical form : the tonal system of classical music, mainly used from 1750 to 1820. This way we can set different reaction rules governing the track creation. </p>
+				<div style="text-align:center;"><img src="images/music.png" alt="" width="515" height="205" /></div>
+				<p><br/>Using a GUI, users can specify some parameters like tempo, range and number of bars. Then, the application will automatically generate a song dependent on these parameters.   
+				</p>
+			</div>
+		
+		</div>
+	</div>
+	<!-- end content -->
+	<!-- start sidebar -->
+	<div id="sidebar">
+		
+		<ul>
+			<li>
+				<h2>Summary</h2>
+				<ul>
+					<li><a href="#programmation">Chemical programming</a></li>
+					<li><a href="#bibliotheque">Java library</a></li>
+					<li><a href="#vitrine">Technology showcase</a></li>
+					
+					<li><a href="project.pdf"><br/>PDF printable version</a></li>
+				</ul>
+			</li>
+			<li>
+				<h2>Informations</h2>
+				<ul>
+					<li><a href="about.html">About</a></li>
+					<li><a href="contact-en.html">Contacts</a></li>
+				</ul>
+			</li>
+		</ul>
+		<br/>
+		<br/>
+		<a href="http://www.insa-rennes.fr"><img src="images/insa.png" alt=""/></a>
+		<br/><br/><br/>
+		<a href="http://www.irisa.fr"><img src="images/irisa.png" alt=""/></a>
+	</div>
+	<!-- end sidebar -->
+	<div style="clear: both;">&nbsp;</div>
+</div>
+<!-- end page -->
+</div>
+</div>
+<!-- start footer -->
+<div id="footer">
+	<div id="footer-wrap">
+	<p id="legal">(c) 2012 INSA Rennes. Andreolli, Boulanger, Clero, Guellier, Guilloux, Templé. LGPL license.</p>
+	</div>
+</div>
+<!-- end footer -->
+</body>
+</html>
