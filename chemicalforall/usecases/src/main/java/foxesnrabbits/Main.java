@@ -14,7 +14,7 @@ public class Main {
 		Random rand = new Random();
 		int r;
 		int nbReactionRules = 0;
-		for(int i = 0; i < N; i++) {
+		/*for(int i = 0; i < N; i++) {
 			for(int j = 0; j < M; j++) {
 				c = new Cell(i, j);
 				solution.add(c);
@@ -28,6 +28,6 @@ public class Main {
 					nbReactionRules++;
 				}
 			}
-		}
+		}*/
 	}
 }

@@ -28,16 +28,16 @@ public class Rabbit extends Animal implements ReactionRule {
 			int births = breed();
 			for(int i = 0; i < births; i++) {
 				Cell newLocation = _location.findFreeAdjacentCell();
-				result.add(new Rabbit(false, newLocation));
+				//result.add(new Rabbit(false, newLocation));
 			}
 			
 			//The rabbit just moves
 			_location = _nextMove;
 			
-			if((double)rand.nextInt(100)/100 <= this._chanceToBreed) {
+			/*if((double)rand.nextInt(100)/100 <= this._chanceToBreed) {
 				result = new Object[] { new Rabbit(this._remainingYears-1, this._chanceToBreed, _location), new Rabbit(50, 0.13, _location)};
 			else
-				result = new Object[] { new Rabbit(this._remainingYears-1, this._chanceToBreed, _location)};
+				result = new Object[] { new Rabbit(this._remainingYears-1, this._chanceToBreed, _location)};*/
 			
 			incrementAge();
 		}

@@ -5,7 +5,7 @@ import fr.insa.rennes.info.chemical.user.ReactionRule;
 public class Fox extends Animal implements ReactionRule {
 
 	public Fox() {
-		super(125, 0.06);
+		super(0, 0, 0, 0, 0);
 	}
 
 	public Object[] computeResult() {
