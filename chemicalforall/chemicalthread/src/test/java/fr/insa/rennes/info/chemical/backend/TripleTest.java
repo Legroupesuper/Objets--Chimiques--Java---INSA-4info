@@ -19,7 +19,6 @@
 package fr.insa.rennes.info.chemical.backend;
 
 import junit.framework.TestCase;
-import fr.insa.rennes.info.chemical.user.ReactionRule;
 
 /**
  * @author ArthurTemple
@@ -28,7 +27,6 @@ import fr.insa.rennes.info.chemical.user.ReactionRule;
 
 public class TripleTest extends TestCase {
 
-	private Triple testTriple;
 	
 	/**
 	 * @param name
@@ -52,9 +50,45 @@ public class TripleTest extends TestCase {
 	}
 
 	/**
-	 * Test method for {@link Triple#fooTest()}.
+	 * Test method for {@link Triple#Triple()}.
 	 */
-	public void testFooTest() {
-		assertTrue(true);
+	public void testConstructor() {
+		Triple<?, ?, ?> testTriple;
+		testTriple = new Triple<Integer, Object, String>(12, new Object(), "foo");
+		assertTrue("The constructor for Triple should not be fatal", testTriple instanceof Triple<?, ?, ?>);
+	}
+
+	/**
+	 * Test method for Triple's attribute getters.
+	 */
+	public void testGetters() {
+		Triple<?, ?, ?> testTriple;
+		String s1 = "baz";
+		String s2 = "qux";
+		Object o = new Object();
+		testTriple = new Triple<String, String, Object>(s1, s2, o);
+		assertTrue("Access to the first element of a Triple should be correct", testTriple.get_first().equals(s1));
+		assertTrue("Access to the second element of a Triple should be correct", testTriple.get_second().equals(s2));
+		assertTrue("Access to the third element of a Triple should be correct", testTriple.get_triple().equals(o));
+	}
+
+	/**
+	 * Test method for Triple's attribute setters.
+	 */
+	public void testSetters() {
+		Triple<String, String, Object> testTriple;
+		
+		String s1 = "baz";
+		String s2 = "qux";
+		Object o = new Object();
+		testTriple = new Triple<String, String, Object>("bim", "bam", "boum");
+
+		testTriple.set_first(s1);
+		testTriple.set_second(s2);
+		testTriple.set_triple(o);
+		
+		assertTrue("Modifying the first element of a Triple should be relevant", testTriple.get_first().equals(s1));
+		assertTrue("Modifying the second element of a Triple should be relevant", testTriple.get_second().equals(s2));
+		assertTrue("Modifying the third element of a Triple should be relevant", testTriple.get_triple().equals(o));
 	}
 }
