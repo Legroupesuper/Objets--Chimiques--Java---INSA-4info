@@ -1,6 +1,7 @@
 package org.chemicalmozart.utils;
 
 import org.chemicalmozart.model.implementations.ChordImpl;
+import org.chemicalmozart.model.implementations.Rythme;
 import org.chemicalmozart.utils.MusicWriter.NoteValues;
 
 import fr.insa.rennes.info.chemical.backend.ChemicalException;

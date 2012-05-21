@@ -23,7 +23,7 @@ import java.util.List;
 
 import org.chemicalmozart.model.implementations.ChordImpl;
 import org.chemicalmozart.model.implementations.Note;
-import org.chemicalmozart.model.interfaces.Rythme;
+import org.chemicalmozart.model.interfaces.RythmPattern;
 import org.chemicalmozart.model.implementations.solutionindentification.RythmePull;
 
 import fr.insa.rennes.info.chemical.backend.Solution;
@@ -94,7 +94,7 @@ public class RythmicRR implements ReactionRule{
 		SubSolutionElements elts = new SubSolutionElements();
 		List<Class<? extends Object>> l = new ArrayList<Class<? extends Object>>();
 		l.add(RythmePull.class);
-		l.add(org.chemicalmozart.model.interfaces.Rythme.class);
+		l.add(org.chemicalmozart.model.interfaces.RythmPattern.class);
 		elts.setTypeList(l);
 		_rythmeSolution = new SubSolution<SubSolutionElements>(elts);
 		this._num = 0;
@@ -131,7 +131,7 @@ public class RythmicRR implements ReactionRule{
 	 */
 	public Object[] computeResult() {
 		Object[] result = null;
-		Rythme chosenRythm = (Rythme) this._rythmeSolution.getElements().get(1);
+		RythmPattern chosenRythm = (RythmPattern) this._rythmeSolution.getElements().get(1);
 		List<Note> listNotes = chosenRythm.getListNotes();
 		int nbNotesInChosenRythm = listNotes.size();
 
@@ -186,9 +186,9 @@ public class RythmicRR implements ReactionRule{
 		if (rythmeSolutionElements != null){
 			if(rythmeSolutionElements.size()>=2){
 				rythmeSolution_containsARythmePull = rythmeSolutionElements.get(0) instanceof RythmePull;
-				rythmeSolution_containsARythm = rythmeSolutionElements.get(1) instanceof org.chemicalmozart.model.interfaces.Rythme;
+				rythmeSolution_containsARythm = rythmeSolutionElements.get(1) instanceof org.chemicalmozart.model.interfaces.RythmPattern;
 				if(rythmeSolution_containsARythmePull && rythmeSolution_containsARythm){
-					org.chemicalmozart.model.interfaces.Rythme r = (Rythme) rythmeSolutionElements.get(1);
+					org.chemicalmozart.model.interfaces.RythmPattern r = (RythmPattern) rythmeSolutionElements.get(1);
 					rythmeSolution_RythmHasSameDurationThanChordImpl = r.getDuration() == _chordImpl.getDuration();
 				}
 			}
