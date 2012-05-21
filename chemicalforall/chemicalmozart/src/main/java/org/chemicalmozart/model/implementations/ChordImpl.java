@@ -40,7 +40,7 @@ public class ChordImpl {
 	/**
 	 * The duration of a chordimpl
 	 */
-	private Rythme duration;
+	private int duration;
 	/**
 	 * @return the _degrees
 	 */
@@ -56,7 +56,7 @@ public class ChordImpl {
 	/**
 	 * @return the duration
 	 */
-	public Rythme getDuration() {
+	public int getDuration() {
 		return this.duration;
 	}
 	/**
@@ -74,7 +74,7 @@ public class ChordImpl {
 	/**
 	 * @param duration the duration to set
 	 */
-	public void setDuration(Rythme duration) {
+	public void setDuration(int duration) {
 		this.duration = duration;
 	}
 
