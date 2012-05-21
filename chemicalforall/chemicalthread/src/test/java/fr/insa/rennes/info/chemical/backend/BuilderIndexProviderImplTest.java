@@ -22,17 +22,15 @@ import junit.framework.TestCase;
 
 /**
  * @author ArthurTemple
- * Unit tests for SubSolutionElements
+ * Unit tests for BuilderIndexProviderImpl
  */
 
-public class SubSolutionElementsTest extends TestCase {
+public class BuilderIndexProviderImplTest extends TestCase {
 
-	private SubSolutionElements testSubSolutionElements;
-	
 	/**
 	 * @param name
 	 */
-	public SubSolutionElementsTest(String name) {
+	public BuilderIndexProviderImplTest(String name) {
 		super(name);
 	}
 
@@ -51,10 +49,9 @@ public class SubSolutionElementsTest extends TestCase {
 	}
 
 	/**
-	 * Test method for {@link SubSolutionElements#SubSolutionElements()}.
+	 * Test method for {@link BuilderIndexProviderImpl#fooTest()}.
 	 */
-	public void testConstructor() {
-		this.testSubSolutionElements = new SubSolutionElements();
-		assertTrue("SubSolutionElements should implement SubSolutionReagentsAccessor", this.testSubSolutionElements instanceof SubSolutionReagentsAccessor);
+	public void testFooTest() {
+		assertTrue(true);
 	}
 }

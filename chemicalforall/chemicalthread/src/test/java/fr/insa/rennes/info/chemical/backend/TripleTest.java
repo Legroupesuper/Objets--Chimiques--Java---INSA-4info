@@ -22,7 +22,7 @@ import junit.framework.TestCase;
 
 /**
  * @author ArthurTemple
- * Unit tests for IndexProvider
+ * Unit tests for Triple
  */
 
 public class TripleTest extends TestCase {

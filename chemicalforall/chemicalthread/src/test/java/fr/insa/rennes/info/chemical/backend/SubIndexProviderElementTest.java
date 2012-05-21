@@ -24,7 +24,7 @@ import junit.framework.TestCase;
 
 /**
  * @author ArthurTemple
- * Unit tests for IndexProvider
+ * Unit tests for SubIndexProviderElement
  */
 
 public class SubIndexProviderElementTest extends TestCase {

@@ -25,7 +25,7 @@ import fr.insa.rennes.info.chemical.user.ReactionRule;
 
 /**
  * @author ArthurTemple
- * Unit tests for ChemicalThread
+ * Unit tests for Utils
  */
 
 public class UtilsTest extends TestCase {
