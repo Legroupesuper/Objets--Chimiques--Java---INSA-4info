@@ -30,6 +30,26 @@ public class Pitch {
 	private DegreeImpl _degree;
 
 	/**
+	 * Constructor using fields
+	 * @param _octave
+	 * @param _degree
+	 */
+	public Pitch(int _octave, DegreeImpl _degree) {
+		super();
+		this._octave = _octave;
+		this._degree = _degree;
+	}
+	
+	/**
+	 * Default constructor
+	 */
+	public Pitch() {
+		super();
+		this._degree = null;
+		this._octave = (Integer) null;
+	}
+
+	/**
 	 * @return the degree
 	 */
 	public DegreeImpl getDegree() {
@@ -53,5 +73,15 @@ public class Pitch {
 	public void setOctave(int octave) {
 		this._octave = octave;
 	}
+
+	/** toString
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "Pitch [_octave=" + _octave + ", _degree=" + _degree + "]";
+	}
+	
+	
 
 }

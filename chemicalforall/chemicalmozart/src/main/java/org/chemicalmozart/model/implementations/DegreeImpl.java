@@ -57,5 +57,9 @@ public class DegreeImpl {
 		this._value = _value;
 	}
 
+	@Override
+	public String toString() {
+		return "DegreeImpl [_value=" + _value + "]";
+	}
 
 }

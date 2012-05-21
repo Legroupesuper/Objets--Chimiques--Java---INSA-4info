@@ -1,6 +1,7 @@
 package org.chemicalmozart.utils;
 
 import org.chemicalmozart.model.implementations.ChordImpl;
+import org.chemicalmozart.model.implementations.Note;
 import org.chemicalmozart.model.implementations.Rythme;
 import org.chemicalmozart.utils.MusicWriter.NoteValues;
 
@@ -31,29 +32,29 @@ public class DegresAssociation {
 	public static int getMidiNote(NoteValues note) throws ChemicalException{
 		switch(note){
 		case DO : 
-			return 36;
+			return 48;
 		case DOD:
-			return 37;
+			return 49;
 		case RE : 
-			return 38;
+			return 50;
 		case RED:
-			return 39;
+			return 51;
 		case MI : 
-			return 40;
+			return 52;
 		case FA:
-			return 41;
+			return 53;
 		case FAD : 
-			return 42;
+			return 54;
 		case SOL:
-			return 43;
+			return 55;
 		case SOLD : 
-			return 44;
+			return 56;
 		case LA:
-			return 45;
+			return 57;
 		case LAD : 
-			return 46;
+			return 58;
 		case SI:
-			return 47;
+			return 59;
 		default:
 			throw new ChemicalException(note.toString()+" is not a valid value for the type NoteValues.");
 		}
@@ -99,6 +100,36 @@ public class DegresAssociation {
 		case sixteenth : return 1;
 		case whole : return 16;
 		default: throw new ChemicalException(c.getDuration()+ " is not a valid duration");
+		}
+	}
+	
+	public static long getNoteValue(int firstDegree, Note n) throws ChemicalException{
+		int v;
+		switch(n.get_pitch().getDegree().get_value()){
+		case 1 : v = firstDegree;break;
+		case 2 : v = firstDegree + 2;break;
+		case 3 : v = firstDegree + 4;break;
+		case 4 : v = firstDegree + 5;break;
+		case 5 : v = firstDegree + 7;break;
+		case 6 : v = firstDegree + 9;break;
+		case 7 : v = firstDegree + 11;break;
+		default : throw new ChemicalException(n.get_pitch().getDegree().get_value()+ " is not a valid value for a degree");
+		}
+		v = v + 12*n.get_pitch().getOctave();
+		return v;
+	}
+
+	public static long getDuration(Rythme rythm) throws ChemicalException {
+		switch(rythm){
+		case eightdotted : return 3;
+		case eighth : return 2;
+		case half : return 8;
+		case halfdotted : return 12;
+		case quater : return 4;
+		case quaterdotted : return 6;
+		case sixteenth : return 1;
+		case whole : return 16;
+		default: throw new ChemicalException(rythm+ " is not a valid duration");
 		}
 	}
 }

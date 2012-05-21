@@ -77,5 +77,14 @@ public class ChordImpl {
 	public void setDuration(Rythme duration) {
 		this.duration = duration;
 	}
-
+	
+	/** toString
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "ChordImpl [_degrees=" + _degrees + ", _position=" + _position
+				+ ", duration=" + duration + "]";
+	}
+	
 }

@@ -105,7 +105,7 @@ public class MelodicRR implements ReactionRule{
 		}
 		else{
 			int degChosenIndex =  (int)(Math.random()*6);
-			// J'pige que dalle au delbor ^^
+			// TODO J'pige que dalle au delbor ^^
 		}
 		
 		return null;
