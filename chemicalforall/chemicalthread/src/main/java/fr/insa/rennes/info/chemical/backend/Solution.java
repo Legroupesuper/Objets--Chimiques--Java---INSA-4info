@@ -10,7 +10,6 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -35,12 +34,6 @@ import fr.insa.rennes.info.chemical.user.ReactionRule;
  *
  */
 public final class Solution implements Collection<Object>{
-	
-	public static int ID = 0;
-	
-	private int myId;
-	
-	
 	/**
 	 * Different strategies available for reagent selection sequence.
 	 * <p>
@@ -87,7 +80,7 @@ public final class Solution implements Collection<Object>{
 	private ThreadGroup _threadGroup;
 
 	/**
-	 * The reagent iteration strategy, chosen by the user. The chosen strategy will apply 
+	 * The reagents iteration strategy, chosen by the user. The chosen strategy will apply 
 	 * to every reaction rule added in this solution. 
 	 * @see Solution.Strategy
 	 */
@@ -125,9 +118,6 @@ public final class Solution implements Collection<Object>{
 		_threadTable = Collections.synchronizedMap(new HashMap<ReactionRule, ChemicalThread>());
 		_strategy = s;
 		_inert = false;
-		
-		myId = ID;
-		ID++;
 	}
 
 	/**
