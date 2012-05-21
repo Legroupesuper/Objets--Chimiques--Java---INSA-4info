@@ -25,6 +25,8 @@ import org.chemicalmozart.model.implementations.reactionrules.StartMelodicRR;
 import org.chemicalmozart.model.implementations.solutionindentification.BarInCreation;
 
 import fr.insa.rennes.info.chemical.backend.Solution;
+import fr.insa.rennes.info.chemical.user.InertEvent;
+import fr.insa.rennes.info.chemical.user.InertEventListener;
 
 
 
@@ -39,15 +41,22 @@ public class LittleTests {
 		subSol.add(new BarInCreation());
 		subSol.add(new BarNumber(1));
 		
-		Solution sol = new Solution();
+		final Solution sol = new Solution();
 		sol.add(startMelodicRR);
 		sol.add(pitch);
 		sol.add(barNumber);
 		System.out.println("Before :");
 		System.out.println(sol);
+		sol.addInertEventListener(new InertEventListener() {
+			
+			public void isInert(InertEvent e) {
+				System.out.println("After :");
+				System.out.println(sol);
+			}
+		});
 		sol.react();
-		System.out.println("After :");
-		System.out.println(sol);
+		
+		
 	}
 
 	/**
