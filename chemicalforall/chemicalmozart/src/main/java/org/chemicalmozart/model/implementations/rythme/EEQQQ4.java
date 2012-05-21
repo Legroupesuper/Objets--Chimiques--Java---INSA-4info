@@ -23,12 +23,13 @@ import java.util.List;
 
 import org.chemicalmozart.model.implementations.Note;
 import org.chemicalmozart.model.implementations.Note.Type;
-import org.chemicalmozart.model.interfaces.Rythme;
+import org.chemicalmozart.model.implementations.Rythme;
+import org.chemicalmozart.model.interfaces.RythmPattern;
 
-public class EEQQQ4  implements Rythme{
+public class EEQQQ4  implements RythmPattern{
 
-	public int getDuration() {
-		return 4;
+	public Rythme getDuration() {
+		return Rythme.whole;
 	}
 	public List<Note> getListNotes() {
 		Note n1 = new Note(0, Type.STRONG, org.chemicalmozart.model.implementations.Rythme.eighth);

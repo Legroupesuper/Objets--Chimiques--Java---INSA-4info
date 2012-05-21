@@ -23,7 +23,7 @@ import java.util.List;
 
 import org.chemicalmozart.model.implementations.ChordImpl;
 import org.chemicalmozart.model.implementations.Note;
-import org.chemicalmozart.model.interfaces.Rythme;
+import org.chemicalmozart.model.interfaces.RythmPattern;
 import org.chemicalmozart.model.implementations.solutionindentification.RythmePull;
 
 import fr.insa.rennes.info.chemical.backend.Solution;
@@ -94,6 +94,7 @@ public class RythmicRR implements ReactionRule{
 		SubSolutionElements elts = new SubSolutionElements();
 		List<Class<? extends Object>> l = new ArrayList<Class<? extends Object>>();
 		l.add(RythmePull.class);
+		l.add(org.chemicalmozart.model.interfaces.RythmPattern.class);
 		elts.setTypeList(l);
 		_rythmeSolution = new SubSolution<SubSolutionElements>(elts);
 		this._num = 0;
@@ -130,7 +131,7 @@ public class RythmicRR implements ReactionRule{
 	 */
 	public Object[] computeResult() {
 		Object[] result = null;
-		Rythme chosenRythm = (Rythme) this._rythmeSolution.getElements().get(1);
+		RythmPattern chosenRythm = (RythmPattern) this._rythmeSolution.getElements().get(1);
 		List<Note> listNotes = chosenRythm.getListNotes();
 		int nbNotesInChosenRythm = listNotes.size();
 
@@ -148,7 +149,7 @@ public class RythmicRR implements ReactionRule{
 			this._chordImpl.set_position(this._chordImpl.get_position()+this._max);
 			this._chordNumber++;
 			this._max += nbNotesInChosenRythm;
-			result = new Object[]{this._num,this._chordImpl,this._rythmeSolution,this._melodicRR};
+			result = new Object[]{this._num,this._chordImpl,rythmSol,this._melodicRR, this};
 		}
 
 
@@ -168,30 +169,37 @@ public class RythmicRR implements ReactionRule{
 		}
 		return result;
 	}
+ 
 
 	/**
-	 * Must check that _chordNumber correspond to the position of the _chordImpl. It must also check that the selected subsolution rhythm
-	 * has the same duration than _chordImpl.
+	 * Must check that _chordNumber correspond to the position of the _chordImpl.
+	 * It must also check that the selected subsolution rhythm has the same duration than _chordImpl.
 	 */
+	
 	public boolean computeSelect() {
 		List<Object> rythmeSolutionElements = _rythmeSolution.getElements();
 		boolean rythmeSolution_containsARythmePull = false;
 		boolean rythmeSolution_RythmHasSameDurationThanChordImpl = false;
 		boolean chordNumberCorrespondToChordImplPosition = this._chordNumber == this._chordImpl.get_position();
+		boolean rythmeSolution_containsARythm = false;
+		
 		if (rythmeSolutionElements != null){
-			if(rythmeSolutionElements.size()>=1){
+			if(rythmeSolutionElements.size()>=2){
 				rythmeSolution_containsARythmePull = rythmeSolutionElements.get(0) instanceof RythmePull;
-				if(rythmeSolution_containsARythmePull){
-					rythmeSolution_RythmHasSameDurationThanChordImpl = (rythmeSolutionElements.get(0)).equals(_chordImpl.getDuration());
-							
+				rythmeSolution_containsARythm = rythmeSolutionElements.get(1) instanceof org.chemicalmozart.model.interfaces.RythmPattern;
+				if(rythmeSolution_containsARythmePull && rythmeSolution_containsARythm){
+					org.chemicalmozart.model.interfaces.RythmPattern r = (RythmPattern) rythmeSolutionElements.get(1);
+					rythmeSolution_RythmHasSameDurationThanChordImpl = r.getDuration() == _chordImpl.getDuration();
 				}
 			}
 		}
 		return rythmeSolution_containsARythmePull &&
+				rythmeSolution_containsARythm &&
 				rythmeSolution_RythmHasSameDurationThanChordImpl &&
 				chordNumberCorrespondToChordImplPosition;
 	}
-
+	
+	
 	/**
 	 * @return the _melodicRR
 	 */

@@ -109,6 +109,7 @@ public class StartMelodicRR implements ReactionRule{
 		boolean solContainsBarInCreation = false;
 		boolean solContainsBarNumber = false;
 		boolean barNumbersHaveSameValue = false;
+		
 		if(_sol.getSolution() != null){
 			List<Object> solElements = _sol.getElements();
 			if (solElements != null){
