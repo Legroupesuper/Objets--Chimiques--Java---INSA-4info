@@ -412,7 +412,7 @@ public class SolutionTest extends TestCase {
 		testSolution.add("toto");
 		testSolution.add(16);
 //		testSolution.add(addIntRR);
-		testSolution.add(new totoRR());
+		//testSolution.add(new totoRR());
 //		testSolution.add(suppressRRRR);
 		
 		testSolution.addInertEventListener(new InertEventListener() {
