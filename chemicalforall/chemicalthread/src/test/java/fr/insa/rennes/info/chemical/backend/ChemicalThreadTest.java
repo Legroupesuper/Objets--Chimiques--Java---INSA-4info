@@ -19,9 +19,6 @@
 package fr.insa.rennes.info.chemical.backend;
 
 import junit.framework.TestCase;
-
-import org.junit.Test;
-
 import fr.insa.rennes.info.chemical.user.ReactionRule;
 
 /**
@@ -73,50 +70,11 @@ public class ChemicalThreadTest extends TestCase {
 		super.tearDown();
 	}
 
-	@Test
-	public void testPourCompiler(){
-		assertTrue(true);
+	/**
+	 * Test method for {@link ChemicalThread#ChemicalThread()}.
+	 */
+
+	public void testConstructor() {
+		assertTrue("A ChemicalThread must be a Thread", testChemicalThread instanceof Thread);
 	}
-
-	/**
-	 * Test method for {@link ChemicalThread#get_reactionRule()}.
-	 */
-	/*public void testGet_reactionRule() {
-		assertTrue(testReactionRule == testChemicalThread.get_reactionRule());
-	}*/
-
-	/**
-	 * Test method for {@link ChemicalThread#get_solutionContainer()}.
-	 */
-	/*public void testGet_solutionContainer() {
-		assertTrue(testSolution == testChemicalThread.get_solutionContainer());
-	}*/
-
-	/**
-	 * Test method for {@link ChemicalThread#set_reactionRule(ReactionRule)}.
-	 */
-	/*public void testSet_reactionRule() {
-		ReactionRule rr = new ReactionRule(){
-			public Object[] computeResult(){
-				return null;
-			}
-			public boolean computeSelect(){
-				return true;
-			}
-			public ReactionRule.Multiplicity getMultiplicity(){
-				return ReactionRule.Multiplicity.INFINITY_SHOT;
-			}
-		};
-		testChemicalThread.set_reactionRule(rr);
-		assertTrue(rr == testChemicalThread.get_reactionRule());
-	}*/
-
-	/**
-	 * Test method for {@link ChemicalThread#set_solutionContainer(Solution)}.
-	 */
-	/*public void testSet_solutionContainer() {
-		Solution s = new Solution();
-		testChemicalThread.set_solutionContainer(s);
-		assertTrue(s == testChemicalThread.get_solutionContainer());
-	}*/
 }
