@@ -54,7 +54,7 @@ import fr.insa.rennes.info.chemical.user.ReactionRule;
  */
 public class StartMelodicRR implements ReactionRule{
 	/**
-	 * The  number is the result solution
+	 * The number is the result solution
 	 */
 	private BarNumber _barNumber;
 	/**
@@ -167,4 +167,16 @@ public class StartMelodicRR implements ReactionRule{
 	public void set_sol(SubSolution<SubSolutionElements> _sol) {
 		this._sol = _sol;
 	}
+
+	/** toString
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "StartMelodicRR [_barNumber=" + _barNumber + ", _sol=" + _sol
+				+ ", _pitch=" + _pitch + "]";
+	}
+	
+	
+	
 }
