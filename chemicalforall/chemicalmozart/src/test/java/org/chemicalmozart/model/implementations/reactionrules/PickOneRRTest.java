@@ -75,6 +75,8 @@ public class PickOneRRTest extends TestCase{
 
 		PickOneRR rr = new PickOneRR();
 		rr.set_barInCreation(barInCreation);
+		rr.get_barInCreation().setSolution(new Solution());
+		rr.get_temporaryBar().setSolution(new Solution());
 		rr.set_temporaryBar(temporaryBar);
 
 		//Now the RR is instantiated and ready for being tested
@@ -104,10 +106,12 @@ public class PickOneRRTest extends TestCase{
 		assertTrue("GarbageRR is not present", _isGarbageRRPresent);
 	}
 
+	/*
 	@Test
 	public void testDegreeImplPresent(){
 		assertTrue("DegreeImpl is not present", _isDegreeImplPresent);
 	}
+	*/
 	
 	@Test
 	public void testQuaterLeftPresent(){

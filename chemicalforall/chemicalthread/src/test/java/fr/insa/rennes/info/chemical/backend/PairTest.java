@@ -23,7 +23,7 @@ import fr.insa.rennes.info.chemical.user.ReactionRule;
 
 /**
  * @author ArthurTemple
- * Unit tests for IndexProvider
+ * Unit tests for Pair
  */
 
 public class PairTest extends TestCase {

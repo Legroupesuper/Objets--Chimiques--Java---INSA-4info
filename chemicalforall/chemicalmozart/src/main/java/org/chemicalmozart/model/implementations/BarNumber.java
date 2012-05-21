@@ -22,7 +22,7 @@ package org.chemicalmozart.model.implementations;
 
 
 /**
- * Description of the class MeasureNumber.
+ * Description of the class BarNumber.
  *
  *
  */
@@ -35,4 +35,5 @@ public class BarNumber extends Number {
 	public BarNumber(BarNumber number) {
 		super(number);
 	}
+	
 }

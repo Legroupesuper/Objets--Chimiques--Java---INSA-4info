@@ -33,7 +33,4 @@ public class ChordNumber extends Number {
 		// TODO Auto-generated constructor stub
 	}
 
-
-
-
 }

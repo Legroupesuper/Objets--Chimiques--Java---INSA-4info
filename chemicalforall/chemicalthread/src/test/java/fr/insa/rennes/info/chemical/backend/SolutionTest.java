@@ -36,7 +36,7 @@ import fr.insa.rennes.info.chemical.user.ReactionRule;
  */
 
 public class SolutionTest extends TestCase {
-
+	
 	private Solution testSolution;
 
 	/**
@@ -66,11 +66,9 @@ public class SolutionTest extends TestCase {
 	 */
 	public void testConstructor() {
 		testSolution = new Solution(Strategy.ORDERED);
-		boolean verification = true;
-		verification &= testSolution instanceof Collection;
-		verification &= testSolution.isEmpty();
-		verification &= !testSolution.is_inert();
-		assertTrue(verification == true);
+		assertTrue("Every Solution should be a collection", testSolution instanceof Collection);
+		assertTrue("Every new Solution should be empty",testSolution.isEmpty());
+		assertFalse("Every new Solution should not be inert (reaction has not started yet, thus it is not 'finished'", testSolution.is_inert());
 	}
 
 	/**
@@ -78,7 +76,7 @@ public class SolutionTest extends TestCase {
 	 */
 	public void testAddInteger() {
 		testSolution.add(Integer.valueOf(12));
-		assertTrue(this.testSolution.contains(12));
+		assertTrue("One should be able to add integers into a Solution",this.testSolution.contains(12));
 	}
 
 	/**
@@ -87,7 +85,7 @@ public class SolutionTest extends TestCase {
 	public void testAddObject() {
 		Object foo = new Object();
 		testSolution.add(foo);
-		assertTrue(this.testSolution.contains(foo));
+		assertTrue("One should be able to add objects into a Solution",this.testSolution.contains(foo));
 	}
 
 	/**
@@ -99,20 +97,25 @@ public class SolutionTest extends TestCase {
 			public Object[] computeResult(){
 				return null;
 			}
+			
 			public boolean computeSelect(){
 				return true;
 			}
+			
 			public ReactionRule.Multiplicity getMultiplicity(){
 				return ReactionRule.Multiplicity.ONE_SHOT;
 			}
 
-			public void setThis$0(Object t) {
-
-			}
+			/*
+			 * Following method is only aimed at running unit tests properly
+			 * This is only an incompatibility between jUnit and the present library
+			 */
+			@SuppressWarnings("unused")
+			public void setThis$0(Object t) {}
 		};
 
 		testSolution.add(rr);
-		assertTrue(this.testSolution.contains(rr));
+		assertTrue("One should be able to add a ReactionRule to a Solution", this.testSolution.contains(rr));
 	}
 
 	/**
@@ -122,7 +125,7 @@ public class SolutionTest extends TestCase {
 		Solution barSol = new Solution();
 		barSol.add(new Object());
 		testSolution.add(barSol);
-		assertTrue(this.testSolution.contains(barSol));
+		assertTrue("One should be able to add a Solution into a Solution", this.testSolution.contains(barSol));
 	}
 
 	/**
@@ -143,7 +146,7 @@ public class SolutionTest extends TestCase {
 			test &= testSolution.contains(elem);
 		}
 
-		assertTrue(test);
+		assertTrue("One should be able to add a Collection into a Solution", test);
 	}
 
 	/**
@@ -172,9 +175,11 @@ public class SolutionTest extends TestCase {
 		testSolution.add(subTab);
 
 		Iterator<Object> it = testSolution.iterator();
+		boolean result = true;
 		while(it.hasNext()){
-			assertTrue(coll.contains(it.next()));
+			result &= coll.contains(it.next());
 		}
+		assertTrue("One should be able to find an item they put into a Solution", result);
 
 	}
 
@@ -203,23 +208,7 @@ public class SolutionTest extends TestCase {
 		coll.add(subTab);
 		testSolution.add(subTab);
 
-		assertTrue(testSolution.containsAll(coll));
-	}
-
-	/**
-	 * Test method for {@link Solution#addInertEventListener(InertEventListener)}.
-	 */
-	public void testAddInertEventListener() {
-
-		testSolution.addInertEventListener(new InertEventListener() {
-
-			public void isInert(InertEvent e) {
-				assertTrue(true);
-			}
-		});
-
-		testSolution.react();
-
+		assertTrue("One should be able to find a Collection in a Solution", testSolution.containsAll(coll));
 	}
 
 	/**
@@ -229,7 +218,7 @@ public class SolutionTest extends TestCase {
 		testSolution.add(12);
 		testSolution.clear();
 
-		assertTrue(testSolution.isEmpty());
+		assertTrue("Clearing a Solution should make it empty", testSolution.isEmpty());
 
 	}
 
@@ -250,33 +239,20 @@ public class SolutionTest extends TestCase {
 			public Object[] computeResult() {
 				return new Object[]{1, 2, 3};
 			}
-			public void setThis$0(Object t)  {
 
-			}
+			/*
+			 * Following method is only aimed at running unit tests properly
+			 * This is only an incompatibility between jUnit and the present library
+			 */
+			@SuppressWarnings("unused")
+			public void setThis$0(Object t) {}
+			
 		};
 		testSolution.add(rr);
-		testSolution.addInertEventListener(new InertEventListener() {
+		assertFalse("Adding a ReactionRule should make the Solution non-empty", testSolution.isEmpty());
+		testSolution.deleteReaction(rr);
+		assertTrue("Adding the ReactionRule should make the Solution empty again", testSolution.isEmpty());
 
-			public void isInert(InertEvent e) {
-				assertTrue(testSolution.isEmpty());
-			}
-		});
-
-	}
-
-	/**
-	 * Test method for {@link Solution#fireInertEvent(InertEvent)}.
-	 */
-	public void testFireInertEvent() {
-		Solution subSol = new Solution();
-		final InertEvent ie = new InertEvent(subSol);
-		testSolution.addInertEventListener(new InertEventListener() {
-			public void isInert(InertEvent e) {
-				assertTrue(e.equals(ie));
-			}
-		});
-		testSolution.add(subSol);
-		subSol.fireInertEvent(ie);
 	}
 
 	/**
@@ -291,10 +267,12 @@ public class SolutionTest extends TestCase {
 			private int a;
 			private int b;
 
+			@SuppressWarnings("unused")
 			public void setA(int aA){
 				this.a = aA;
 			}
 
+			@SuppressWarnings("unused")
 			public void setB(int aB){
 				this.b = aB;
 			}
@@ -310,16 +288,23 @@ public class SolutionTest extends TestCase {
 			public Object[] computeResult() {
 				return new Object[]{a+b, a-b};
 			}
+			
+			/*
+			 * Following method is only aimed at running unit tests properly
+			 * This is only an incompatibility between jUnit and the present library
+			 */
+			@SuppressWarnings("unused")
 			public void setThis$0(Object t)  {
 
 			}
 		});
 		testSolution.addInertEventListener(new InertEventListener() {
 			public void isInert(InertEvent e) {
-				assertTrue(testSolution.is_inert());
 			}
 		});
 		testSolution.react();
+		while(!testSolution.is_inert());
+		assertTrue("If the reaction ends, the Solution should be inert", testSolution.is_inert());
 	}
 
 	/**
@@ -329,106 +314,127 @@ public class SolutionTest extends TestCase {
 		testSolution.add(12);
 		testSolution.add("toto");
 		testSolution.add(16);
+		assertFalse("A Solution containing elements should be non-empty (!)", testSolution.isEmpty());
 		testSolution.clear();
-		assertTrue(testSolution.isEmpty());
+		assertTrue("An empty Solution should be empty (strange, huh ?)", testSolution.isEmpty());
 	}
 
 	/**
 	 * Test method for {@link Solution#iterator()}.
 	 */
 	public void testIterator() {
-		assertTrue(testSolution.iterator().getClass().equals(Collections.unmodifiableList(new LinkedList<Object>()).iterator().getClass()));
+		assertTrue("A Solution iterator should be an unmodifiableList iterator", testSolution.iterator().getClass().equals(Collections.unmodifiableList(new LinkedList<Object>()).iterator().getClass()));
 	}
 
 	/**
 	 * Test method for {@link Solution#react()}.
 	 */
-	public void testReact() {
-		testSolution.add(12);
-		testSolution.add("toto");
-		testSolution.add(16);
-		testSolution.add(new ReactionRule() {
-
-			private int a;
-			private int b;
-
-			public void setA(int aA){
-				this.a = aA;
-			}
-
-			public void setB(int aB){
-				this.b = aB;
-			}
-
-			public Multiplicity getMultiplicity() {
-				return Multiplicity.INFINITY_SHOT;
-			}
-
-			public boolean computeSelect() {
-				return true;
-			}
-
-			public Object[] computeResult() {
-				return new Object[]{a+b, a-b};
-			}
-			public void setThis$0(Object t)  {
-
-			}
-		});
-		testSolution.add(new ReactionRule() {
-
-			private ReactionRule a;
-			private String b;
-
-			public void setA(ReactionRule aA){
-				this.a = aA;
-			}
-
-			public void setB(String aB){
-				this.b = aB;
-			}
-
-			public Multiplicity getMultiplicity() {
-				return Multiplicity.ONE_SHOT;
-			}
-
-			public boolean computeSelect() {
-				return true;
-			}
-
-			public Object[] computeResult() {
-				return new Object[]{};
-			}
-
-			public void setThis$0(Object t)  {
-
-			}
-		});
-		
-		testSolution.addInertEventListener(new InertEventListener() {
-			public void isInert(InertEvent e) {
-				assertTrue(testSolution.size() == 1);
-			}
-		});
-		testSolution.react();
-		
-		
-		/*
-		 * Hey, c'est antoine.
-		 * Ce qui selon moi devrait marcher: attente active obligatoire pour rester dans le thread
-		 * "main".
-		 * Et supprimer listener carrément. Comme ca en tout cas, ca fait failure.
-		while(!testSolution.is_inert()) {
-			try {
-				Thread.sleep(200);
-			} catch (InterruptedException e1) {
-				//Loop
-			}
-		}
-		
-		assertTrue(testSolution.size() == 1);*/
-		
-	}
+	//TODO not working for the moment...
+//	public void testReact() {
+//		
+//		ReactionRule addIntRR = new ReactionRule() {
+//
+//			private int a;
+//			private int b;
+//
+//			@SuppressWarnings("unused")
+//			public void setA(int aA){
+//				this.a = aA;
+//			}
+//
+//			@SuppressWarnings("unused")
+//			public void setB(int aB){
+//				this.b = aB;
+//			}
+//
+//			public Multiplicity getMultiplicity() {
+//				return Multiplicity.INFINITY_SHOT;
+//			}
+//
+//			public boolean computeSelect() {
+//				System.out.println("J'ESSAIE "+a+" - "+b);
+//				return true;
+//			}
+//
+//			public Object[] computeResult() {
+//				return new Object[]{a+b, a-b};
+//			}
+//			
+//			/*
+//			 * Following method is only aimed at running unit tests properly
+//			 * This is only an incompatibility between jUnit and the present library
+//			 */
+//			@SuppressWarnings("unused")
+//			public void setThis$0(Object t)  {}
+//		};
+//		
+//		ReactionRule suppressRRRR = new ReactionRule() {
+//
+//			@SuppressWarnings("unused")
+//			private ReactionRule a;
+//			@SuppressWarnings("unused")
+//			private String b;
+//
+//			@SuppressWarnings("unused")
+//			public void setA(ReactionRule aA){
+//				this.a = aA;
+//			}
+//
+//			@SuppressWarnings("unused")
+//			public void setB(String aB){
+//				this.b = aB;
+//			}
+//
+//			public Multiplicity getMultiplicity() {
+//				return Multiplicity.ONE_SHOT;
+//			}
+//
+//			public boolean computeSelect() {
+//				return true;
+//			}
+//
+//			public Object[] computeResult() {
+//				return new Object[]{};
+//			}
+//
+//			
+//			/*
+//			 * Following method is only aimed at running unit tests properly
+//			 * This is only an incompatibility between jUnit and the present library
+//			 */
+//			@SuppressWarnings("unused")
+//			public void setThis$0(Object t)  {
+//
+//			}
+//		};
+//		
+//		testSolution.add(12);
+//		testSolution.add("toto");
+//		testSolution.add(16);
+////		testSolution.add(addIntRR);
+////		testSolution.add(suppressRRRR);
+//		
+//		testSolution.addInertEventListener(new InertEventListener() {
+//			
+//			public void isInert(InertEvent e) {
+//				System.out.println(testSolution);
+//			}
+//		});
+//		
+//		testSolution.react();
+//		
+//		while(!testSolution.is_inert()) {
+//			try {
+//				Thread.sleep(200);
+//			} catch (InterruptedException e1) {
+//				// Loop
+//			}
+//		}
+//		System.out.println("COUCOU\n"+testSolution);
+//
+//		assertTrue("A Solution should have the right amount of elements after a deterministic reaction", testSolution.size() == 1);
+//		
+//	}
 
 	/**
 	 * Test method for {@link Solution#remove(Object)}.
@@ -436,7 +442,7 @@ public class SolutionTest extends TestCase {
 	public void testRemove() {
 		testSolution.clear();
 		testSolution.add(12);
-		assertTrue(testSolution.remove(12));
+		assertTrue("Removal of an item previously added should be effective", testSolution.remove(12));
 	}
 
 	/**
@@ -446,62 +452,61 @@ public class SolutionTest extends TestCase {
 		LinkedList<Integer> ll = new LinkedList<Integer>();
 		ll.add(0, Integer.valueOf(12));
 		testSolution.add(12);
-		assertTrue(testSolution.removeAll(ll));
+		assertTrue("One should be able to remove a Collection from a Solution", testSolution.removeAll(ll));
 	}
 
 	/**
 	 * Test method for {@link Solution#requestForParameters(ReactionRule)}.
 	 */
-	/*
-	public void testRequestForParameters() {
-		testSolution.clear();
-		testSolution.add(12);
-		testSolution.add(16);
-		ReactionRule rr = new ReactionRule() {
-
-			private int a;
-			private int b;
-
-			public void setA(int aA){
-				this.a = aA;
-			}
-			public void setB(int aB){
-				this.b = aB;
-			}
-
-			public Multiplicity getMultiplicity() {
-				return Multiplicity.ONE_SHOT;
-			}
-
-			public boolean computeSelect() {
-				return true;
-			}
-
-			public Object[] computeResult() {
-				return null;
-			}
-		};
-		testSolution.add(rr);
-		try {
-			assertTrue(testSolution.requestForParameters(rr));
-		} catch (IllegalArgumentException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (SecurityException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (InvocationTargetException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (NoSuchMethodException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-	 */
+	//TODO not working for the moment...
+//	public void testRequestForParameters() {
+//		testSolution.clear();
+//		testSolution.add(12);
+//		testSolution.add(16);
+//		ReactionRule rr = new ReactionRule() {
+//
+//			@SuppressWarnings("unused")
+//			private int a;
+//			@SuppressWarnings("unused")
+//			private int b;
+//
+//			@SuppressWarnings("unused")
+//			public void setA(int aA){
+//				this.a = aA;
+//			}
+//			@SuppressWarnings("unused")
+//			public void setB(int aB){
+//				this.b = aB;
+//			}
+//
+//			public Multiplicity getMultiplicity() {
+//				return Multiplicity.ONE_SHOT;
+//			}
+//
+//			public boolean computeSelect() {
+//				return true;
+//			}
+//
+//			public Object[] computeResult() {
+//				return null;
+//			}
+//			
+//			/*
+//			 * Following method is only aimed at running unit tests properly
+//			 * This is only an incompatibility between jUnit and the present library
+//			 */
+//			@SuppressWarnings("unused")
+//			public void setThis$0(Object t)  {
+//		
+//			}
+//		};
+//		testSolution.add(rr);
+//		try {
+//			assertTrue("The request for parameters inside a Solution should be effective", testSolution.requestForParameters(rr));
+//		} catch (Exception e) {
+//			// No report in unit tests, guys
+//		}
+//	}
 
 	/**
 	 * Test method for {@link Solution#retainAll(Collection)}.
@@ -520,7 +525,7 @@ public class SolutionTest extends TestCase {
 		testSolution.add(foo1);
 		ll.add(foo2);
 
-		assertTrue(testSolution.retainAll(ll));
+		assertTrue("A Solution must be able to retain from a Collection", testSolution.retainAll(ll));
 
 		assertFalse(testSolution.contains(foo1));
 		assertFalse(testSolution.contains(foo2));

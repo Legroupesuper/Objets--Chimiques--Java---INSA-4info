@@ -40,7 +40,7 @@ public class ChordImpl {
 	/**
 	 * The duration of a chordimpl
 	 */
-	private int duration;
+	private Rythme duration;
 	/**
 	 * @return the _degrees
 	 */
@@ -56,7 +56,7 @@ public class ChordImpl {
 	/**
 	 * @return the duration
 	 */
-	public int getDuration() {
+	public Rythme getDuration() {
 		return this.duration;
 	}
 	/**
@@ -74,8 +74,17 @@ public class ChordImpl {
 	/**
 	 * @param duration the duration to set
 	 */
-	public void setDuration(int duration) {
+	public void setDuration(Rythme duration) {
 		this.duration = duration;
 	}
-
+	
+	/** toString
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "ChordImpl [_degrees=" + _degrees + ", _position=" + _position
+				+ ", duration=" + duration + "]";
+	}
+	
 }

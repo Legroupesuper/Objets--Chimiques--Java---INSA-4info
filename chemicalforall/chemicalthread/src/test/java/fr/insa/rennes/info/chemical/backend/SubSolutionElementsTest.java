@@ -19,11 +19,10 @@
 package fr.insa.rennes.info.chemical.backend;
 
 import junit.framework.TestCase;
-import fr.insa.rennes.info.chemical.user.ReactionRule;
 
 /**
  * @author ArthurTemple
- * Unit tests for IndexProvider
+ * Unit tests for SubSolutionElements
  */
 
 public class SubSolutionElementsTest extends TestCase {
@@ -52,9 +51,10 @@ public class SubSolutionElementsTest extends TestCase {
 	}
 
 	/**
-	 * Test method for {@link SubSolutionElements#fooTest()}.
+	 * Test method for {@link SubSolutionElements#SubSolutionElements()}.
 	 */
-	public void testFooTest() {
-		assertTrue(true);
+	public void testConstructor() {
+		this.testSubSolutionElements = new SubSolutionElements();
+		assertTrue("SubSolutionElements should implement SubSolutionReagentsAccessor", this.testSubSolutionElements instanceof SubSolutionReagentsAccessor);
 	}
 }

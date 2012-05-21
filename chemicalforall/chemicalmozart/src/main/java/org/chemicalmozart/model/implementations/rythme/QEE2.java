@@ -22,13 +22,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.chemicalmozart.model.implementations.Note;
+import org.chemicalmozart.model.implementations.Rythme;
 import org.chemicalmozart.model.implementations.Note.Type;
-import org.chemicalmozart.model.interfaces.Rythme;
+import org.chemicalmozart.model.interfaces.RythmPattern;
 
-public class QEE2  implements Rythme{
+public class QEE2  implements RythmPattern{
 
-	public int getDuration() {
-		return 2;
+	public Rythme getDuration() {
+		return Rythme.half;
 	}
 	public List<Note> getListNotes() {
 		Note n1 = new Note(0, Type.STRONG, org.chemicalmozart.model.implementations.Rythme.quater);

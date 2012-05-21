@@ -86,7 +86,7 @@ public class MoveToResultRR implements ReactionRule{
 	 * <br />
 	 * It must put back the BarInCreation and the QuaterLeft in the BarInCreation solution and then add the BarInCreationSolution into
 	 * the Result solution. It must also put back the Result object into the Result solution.
-	 * @return The Result solution as describe
+	 * @return The Result solution as described
 	 */
 	public Object[] computeResult() {
 		Solution inCreationSolution = _subSolInCreation.getSolution();
@@ -116,6 +116,7 @@ public class MoveToResultRR implements ReactionRule{
 		boolean subSolInCreation_quaterLeftWithAValue0 = false;
 		boolean subSolInCreation_containsAtLeastOneChodImpl = false;
 		boolean subSolResult_containsResult = false;
+		
 		if(subSolInCreationElements != null && subSolResultElements != null){
 			if(subSolInCreationElements.size()>=2){
 				subSolInCreation_ContainsBarInCreation = subSolInCreationElements.get(0) instanceof BarInCreation;

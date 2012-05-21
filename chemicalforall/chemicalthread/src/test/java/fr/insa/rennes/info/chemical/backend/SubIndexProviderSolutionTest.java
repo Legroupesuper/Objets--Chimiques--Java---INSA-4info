@@ -25,7 +25,7 @@ import fr.insa.rennes.info.chemical.user.ReactionRule;
 
 /**
  * @author ArthurTemple
- * Unit tests for IndexProvider
+ * Unit tests for SubIndexProviderSolution
  */
 
 public class SubIndexProviderSolutionTest extends TestCase {
