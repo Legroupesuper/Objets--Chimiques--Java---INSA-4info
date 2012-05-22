@@ -19,31 +19,33 @@ public class RythmicRRMain {
 	public static void main(String[] args) {
 		MozartSolutionFactoryImpl factory = new MozartSolutionFactoryImpl();
 		Solution pull = factory.createRythmicPull();
-		final Solution sol = new Solution();
+		Solution sol = new Solution();
 		sol.add(pull);
-		pull.setIsInert(true);
+		//System.err.println("is inert ?"+pull.is_inert());
 		sol.add(new RythmicRR());
 		sol.add(2);
-		sol.add(new MelodicRR());
-		ChordImpl c1 = new ChordImpl();
-		c1.set_degrees(new DegreeImpl(1));
-		c1.set_position(0);
-		c1.setDuration(Rythme.half);
-		
-		ChordImpl c2 = new ChordImpl();
-		c2.set_degrees(new DegreeImpl(4));
-		c2.set_position(1);
-		c2.setDuration(Rythme.half);
-		
-		sol.add(c1);sol.add(c2);
+		MelodicRR m = new MelodicRR();
+		m.set_activated(false);
+		sol.add(m);
+//		ChordImpl c1 = new ChordImpl();
+//		c1.set_degrees(new DegreeImpl(1));
+//		c1.set_position(0);
+//		c1.setDuration(Rythme.half);
+//		
+//		ChordImpl c2 = new ChordImpl();
+//		c2.set_degrees(new DegreeImpl(4));
+//		c2.set_position(1);
+//		c2.setDuration(Rythme.half);
+//		
+//		sol.add(c1);sol.add(c2);
 		System.out.println("Solution avant : ");
 		System.out.println(sol);
 		
 		sol.addInertEventListener(new InertEventListener() {
 			
 			public void isInert(InertEvent e) {
-				System.out.println("Solution après : "+sol.is_inert());
-				System.out.println(sol);
+				System.out.println("Solution après : "+((Solution)e.getSource()).is_inert());
+				System.out.println(((Solution)e.getSource()));
 			}
 		});
 		sol.react();

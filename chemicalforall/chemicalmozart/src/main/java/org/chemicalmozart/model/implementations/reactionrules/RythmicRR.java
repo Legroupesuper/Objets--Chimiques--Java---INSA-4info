@@ -23,6 +23,7 @@ import java.util.List;
 import org.chemicalmozart.model.implementations.rythme.RythmPattern;
 import org.chemicalmozart.model.implementations.solutionindentification.RythmePull;
 import fr.insa.rennes.info.chemical.backend.SubSolutionElements;
+import fr.insa.rennes.info.chemical.user.Dontreact;
 import fr.insa.rennes.info.chemical.user.ReactionRule;
 
 
@@ -68,8 +69,7 @@ public class RythmicRR implements ReactionRule{
 	 * The current ChordNumber.<br />
 	 * This parameter doesn't react and the same instance will be used for a same RythmicRR. The constructor must initialize it to 0.
 	 */
-//	@Dontreact
-//	private int _chordNumber;
+//	@Dontreact private int _chordNumber;
 	/**
 	 * The total number of ChordImpl in the current bar
 	 */
@@ -183,6 +183,7 @@ public class RythmicRR implements ReactionRule{
 		
 //		return result;
 //		_rythmeSolution.getSolution().add(new RythmePull());
+		System.err.println("On met le pâté");
 		return  new Object[]{_num+1};
 	}
  
