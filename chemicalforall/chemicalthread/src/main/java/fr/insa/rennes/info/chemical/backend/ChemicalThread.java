@@ -77,8 +77,10 @@ public class ChemicalThread extends Thread {
 		//Run as long as the solution is not inert AND as long
 		//as we didn't stop the thread "manually"
 		while(!_solutionContainer.is_inert() && _continue){
+			System.err.println("Un tour de boucle "+_reactionRule);
 			//If we find enough valid parameters...
 			if(_solutionContainer.requestForParameters(_reactionRule)){
+				System.err.println("On a passé le computeSelect");
 				//...we compute reaction result
 				Object obj[] = _reactionRule.computeResult();
 				//add the results to the solution
@@ -87,18 +89,21 @@ public class ChemicalThread extends Thread {
 				
 				//Then wake all ReactionRules (as the solution has been modified)
 				_solutionContainer.wakeAll();
-				
+				System.err.println("on fait le wakeAll");
 				//If the reaction rule is ONE SHOT, we must delete it and stop this thread
 				if(_reactionRule.getMultiplicity().equals(Multiplicity.ONE_SHOT)){
 					_solutionContainer.deleteReaction(_reactionRule);
+					System.err.println("C'était une One-shot");
 					break;
 				}
 			}else{
 				//If we do not find valid parameters, the reaction goes to sleep
 				//A sleeping reaction waits for the solution to go inert or to see its inner elements modified
+				System.err.println("On fait faire dodo à "+_reactionRule);
 				_solutionContainer.makeSleep();
 			}
 		}
+		System.err.println("On sort");
 	}
 	
 	/**
@@ -106,5 +111,10 @@ public class ChemicalThread extends Thread {
 	 */
 	public void stopTheThread(){
 		_continue  = false;
+	}
+	
+	@Override
+	public String toString() {
+		return "Je suis le thread "+_reactionRule;
 	}
 }
