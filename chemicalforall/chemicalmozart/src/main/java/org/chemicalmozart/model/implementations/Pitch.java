@@ -1,5 +1,5 @@
 /* 
-	Copyright (C) 2012 Andreolli Cédric, Boulanger Chloé, Cléro Olivier, Guellier Antoine, Guilloux Sébastien, Templé Arthur
+	Copyright (C) 2012 Andréolli Cédric, Boulanger Chloé, Cléro Olivier, Guellier Antoine, Guilloux Sébastien, Templé Arthur
 
     This file is part of ChemicalLibSuper.
 
@@ -79,7 +79,7 @@ public class Pitch {
 	 */
 	@Override
 	public String toString() {
-		return "Pitch [_octave=" + _octave + ", _degree=" + _degree + "]";
+		return "[_octave=" + _octave + ", _degree=" + _degree + "]";
 	}
 	
 	

@@ -1,5 +1,5 @@
 /* 
-	Copyright (C) 2012 Andreolli Cédric, Boulanger Chloé, Cléro Olivier, Guellier Antoine, Guilloux Sébastien, Templé Arthur
+	Copyright (C) 2012 Andréolli Cédric, Boulanger Chloé, Cléro Olivier, Guellier Antoine, Guilloux Sébastien, Templé Arthur
 
     This file is part of ChemicalLibSuper.
 
@@ -20,6 +20,9 @@ package org.chemicalmozart.model.implementations.reactionrules;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
+
+import javax.print.attribute.standard.MediaSize.Other;
 
 import org.chemicalmozart.model.implementations.ChordImpl;
 import org.chemicalmozart.model.implementations.DegreeImpl;
@@ -41,6 +44,7 @@ import fr.insa.rennes.info.chemical.user.ReactionRule;
  * 		<li>Note : Which is the Note we need to set</li>
  * 		<li>Pitch : Which is the pitch of the last note set.</li>
  * </ul>
+ * The notes must hve a chord setted
  */
 public class MelodicRR implements ReactionRule{
 	/**
@@ -81,40 +85,60 @@ public class MelodicRR implements ReactionRule{
 	 */
 	public Object[] computeResult() {
 		if(_note.get_type()==Type.STRONG){
-			DegreeImpl[] possibleDegrees;
-			int choicesNumber = 3;
-			
-			DegreeImpl deg = _note.get_chord().get_degrees();
-			possibleDegrees = new DegreeImpl[3];
-			possibleDegrees[0]=deg;
-			
-			int deg2value = (deg.get_value()+2)%8 + ((int)(deg.get_value()+2)/(int)8);
-			possibleDegrees[1]= new DegreeImpl(deg2value);
-			
-			int deg3value = (deg.get_value()+4)%8 + ((int)(deg.get_value()+4)/(int)8);
-			possibleDegrees[2]= new DegreeImpl(deg3value);
-
-			int degChosenIndex =  (int)(Math.random()*3);
-			DegreeImpl chosenDegree = (DegreeImpl) possibleDegrees[degChosenIndex];
-			ChordImpl chord = new ChordImpl();
-			chord.set_degrees(chosenDegree);
-			_note.set_chord(chord);
-			Pitch pitch = new Pitch();
-			pitch.setDegree(chosenDegree);
-			_note.set_pitch(pitch);
+			int degreeValue = _note.get_chord().get_degrees().get_value();
+			int notePitch;
+			int randNumber = (int) ((Math.random())*3 %3);
+			System.out.println("Rand : "+randNumber);
+			switch(randNumber){
+			case 0:
+				notePitch = degreeValue;
+				break;
+			case 1: 
+				notePitch = (degreeValue + 2)%8;
+				break;
+			default:
+				notePitch = (degreeValue + 4)%8;
+			}
+			int octave = 0;
+			if(Math.abs(notePitch - _pitch.getDegree().get_value())>3){
+				if(notePitch>4)
+					octave = _pitch.getOctave()+1;
+				else
+					octave = _pitch.getOctave() - 1;
+			}else{
+				octave = _pitch.getOctave();
+			}
+			_note.set_pitch(new Pitch(octave, new DegreeImpl(notePitch)));
 		}
-		else{
-			int degChosenIndex =  (int)(Math.random()*6);
-			// TODO J'pige que dalle au delbor ^^
+		else{//Not strong
+			int notePitch = _pitch.getDegree().get_value();
+			int randNumber = (int)(Math.random()*2 %2);
+			if(randNumber==0){
+				notePitch = (notePitch + 1)%8;
+			}else{
+				notePitch = (notePitch + 7)%8;
+			}
+			int octave = 0;
+			if(Math.abs(notePitch - _pitch.getDegree().get_value())>3){
+				if(notePitch>4)
+					octave = _pitch.getOctave()+1;
+				else
+					octave = _pitch.getOctave() - 1;
+			}else{
+				octave = _pitch.getOctave();
+			}
+			_note.set_pitch(new Pitch(octave, new DegreeImpl(notePitch)));
 		}
-		
-		return null;
+		_melodicNumber++;
+		return new Object[]{_note, _note.get_pitch()};
 	}
 	/**
 	 * Succeeds if the position of _note is equal to the melodic number and the MelodicRR is activated
 	 */
 	public boolean computeSelect() {
-		return false;
+		System.err.println("Compute select");
+		System.err.println("melodicNumber = "+_melodicNumber+" note.getPosition = "+_note.get_position());
+		return _melodicNumber == _note.get_position() && _activated && _melodicNumber<_max;
 	}
 
 	/**
@@ -142,7 +166,7 @@ public class MelodicRR implements ReactionRule{
 		return this._pitch;
 	}
 	public Multiplicity getMultiplicity() {
-		return Multiplicity.ONE_SHOT;
+		return Multiplicity.INFINITY_SHOT;
 	}
 	/**
 	 * @return the state of the MelodicRR

@@ -1,5 +1,5 @@
 /* 
-	Copyright (C) 2012 Andreolli Cédric, Boulanger Chloé, Cléro Olivier, Guellier Antoine, Guilloux Sébastien, Templé Arthur
+	Copyright (C) 2012 Andréolli Cédric, Boulanger Chloé, Cléro Olivier, Guellier Antoine, Guilloux Sébastien, Templé Arthur
 
     This file is part of ChemicalLibSuper.
 
@@ -24,9 +24,8 @@ import java.util.List;
 import org.chemicalmozart.model.implementations.Note;
 import org.chemicalmozart.model.implementations.Note.Type;
 import org.chemicalmozart.model.implementations.Rythme;
-import org.chemicalmozart.model.interfaces.RythmPattern;
 
-public class QPE2  implements RythmPattern{
+public class QPE2{
 
 	public Rythme getDuration() {
 		return Rythme.half;

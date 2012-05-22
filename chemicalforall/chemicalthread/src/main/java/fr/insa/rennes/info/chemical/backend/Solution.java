@@ -21,6 +21,7 @@ package fr.insa.rennes.info.chemical.backend;
 
 
 
+import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -252,16 +253,14 @@ public final class Solution implements Collection<Object>{
 					result = l.add(newReagent);
 					_mapElements.put(rawClassName, l);
 				}
-
 				if(getNumberOfActiveThreads() == 1 && !containsNonInertSubSol())
 					endOfReaction();
-
-
 				return result;
 			}else{
 				return false;
 			}
 		}
+		
 	}
 
 	/**
@@ -645,6 +644,7 @@ public final class Solution implements Collection<Object>{
 	 * @see Solution#_mapElements
 	 */
 	boolean requestForParameters(ReactionRule r) {
+		System.err.println("request for parameters");
 		synchronized (this) {
 			while(!_reactionInProgress){
 				try {
@@ -670,12 +670,14 @@ public final class Solution implements Collection<Object>{
 				ipBuilder.setStrategy(_strategy);
 				ipBuilder.build();
 				indexProvider = ipBuilder.getProduct();
-
+				System.err.println("On a fini le paramétrage de indexProvider");
 			} catch (ChemicalException e1) {
+				System.err.println("on est dans la merde");
 				return false;
 			} catch(Exception e) {
 				//Just in case there is any other exception, and in order to avoid 
 				//to annoy the user with a stack trace, just return false 
+				System.err.println("on est dans la merde v2");
 				return false;
 			}
 
@@ -726,6 +728,7 @@ public final class Solution implements Collection<Object>{
 	 * @see IndexProvider
 	 */
 	private List<Pair<Solution, Object>> searchForReagents(ReactionRule rr, Field[] rrFields, IndexProvider indexProvider) throws IllegalArgumentException, IllegalAccessException, InvocationTargetException {
+		System.err.println("searchForReagent");
 		//Effectively research a valid set of reagents for the reaction rule
 		//given all the tools
 		List<Pair<Solution, Object>> reagents = new ArrayList<Pair<Solution,Object>>();
@@ -749,6 +752,7 @@ public final class Solution implements Collection<Object>{
 
 					//..instanciate the (value) of the field...
 					reagentObject = instanciateField(f, sipSol.get_listSubIP().get(i), rr);
+					System.out.println(f.getName()+" : "+reagentObject);
 					//If instanciateField returned false, an error occured, go on the the next increment of the index provider
 					if(reagentObject == null) {
 						tryComputeSelect = false;
@@ -952,34 +956,38 @@ public final class Solution implements Collection<Object>{
 	 */
 	@Override
 	public String toString(){
-		String res = "Solution contains :\n"+this.prettyPrint(0);
+		String solutionBeginning = "Solution\n{\n";
+		String solutionEnd ="}\n";
+		String res = solutionBeginning+this.prettyPrint(0)+solutionEnd;
 		return res;
 	}
-
-	/*
-	 * A somewhat useful pretty printer...
+	
+	/**
+	 * A somewhat useful pretty printer, which works recursively
+	 * @param level the depth level
 	 */
 	private String prettyPrint(int level){
+		String solutionEnd ="}\n";
 
 		String res = "";
 		String alinea = "";
 		// Prepare indentation
-		for(int i = 0 ; i < level ; i++){
+		for(int i = 0 ; i < level+1 ; i++){
 			alinea += "\t";
 		}
 
 		for(Map.Entry<String, List<Object>> entry : _mapElements.entrySet()) {
 			String type = entry.getKey();
 			if(type.equals(Solution.class.getName())){
-				res += alinea+type+" ->\n";
+				res += alinea+"Solution\n" + alinea + "{\n";
 				for(Object sol : entry.getValue()){
 					res += ((Solution)sol).prettyPrint(level+1);
 				}
+				res += alinea+solutionEnd;
 			} else {
 				res += alinea+type+" -> "+entry.getValue()+"\n";				
 			}
 		}
-
 		return res;
 	}
 
