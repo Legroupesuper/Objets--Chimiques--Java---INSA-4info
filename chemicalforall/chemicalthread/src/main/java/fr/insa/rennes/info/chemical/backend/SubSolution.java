@@ -1,5 +1,5 @@
 /* 
-	Copyright (C) 2012 Andréolli Cédric, Boulanger Chloé, Cléro Olivier, Guellier Antoine, Guilloux Sébastien, Templé Arthur
+	Copyright (C) 2012 Andreolli Cédric, Boulanger Chloé, Cléro Olivier, Guellier Antoine, Guilloux Sébastien, Templé Arthur
 
     This file is part of ChemicalLibSuper.
 
@@ -35,7 +35,7 @@ import fr.insa.rennes.info.chemical.user.ReactionRule;
  * All the functions of this class execute a simple recursive call. For example, <code>this.getElements()</code>
  * is <code>return this.parameterized_type.getElements()</code>.
  * 
- * @author Andréolli Cédric, Boulanger Chloé, Cléro Olivier, Guellier Antoine, Guilloux Sébastien, Templé Arthur
+ * @author Andreolli Cédric, Boulanger Chloé, Cléro Olivier, Guellier Antoine, Guilloux Sébastien, Templé Arthur
  *
  * @param <T> A {@link SubSolutionReagentsAccessor} object: it has to be either {@link SubSolution} or {@link SubSolutionElements}.
  */
