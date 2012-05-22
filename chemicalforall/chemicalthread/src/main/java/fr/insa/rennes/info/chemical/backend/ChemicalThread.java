@@ -1,5 +1,5 @@
 /* 
-	Copyright (C) 2012 Andréolli Cédric, Boulanger Chloé, Cléro Olivier, Guellier Antoine, Guilloux Sébastien, Templé Arthur
+	Copyright (C) 2012 Andreolli Cédric, Boulanger Chloé, Cléro Olivier, Guellier Antoine, Guilloux Sébastien, Templé Arthur
 
     This file is part of ChemicalLibSuper.
 
@@ -31,7 +31,7 @@ import fr.insa.rennes.info.chemical.user.ReactionRule.Multiplicity;
  * {@link ReactionRule#computeSelect()} and {@link ReactionRule#computeResult()} functions
  * to process to reactions. Each reaction rule in a solution is given a chemical thread that will execute its
  * reaction according to its specifications (reagents, products, ...).
- * @author Andréolli Cédric, Boulanger Chloé, Cléro Olivier, Guellier Antoine, Guilloux Sébastien, Templé Arthur
+ * @author Andreolli Cédric, Boulanger Chloé, Cléro Olivier, Guellier Antoine, Guilloux Sébastien, Templé Arthur
  *
  */
 public class ChemicalThread extends Thread {

@@ -90,7 +90,7 @@ options = {
 	'use' => '',	# Use tags are exported
 	'version' => '',	# Version tags are exported
 	'windowtitle' => "#{Library_name}",	# Text displayed in the window title, surrounded by parentheses
-	'header' => "Official documentation for #{Library_name} - header",	# Text displayed at the top of the page
+	'header' => "Official documentation for #{Library_name}",	# Text displayed at the top of the page
 	'd' => Temp_folder,	# Directory in which you generate the doc (should be left as is)
 	'bottom' => '2011-2012 - INSA of Rennes. Licensed under LGPL.'	# Text displayed at the bottom of the page
 }

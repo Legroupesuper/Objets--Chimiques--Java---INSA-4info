@@ -1,5 +1,5 @@
 /* 
-	Copyright (C) 2012 Andréolli Cédric, Boulanger Chloé, Cléro Olivier, Guellier Antoine, Guilloux Sébastien, Templé Arthur
+	Copyright (C) 2012 Andreolli Cédric, Boulanger Chloé, Cléro Olivier, Guellier Antoine, Guilloux Sébastien, Templé Arthur
 
     This file is part of ChemicalLibSuper.
 
@@ -48,7 +48,7 @@ import fr.insa.rennes.info.chemical.user.ReactionRule;
  * 
  * @see ReactionRule
  * 
- * @author Andréolli Cédric, Boulanger Chloé, Cléro Olivier, Guellier Antoine, Guilloux Sébastien, Templé Arthur
+ * @author Andreolli Cédric, Boulanger Chloé, Cléro Olivier, Guellier Antoine, Guilloux Sébastien, Templé Arthur
  *
  */
 public final class Solution implements Collection<Object>{
@@ -206,7 +206,7 @@ public final class Solution implements Collection<Object>{
 		Solution sol = (Solution) solutionObject;
 		sol.addInertEventListener(new InertEventListener() {
 			public void isInert(InertEvent e) {
-				Solution.this.checkTrivialEndOfReaction();
+				Solution.this.tryTrivialEndOfReaction();
 			}
 		});
 		if(_reactionInProgress)
@@ -252,7 +252,8 @@ public final class Solution implements Collection<Object>{
 					result = l.add(newReagent);
 					_mapElements.put(rawClassName, l);
 				}
-				System.out.println(className+" added");
+				if(getNumberOfActiveThreads() == 1 && !containsNonInertSubSol())
+					endOfReaction();
 				return result;
 			}else{
 				return false;
@@ -344,19 +345,19 @@ public final class Solution implements Collection<Object>{
 					_threadTable.remove(r);
 				}
 
-				checkTrivialEndOfReaction();
+				tryTrivialEndOfReaction();
 			}
 		}
 	}
 
 	/**
-	 * Checks if the end of the reaction is reached. 
+	 * Checks if the end of the reaction is reached, and if it is, call {@link #endOfReaction()}.
 	 * The end of the reaction is reached when there is no longer any active thread and 
 	 * that there is no non inert inner solution. In the contrary, 
 	 * if the end of the reaction isn't reached, this function wakes all the reaction
 	 * rule threads. 
 	 */
-	private void checkTrivialEndOfReaction() {
+	private void tryTrivialEndOfReaction() {
 		if(_threadTable.size() == 0 && !containsNonInertSubSol())
 			endOfReaction();
 		else {
@@ -378,7 +379,7 @@ public final class Solution implements Collection<Object>{
 		_inert = true;
 
 		notifyAll();
-		fireInertEvent(new InertEvent(new Object()));
+		fireInertEvent(new InertEvent(this));
 	}
 
 	/**
@@ -490,6 +491,22 @@ public final class Solution implements Collection<Object>{
 		}
 		return Collections.unmodifiableList(reagentsCopy).iterator();
 	}
+	
+	/**
+	 * Returns an iterator over the elements/reagents in this solution that have the specified types. 
+	 * As this solution can contain any type of element, the function returns an iterator of Object objects.
+	 * There are no guarantees concerning the order in which the elements are returned
+	 * @param types The types of the objects needed.
+	 * @return an <code>Iterator</code> over the elements of the specified types in this solution.
+	 * @see Iterator
+	 */
+	public Iterator<Object> iterator(List<Class> types) {
+		List<Object> reagentsCopy = new LinkedList<Object>();
+		for(List<Object> reagentList : _mapElements.values()) {
+			reagentsCopy.addAll(reagentList);
+		}
+		return Collections.unmodifiableList(reagentsCopy).iterator();
+	}
 
 	/**
 	 * Called by a thread, makes the thread wait until a <code>notify</code> is called.
@@ -551,7 +568,7 @@ public final class Solution implements Collection<Object>{
 					 */
 					s.addInertEventListener(new InertEventListener() {
 						public void isInert(InertEvent e) {
-							Solution.this.checkTrivialEndOfReaction();
+							Solution.this.tryTrivialEndOfReaction();
 						}
 					});
 					s.react();

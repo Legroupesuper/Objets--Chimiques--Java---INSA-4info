@@ -1,5 +1,5 @@
 /* 
-	Copyright (C) 2012 Andréolli Cédric, Boulanger Chloé, Cléro Olivier, Guellier Antoine, Guilloux Sébastien, Templé Arthur
+	Copyright (C) 2012 Andreolli Cédric, Boulanger Chloé, Cléro Olivier, Guellier Antoine, Guilloux Sébastien, Templé Arthur
 
     This file is part of ChemicalLibSuper.
 
@@ -28,7 +28,7 @@ import fr.insa.rennes.info.chemical.user.ReactionRule;
  * an attribute of a reaction rule (see {@link ReactionRule}), and allows 
  * the user of the library to select reagents in inner solutions. For more details, see the two implementations 
  * {@link SubSolution} and {@link SubSolutionElements}.
- * @author Andréolli Cédric, Boulanger Chloé, Cléro Olivier, Guellier Antoine, Guilloux Sébastien, Templé Arthur
+ * @author Andreolli Cédric, Boulanger Chloé, Cléro Olivier, Guellier Antoine, Guilloux Sébastien, Templé Arthur
  */
 interface SubSolutionReagentsAccessor {
 	/**

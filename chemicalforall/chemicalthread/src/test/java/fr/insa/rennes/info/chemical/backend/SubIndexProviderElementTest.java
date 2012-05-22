@@ -1,5 +1,5 @@
 /* 
-	Copyright (C) 2012 Andréolli Cédric, Boulanger Chloé, Cléro Olivier, Guellier Antoine, Guilloux Sébastien, Templé Arthur
+	Copyright (C) 2012 Andreolli Cédric, Boulanger Chloé, Cléro Olivier, Guellier Antoine, Guilloux Sébastien, Templé Arthur
 
     This file is part of ChemicalLibSuper.
 
@@ -24,7 +24,7 @@ import junit.framework.TestCase;
 
 /**
  * @author ArthurTemple
- * Unit tests for IndexProvider
+ * Unit tests for SubIndexProviderElement
  */
 
 public class SubIndexProviderElementTest extends TestCase {

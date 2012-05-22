@@ -1,5 +1,5 @@
 /* 
-	Copyright (C) 2012 Andréolli Cédric, Boulanger Chloé, Cléro Olivier, Guellier Antoine, Guilloux Sébastien, Templé Arthur
+	Copyright (C) 2012 Andreolli Cédric, Boulanger Chloé, Cléro Olivier, Guellier Antoine, Guilloux Sébastien, Templé Arthur
 
     This file is part of ChemicalLibSuper.
 
@@ -34,7 +34,7 @@ import fr.insa.rennes.info.chemical.user.ReactionRule;
  * The different parameters to give to the builder are the solution, the reaction rule, the reaction rule's fields, 
  * and the increment strategy of the index provider. See the associated setters for a detailed descrition.
  * </p>
- * @author Andréolli Cédric, Boulanger Chloé, Cléro Olivier, Guellier Antoine, Guilloux Sébastien, Templé Arthur
+ * @author Andreolli Cédric, Boulanger Chloé, Cléro Olivier, Guellier Antoine, Guilloux Sébastien, Templé Arthur
  * 
  * @see IndexProvider
  * @see IncrementStrategy

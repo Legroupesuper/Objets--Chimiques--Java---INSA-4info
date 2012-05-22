@@ -1,5 +1,5 @@
 /* 
-	Copyright (C) 2012 Andréolli Cédric, Boulanger Chloé, Cléro Olivier, Guellier Antoine, Guilloux Sébastien, Templé Arthur
+	Copyright (C) 2012 Andreolli Cédric, Boulanger Chloé, Cléro Olivier, Guellier Antoine, Guilloux Sébastien, Templé Arthur
 
     This file is part of ChemicalLibSuper.
 
@@ -18,16 +18,14 @@
 */
 package fr.insa.rennes.info.chemical.backend;
 
-import java.lang.reflect.Field;
 import java.util.logging.Logger;
 
 import junit.framework.TestCase;
 import fr.insa.rennes.info.chemical.user.ReactionRule;
-import fr.insa.rennes.info.chemical.user.ReactionRule.Multiplicity;
 
 /**
  * @author ArthurTemple
- * Unit tests for ChemicalThread
+ * Unit tests for Utils
  */
 
 public class UtilsTest extends TestCase {
@@ -59,8 +57,8 @@ public class UtilsTest extends TestCase {
 	 * Test method for {@link Utils#logger}.
 	 */
 	public void testLogger() {
-		assertFalse(Utils.logger.equals(Logger.getAnonymousLogger()));
-		assertTrue(Utils.logger.equals(Logger.getLogger(packageName)));
+		assertFalse("Logger should not be anonymous", Utils.logger.equals(Logger.getAnonymousLogger()));
+		assertTrue("Logger should be associated to the right package", Utils.logger.equals(Logger.getLogger(packageName)));
 	}
 
 	/**
@@ -71,6 +69,7 @@ public class UtilsTest extends TestCase {
 			
 			int foo;
 			
+			@SuppressWarnings("unused")
 			public void setFoo(int aFoo){
 				this.foo = aFoo;
 			}
@@ -88,7 +87,7 @@ public class UtilsTest extends TestCase {
 			}
 		};
 		try {
-			assertTrue(Utils.getMethodFromReactionRule(rr, "set", rr.getClass().getDeclaredField("foo")).getName().equalsIgnoreCase("setFoo"));
+			assertTrue("The method extracted from the ReactionRule should at least have the right name", Utils.getMethodFromReactionRule(rr, "set", rr.getClass().getDeclaredField("foo")).getName().equalsIgnoreCase("setFoo"));
 		} catch (NoSuchFieldException e) {
 			fail("NoSuchFieldException");
 		} catch (SecurityException e) {

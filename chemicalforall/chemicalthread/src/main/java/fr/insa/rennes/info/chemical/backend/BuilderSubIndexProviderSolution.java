@@ -1,5 +1,5 @@
 /* 
-	Copyright (C) 2012 Andréolli Cédric, Boulanger Chloé, Cléro Olivier, Guellier Antoine, Guilloux Sébastien, Templé Arthur
+	Copyright (C) 2012 Andreolli Cédric, Boulanger Chloé, Cléro Olivier, Guellier Antoine, Guilloux Sébastien, Templé Arthur
 
     This file is part of ChemicalLibSuper.
 
@@ -46,7 +46,7 @@ import fr.insa.rennes.info.chemical.user.ReactionRule;
  * field ({@link #setSubSolutionField(Field)}). The first case is used to build the root {@link SubIndexProviderSolution} of 
  * a {@link IndexProvider}, and the second one is used to recursively build {@link SubIndexProviderSolution} objects.
  * </p>
- * @author Andréolli Cédric, Boulanger Chloé, Cléro Olivier, Guellier Antoine, Guilloux Sébastien, Templé Arthur
+ * @author Andreolli Cédric, Boulanger Chloé, Cléro Olivier, Guellier Antoine, Guilloux Sébastien, Templé Arthur
  * @see IndexProvider
  * @see SubIndexProviderSolution
  */
