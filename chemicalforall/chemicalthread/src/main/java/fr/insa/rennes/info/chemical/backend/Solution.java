@@ -644,7 +644,6 @@ public final class Solution implements Collection<Object>{
 	 * @see Solution#_mapElements
 	 */
 	boolean requestForParameters(ReactionRule r) {
-		System.err.println("request for parameters");
 		synchronized (this) {
 			while(!_reactionInProgress){
 				try {
@@ -670,14 +669,13 @@ public final class Solution implements Collection<Object>{
 				ipBuilder.setStrategy(_strategy);
 				ipBuilder.build();
 				indexProvider = ipBuilder.getProduct();
-				System.err.println("On a fini le paramétrage de indexProvider");
 			} catch (ChemicalException e1) {
-				System.err.println("on est dans la merde");
 				return false;
+			} catch(NullPointerException e) { 
+				throw e;
 			} catch(Exception e) {
 				//Just in case there is any other exception, and in order to avoid 
 				//to annoy the user with a stack trace, just return false 
-				System.err.println("on est dans la merde v2");
 				return false;
 			}
 
@@ -702,6 +700,8 @@ public final class Solution implements Collection<Object>{
 				return false;
 			} catch (InvocationTargetException e) {
 				return false;
+			} catch(NullPointerException e) { 
+				throw e;
 			} catch(Exception e) {
 				//Just in case there is any other exception, and in order to avoid 
 				//to annoy the user with a stack trace, just return false 
@@ -728,7 +728,6 @@ public final class Solution implements Collection<Object>{
 	 * @see IndexProvider
 	 */
 	private List<Pair<Solution, Object>> searchForReagents(ReactionRule rr, Field[] rrFields, IndexProvider indexProvider) throws IllegalArgumentException, IllegalAccessException, InvocationTargetException {
-		System.err.println("searchForReagent");
 		//Effectively research a valid set of reagents for the reaction rule
 		//given all the tools
 		List<Pair<Solution, Object>> reagents = new ArrayList<Pair<Solution,Object>>();
