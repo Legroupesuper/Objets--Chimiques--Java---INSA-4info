@@ -15,11 +15,12 @@ public class PutWordsTogetherRR  implements ReactionRule{
 		String res = s+" "+v+" "+c;
 		return new Object[]{res};
 	}
+	
 	public boolean computeSelect() {
 		return true;
 	}
 	public Multiplicity getMultiplicity() {
-		return Multiplicity.ONE_SHOT;
+		return Multiplicity.INFINITY_SHOT;
 	}
 	public Subject getSubject() {
 		return subject;
