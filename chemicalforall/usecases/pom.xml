@@ -1,0 +1,43 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <artifactId>chemicalPOM</artifactId>
+    <groupId>fr.insa-rennes</groupId>
+    <version>0.0.1-SNAPSHOT</version>
+    <relativePath>..</relativePath>
+  </parent>
+  <artifactId>usecases</artifactId>
+  <version>0.0.1</version>
+  <name>Use cases</name>
+  <description>Basic use cases in order to illustrate chemical efficiency</description>
+
+  <build>
+	<plugins>
+		<plugin>
+			<groupId>org.apache.maven.plugins</groupId>
+			<artifactId>maven-jar-plugin</artifactId>
+			<version>2.3.1</version>
+			<configuration>
+				<archive>
+					<manifest>
+						<mainClass>Test</mainClass>
+						<addClasspath>true</addClasspath>
+						<classpathLayoutType>repository</classpathLayoutType>
+
+					</manifest>
+				</archive>
+			</configuration>
+		</plugin>
+
+	</plugins>
+	
+  </build>
+
+  <dependencies>
+  	<dependency>
+  		<groupId>fr.insa-rennes</groupId>
+  		<artifactId>chemicalthread</artifactId>
+  		<version>0.0.1-SNAPSHOT</version>
+  	</dependency>
+  </dependencies>
+</project>

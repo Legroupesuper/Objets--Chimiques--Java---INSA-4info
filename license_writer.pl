@@ -6,8 +6,8 @@ if($ARGV[0] eq "") {
 	$ARGV[0] = "ChLOE";
 }
 
-my $licence_text = "/* 
-	Copyright (C) 2012 Andréolli Cédric, Boulanger Chloé, Cléro Olivier, Guellier Antoine, Guilloux Sébastien, Templé Arthur
+my $license_text = "/* 
+	Copyright (C) 2012 Andreolli Cédric, Boulanger Chloé, Cléro Olivier, Guellier Antoine, Guilloux Sébastien, Templé Arthur
 
     This file is part of ".$ARGV[0].".
 
@@ -36,8 +36,8 @@ foreach my $file (@file_list) {
 	open(HANDLE_TMP, ">$file.tmp")  or die("Erreur lors de l'ouverture de $file.tmp");
 	
 	
-	#Print the licence in the file
-	print HANDLE_TMP $licence_text;
+	#Print the license in the file
+	print HANDLE_TMP $license_text;
 	
 	
 	my $nrLine = 0;
