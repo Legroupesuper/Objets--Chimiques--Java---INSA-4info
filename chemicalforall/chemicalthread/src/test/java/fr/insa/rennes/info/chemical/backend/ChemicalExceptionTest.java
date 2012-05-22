@@ -51,7 +51,8 @@ public class ChemicalExceptionTest extends TestCase {
 	/**
 	 * Test method for {@link ChemicalException#fooTest()}.
 	 */
-	public void testFooTest() {
-		assertTrue(true);
+	public void testConstructor() {
+		ChemicalException ce = new ChemicalException("foo ChemicalException");
+		assertTrue("A ChemicalException should be an instance of Exception", ce instanceof Exception);
 	}
 }

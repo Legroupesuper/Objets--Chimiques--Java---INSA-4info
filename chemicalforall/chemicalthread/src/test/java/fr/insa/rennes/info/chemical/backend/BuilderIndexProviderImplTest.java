@@ -93,7 +93,11 @@ public class BuilderIndexProviderImplTest extends TestCase {
 			correct = true;
 		}
 		assertTrue("Calling getProduct before completion should raise a ChemicalException", correct);
-		
+
+		this.testBIPI.setReactionRule(fooRR);
+		this.testBIPI.setReactionRuleFields(fooF);
+		this.testBIPI.setSolution(fooSol);
+		this.testBIPI.setStrategy(fooStra);
 		try {
 			this.testBIPI.build();
 			assertTrue("Calling getProduct after completion should return an IndexProvider", this.testBIPI.getProduct() instanceof IndexProvider);
