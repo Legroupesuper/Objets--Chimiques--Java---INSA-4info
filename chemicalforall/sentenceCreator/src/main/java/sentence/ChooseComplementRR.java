@@ -12,10 +12,10 @@
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU Lesser General Public License for more details.
-	
+
     You should have received a copy of the GNU Lesser General Public License
     along with ChemicalLibSuper.  If not, see <http://www.gnu.org/licenses/>
-*/
+ */
 package sentence;
 
 import java.util.ArrayList;
@@ -26,49 +26,85 @@ import fr.insa.rennes.info.chemical.backend.SubSolutionElements;
 import fr.insa.rennes.info.chemical.user.Dontuse;
 import fr.insa.rennes.info.chemical.user.ReactionRule;
 
+/**
+ * Take a preposition from the prepositions solution and a place from the places solution
+ * then concatenate the two and put it in the solution as a Complement.
+ * It takes the following reagents: (they must appear in this order)
+ * <ul>
+ * 	<li>SubSolution _subSolPlaces
+ * 		<ul>
+ * 			<li>PlaceType : To identify the solution</li>
+ * 			<li>String : a string which is a place</li>
+ * 		</ul>
+ *  </li>
+ *  <li>Subsolution _subSolPrepositions
+ *		<ul>
+ *  		<li>PrepositionType : To identify the solution.</li>
+ *  		<li>String :  a string which is a preposition</li>
+ *  	</ul>
+ *  </li>
+ * </ul>
+ */
 public class ChooseComplementRR implements ReactionRule {
 
-	/*
-	 * Prend une preposition dans la sous-solution contenant l'identificateur des prepositions
-	 * Prend un lieu dans la sous-solution contenant l'identificateur des lieux
-	 * Rend la string qui est la concatenation de la preposition et du lieu
-	 * 
-	 */
-	private SubSolution<SubSolutionElements> _subSolComplement;
 	private SubSolution<SubSolutionElements> _subSolPlaces;
+
 	private SubSolution<SubSolutionElements> _subSolPrepositions;
-	
+
 	public ChooseComplementRR(){
 		super();
-		
-		
-		SubSolutionElements eltsPlaces = new SubSolutionElements();
-		_subSolPlaces = new SubSolution<SubSolutionElements>(eltsPlaces);
-		List<Class<? extends Object>> listPlaces = new ArrayList<Class<? extends Object>>();
-		listPlaces.add(PlaceType.class);
-		_subSolPlaces.setTypeList(listPlaces);
-		
-		SubSolutionElements eltsPrepositions = new SubSolutionElements();
-		_subSolPrepositions = new SubSolution<SubSolutionElements>(eltsPrepositions);
-		List<Class<? extends Object>> listPrepostions = new ArrayList<Class<? extends Object>>();
-		listPrepostions.add(PrepositionType.class);
-		_subSolPrepositions.setTypeList(listPrepostions);
+
+		SubSolutionElements elts1 = new SubSolutionElements();
+		List<Class<? extends Object>> list1 = new ArrayList<Class<? extends Object>>();
+		list1.add(PlaceType.class);
+		list1.add(String.class);
+		elts1.setTypeList(list1);
+		_subSolPlaces =  new SubSolution<SubSolutionElements>(elts1);
+
+		SubSolutionElements elts2 = new SubSolutionElements();
+		List<Class<? extends Object>> list2 = new ArrayList<Class<? extends Object>>();
+		list2.add(PrepositionType.class);
+		list2.add(String.class);
+		elts2.setTypeList(list2);
+		_subSolPrepositions =  new SubSolution<SubSolutionElements>(elts2);
 	}
-	
+
 	public Object[] computeResult() {
-		String place = (String)_subSolPlaces.getElements().get(0);
-		String preposition = (String)_subSolPrepositions.getElements().get(0);
-		return new Object[]{preposition+" "+place};
+		String place = (String)_subSolPlaces.getElements().get(1);
+		String preposition = (String)_subSolPrepositions.getElements().get(1);
+		String concat = preposition+" "+place;
+		return new Object[]{new Complement(concat)};
 	}
 
 	@Dontuse
 	public boolean computeSelect() {
-		return false;
+		return true;
 	}
 
 	public Multiplicity getMultiplicity() {
 		return null;
 	}
 
+	@Override
+	public String toString() {
+		return "ChooseComplementRR";
+	}
 	
+	public SubSolution<SubSolutionElements> get_subSolPlaces() {
+		return _subSolPlaces;
+	}
+
+	public void set_subSolPlaces(SubSolution<SubSolutionElements> _subSolPlaces) {
+		this._subSolPlaces = _subSolPlaces;
+	}
+
+
+	public SubSolution<SubSolutionElements> get_subSolPrepositions() {
+		return _subSolPrepositions;
+	}
+
+	public void set_subSolPrepositions(
+			SubSolution<SubSolutionElements> _subSolPrepositions) {
+		this._subSolPrepositions = _subSolPrepositions;
+	}
 }

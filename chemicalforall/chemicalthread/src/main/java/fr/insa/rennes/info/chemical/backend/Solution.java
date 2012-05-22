@@ -253,16 +253,14 @@ public final class Solution implements Collection<Object>{
 					result = l.add(newReagent);
 					_mapElements.put(rawClassName, l);
 				}
-				
 				if(getNumberOfActiveThreads() == 1 && !containsNonInertSubSol())
 					endOfReaction();
-				
-				
 				return result;
 			}else{
 				return false;
 			}
 		}
+		
 	}
 
 	/**
@@ -959,34 +957,38 @@ public final class Solution implements Collection<Object>{
 	 */
 	@Override
 	public String toString(){
-		String res = "Solution contains :\n"+this.prettyPrint(0);
+		String solutionBeginning = "Solution\n{\n";
+		String solutionEnd ="}\n";
+		String res = solutionBeginning+this.prettyPrint(0)+solutionEnd;
 		return res;
 	}
 	
-	/*
-	 * A somewhat useful pretty printer...
+	/**
+	 * A somewhat useful pretty printer, which works recursively
+	 * @param level the depth level
 	 */
 	private String prettyPrint(int level){
+		String solutionEnd ="}\n";
 
 		String res = "";
 		String alinea = "";
 		// Prepare indentation
-		for(int i = 0 ; i < level ; i++){
+		for(int i = 0 ; i < level+1 ; i++){
 			alinea += "\t";
 		}
 
 		for(Map.Entry<String, List<Object>> entry : _mapElements.entrySet()) {
 			String type = entry.getKey();
 			if(type.equals(Solution.class.getName())){
-				res += alinea+type+" ->\n";
+				res += alinea+"Solution\n" + alinea + "{\n";
 				for(Object sol : entry.getValue()){
 					res += ((Solution)sol).prettyPrint(level+1);
 				}
+				res += alinea+solutionEnd;
 			} else {
 				res += alinea+type+" -> "+entry.getValue()+"\n";				
 			}
 		}
-
 		return res;
 	}
 
