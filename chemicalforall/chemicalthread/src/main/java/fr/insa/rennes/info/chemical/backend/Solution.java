@@ -963,6 +963,7 @@ public final class Solution implements Collection<Object>{
 	 */
 	private String prettyPrint(int level){
 		String solutionEnd ="}\n";
+		String solutionStart = "{\n";
 
 		String res = "";
 		String alinea = "";
@@ -974,11 +975,17 @@ public final class Solution implements Collection<Object>{
 		for(Map.Entry<String, List<Object>> entry : _mapElements.entrySet()) {
 			String type = entry.getKey();
 			if(type.equals(Solution.class.getName())){
-				res += alinea+"Solution\n" + alinea + "{\n";
+				res += alinea+"Solution\n" + alinea + solutionStart;
 				for(Object sol : entry.getValue()){
 					res += ((Solution)sol).prettyPrint(level+1);
 				}
 				res += alinea+solutionEnd;
+			} else if(type.toLowerCase().contains(SubSolution.class.getName())){
+				res += alinea+"Solution\n" + alinea + solutionStart;
+				for(Object sol : entry.getValue()){
+					res += ((SubSolution<?>)sol).getSolution().prettyPrint(level+1);
+				}
+				res += alinea+solutionEnd;				
 			} else {
 				res += alinea+type+" -> "+entry.getValue()+"\n";				
 			}
