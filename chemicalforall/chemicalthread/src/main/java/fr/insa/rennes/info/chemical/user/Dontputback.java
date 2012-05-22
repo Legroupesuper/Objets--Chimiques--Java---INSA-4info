@@ -1,5 +1,5 @@
 /* 
-	Copyright (C) 2012 Andréolli Cédric, Boulanger Chloé, Cléro Olivier, Guellier Antoine, Guilloux Sébastien, Templé Arthur
+	Copyright (C) 2012 Andreolli Cédric, Boulanger Chloé, Cléro Olivier, Guellier Antoine, Guilloux Sébastien, Templé Arthur
 
     This file is part of ChemicalLibSuper.
 
@@ -27,7 +27,7 @@ import java.lang.annotation.Target;
 /**
  * This annotation exists for testing purpose only, and therefore should not be used.
  * 
- * @author Andréolli Cédric, Boulanger Chloé, Cléro Olivier, Guellier Antoine, Guilloux Sébastien, Templé Arthur
+ * @author Andreolli Cédric, Boulanger Chloé, Cléro Olivier, Guellier Antoine, Guilloux Sébastien, Templé Arthur
  *
  */
 

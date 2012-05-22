@@ -1,5 +1,5 @@
 /* 
-	Copyright (C) 2012 Andréolli Cédric, Boulanger Chloé, Cléro Olivier, Guellier Antoine, Guilloux Sébastien, Templé Arthur
+	Copyright (C) 2012 Andreolli Cédric, Boulanger Chloé, Cléro Olivier, Guellier Antoine, Guilloux Sébastien, Templé Arthur
 
     This file is part of ChemicalLibSuper.
 
@@ -48,7 +48,7 @@ import fr.insa.rennes.info.chemical.user.ReactionRule;
  * 
  * @see ReactionRule
  * 
- * @author Andréolli Cédric, Boulanger Chloé, Cléro Olivier, Guellier Antoine, Guilloux Sébastien, Templé Arthur
+ * @author Andreolli Cédric, Boulanger Chloé, Cléro Olivier, Guellier Antoine, Guilloux Sébastien, Templé Arthur
  *
  */
 public final class Solution implements Collection<Object>{

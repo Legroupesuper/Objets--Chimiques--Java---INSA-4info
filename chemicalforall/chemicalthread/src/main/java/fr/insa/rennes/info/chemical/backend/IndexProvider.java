@@ -46,7 +46,7 @@ import fr.insa.rennes.info.chemical.backend.Solution.Strategy;
  * the creation of this index provider.
  * </p>
  * 
- * @author Andréolli Cédric, Boulanger Chloé, Cléro Olivier, Guellier Antoine, Guilloux Sébastien, Templé Arthur
+ * @author Andreolli Cédric, Boulanger Chloé, Cléro Olivier, Guellier Antoine, Guilloux Sébastien, Templé Arthur
  * @see IncrementStrategy
  * @see SubIndexProvider
  * @see SubIndexProviderElement

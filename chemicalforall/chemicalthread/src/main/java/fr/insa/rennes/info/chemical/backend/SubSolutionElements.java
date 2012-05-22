@@ -1,5 +1,5 @@
 /* 
-	Copyright (C) 2012 Andréolli Cédric, Boulanger Chloé, Cléro Olivier, Guellier Antoine, Guilloux Sébastien, Templé Arthur
+	Copyright (C) 2012 Andreolli Cédric, Boulanger Chloé, Cléro Olivier, Guellier Antoine, Guilloux Sébastien, Templé Arthur
 
     This file is part of ChemicalLibSuper.
 
@@ -26,7 +26,7 @@ import java.util.List;
  * reference of the sub solution object containing the elements/reagents selected. This class is not supposed to be used alone, it should
  * be within a {@link SubSolution} object, as parameterized type.
  * 
- * @author Andréolli Cédric, Boulanger Chloé, Cléro Olivier, Guellier Antoine, Guilloux Sébastien, Templé Arthur
+ * @author Andreolli Cédric, Boulanger Chloé, Cléro Olivier, Guellier Antoine, Guilloux Sébastien, Templé Arthur
  */
 public final class SubSolutionElements implements SubSolutionReagentsAccessor{
 	/**

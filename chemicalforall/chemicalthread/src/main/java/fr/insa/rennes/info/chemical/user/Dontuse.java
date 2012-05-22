@@ -1,5 +1,5 @@
 /* 
-	Copyright (C) 2012 Andréolli Cédric, Boulanger Chloé, Cléro Olivier, Guellier Antoine, Guilloux Sébastien, Templé Arthur
+	Copyright (C) 2012 Andreolli Cédric, Boulanger Chloé, Cléro Olivier, Guellier Antoine, Guilloux Sébastien, Templé Arthur
 
     This file is part of ChemicalLibSuper.
 
@@ -29,7 +29,7 @@ import java.lang.annotation.Target;
  * required for the reaction to process.<br/>
  * The main goal of this annotation is to speed up the execution of the reaction by skipping the selection process.
  * 
- * @author Andréolli Cédric, Boulanger Chloé, Cléro Olivier, Guellier Antoine, Guilloux Sébastien, Templé Arthur
+ * @author Andreolli Cédric, Boulanger Chloé, Cléro Olivier, Guellier Antoine, Guilloux Sébastien, Templé Arthur
  *
  */
 
