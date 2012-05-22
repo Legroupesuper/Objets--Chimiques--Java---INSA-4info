@@ -71,7 +71,7 @@ public class ChemicalSentenceCreator {
 		mainSolution.add(complementSolution);
 		mainSolution.add(verbsSolution);
 		mainSolution.add(subjectsSolution);
-		
+
 		//letsgo
 		lauchReaction(mainSolution);
 	}
@@ -79,56 +79,54 @@ public class ChemicalSentenceCreator {
 	public static void test2() {
 		Solution mainSolution = new Solution();
 		Solution subjectsSolution = new Solution();
-		
+
 		subjectsSolution.add(new Subject("The cat"));
 		subjectsSolution.add(new Subject("The dog"));
 		subjectsSolution.add(new Subject("The bird"));
 		subjectsSolution.add(new Subject("A wild pikachu"));
 		subjectsSolution.add(new Subject("Chloe Boulanger"));
 		subjectsSolution.add(new SubjectType());
-		
+
 		mainSolution.add(subjectsSolution);
 		mainSolution.add(new ChooseSubjectRR());
-		
+
 		lauchReaction(mainSolution);
 	}
-	
+
 	public static void test3() {
 		Solution mainSolution = new Solution();
-		
-		mainSolution.add(new Subject("The cat"));	
+
+		mainSolution.add(new Subject("Ondine"));	
+		mainSolution.add(new Verb("is fucking"));
+		mainSolution.add(new Complement("on the couch"));
+		mainSolution.add(new PutWordsTogetherRR());
+
+		lauchReaction(mainSolution);
+	}
+
+	public static void test4(){
+		Solution mainSolution = new Solution();
+		Solution subjectsSolution = new Solution();
+
+		subjectsSolution.add(new Subject("The cat"));
+		subjectsSolution.add(new Subject("The dog"));
+		subjectsSolution.add(new Subject("The bird"));
+		subjectsSolution.add(new Subject("A wild pikachu"));
+		subjectsSolution.add(new Subject("Chloe Boulanger"));
+		subjectsSolution.add(new SubjectType());
+
+		mainSolution.add(subjectsSolution);
+		mainSolution.add(new ChooseSubjectRR());
 		mainSolution.add(new Verb("is eating sausages"));
 		mainSolution.add(new Complement("on the couch"));
 		mainSolution.add(new PutWordsTogetherRR());
-		
-		lauchReaction(mainSolution);
-	}
-	
-	public static void test4(){
-		Solution mainSolution = new Solution();
-		Solution sol1 = new Solution();
-		Solution sol2 = new Solution();
-		Solution sol3 = new Solution();
-		Solution sol4 = new Solution();
-		sol4.add(1);
-		sol3.add(sol4);
-		sol2.add(sol3);
-		sol1.add(sol2);
-		mainSolution.add(sol1);
-		
-		for(int i=0;i<10;i++){
-			sol3.add(new Subject(""+i));
-		}
-		for(int i=0;i<10;i++){
-			sol2.add(new Subject(""+i));
-		}
-		for(int i=0;i<10;i++){
-			sol1.add(new Subject(""+i));
-		}
-		lauchReaction(mainSolution);
+		mainSolution.add(new Subject("Ondine"));	
+		mainSolution.add(new Verb("is fucking"));
+		mainSolution.add(new Complement("on the sofa"));
 
+		lauchReaction(mainSolution);
 	}
-	
+
 	public static void lauchReaction(final Solution s){
 		System.out.println("-- Before --");
 		System.out.println(s);
@@ -142,7 +140,7 @@ public class ChemicalSentenceCreator {
 	}
 
 	public static void main(String[] args) {
-		test1();
+		test4();
 	}
 
 }

@@ -12,10 +12,10 @@
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU Lesser General Public License for more details.
-	
+
     You should have received a copy of the GNU Lesser General Public License
     along with ChemicalLibSuper.  If not, see <http://www.gnu.org/licenses/>
-*/
+ */
 package fr.insa.rennes.info.chemical.backend;
 
 import java.lang.reflect.Field;
@@ -66,7 +66,7 @@ class BuilderSubIndexProviderSolutionImpl implements BuilderSubIndexProviderSolu
 	 * calls {@link #getProduct()} although it is not built yet.  
 	 */
 	private boolean _complete;
-	
+
 	/**
 	 * Constructs a standard builder for a {@link SubIndexProviderSolution}.
 	 * Initializes all the builder's parameters to <code>null</code> and the {@link #_complete} field
@@ -80,14 +80,14 @@ class BuilderSubIndexProviderSolutionImpl implements BuilderSubIndexProviderSolu
 		_rrSubSolField = null;
 		_complete = false;
 	}
-	
+
 	public SubIndexProviderSolution getProduct() throws ChemicalException {
 		if(!_complete)
 			throw new ChemicalException("The element index provider is not entirely built yet.");
 
 		return _sipSol;
 	}
-	
+
 	public void setReactionRule(ReactionRule rr) {
 		this._rr = rr;
 	}
@@ -95,7 +95,7 @@ class BuilderSubIndexProviderSolutionImpl implements BuilderSubIndexProviderSolu
 	public void setReactionRuleFields(Field[] rrFields) {
 		this._rrFields = rrFields;
 	}
-	
+
 	public void setParamType(ParameterizedType paramType) {
 		this._paramType = paramType;
 	}
@@ -103,7 +103,7 @@ class BuilderSubIndexProviderSolutionImpl implements BuilderSubIndexProviderSolu
 	public void setSolution(Solution sol) {
 		this._solution = sol;
 	}
-	
+
 	public void setSubSolutionField(Field subSolField) {
 		this._rrSubSolField = subSolField;
 	}
@@ -188,7 +188,7 @@ class BuilderSubIndexProviderSolutionImpl implements BuilderSubIndexProviderSolu
 						sipSolAccumulation.merge(sipSol);
 				}
 			}
-			
+
 			//As we are in the recursion, this _sipSol is only a option among others
 			//Thus, the response CAN be null (it is just a wrong way, and we can "backtrack"-sort of)
 			if(sipSolAccumulation == null) {
@@ -196,7 +196,7 @@ class BuilderSubIndexProviderSolutionImpl implements BuilderSubIndexProviderSolu
 			} else {
 				secondLevelList.add(sipSolAccumulation);
 				firstLevelList.add(secondLevelList);
-	
+
 				//At this point we have a SubSolution<Subsolution<...>> so there can 
 				//not be dependent indexes
 				List<List<Integer>> dependentIndexesList = new ArrayList<List<Integer>>();
@@ -208,8 +208,11 @@ class BuilderSubIndexProviderSolutionImpl implements BuilderSubIndexProviderSolu
 			//At this point, this._subSol is the Solution in which we are going to try to find our reagents.
 			//In other words, we are at the end of the recursion
 			Method getter = Utils.getMethodFromReactionRule(_rr, "get", _rrSubSolField);
+			System.err.println("cucu : "+getter);
 			try {
 				//The getter allows us to generate SubSolution element to access the type list
+				System.err.println("rr : "+_rr);
+				System.err.println("sans cast : "+getter.invoke(_rr, new Object[0]));
 				SubSolution<SubSolutionReagentsAccessor> subSolObject = (SubSolution<SubSolutionReagentsAccessor>) getter.invoke(_rr, new Object[0]);
 
 				//For each type in the SubSolutionReagentsAccessor type list, create
@@ -217,6 +220,7 @@ class BuilderSubIndexProviderSolutionImpl implements BuilderSubIndexProviderSolu
 				List<List<SubIndexProvider>> firstLevelList = new ArrayList<List<SubIndexProvider>>();
 				List<SubIndexProvider> secondLevelList = new ArrayList<SubIndexProvider>();
 				List<String> typeList = new ArrayList<String>();
+				System.err.println("caca : "+subSolObject);
 				for(Class<?> c : subSolObject.getTypeList()){
 					typeList.add(c.getName());
 
@@ -246,7 +250,7 @@ class BuilderSubIndexProviderSolutionImpl implements BuilderSubIndexProviderSolu
 		}
 	}
 
-	
+
 	/**
 	 * Builds a root {@link SubIndexProviderSolution} for a {@link IndexProvider}; normally called only once.<br />
 	 * This building version needs the following parameters to be correctly instantiated : 
@@ -301,13 +305,13 @@ class BuilderSubIndexProviderSolutionImpl implements BuilderSubIndexProviderSolu
 								sipSolAccumulation.merge(sipSol);
 						}
 					}
-					
+
 					//The accumulation can not be null. 
 					//If it is, this mean the reagents will never be matched anyway
 					if(sipSolAccumulation == null) {
 						throw new ChemicalException("There is not enough solution nesting, impossible to match reagents, aborting index provider building.");
 					}
-					
+
 					sip = sipSolAccumulation;
 				}else{
 					//Else, the reaction rule attribute is a simple Java object,
@@ -321,7 +325,7 @@ class BuilderSubIndexProviderSolutionImpl implements BuilderSubIndexProviderSolu
 				secondLevelList.add(sip);
 			}
 		}
-		
+
 		//The first level list only contains one sub-list (see why in the comment up there in this function)
 		firstLevelList.add(secondLevelList);
 
@@ -381,7 +385,7 @@ class BuilderSubIndexProviderSolutionImpl implements BuilderSubIndexProviderSolu
 
 		return dependantIndexesList;
 	}
-	
+
 	/**
 	 * Builds the list of dependent indexes for the specified list of reagent type.
 	 * Basically two indexes are dependent if they correspond to reagents that have the same type.

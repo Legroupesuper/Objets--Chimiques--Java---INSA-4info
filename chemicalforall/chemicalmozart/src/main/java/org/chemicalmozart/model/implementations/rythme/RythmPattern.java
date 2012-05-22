@@ -18,31 +18,36 @@
 */
 package org.chemicalmozart.model.implementations.rythme;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.chemicalmozart.model.implementations.Note;
 import org.chemicalmozart.model.implementations.Rythme;
-import org.chemicalmozart.model.implementations.Note.Type;
-
-public class QQQEE4{
-
-	public Rythme getDuration() {
-		return Rythme.whole;
+/**
+ * This interface is used to describe a Rythme class.
+ * @author cedricandreolli
+ *
+ */
+public class RythmPattern {
+	private Rythme _duration;
+	private List<Note> _listNotes;
+	
+	public RythmPattern(Rythme _duration, List<Note> _listNotes) {
+		super();
+		this._duration = _duration;
+		this._listNotes = _listNotes;
 	}
-	public List<Note> getListNotes() {
-		Note n1 = new Note(0, Type.STRONG, org.chemicalmozart.model.implementations.Rythme.quater);
-		Note n2 = new Note(1, Type.BEFORE_STRONG, org.chemicalmozart.model.implementations.Rythme.quater);
-		Note n3 = new Note(2, Type.STRONG, org.chemicalmozart.model.implementations.Rythme.quater);
-		Note n4 = new Note(3, Type.NONE, org.chemicalmozart.model.implementations.Rythme.eighth);
-		Note n5 = new Note(4, Type.BEFORE_STRONG, org.chemicalmozart.model.implementations.Rythme.eighth);
-
-		List<Note> l = new ArrayList<Note>();
-		l.add(n1);
-		l.add(n2);
-		l.add(n3);
-		l.add(n4);
-		l.add(n5);
-		return l;
+	/**
+	 * 
+	 * @return The duration of a rythme
+	 */
+	public Rythme getDuration(){
+		return _duration;
+	}
+	/**
+	 * It returns a list of notes
+	 * @return a list of notes with a specific rythme
+	 */
+	public List<Note> getListNotes(){
+		return _listNotes;
 	}
 }
