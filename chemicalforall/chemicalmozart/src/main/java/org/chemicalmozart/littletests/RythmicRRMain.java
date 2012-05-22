@@ -21,20 +21,21 @@ public class RythmicRRMain {
 		Solution pull = factory.createRythmicPull();
 		final Solution sol = new Solution();
 		sol.add(pull);
+		pull.setIsInert(true);
 		sol.add(new RythmicRR());
-		sol.add((Integer)2);
-		//sol.add(new MelodicRR());
-//		ChordImpl c1 = new ChordImpl();
-//		c1.set_degrees(new DegreeImpl(1));
-//		c1.set_position(0);
-//		c1.setDuration(Rythme.half);
-//		
-//		ChordImpl c2 = new ChordImpl();
-//		c2.set_degrees(new DegreeImpl(4));
-//		c2.set_position(1);
-//		c2.setDuration(Rythme.half);
-//		
-//		sol.add(c1);sol.add(c2);
+		sol.add(2);
+		sol.add(new MelodicRR());
+		ChordImpl c1 = new ChordImpl();
+		c1.set_degrees(new DegreeImpl(1));
+		c1.set_position(0);
+		c1.setDuration(Rythme.half);
+		
+		ChordImpl c2 = new ChordImpl();
+		c2.set_degrees(new DegreeImpl(4));
+		c2.set_position(1);
+		c2.setDuration(Rythme.half);
+		
+		sol.add(c1);sol.add(c2);
 		System.out.println("Solution avant : ");
 		System.out.println(sol);
 		
@@ -45,7 +46,6 @@ public class RythmicRRMain {
 				System.out.println(sol);
 			}
 		});
-		System.out.println("test");
 		sol.react();
 	}
 
