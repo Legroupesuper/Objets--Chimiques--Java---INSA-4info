@@ -208,19 +208,18 @@ class BuilderSubIndexProviderSolutionImpl implements BuilderSubIndexProviderSolu
 			//At this point, this._subSol is the Solution in which we are going to try to find our reagents.
 			//In other words, we are at the end of the recursion
 			Method getter = Utils.getMethodFromReactionRule(_rr, "get", _rrSubSolField);
-			System.err.println("cucu : "+getter);
 			try {
 				//The getter allows us to generate SubSolution element to access the type list
-				System.err.println("rr : "+_rr);
-				System.err.println("sans cast : "+getter.invoke(_rr, new Object[0]));
 				SubSolution<SubSolutionReagentsAccessor> subSolObject = (SubSolution<SubSolutionReagentsAccessor>) getter.invoke(_rr, new Object[0]);
-
+				//If the invocation went well but the SubSolution field wasn't initialized by the user, send an error
+				if(subSolObject == null)
+					throw new NullPointerException("The SubSolution field \""+_rrSubSolField.getName()+"\" of class "+_rr.getClass().getSimpleName()+" has a null value. Maybe it wasn't initialized.");
+				
 				//For each type in the SubSolutionReagentsAccessor type list, create
 				//a SubIndexProviderElement object.
 				List<List<SubIndexProvider>> firstLevelList = new ArrayList<List<SubIndexProvider>>();
 				List<SubIndexProvider> secondLevelList = new ArrayList<SubIndexProvider>();
 				List<String> typeList = new ArrayList<String>();
-				System.err.println("caca : "+subSolObject);
 				for(Class<?> c : subSolObject.getTypeList()){
 					typeList.add(c.getName());
 
@@ -241,11 +240,11 @@ class BuilderSubIndexProviderSolutionImpl implements BuilderSubIndexProviderSolu
 			} catch(ChemicalException e1) {
 				throw e1;
 			} catch (IllegalArgumentException e2) {
-				throw new ChemicalException("Error while building the index provider : invocation of the getter of a reaction rule SubSolution field failed.");
+				throw new ChemicalException("Invocation of the getter of a reaction rule SubSolution field failed.");
 			} catch (IllegalAccessException e3) {
-				throw new ChemicalException("Error while building the index provider : invocation of the getter of a reaction rule SubSolution field failed.");
+				throw new ChemicalException("Invocation of the getter of a reaction rule SubSolution field failed.");
 			} catch (InvocationTargetException e4) {
-				throw new ChemicalException("Error while building the index provider : invocation of the getter of a reaction rule SubSolution field failed.");
+				throw new ChemicalException("Invocation of the getter of a reaction rule SubSolution field failed.");
 			}
 		}
 	}

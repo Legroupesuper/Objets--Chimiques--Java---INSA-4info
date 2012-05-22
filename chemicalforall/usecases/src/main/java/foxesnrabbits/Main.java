@@ -1,9 +1,8 @@
 package foxesnrabbits;
 
-import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 import java.util.Random;
 
 import fr.insa.rennes.info.chemical.backend.Solution;
@@ -11,14 +10,14 @@ import fr.insa.rennes.info.chemical.user.InertEvent;
 import fr.insa.rennes.info.chemical.user.InertEventListener;
 
 public class Main {
-	
+	public static long time = 0;
 	
 	public static void main(String[] args) {
 		Solution solution = new Solution();
 		
 		//Create the fields
-		int N = 50;
-		int M = 10;
+		int N = 100;
+		int M = 20;
 		Field field = new Field(N, M);
 		
 		//Add all the cells
@@ -52,17 +51,20 @@ public class Main {
 		
 		solution.addInertEventListener(new InertEventListener() {
 			public void isInert(InertEvent e) {
+				time = System.currentTimeMillis()-time;
 				System.out.println("\n\nRéaction terminée :");
 				System.out.println(e.getSource());
 				printNbRabbitsAndFoxes((Solution)e.getSource(), -1);
+				System.out.println("Time : "+time+"ms");
 			}
 			
 		});
 		
 		System.out.println(solution);
+		time = System.currentTimeMillis();
 		solution.react();
 		
-		int seconds = 0;
+		/*int seconds = 0;
 		while(!solution.is_inert()) {
 			seconds++;
 			try {
@@ -73,24 +75,12 @@ public class Main {
 			}
 			
 			printNbRabbitsAndFoxes(solution, seconds);
-		}
+		}*/
 	}
 	
 	public static void printNbRabbitsAndFoxes(Solution solution, int seconds) {
-		
-		Iterator<Object> it = solution.iterator();
-		int nbRabbits = 0;
-		int nbFoxes = 0;
-		Object next;
-		while(it.hasNext()) {
-			next = it.next();
-			
-			if(next instanceof Rabbit)
-				nbRabbits++;
-			else if(next instanceof Fox)
-				nbFoxes++;
-		}
-		
-		System.out.println((seconds == -1 ? "End" : seconds)+" => Rabbits "+nbRabbits+"/ Foxes : "+nbFoxes);
+		System.out.println((seconds == -1 ? "End" : seconds)+
+				" => Rabbits "+solution.getReactivesFromType(Rabbit.class).size()+
+				"/ Foxes : "+solution.getReactivesFromType(Fox.class).size());
 	}
 }
