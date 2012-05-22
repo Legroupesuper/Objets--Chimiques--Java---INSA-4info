@@ -12,10 +12,10 @@
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU Lesser General Public License for more details.
-	
+
     You should have received a copy of the GNU Lesser General Public License
     along with ChemicalLibSuper.  If not, see <http://www.gnu.org/licenses/>
-*/
+ */
 package fr.insa.rennes.info.chemical.backend;
 
 
@@ -170,7 +170,7 @@ public final class Solution implements Collection<Object>{
 			}
 
 			if(!setterOK){
-				return false;
+				throw new IllegalArgumentException("The specified reaction rule hasn't got all the necessary setters: missing setter for "+rrClass.getSimpleName()+"::"+f.getName());
 			}
 		}
 
@@ -252,11 +252,11 @@ public final class Solution implements Collection<Object>{
 					result = l.add(newReagent);
 					_mapElements.put(rawClassName, l);
 				}
-				
+
 				if(getNumberOfActiveThreads() == 1 && !containsNonInertSubSol())
 					endOfReaction();
-				
-				
+
+
 				return result;
 			}else{
 				return false;
@@ -493,21 +493,20 @@ public final class Solution implements Collection<Object>{
 		}
 		return Collections.unmodifiableList(reagentsCopy).iterator();
 	}
-	
+
 	/**
-	 * Returns an iterator over the elements/reagents in this solution that have the specified types. 
-	 * As this solution can contain any type of element, the function returns an iterator of Object objects.
+	 * Returns a list containing the elements/reagents in this solution that have the specified type. 
+	 * As this solution can contain any type of element, the function returns a list of Object objects.
 	 * There are no guarantees concerning the order in which the elements are returned
-	 * @param types The types of the objects needed.
-	 * @return an <code>Iterator</code> over the elements of the specified types in this solution.
-	 * @see Iterator
+	 * @param type The type of the objects needed.
+	 * @return a <code>List</code> containing the elements of the specified type in this solution.
 	 */
-	public Iterator<Object> iterator(List<Class> types) {
-		List<Object> reagentsCopy = new LinkedList<Object>();
-		for(List<Object> reagentList : _mapElements.values()) {
-			reagentsCopy.addAll(reagentList);
-		}
-		return Collections.unmodifiableList(reagentsCopy).iterator();
+	public List<Object> getReactivesFromType(Class<?> type) {
+		List<Object> result = _mapElements.get(type.getName());
+		if(result == null)
+			return null;
+		else
+			return Collections.unmodifiableList(result);
 	}
 
 	/**
@@ -956,7 +955,7 @@ public final class Solution implements Collection<Object>{
 		String res = "Solution contains :\n"+this.prettyPrint(0);
 		return res;
 	}
-	
+
 	/*
 	 * A somewhat useful pretty printer...
 	 */
