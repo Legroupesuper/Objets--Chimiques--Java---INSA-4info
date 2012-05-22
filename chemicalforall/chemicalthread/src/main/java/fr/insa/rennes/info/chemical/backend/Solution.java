@@ -255,9 +255,7 @@ public final class Solution implements Collection<Object>{
 				
 				if(getNumberOfActiveThreads() == 1 && !containsNonInertSubSol())
 					endOfReaction();
-				else {
-					wakeAll();
-				}
+				
 				
 				return result;
 			}else{
@@ -489,6 +487,22 @@ public final class Solution implements Collection<Object>{
 	 * @see Iterator
 	 */
 	public Iterator<Object> iterator() {
+		List<Object> reagentsCopy = new LinkedList<Object>();
+		for(List<Object> reagentList : _mapElements.values()) {
+			reagentsCopy.addAll(reagentList);
+		}
+		return Collections.unmodifiableList(reagentsCopy).iterator();
+	}
+	
+	/**
+	 * Returns an iterator over the elements/reagents in this solution that have the specified types. 
+	 * As this solution can contain any type of element, the function returns an iterator of Object objects.
+	 * There are no guarantees concerning the order in which the elements are returned
+	 * @param types The types of the objects needed.
+	 * @return an <code>Iterator</code> over the elements of the specified types in this solution.
+	 * @see Iterator
+	 */
+	public Iterator<Object> iterator(List<Class> types) {
 		List<Object> reagentsCopy = new LinkedList<Object>();
 		for(List<Object> reagentList : _mapElements.values()) {
 			reagentsCopy.addAll(reagentList);
