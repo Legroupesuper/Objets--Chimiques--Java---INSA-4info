@@ -29,7 +29,7 @@ import fr.insa.rennes.info.chemical.user.ReactionRule;
  * do not fit in any other class.
  * @author Andreolli Cédric, Boulanger Chloé, Cléro Olivier, Guellier Antoine, Guilloux Sébastien, Templé Arthur
  */
-class Utils {
+public class Utils {
 	
 /*
  * Logger (replacing classic
@@ -67,7 +67,7 @@ class Utils {
  * 
  */
 	// Scope is set to "default" on purpose : only this library should use this log
-	static Logger logger = Logger.getLogger("fr.insa.rennes.info.chemical");
+	public static Logger logger = Logger.getLogger("fr.insa.rennes.info.chemical");
 	
 	/**
 	 * This method is used to get a Method associated to a field and a ReactionRule.
