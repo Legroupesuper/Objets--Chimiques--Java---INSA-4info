@@ -253,8 +253,9 @@ public final class Solution implements Collection<Object>{
 					result = l.add(newReagent);
 					_mapElements.put(rawClassName, l);
 				}
-				if(getNumberOfActiveThreads() == 1 && !containsNonInertSubSol())
-					endOfReaction();
+				
+				tryTrivialEndOfReaction();
+				
 				return result;
 			}else{
 				return false;
@@ -751,7 +752,6 @@ public final class Solution implements Collection<Object>{
 
 					//..instanciate the (value) of the field...
 					reagentObject = instanciateField(f, sipSol.get_listSubIP().get(i), rr);
-					System.out.println(f.getName()+" : "+reagentObject);
 					//If instanciateField returned false, an error occured, go on the the next increment of the index provider
 					if(reagentObject == null) {
 						tryComputeSelect = false;

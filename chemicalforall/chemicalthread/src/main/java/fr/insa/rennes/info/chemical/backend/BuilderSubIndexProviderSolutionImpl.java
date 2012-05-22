@@ -212,7 +212,6 @@ class BuilderSubIndexProviderSolutionImpl implements BuilderSubIndexProviderSolu
 				//The getter allows us to generate SubSolution element to access the type list
 				SubSolution<SubSolutionReagentsAccessor> subSolObject = (SubSolution<SubSolutionReagentsAccessor>) getter.invoke(_rr, new Object[0]);
 				//If the invocation went well but the SubSolution field wasn't initialized by the user, send an error
-				System.err.println("caca : "+subSolObject);
 				if(subSolObject == null)
 					throw new NullPointerException("The SubSolution field \""+_rrSubSolField.getName()+"\" of class "+_rr.getClass().getSimpleName()+" has a null value. Maybe it wasn't initialized.");
 				
