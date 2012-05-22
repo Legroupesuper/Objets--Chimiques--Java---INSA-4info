@@ -26,7 +26,7 @@ import fr.insa.rennes.info.chemical.user.ReactionRule;
 /**
  * Standard implementation of {@link BuilderIndexProvider}. Another implementation can be created
  * by implementing {@link BuilderIndexProvider}.
- * @author Andréolli Cédric, Boulanger Chloé, Cléro Olivier, Guellier Antoine, Guilloux Sébastien, Templé Arthur
+ * @author Andreolli Cédric, Boulanger Chloé, Cléro Olivier, Guellier Antoine, Guilloux Sébastien, Templé Arthur
  */
 public class BuilderIndexProviderImpl implements BuilderIndexProvider {
 	/**
