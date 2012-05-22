@@ -23,7 +23,6 @@ import java.util.List;
 
 import fr.insa.rennes.info.chemical.backend.SubSolution;
 import fr.insa.rennes.info.chemical.backend.SubSolutionElements;
-import fr.insa.rennes.info.chemical.user.Dontuse;
 import fr.insa.rennes.info.chemical.user.ReactionRule;
 
 public class ChooseVerbRR implements ReactionRule{
@@ -60,9 +59,6 @@ public class ChooseVerbRR implements ReactionRule{
 		_subSol = new SubSolution<SubSolutionElements>(e);
 	}
 	
-	/*
-	 * Met au pluriel (rajoute un "s") avec 50% de chances
-	 */
 	public Object[] computeResult() {
 		Verb v = (Verb)_subSol.getElements().get(1);
 		return new Object[]{v};
