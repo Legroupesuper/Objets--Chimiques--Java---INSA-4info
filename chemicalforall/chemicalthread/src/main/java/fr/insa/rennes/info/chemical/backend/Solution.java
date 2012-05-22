@@ -206,7 +206,7 @@ public final class Solution implements Collection<Object>{
 		Solution sol = (Solution) solutionObject;
 		sol.addInertEventListener(new InertEventListener() {
 			public void isInert(InertEvent e) {
-				Solution.this.checkTrivialEndOfReaction();
+				Solution.this.tryTrivialEndOfReaction();
 			}
 		});
 		if(_reactionInProgress)
@@ -252,6 +252,13 @@ public final class Solution implements Collection<Object>{
 					result = l.add(newReagent);
 					_mapElements.put(rawClassName, l);
 				}
+				
+				if(getNumberOfActiveThreads() == 1 && !containsNonInertSubSol())
+					endOfReaction();
+				else {
+					wakeAll();
+				}
+				
 				return result;
 			}else{
 				return false;
@@ -342,19 +349,19 @@ public final class Solution implements Collection<Object>{
 					_threadTable.remove(r);
 				}
 
-				checkTrivialEndOfReaction();
+				tryTrivialEndOfReaction();
 			}
 		}
 	}
 
 	/**
-	 * Checks if the end of the reaction is reached. 
+	 * Checks if the end of the reaction is reached, and if it is, call {@link #endOfReaction()}.
 	 * The end of the reaction is reached when there is no longer any active thread and 
 	 * that there is no non inert inner solution. In the contrary, 
 	 * if the end of the reaction isn't reached, this function wakes all the reaction
 	 * rule threads. 
 	 */
-	private void checkTrivialEndOfReaction() {
+	private void tryTrivialEndOfReaction() {
 		if(_threadTable.size() == 0 && !containsNonInertSubSol())
 			endOfReaction();
 		else {
@@ -376,7 +383,7 @@ public final class Solution implements Collection<Object>{
 		_inert = true;
 
 		notifyAll();
-		fireInertEvent(new InertEvent(new Object()));
+		fireInertEvent(new InertEvent(this));
 	}
 
 	/**
@@ -549,7 +556,7 @@ public final class Solution implements Collection<Object>{
 					 */
 					s.addInertEventListener(new InertEventListener() {
 						public void isInert(InertEvent e) {
-							Solution.this.checkTrivialEndOfReaction();
+							Solution.this.tryTrivialEndOfReaction();
 						}
 					});
 					s.react();

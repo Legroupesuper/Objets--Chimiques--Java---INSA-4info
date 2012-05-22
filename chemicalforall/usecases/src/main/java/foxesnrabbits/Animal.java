@@ -13,13 +13,15 @@ public class Animal {
 	protected int _maxLitterSize;
 	protected Cell _location;
 	
-	public Animal(int defaultAge, int longevity, double breedProb, int breedAge, int maxLitter) {
+	public Animal(int defaultAge, int longevity, double breedProb, int breedAge, int maxLitter, Cell c) {
 		_alive = true;
 		_age = 0;
 		_maxAge = longevity;
 		_breedingProbability = breedProb;
 		_breedingAge = breedAge;
 		_maxLitterSize = maxLitter;
+		_location = c;
+		_location.setAnimal(this);
 		
 		if(defaultAge == -1) {
 			_age = rand.nextInt(_maxAge);
@@ -27,13 +29,13 @@ public class Animal {
 			_age = defaultAge;
 	}
 
-	protected void incrementAge() {
+	public void incrementAge() {
 		_age++;
 		if(_age > _maxAge)
 			_alive = false;
 	}
 	
-	protected int breed() {
+	public int breed() {
         int births = 0;
         if(canBreed() && rand.nextDouble() <= _breedingProbability) {
             births = rand.nextInt(_maxLitterSize) + 1;
@@ -43,5 +45,23 @@ public class Animal {
 	
 	protected boolean canBreed() {
 		return _age > _breedingAge;
+	}
+	
+	public Cell getLocation() {
+		return _location;
+	}
+	
+	public void changeLocation(Cell nextLocation) {
+		_location.setAnimal(null);
+		nextLocation.setAnimal(this);
+		_location = nextLocation;
+	}
+	
+	public boolean isAlive() {
+		return _alive;
+	}
+	
+	public void setDead() {
+		_alive = false;
 	}
 }
