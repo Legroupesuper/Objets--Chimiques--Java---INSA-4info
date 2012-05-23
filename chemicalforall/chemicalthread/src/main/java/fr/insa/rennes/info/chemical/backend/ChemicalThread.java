@@ -95,6 +95,7 @@ public class ChemicalThread extends Thread {
 				//If the reaction rule is ONE SHOT, we must delete it and stop this thread
 				if(_reactionRule.getMultiplicity().equals(Multiplicity.ONE_SHOT)){
 					_solutionContainer.deleteReaction(_reactionRule);
+					_solutionContainer.wakeAll();
 					Utils.logger.info("C'était une One-shot");
 					break;
 				}
