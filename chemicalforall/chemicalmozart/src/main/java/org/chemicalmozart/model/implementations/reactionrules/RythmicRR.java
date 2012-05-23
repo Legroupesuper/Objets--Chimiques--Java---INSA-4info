@@ -26,7 +26,6 @@ import org.chemicalmozart.model.implementations.Note;
 import org.chemicalmozart.model.implementations.rythme.RythmPattern;
 import org.chemicalmozart.model.implementations.solutionindentification.RythmePull;
 
-import fr.insa.rennes.info.chemical.backend.Solution;
 import fr.insa.rennes.info.chemical.backend.SubSolution;
 import fr.insa.rennes.info.chemical.backend.SubSolutionElements;
 import fr.insa.rennes.info.chemical.user.Dontreact;
