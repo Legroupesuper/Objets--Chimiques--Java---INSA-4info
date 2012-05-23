@@ -76,8 +76,8 @@ public class Test {
 		s3.add("naze");
 		s3.add("gros");
 		s3.add("un");
-//		s3.add(new ConcatRR());
-//		s3.add(new MaxIntRR(0));
+		s3.add(new ConcatRR());
+		s3.add(new MaxIntRR(0));
 		s5.add(56);
 		s5.add(56);
 		s5.add(56);
@@ -123,12 +123,11 @@ public class Test {
 		s.add(" Le ");
 		s.add(" Gros ");
 		s.add(" Eléphant ");
-		//s.add(new MaxIntRR(0));
-		//s2.add(new DeleteRuleMax());
-		//s.add(new MaxIntSubSolRR());
-		//s.add(new ConcatRR());
-		//s.add(new RandomNumberRR());
-		//	s.add(new TrucRR());
+		s.add(new MaxIntRR(10));
+		s.add(new MaxIntSubSolRR());
+		s.add(new ConcatRR());
+		s.add(new RandomNumberRR());
+			s.add(new TrucRR());
 		s.add(new ConcatSubSolRR());
 		System.out.println("AVANT : ");
 		System.out.println(s);
@@ -150,6 +149,19 @@ public class Test {
 			s.react();
 		} catch (IllegalArgumentException e) {
 			e.printStackTrace();
+		}
+		
+		int i = 0;
+		while(!s.is_inert() && i*5 < 60) {
+			try {
+				Thread.sleep(2);
+			} catch (InterruptedException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			
+			System.out.println("\n"+s);
+			i++;
 		}
 		
 		

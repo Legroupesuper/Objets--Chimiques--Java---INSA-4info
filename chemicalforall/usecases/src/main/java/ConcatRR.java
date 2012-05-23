@@ -24,6 +24,7 @@ public class ConcatRR implements ReactionRule{
 	private String s;
 	private String t;
 	public Object[] computeResult() {
+		System.out.println("J'ai s="+s+" et t="+t);
 		return new String[]{s+t};
 	}
 	public boolean computeSelect() {

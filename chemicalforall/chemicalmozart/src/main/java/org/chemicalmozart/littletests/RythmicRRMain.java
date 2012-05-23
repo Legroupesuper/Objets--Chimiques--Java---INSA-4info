@@ -19,11 +19,14 @@ public class RythmicRRMain {
 	public static void main(String[] args) {
 		MozartSolutionFactoryImpl factory = new MozartSolutionFactoryImpl();
 		Solution pull = factory.createRythmicPull();
-		final Solution sol = new Solution();
+		Solution sol = new Solution();
 		sol.add(pull);
+		//System.err.println("is inert ?"+pull.is_inert());
 		sol.add(new RythmicRR());
-		sol.add((Integer)2);
-		//sol.add(new MelodicRR());
+		sol.add(2);
+		MelodicRR m = new MelodicRR();
+		m.set_activated(false);
+		sol.add(m);
 //		ChordImpl c1 = new ChordImpl();
 //		c1.set_degrees(new DegreeImpl(1));
 //		c1.set_position(0);
@@ -41,11 +44,10 @@ public class RythmicRRMain {
 		sol.addInertEventListener(new InertEventListener() {
 			
 			public void isInert(InertEvent e) {
-				System.out.println("Solution après : "+sol.is_inert());
-				System.out.println(sol);
+				System.out.println("Solution après : "+((Solution)e.getSource()).is_inert());
+				System.out.println(((Solution)e.getSource()));
 			}
 		});
-		System.out.println("test");
 		sol.react();
 	}
 

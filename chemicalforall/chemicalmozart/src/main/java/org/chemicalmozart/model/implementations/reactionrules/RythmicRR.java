@@ -18,20 +18,11 @@
 */
 package org.chemicalmozart.model.implementations.reactionrules;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
-import org.chemicalmozart.model.implementations.ChordImpl;
-import org.chemicalmozart.model.implementations.Note;
 import org.chemicalmozart.model.implementations.rythme.RythmPattern;
 import org.chemicalmozart.model.implementations.solutionindentification.RythmePull;
-
-import fr.insa.rennes.info.chemical.backend.Solution;
-import fr.insa.rennes.info.chemical.backend.SubSolution;
 import fr.insa.rennes.info.chemical.backend.SubSolutionElements;
-import fr.insa.rennes.info.chemical.backend.Utils;
 import fr.insa.rennes.info.chemical.user.Dontreact;
 import fr.insa.rennes.info.chemical.user.ReactionRule;
 
@@ -57,29 +48,28 @@ public class RythmicRR implements ReactionRule{
 	/**
 	 * The solution which contains the rhythmic patterns and identified by a RythmePull object
 	 */
-	private SubSolution<SubSolutionElements> _rythmeSolution;
-	public SubSolution<SubSolutionElements> get_rythmeSolution() {
-		return _rythmeSolution;
-	}
-
-	public void set_rythmeSolution(SubSolution<SubSolutionElements> _rythmeSolution) {
-		this._rythmeSolution = _rythmeSolution;
-	}
+//	private SubSolution<SubSolutionElements> _rythmeSolution;
+//	public SubSolution<SubSolutionElements> get_rythmeSolution() {
+//		return _rythmeSolution;
+//	}
+//
+//	public void set_rythmeSolution(SubSolution<SubSolutionElements> _rythmeSolution) {
+//		this._rythmeSolution = _rythmeSolution;
+//	}
 
 	/**
 	 * The current selected ChordImpl
 	 */
-	//private ChordImpl _chordImpl;
+//	private ChordImpl _chordImpl;
 	/**
 	 * The solution which contains the patterns
 	 */
-//	private Solution _solution;
+	//private Solution _solution;
 	/**
 	 * The current ChordNumber.<br />
 	 * This parameter doesn't react and the same instance will be used for a same RythmicRR. The constructor must initialize it to 0.
 	 */
-//	@Dontreact
-//	private int _chordNumber;
+//	@Dontreact private int _chordNumber;
 	/**
 	 * The total number of ChordImpl in the current bar
 	 */
@@ -111,7 +101,7 @@ public class RythmicRR implements ReactionRule{
 		l.add(RythmePull.class);
 		l.add(RythmPattern.class);
 		elts.setTypeList(l);
-		_rythmeSolution = new SubSolution<SubSolutionElements>(elts);
+//		_rythmeSolution = new SubSolution<SubSolutionElements>(elts);
 //		this._chordNumber = 0;
 //		this._max = 0;
 	}
@@ -193,7 +183,8 @@ public class RythmicRR implements ReactionRule{
 		
 //		return result;
 //		_rythmeSolution.getSolution().add(new RythmePull());
-		return  new Object[]{2};
+		System.err.println("On met le pâté");
+		return  new Object[]{_num+1};
 	}
  
 
@@ -202,7 +193,6 @@ public class RythmicRR implements ReactionRule{
 	 * It must also check that the selected subsolution rhythm has the same duration than _chordImpl.
 	 */
 	public boolean computeSelect() {
-		File f = new File("toto");
 		System.err.println("On est là : "+_num);
 //		boolean validPosition = _chordImpl.get_position() == _chordNumber;
 //		boolean sameDuration = ((RythmPattern)_rythmeSolution.getElements().get(1)).getDuration() == _chordImpl.getDuration();
@@ -271,7 +261,7 @@ public class RythmicRR implements ReactionRule{
 	 * One-shot
 	 */
 	public Multiplicity getMultiplicity() {
-		return Multiplicity.INFINITY_SHOT;
+		return Multiplicity.ONE_SHOT;
 	}
 
 	
