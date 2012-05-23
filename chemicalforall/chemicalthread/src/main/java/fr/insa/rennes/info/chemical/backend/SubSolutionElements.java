@@ -18,6 +18,7 @@
 */
 package fr.insa.rennes.info.chemical.backend;
 
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -41,7 +42,14 @@ public final class SubSolutionElements implements SubSolutionReagentsAccessor{
 	 * The type list, giving the types of the desired reagents by the user.
 	 */
 	private List<Class<? extends Object>> _types;
-
+	
+	/**
+	 * Sole constructor, initializes the {@link #_types} fields.
+	 */
+	public SubSolutionElements() {
+		_types = new LinkedList<Class<? extends Object>>();
+	}
+	
 	public List<Object> getElements(){
 		return _elements;
 	}
@@ -64,6 +72,10 @@ public final class SubSolutionElements implements SubSolutionReagentsAccessor{
 	
 	public Solution getSolution() {
 		return _containingSolution;
+	}
+
+	public void addType(Class<? extends Object> type) {
+		_types.add(type);
 	}
 
 

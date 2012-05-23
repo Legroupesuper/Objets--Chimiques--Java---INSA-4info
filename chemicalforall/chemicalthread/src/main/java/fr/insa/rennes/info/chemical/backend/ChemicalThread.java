@@ -84,8 +84,6 @@ public class ChemicalThread extends Thread {
 				//...we compute reaction result
 				Object obj[] = _reactionRule.computeResult();
 				Utils.logger.info("impression temps du retour de compute result ->\n");
-				for(Object ob : obj)
-				System.err.print(" "+ob);
 				boolean b = false;
 				//add the results to the solution
 				if(obj != null)

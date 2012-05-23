@@ -153,10 +153,11 @@ public final class Solution implements Collection<Object>{
 		//We check that every field has an appropriate setter
 		boolean classOK = true;
 		int numberOfMethods = rrClass.getDeclaredMethods().length;
-		boolean setterOK;
+		boolean setterOK, getterOk;
 		for(Field f : rrClass.getDeclaredFields()){
 			setterOK = false;
-
+			getterOk = false;
+			
 			if(f.getAnnotation(Dontreact.class) != null) 
 				continue;
 
@@ -168,11 +169,16 @@ public final class Solution implements Collection<Object>{
 
 					setterOK = true;
 				}
+				//Getters are needed only for SubSolution fields
+				if(!f.getType().equals(SubSolution.class) || m.getName().toLowerCase().equals("get"+f.getName().toLowerCase()))
+					getterOk = true;
 			}
 
 			if(!setterOK){
 				throw new IllegalArgumentException("The specified reaction rule hasn't got all the necessary setters: missing setter for "+rrClass.getSimpleName()+"::"+f.getName());
 			}
+			if(!getterOk)
+				throw new IllegalArgumentException("The specified reaction rule hasn't got all the necessary getters: missing getter for "+rrClass.getSimpleName()+"::"+f.getName());
 		}
 
 		if(!classOK){
@@ -247,7 +253,7 @@ public final class Solution implements Collection<Object>{
 			if(_mapElements.get(rawClassName) != null){
 				result = _mapElements.get(rawClassName).add(newReagent);
 			}
-			//There is no entry for the moment : we init the list
+			//There is no entry for the moment : we initialize the list
 			else{
 				List<Object> l =new ArrayList<Object>();
 				result = l.add(newReagent);
@@ -543,9 +549,7 @@ public final class Solution implements Collection<Object>{
 				}
 			} while(interrupted);
 
-		}else if(!_threadTable.containsValue(Thread.currentThread())){
-
-		}else {
+		} else {
 			//If the current thread is the last one standing, kill all the threads by switching the
 			//boolean _keepOnReacting to false (all thread are in a loop on this boolean).
 			endOfReaction();
@@ -664,9 +668,9 @@ public final class Solution implements Collection<Object>{
 		Field[] rrFields = r.getClass().getDeclaredFields();
 
 		//The access to the main atom map is restricted to 1 thread at a time
+		IndexProvider indexProvider = null;
 		synchronized(this) {
 			//Instantiate the IndexProvider object
-			IndexProvider indexProvider = null;
 			try {
 				BuilderIndexProvider ipBuilder = new BuilderIndexProviderImpl();
 				ipBuilder.setSolution(this);
@@ -675,15 +679,18 @@ public final class Solution implements Collection<Object>{
 				ipBuilder.setStrategy(_strategy);
 				ipBuilder.build();
 				indexProvider = ipBuilder.getProduct();
-			} catch (ChemicalException e1) {
+			} /*catch (ChemicalException e1) {
 				return false;
 			} catch(NullPointerException e) { 
 				throw e;
-			} catch(Exception e) {
+			} */catch(Exception e) {
 				//Just in case there is any other exception, and in order to avoid 
 				//to annoy the user with a stack trace, just return false 
 				return false;
 			}
+		}
+		
+		synchronized (this) {
 
 			//Once the index provider is created, we have to search for reagents matching,
 			//Meanwhile, we have to catch every Exception before the user get them
@@ -859,10 +866,25 @@ public final class Solution implements Collection<Object>{
 				return null;
 
 			//...until we reach the level in which the reagents have to be found,
-			//so that we can instanciate the elementList of the SubSolution object
+			//so that we can instantiate the elementList of the SubSolution object
 			List<Object> l = new ArrayList<Object>();
 			int i = 0;
 			for(Class<?> c : subSolObject.getTypeList()){
+				System.out.println("1");
+				c.getName();
+				System.out.println("2");
+				sipSol.get_listSubIP();
+				System.out.println("3");
+				sipSol.get_listSubIP().get(i);
+				System.out.println("4");
+				sipSol.get_listSubIP().get(i).getValue();
+				System.out.println("5 "+nextSol._mapElements+" "+c.getName());
+				nextSol._mapElements.get(c.getName()).get(sipSol.get_listSubIP().get(i).getValue());
+				System.out.println("6");
+				
+				
+				
+				
 				l.add(nextSol._mapElements.get(c.getName()).get(sipSol.get_listSubIP().get(i).getValue()));
 				i++;
 			}
@@ -983,18 +1005,18 @@ public final class Solution implements Collection<Object>{
 		for(Map.Entry<String, List<Object>> entry : _mapElements.entrySet()) {
 			String type = entry.getKey();
 			if(type.equals(Solution.class.getName())){
-				res += alinea+"Solution\n" + alinea + solutionStart;
-				for(Object sol : entry.getValue()){
+				for(Object sol : entry.getValue()) {
+					res += alinea+"Solution\n" + alinea + solutionStart;
 					res += ((Solution)sol).prettyPrint(level+1);
+					res += alinea+solutionEnd;
 				}
-				res += alinea+solutionEnd;
-			} else if(type.toLowerCase().contains(SubSolution.class.getName())){
+			} /*else if(type.contains(SubSolution.class.getName())){
 				res += alinea+"Solution\n" + alinea + solutionStart;
 				for(Object sol : entry.getValue()){
 					res += ((SubSolution<?>)sol).getSolution().prettyPrint(level+1);
 				}
 				res += alinea+solutionEnd;				
-			} else {
+			}*/ else {
 				res += alinea+type+" -> "+entry.getValue()+"\n";				
 			}
 		}

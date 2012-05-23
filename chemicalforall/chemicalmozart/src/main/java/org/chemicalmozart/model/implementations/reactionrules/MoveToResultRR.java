@@ -68,17 +68,19 @@ public class MoveToResultRR implements ReactionRule{
 	public MoveToResultRR() {
 		super();
 
-		SubSolutionElements eltsSolInCreation = new SubSolutionElements();
+		/*SubSolutionElements eltsSolInCreation = new SubSolutionElements();
 		List<Class<? extends Object>> typeListSolInCreation = new ArrayList<Class<? extends Object>>();
 		typeListSolInCreation.add(BarInCreation.class);
-		eltsSolInCreation.setTypeList(typeListSolInCreation);
-		_subSolInCreation = new SubSolution<SubSolutionElements>(eltsSolInCreation);
+		eltsSolInCreation.setTypeList(typeListSolInCreation);*/
+		_subSolInCreation = new SubSolution<SubSolutionElements>();
+		_subSolInCreation.addType(BarInCreation.class);
 
-		SubSolutionElements eltsSolResult = new SubSolutionElements();
+		/*SubSolutionElements eltsSolResult = new SubSolutionElements();
 		List<Class<? extends Object>> typeListSolResult = new ArrayList<Class<? extends Object>>();
 		typeListSolResult.add(Result.class);
-		eltsSolResult.setTypeList(typeListSolResult);
-		_subSolResult = new SubSolution<SubSolutionElements>(eltsSolResult);
+		eltsSolResult.setTypeList(typeListSolResult);*/
+		_subSolResult = new SubSolution<SubSolutionElements>();
+		_subSolResult.addType(Result.class);
 	}
 
 	/**

@@ -224,7 +224,7 @@ class BuilderSubIndexProviderSolutionImpl implements BuilderSubIndexProviderSolu
 					typeList.add(c.getName());
 
 					if(_solution.getMapElements().get(c.getName()) == null)
-						throw new ChemicalException("There is no reagent of the type asked ("+c.getName()+"), aborting index provider building.");
+						throw new ChemicalException("There is no reagent of the type asked ("+c.getName()+"), aborting index provider building. Solution concerned : "+_solution);
 
 					SubIndexProviderElement sipElmt = new SubIndexProviderElement(_solution.getMapElements().get(c.getName()).size());
 					secondLevelList.add(sipElmt);
@@ -238,7 +238,7 @@ class BuilderSubIndexProviderSolutionImpl implements BuilderSubIndexProviderSolu
 
 				_sipSol = new SubIndexProviderSolution(firstLevelList, dependentIndexesList);
 			} catch(ChemicalException e1) {
-				throw e1;
+				_sipSol = null;
 			} catch (IllegalArgumentException e2) {
 				throw new ChemicalException("Invocation of the getter of a reaction rule SubSolution field failed.");
 			} catch (IllegalAccessException e3) {
@@ -332,6 +332,9 @@ class BuilderSubIndexProviderSolutionImpl implements BuilderSubIndexProviderSolu
 		List<List<Integer>> dependantIndexesList = buildDependantIndexesListWithFields(_rrFields, _solution.getMapElements());
 
 		_sipSol = new SubIndexProviderSolution(firstLevelList, dependantIndexesList);
+		
+		System.out.println("LALALALALA");
+		System.out.println(_sipSol);
 	}
 
 
@@ -351,12 +354,13 @@ class BuilderSubIndexProviderSolutionImpl implements BuilderSubIndexProviderSolu
 
 		Map<String, List<Integer>> dependantIndexesMap = new HashMap<String, List<Integer>>();
 		String reagentTypeName;
-		for(int i = 0; i < rrFields.length; i++){
-			if(rrFields[i].getAnnotation(Dontreact.class) == null) {
-				if(rrFields[i].getType().getName().contains(SubSolution.class.getName())){
+		int index = 0;
+		for(Field f : rrFields){
+			if(f.getAnnotation(Dontreact.class) == null) {
+				if(f.getType().getName().contains(SubSolution.class.getName())){
 					reagentTypeName = Solution.class.getName();
 				}else{
-					reagentTypeName = rrFields[i].getType().getName();
+					reagentTypeName = f.getType().getName();
 				}
 
 				//If the type isn't even an entry of the hash map, don't bother
@@ -364,13 +368,14 @@ class BuilderSubIndexProviderSolutionImpl implements BuilderSubIndexProviderSolu
 					throw new ChemicalException("rrFields There is no reagent of this type, aborting IndexProvider instanciation.");
 
 				if(dependantIndexesMap.containsKey(reagentTypeName)){
-					dependantIndexesMap.get(reagentTypeName).add(i);
+					dependantIndexesMap.get(reagentTypeName).add(index);
 				}else{
 					List<Integer> l = new ArrayList<Integer>();
-					l.add(i);
+					l.add(index);
 					dependantIndexesMap.put(reagentTypeName, l);
 				}
-			}
+				index++;
+			} 
 		}
 
 		//We have to provide the IndexProvider a list of a list of int, so
@@ -381,7 +386,7 @@ class BuilderSubIndexProviderSolutionImpl implements BuilderSubIndexProviderSolu
 				dependantIndexesList.add(dependantIndexesMap.get(s));
 			}
 		}
-
+		
 		return dependantIndexesList;
 	}
 

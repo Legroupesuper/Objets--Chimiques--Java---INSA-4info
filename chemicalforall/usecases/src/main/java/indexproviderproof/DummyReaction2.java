@@ -3,14 +3,14 @@ package indexproviderproof;
 import fr.insa.rennes.info.chemical.user.Dontreact;
 import fr.insa.rennes.info.chemical.user.ReactionRule;
 
-public class DummyReaction implements ReactionRule {
+public class DummyReaction2 implements ReactionRule {
 	@Dontreact
 	private int nbCombination;
 	
-	private Integer a;
+	private String a;
 	private Integer b;
 	
-	public DummyReaction() {
+	public DummyReaction2() {
 		nbCombination = 0;
 	}
 	
@@ -20,7 +20,7 @@ public class DummyReaction implements ReactionRule {
 
 	public boolean computeSelect() {
 		nbCombination++;
-		System.out.println("Dummy 1 : Test a = "+a+", b = "+b+", combination #"+nbCombination);
+		System.out.println("Dummy2 : Test a = "+a+", b = "+b+", combination #"+nbCombination);
 		
 		try {
 			Thread.sleep(250);
@@ -35,7 +35,7 @@ public class DummyReaction implements ReactionRule {
 		return Multiplicity.INFINITY_SHOT;
 	}
 
-	public void setA(Integer a) {
+	public void setA(String a) {
 		this.a = a;
 	}
 

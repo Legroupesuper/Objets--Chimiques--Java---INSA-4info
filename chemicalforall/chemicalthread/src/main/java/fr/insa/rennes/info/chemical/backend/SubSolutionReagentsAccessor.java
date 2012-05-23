@@ -73,4 +73,10 @@ interface SubSolutionReagentsAccessor {
 	 * @param l the list of elements/reagents found.
 	 */
 	public void setElements(List<Object> l);
+	
+	/**
+	 * Adds the specified type to the type list.
+	 * @param type The type to add to the type list
+	 */
+	public void addType(Class<? extends Object> type);
 }

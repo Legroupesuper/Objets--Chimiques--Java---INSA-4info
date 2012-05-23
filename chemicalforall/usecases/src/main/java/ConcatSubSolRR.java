@@ -30,14 +30,16 @@ public class ConcatSubSolRR implements ReactionRule{
 	private SubSolution<SubSolution<SubSolutionElements>> a;
 	
 	public ConcatSubSolRR() {
-		SubSolutionElements ea = new SubSolutionElements();
+		/*SubSolutionElements ea = new SubSolutionElements();
 		List<Class<? extends Object>> la = new ArrayList<Class<? extends Object>>();
 		la.add(String.class);
 		la.add(String.class);
 		ea.setTypeList(la);
 		
-		SubSolution<SubSolutionElements> sa = new SubSolution<SubSolutionElements>(ea);
-		a = new SubSolution<SubSolution<SubSolutionElements>>(sa);
+		SubSolution<SubSolutionElements> sa = new SubSolution<SubSolutionElements>(ea);*/
+		a = new SubSolution<SubSolution<SubSolutionElements>>();
+		a.addType(String.class);
+		a.addType(String.class);
 	}
 	
 	public Object[] computeResult() {

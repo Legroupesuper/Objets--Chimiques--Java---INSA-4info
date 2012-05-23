@@ -46,6 +46,17 @@ public final class SubSolution<T extends SubSolutionReagentsAccessor> implements
 	private T _element;
 	
 	/**
+	 * Default constructor. Automatically builds the inner object characterized by the parameterized type.
+	 */
+	public SubSolution(){
+		if(_element instanceof SubSolution) {
+			_element = (T) new SubSolution();
+		} else {
+			_element = (T) new SubSolutionElements();
+		}
+	}
+	
+	/**
 	 * Builds a SubSolution object, with the specified {@link SubSolutionReagentsAccessor} implementation object.
 	 * @param e the {@link SubSolutionReagentsAccessor} implementation object.
 	 */
@@ -75,6 +86,10 @@ public final class SubSolution<T extends SubSolutionReagentsAccessor> implements
 
 	public void setSolution(Solution s) {
 		_element.setSolution(s);
+	}
+
+	public void addType(Class<? extends Object> type) {
+		_element.addType(type);
 	}
 
 

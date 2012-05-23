@@ -248,7 +248,6 @@ public class SubIndexProviderSolution implements SubIndexProvider{
 
 			if(l!=null){
 				for(int n : l){
-
 					if(valuesIndexProvider.contains(_listSubIP.
 							get(_currentSubSol).
 							get(n).getValue())){
