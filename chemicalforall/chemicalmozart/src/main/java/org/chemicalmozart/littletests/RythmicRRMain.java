@@ -44,7 +44,7 @@ public class RythmicRRMain {
 		sol.addInertEventListener(new InertEventListener() {
 			
 			public void isInert(InertEvent e) {
-				System.out.println("Solution après : "+((Solution)e.getSource()).is_inert());
+				//System.out.println("Solution après : "+((Solution)e.getSource()).is_inert());
 				System.out.println(((Solution)e.getSource()));
 //				while(true){
 //					try {

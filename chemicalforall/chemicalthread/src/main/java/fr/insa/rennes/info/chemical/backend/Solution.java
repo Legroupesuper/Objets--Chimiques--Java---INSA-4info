@@ -534,7 +534,7 @@ public final class Solution implements Collection<Object>{
 		//it means other reaction rules may still be reacting, so just make this thread wait.
 		//Same thing with the number of inert solution: a solution can't be inert if one or more
 		//of its inner solutions isn't inert.
-		if(nbThreadAwaken > 1 || containsNonInertSubSolutions){
+		if(nbThreadAwaken > 1 || containsNonInertSubSolutions || !_threadTable.containsValue(Thread.currentThread())){
 			//Loop on the wait (always)
 			boolean interrupted;
 			do {
@@ -548,8 +548,6 @@ public final class Solution implements Collection<Object>{
 				}
 			} while(interrupted);
 
-		}else if(!_threadTable.containsValue(Thread.currentThread())){
-			
 		}else {
 			//If the current thread is the last one standing, kill all the threads by switching the
 			//boolean _keepOnReacting to false (all thread are in a loop on this boolean).
