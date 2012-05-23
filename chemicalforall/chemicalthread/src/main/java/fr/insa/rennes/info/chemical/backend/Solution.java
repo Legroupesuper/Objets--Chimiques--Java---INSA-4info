@@ -224,7 +224,7 @@ public final class Solution implements Collection<Object>{
 	 */
 	public boolean add(Object newReagent) {
 		//The map (container of our elements) must NOT be accessed concurrently
-		synchronized (_mapElements) {
+		synchronized (this) {
 
 			//At first we determine whether it is a ReactionRule or not
 			String className = getReagentType(newReagent);
@@ -274,7 +274,7 @@ public final class Solution implements Collection<Object>{
 	 * @see Collection#addAll(Collection)
 	 */
 	public boolean addAll(Collection<?> c) {
-		synchronized (_mapElements) {
+		synchronized (this) {
 			for(Object obj : c){
 				this.add(obj);
 			}
@@ -340,9 +340,9 @@ public final class Solution implements Collection<Object>{
 	 * @see Solution#endOfReaction()
 	 */
 	void deleteReaction(ReactionRule r){
-		synchronized (_mapElements) {
+		synchronized (this) {
 			if(_mapElements.remove(r.getClass().getName()) != null) {
-				synchronized (_threadTable) {
+				synchronized (this) {
 					_threadTable.get(r).stopTheThread();
 					_threadTable.remove(r);
 				}
@@ -412,13 +412,13 @@ public final class Solution implements Collection<Object>{
 	 */
 	private int getNumberOfActiveThreads(){
 		int nb = 0;
-		synchronized (_threadTable) {
+		synchronized (this) {
 			//Count the number of thread that are awaken right now, 
 			//apart from the one running this function
 			for(Thread t : _threadTable.values()){
-				if(!t.getState().equals(Thread.State.WAITING)){
+				if(!t.getState().equals(Thread.State.WAITING) && !t.getState().equals(Thread.State.TERMINATED)){
 					nb++;
-					System.err.println("Je suis actif -> "+t);
+					System.err.println("Je suis actif -> "+t+" : "+t.getState());
 				}
 			}
 		}
@@ -429,12 +429,11 @@ public final class Solution implements Collection<Object>{
 	 * Returns <code>true</code> if this solution contains at least one non inert inner solution.
 	 * @return <code>true</code> if this solution contains at least one non inert inner solution.
 	 */
-	private boolean containsNonInertSubSol() {
+	private synchronized boolean containsNonInertSubSol() {
 		System.err.println("Début de containesNonInertSubSol");
-		/**
-		 * TODO : On a un deadlock ici, putain de map synchronized à mon avis
-		 */
+		
 		List<Object> subSols = _mapElements.get(Solution.class.getName());
+		
 		System.err.println("subSol containesNonInertSubSol");
 		if(subSols == null)
 			return false;
@@ -610,7 +609,7 @@ System.err.println("ContainesNonInert : "+containsNonInertSubSolutions);
 		String reagentType = reagent.getClass().getName();
 		boolean res = false;
 		//For the same reason as in add, synchronized have to be declared on the hash map
-		synchronized(_mapElements) {
+		synchronized(this) {
 			//If the hash map doesn't even know the type, return false
 			if(_mapElements.get(reagentType) == null) {
 				return false;
@@ -632,7 +631,7 @@ System.err.println("ContainesNonInert : "+containsNonInertSubSolutions);
 	public boolean removeAll(Collection<? extends Object> c) {
 		boolean res = false;
 
-		synchronized (_mapElements) {
+		synchronized (this) {
 			for(Object obj : c) {
 				res = res || this.remove(obj);
 			}
@@ -669,7 +668,7 @@ System.err.println("ContainesNonInert : "+containsNonInertSubSolutions);
 		Field[] rrFields = r.getClass().getDeclaredFields();
 
 		//The access to the main atom map is restricted to 1 thread at a time
-		synchronized(_mapElements) {
+		synchronized(this) {
 			//Instantiate the IndexProvider object
 			IndexProvider indexProvider = null;
 			try {
@@ -894,7 +893,7 @@ System.err.println("ContainesNonInert : "+containsNonInertSubSolutions);
 		String reagentName;
 
 		//The write/remove operations on the hash map have to be atomic
-		synchronized (_mapElements) {
+		synchronized (this) {
 			Iterator<Object> it = this.iterator();
 			Object obj = null;
 			while(it.hasNext()) {
