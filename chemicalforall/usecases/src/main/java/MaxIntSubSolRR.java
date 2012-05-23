@@ -44,14 +44,16 @@ public class MaxIntSubSolRR implements ReactionRule{
 
 
 	public MaxIntSubSolRR() {
-		SubSolutionElements ea = new SubSolutionElements();
+		/*SubSolutionElements ea = new SubSolutionElements();
 		List<Class<? extends Object>> la = new ArrayList<Class<? extends Object>>();
 		la.add(Integer.class);
 		la.add(Integer.class);
 		ea.setTypeList(la);
 		
-		SubSolution<SubSolutionElements> sa = new SubSolution<SubSolutionElements>(ea);
-		a = new SubSolution<SubSolution<SubSolutionElements>>(sa);
+		SubSolution<SubSolutionElements> sa = new SubSolution<SubSolutionElements>(ea);*/
+		a = new SubSolution<SubSolution<SubSolutionElements>>();
+		a.addType(Integer.class);
+		a.addType(Integer.class);
 		
 		/*SubSolutionElements eb = new SubSolutionElements();
 		List<Class<? extends Object>> lb = new ArrayList<Class<? extends Object>>();

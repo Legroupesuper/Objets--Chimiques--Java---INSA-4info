@@ -102,12 +102,14 @@ public class RythmicRR implements ReactionRule{
 	 */
 	public RythmicRR() {
 		super();
-		SubSolutionElements elts = new SubSolutionElements();
+		/*SubSolutionElements elts = new SubSolutionElements();
 		List<Class<? extends Object>> l = new ArrayList<Class<? extends Object>>();
 		l.add(RythmePull.class);
 		l.add(RythmPattern.class);
-		elts.setTypeList(l);
-		_rythmeSolution = new SubSolution<SubSolutionElements>(elts);
+		elts.setTypeList(l);*/
+		_rythmeSolution = new SubSolution<SubSolutionElements>();
+		_rythmeSolution.addType(RythmePull.class);
+		_rythmeSolution.addType(RythmPattern.class);
 		this._chordNumber = 0;
 		this._max = 0;
 	}

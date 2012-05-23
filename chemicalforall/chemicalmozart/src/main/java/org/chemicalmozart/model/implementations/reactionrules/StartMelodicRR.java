@@ -71,12 +71,14 @@ public class StartMelodicRR implements ReactionRule{
 	 */
 	public StartMelodicRR() {
 		super();
-		SubSolutionElements solElements = new SubSolutionElements();
+		/*SubSolutionElements solElements = new SubSolutionElements();
 		List<Class<? extends Object>> solElementsList = new ArrayList<Class<? extends Object>>();
 		solElementsList.add(BarInCreation.class);
 		solElementsList.add(BarNumber.class);
-		solElements.setTypeList(solElementsList);
-		_sol = new SubSolution<SubSolutionElements>(solElements);
+		solElements.setTypeList(solElementsList);*/
+		_sol = new SubSolution<SubSolutionElements>();
+		_sol.addType(BarInCreation.class);
+		_sol.addType(BarNumber.class);
 	}
 
 	/**

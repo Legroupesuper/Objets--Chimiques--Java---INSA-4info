@@ -83,7 +83,6 @@ public class ChemicalThread extends Thread {
 				Utils.logger.info("On a passé le computeSelect");
 				//...we compute reaction result
 				Object obj[] = _reactionRule.computeResult();
-				
 				boolean b = false;
 				//add the results to the solution
 				if(obj != null)

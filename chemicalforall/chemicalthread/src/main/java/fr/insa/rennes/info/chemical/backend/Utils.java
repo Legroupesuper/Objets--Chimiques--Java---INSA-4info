@@ -24,6 +24,7 @@ import java.io.PrintStream;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.logging.FileHandler;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import fr.insa.rennes.info.chemical.user.ReactionRule;
@@ -33,7 +34,7 @@ import fr.insa.rennes.info.chemical.user.ReactionRule;
  * do not fit in any other class.
  * @author Andreolli Cédric, Boulanger Chloé, Cléro Olivier, Guellier Antoine, Guilloux Sébastien, Templé Arthur
  */
-public class Utils {
+class Utils {
 	
 /*
  * Logger (replacing classic
@@ -75,6 +76,10 @@ public class Utils {
 	 * The library logger
 	 */
 	public static Logger logger = Logger.getLogger("fr.insa.rennes.info.chemical");
+	
+	static {
+		logger.setLevel(Level.OFF);
+	}
 	
 	/**
 	 * Sets the log file of the chemical library.
