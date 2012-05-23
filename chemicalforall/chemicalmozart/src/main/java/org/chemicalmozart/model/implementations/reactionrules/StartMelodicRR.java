@@ -57,10 +57,28 @@ public class StartMelodicRR implements ReactionRule{
 	 * The number is the result solution
 	 */
 	private BarNumber _barNumber;
+	
+	public BarNumber get_barNumber() {
+		return _barNumber;
+	}
+
+	public void set_barNumber(BarNumber _barNumber) {
+		this._barNumber = _barNumber;
+	}
+
 	/**
 	 * The matched subsolution
 	 */
 	private SubSolution<SubSolutionElements> _sol;
+	
+	public SubSolution<SubSolutionElements> get_sol() {
+		return _sol;
+	}
+
+	public void set_sol(SubSolution<SubSolutionElements> _sol) {
+		this._sol = _sol;
+	}
+
 	/**
 	 * The pitch of the last note played.
 	 */
@@ -71,11 +89,6 @@ public class StartMelodicRR implements ReactionRule{
 	 */
 	public StartMelodicRR() {
 		super();
-		/*SubSolutionElements solElements = new SubSolutionElements();
-		List<Class<? extends Object>> solElementsList = new ArrayList<Class<? extends Object>>();
-		solElementsList.add(BarInCreation.class);
-		solElementsList.add(BarNumber.class);
-		solElements.setTypeList(solElementsList);*/
 		_sol = new SubSolution<SubSolutionElements>();
 		_sol.addType(BarInCreation.class);
 		_sol.addType(BarNumber.class);
@@ -90,17 +103,19 @@ public class StartMelodicRR implements ReactionRule{
 	 * @returns the solution contained in _sol as describe before, the increased BarNumber
 	 */
 	public Object[] computeResult() {
-		Solution sol = _sol.getSolution();
-		sol.add(new RythmicRR());
-		sol.add(new MelodicRR());
-		sol.add(_pitch);
-		MozartSolutionFactory factory = new MozartSolutionFactoryImpl();
-		sol.add(factory.createRythmicPull());
-		sol.add(_sol.getElements().get(1));
-
-		BarNumber tempBarNumber = _barNumber;
-		tempBarNumber.increment();
-		return new Object[]{sol, tempBarNumber};
+		System.out.println("On est dans le compute result");
+//		Solution sol = _sol.getSolution();
+//		sol.add(new RythmicRR());
+//		sol.add(new MelodicRR());
+//		sol.add(_pitch);
+//		MozartSolutionFactory factory = new MozartSolutionFactoryImpl();
+//		sol.add(factory.createRythmicPull());
+//		sol.add(_sol.getElements().get(1));
+//
+//		BarNumber tempBarNumber = _barNumber;
+//		tempBarNumber.increment();
+//		return new Object[]{sol, tempBarNumber};
+		return null;
 	}
 
 	/**
@@ -108,54 +123,26 @@ public class StartMelodicRR implements ReactionRule{
 	 * BarNumber object in the subsolution. If this is the case, the function returns true.
 	 */
 	public boolean computeSelect() {
-		boolean solContainsBarInCreation = false;
-		boolean solContainsBarNumber = false;
-		boolean barNumbersHaveSameValue = false;
-		
-		if(_sol.getSolution() != null){
-			List<Object> solElements = _sol.getElements();
-			if (solElements != null){
-				if(solElements.size()>=2){
-					solContainsBarInCreation = solElements.get(0) instanceof BarInCreation;
-					solContainsBarNumber = solElements.get(1) instanceof BarNumber;
-					if(solContainsBarNumber){
-						barNumbersHaveSameValue = _barNumber.getValue() == ((BarNumber)solElements.get(1)).getValue();
-					}
-				}
-			}
-		}
-		return solContainsBarInCreation && solContainsBarNumber && barNumbersHaveSameValue;
+		System.out.println("Compute select");
+		Integer bn = (Integer) _sol.getElements().get(1);
+		System.out.println("On est dans le compute select "+_barNumber.getValue()+" == "+bn);
+		return _barNumber.getValue() == bn.intValue();
 	}
-	/**
-	 * @return the _barNumber
-	 */
-	public BarNumber get_Number() {
-		return this._barNumber;
-	}
+
 	/**
 	 * @return the _pitch
 	 */
 	public Pitch get_pitch() {
 		return this._pitch;
 	}
-	/**
-	 * @return the _sol
-	 */
-	public SubSolution<SubSolutionElements> get_sol() {
-		return this._sol;
-	}
+	
 	/**
 	 * This rule is in infinity-shot
 	 */
 	public Multiplicity getMultiplicity() {
 		return Multiplicity.INFINITY_SHOT;
 	}
-	/**
-	 * @param _Number the _Number to set
-	 */
-	public void set_barNumber(BarNumber _Number) {
-		this._barNumber = _Number;
-	}
+
 	/**
 	 * @param _pitch the _pitch to set
 	 */
@@ -163,19 +150,12 @@ public class StartMelodicRR implements ReactionRule{
 		this._pitch = _pitch;
 	}
 
-	/**
-	 * @param _sol the _sol to set
-	 */
-	public void set_sol(SubSolution<SubSolutionElements> _sol) {
-		this._sol = _sol;
-	}
-
 	/** toString
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
 	public String toString() {
-		return "StartMelodicRR [_barNumber=" + _barNumber + ", _sol=" + _sol
+		return "StartMelodicRR [_barNumber=" + _barNumber + ", _sol="// + _sol
 				+ ", _pitch=" + _pitch + "]";
 	}
 	

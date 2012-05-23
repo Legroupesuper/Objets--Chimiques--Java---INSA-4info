@@ -62,12 +62,11 @@ public class WriteMelodyRR implements ReactionRule{
 		} catch (InvalidMidiDataException e) {
 			e.printStackTrace();
 		}
-		_notePosition++;
+		_notePosition=_notePosition+1;
 		return new Object[]{_writer, _note};
 	}
 
-	public boolean computeSelect() {
-		System.out.println("On passe le compute select");
+	public boolean computeSelect(){
 		return _note.get_position()==_notePosition;
 	}
 

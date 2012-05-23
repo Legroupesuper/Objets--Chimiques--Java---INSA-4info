@@ -35,7 +35,7 @@ import fr.insa.rennes.info.chemical.backend.SubSolution;
 import fr.insa.rennes.info.chemical.backend.SubSolutionElements;
 
 public class StartMelodicRRTest extends TestCase{
-	Object[] _tabResult;
+	/*Object[] _tabResult;
 	@Override
 	protected void setUp() throws Exception {
 		super.setUp();
@@ -111,7 +111,7 @@ public class StartMelodicRRTest extends TestCase{
 	}
 	*/
 
-	@Test
+/*	@Test
 	public void testComputeSelect2() {
 		StartMelodicRR rr = new StartMelodicRR();
 
@@ -197,5 +197,5 @@ public class StartMelodicRRTest extends TestCase{
 		rr.set_sol(subsol);
 
 		assertFalse("The test shouldn't pass, The subsolution doesn't contain a BarNumber object", rr.computeSelect());
-	}
+	}*/
 }

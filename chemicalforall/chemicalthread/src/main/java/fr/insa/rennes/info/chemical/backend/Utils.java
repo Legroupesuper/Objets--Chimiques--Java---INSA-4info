@@ -34,7 +34,7 @@ import fr.insa.rennes.info.chemical.user.ReactionRule;
  * do not fit in any other class.
  * @author Andreolli Cédric, Boulanger Chloé, Cléro Olivier, Guellier Antoine, Guilloux Sébastien, Templé Arthur
  */
-class Utils {
+public class Utils {
 	
 /*
  * Logger (replacing classic
@@ -78,7 +78,7 @@ class Utils {
 	public static Logger logger = Logger.getLogger("fr.insa.rennes.info.chemical");
 	
 	static {
-		logger.setLevel(Level.OFF);
+		logger.setLevel(Level.FINE);
 	}
 	
 	/**

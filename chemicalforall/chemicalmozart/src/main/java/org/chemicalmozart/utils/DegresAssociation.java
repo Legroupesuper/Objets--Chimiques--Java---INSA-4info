@@ -1,7 +1,9 @@
 package org.chemicalmozart.utils;
 
 import org.chemicalmozart.model.implementations.ChordImpl;
+import org.chemicalmozart.model.implementations.DegreeImpl;
 import org.chemicalmozart.model.implementations.Note;
+import org.chemicalmozart.model.implementations.Pitch;
 import org.chemicalmozart.model.implementations.Rythme;
 import org.chemicalmozart.utils.MusicWriter.NoteValues;
 
@@ -105,7 +107,9 @@ public class DegresAssociation {
 	
 	public static long getNoteValue(int firstDegree, Note n) throws ChemicalException{
 		int v;
-		switch(n.get_pitch().getDegree().get_value()){
+		Pitch p = n.get_pitch();
+		DegreeImpl deg = p.getDegree();
+		switch(deg.get_value()){
 		case 1 : v = firstDegree;break;
 		case 2 : v = firstDegree + 2;break;
 		case 3 : v = firstDegree + 4;break;
