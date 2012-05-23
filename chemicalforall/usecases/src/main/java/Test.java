@@ -16,14 +16,17 @@
     You should have received a copy of the GNU Lesser General Public License
     along with ChemicalLibSuper.  If not, see <http://www.gnu.org/licenses/>
 */
+import java.io.IOException;
+
 import fr.insa.rennes.info.chemical.backend.Solution;
+import fr.insa.rennes.info.chemical.backend.Utils;
 import fr.insa.rennes.info.chemical.user.InertEvent;
 import fr.insa.rennes.info.chemical.user.InertEventListener;
 
 
 
 public class Test {
-	public static final Solution s = new Solution(Solution.Strategy.ORDERED);
+	public static final Solution s = new Solution(Solution.Strategy.RANDOM);
 	public static Solution s2 = new Solution();
 	public static Solution s3 = new Solution();
 	public static Solution s4 = new Solution();
@@ -143,7 +146,12 @@ public class Test {
 			}
 		});
 	
-		
+		try {
+			Utils.setLogFile("/tmp/coucou.txt");
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		
 		try {
 			s.react();
