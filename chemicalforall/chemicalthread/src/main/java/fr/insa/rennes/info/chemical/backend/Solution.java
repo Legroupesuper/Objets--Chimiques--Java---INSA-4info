@@ -198,6 +198,9 @@ public final class Solution implements Collection<Object>{
 			if(_reactionInProgress)
 				t.start();
 		} else {
+			//			ReactionRule r = (ReactionRule)reactionRuleObject;
+			//			_threadTable.put(r, new ChemicalThread(r, this, _threadGroup));
+			//			_threadTable.get(r).start();
 			return true;
 		}
 
@@ -239,9 +242,11 @@ public final class Solution implements Collection<Object>{
 		boolean addElement = true;
 
 		//It is a ReactionRule, hence special treatment
-		if(className.equals(ReactionRule.class.getName())) {
+		if(newReagent instanceof ReactionRule) {
+			Utils.logger.severe("#}#}#}#}#}#}#}Ajout de la reaction rule "+newReagent);
 			addElement = checkReactionRuleReagent(newReagent);
 		} else if(className.equals(Solution.class.getName())){
+			Utils.logger.severe("#}#}#}#}#}#}#}Ajout d'un reactif normal "+newReagent);
 			processAddSubSolution(newReagent);
 		}
 
@@ -595,8 +600,12 @@ public final class Solution implements Collection<Object>{
 		}
 
 		//Finally, launch all the reaction rule threads
-		for(ChemicalThread t : _threadTable.values())
-			t.start();
+		for(ChemicalThread t : _threadTable.values()){
+			try{
+				if(t!=null)
+					t.start();
+			}catch(Exception e){}
+		}
 
 	}
 

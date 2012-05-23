@@ -6,6 +6,13 @@ public class DeadFoxCollector implements ReactionRule {
 	private Fox _deadFox;
 	
 	public Object[] computeResult() {
+//		try {
+//			Thread.sleep(500);
+//		} catch (InterruptedException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+		_deadFox.setDead();
 		return new Object[] {};
 	}
 
