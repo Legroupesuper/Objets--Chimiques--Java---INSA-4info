@@ -2,9 +2,11 @@ package testOperationsSurDesNombres;
 
 import fr.insa.rennes.info.chemical.user.Dontreact;
 import fr.insa.rennes.info.chemical.user.ReactionRule;
-
+/*
+ * Cette règle de réaction multiplie par 2 les entiers
+ * égaux à l'attribut _b
+ */
 public class Mult2RR implements ReactionRule{
-
 	Integer _a;
 	@Dontreact
 	Integer _b;

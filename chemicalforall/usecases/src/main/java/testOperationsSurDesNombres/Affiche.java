@@ -2,9 +2,11 @@ package testOperationsSurDesNombres;
 
 import fr.insa.rennes.info.chemical.user.Dontuse;
 import fr.insa.rennes.info.chemical.user.ReactionRule;
-
+/*
+ * Cette règle de réaction affiche toutes les String
+ * présentes dans la solution et les enlève de celle-ci
+ */
 public class Affiche implements ReactionRule {
-
 	private String _s;
 
 	public Object[] computeResult() {

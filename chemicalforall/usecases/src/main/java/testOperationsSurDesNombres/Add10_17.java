@@ -4,12 +4,11 @@ import fr.insa.rennes.info.chemical.backend.SubSolution;
 import fr.insa.rennes.info.chemical.backend.SubSolutionElements;
 import fr.insa.rennes.info.chemical.user.ReactionRule;
 /*
- * Cette règle de réaction prend en paramètre 2 entiers
- * (qui doivent être égaux à 10 et à 17) et une autre règle
- * de réaction de type Mult2RR
+ * Cette règle de réaction prend en paramètre 1 entier égal à 17
+ * dans la solution, et dans une sous-solution, un entier égal à 10
+ * et une règle de réaction de type Mult2RR
  */
 public class Add10_17 implements ReactionRule{
-
 	private Integer _attr17;
 	private SubSolution<SubSolutionElements> _subSolution;
 
