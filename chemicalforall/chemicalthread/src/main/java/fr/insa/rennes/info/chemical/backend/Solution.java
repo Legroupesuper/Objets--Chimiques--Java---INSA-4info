@@ -415,10 +415,11 @@ public final class Solution implements Collection<Object>{
 		synchronized (this) {
 			//Count the number of thread that are awaken right now, 
 			//apart from the one running this function
+			System.err.println(Thread.currentThread()+ " "+Thread.currentThread().getState());
 			for(Thread t : _threadTable.values()){
 				if(!t.getState().equals(Thread.State.WAITING)){
 					nb++;
-					System.err.println("Je suis actif -> "+t);
+					System.err.println("Je suis actif -> "+t+ " "+t.getState());
 				}
 			}
 		}
@@ -431,9 +432,6 @@ public final class Solution implements Collection<Object>{
 	 */
 	private synchronized boolean containsNonInertSubSol() {
 		System.err.println("Début de containesNonInertSubSol");
-		/**
-		 * TODO : On a un deadlock ici, putain de map synchronized à mon avis
-		 */
 		List<Object> subSols = null;
 			subSols = _mapElements.get(Solution.class.getName());
 		
@@ -526,12 +524,12 @@ public final class Solution implements Collection<Object>{
 	 * @see ChemicalThread
 	 * @see Solution#_inert
 	 */
-	synchronized void makeSleep(){
-		System.err.println("Début de make sleep");
+	synchronized void makeSleep(ReactionRule r){
+		System.err.println("Début de make sleep "+r);
 		int nbThreadAwaken = getNumberOfActiveThreads();
-		System.err.println("nbThreadsAwaken : "+nbThreadAwaken);
+		System.err.println("nbThreadsAwaken : "+nbThreadAwaken +" "+r);
 		boolean containsNonInertSubSolutions = containsNonInertSubSol();
-System.err.println("ContainesNonInert : "+containsNonInertSubSolutions);
+System.err.println("ContainesNonInert : "+containsNonInertSubSolutions+" "+r);
 		//If there is more than one thread alive (including the current one)
 		//it means other reaction rules may still be reacting, so just make this thread wait.
 		//Same thing with the number of inert solution: a solution can't be inert if one or more

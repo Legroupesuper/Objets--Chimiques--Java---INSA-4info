@@ -80,30 +80,35 @@ public class ChemicalThread extends Thread {
 			System.err.println("Un tour de boucle "+_reactionRule);
 			//If we find enough valid parameters...
 			if(_solutionContainer.requestForParameters(_reactionRule)){
-				System.err.println("On a passé le computeSelect");
+				System.err.println("On a passé le computeSelect "+_reactionRule);
 				//...we compute reaction result
 				Object obj[] = _reactionRule.computeResult();
+				System.err.println("impression temps du retour de compute result ->\n");
+				for(Object ob : obj)
+				System.err.print(" "+ob);
+				boolean b = false;
 				//add the results to the solution
 				if(obj != null)
-					_solutionContainer.addAll(Arrays.asList(obj));
-				
+					b = _solutionContainer.addAll(Arrays.asList(obj));
+				System.err.println();
+				System.err.println("<- impression temps du retour de compute result fin : "+b+ " "+_reactionRule);
 				//Then wake all ReactionRules (as the solution has been modified)
 				_solutionContainer.wakeAll();
-				System.err.println("on fait le wakeAll");
+				System.err.println("on fait le wakeAll depuis "+_reactionRule);
 				//If the reaction rule is ONE SHOT, we must delete it and stop this thread
 				if(_reactionRule.getMultiplicity().equals(Multiplicity.ONE_SHOT)){
 					_solutionContainer.deleteReaction(_reactionRule);
-					System.err.println("C'était une One-shot");
+					System.err.println("C'était une One-shot "+_reactionRule);
 					break;
 				}
 			}else{
 				//If we do not find valid parameters, the reaction goes to sleep
 				//A sleeping reaction waits for the solution to go inert or to see its inner elements modified
 				System.err.println("On fait faire dodo à "+_reactionRule);
-				_solutionContainer.makeSleep();
+				_solutionContainer.makeSleep(_reactionRule);
 			}
 		}
-		System.err.println("On sort");
+		System.err.println("On sort de "+_reactionRule);
 	}
 	
 	/**
