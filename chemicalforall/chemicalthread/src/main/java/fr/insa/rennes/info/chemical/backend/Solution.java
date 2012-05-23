@@ -224,46 +224,44 @@ public final class Solution implements Collection<Object>{
 	 * @return <code>true</code> (as specified by Collection.add(E))
 	 * @see java.util.Collection#add(java.lang.Object)
 	 */
-	public boolean add(Object newReagent) {
+	public synchronized boolean add(Object newReagent) {
 		//The map (container of our elements) must NOT be accessed concurrently
-		synchronized (this) {
 
-			//At first we determine whether it is a ReactionRule or not
-			String className = getReagentType(newReagent);
-			String rawClassName = newReagent.getClass().getName();
-			boolean addElement = true;
+		//At first we determine whether it is a ReactionRule or not
+		String className = getReagentType(newReagent);
+		String rawClassName = newReagent.getClass().getName();
+		boolean addElement = true;
 
-			//It is a ReactionRule, hence special treatment
-			if(newReagent instanceof ReactionRule) {
-				addElement = checkReactionRuleReagent(newReagent);
-			} else if(className.equals(Solution.class.getName())){
-				processAddSubSolution(newReagent);
-			}
-
-			if(!className.equals(SubSolutionReagentsAccessor.class.getName()) && addElement){
-				boolean result;
-				//When you add an element in the solution, the solution is no more inert
-				_inert = false;
-
-				//There is already an entry in the map for this reagent, so we just add the element
-				if(_mapElements.get(rawClassName) != null){
-					result = _mapElements.get(rawClassName).add(newReagent);
-				}
-				//There is no entry for the moment : we init the list
-				else{
-					List<Object> l =new ArrayList<Object>();
-					result = l.add(newReagent);
-					_mapElements.put(rawClassName, l);
-				}
-				
-				tryTrivialEndOfReaction();
-				
-				return result;
-			}else{
-				return false;
-			}
+		//It is a ReactionRule, hence special treatment
+		if(className.equals(ReactionRule.class.getName())) {
+			addElement = checkReactionRuleReagent(newReagent);
+		} else if(className.equals(Solution.class.getName())){
+			processAddSubSolution(newReagent);
 		}
-		
+
+		if(!className.equals(SubSolutionReagentsAccessor.class.getName()) && addElement){
+			boolean result;
+			//When you add an element in the solution, the solution is no more inert
+			_inert = false;
+
+			//There is already an entry in the map for this reagent, so we just add the element
+			if(_mapElements.get(rawClassName) != null){
+				result = _mapElements.get(rawClassName).add(newReagent);
+			}
+			//There is no entry for the moment : we init the list
+			else{
+				List<Object> l =new ArrayList<Object>();
+				result = l.add(newReagent);
+				_mapElements.put(rawClassName, l);
+			}
+
+			tryTrivialEndOfReaction();
+
+			return result;
+		}else{
+			return false;
+		}
+
 	}
 
 	/**
@@ -275,11 +273,9 @@ public final class Solution implements Collection<Object>{
 	 * @see Solution#add(Object)
 	 * @see Collection#addAll(Collection)
 	 */
-	public boolean addAll(Collection<?> c) {
-		synchronized (this) {
-			for(Object obj : c){
-				this.add(obj);
-			}
+	public synchronized boolean addAll(Collection<?> c) {
+		for(Object obj : c){
+			this.add(obj);
 		}
 		return true;
 	}
@@ -341,16 +337,15 @@ public final class Solution implements Collection<Object>{
 	 * @see ReactionRule
 	 * @see Solution#endOfReaction()
 	 */
-	void deleteReaction(ReactionRule r){
-		Utils.logger.info("On supprime "+r);
-		synchronized (this) {
-			if(_mapElements.remove(r.getClass().getName()) != null) {
-				synchronized (this) {
-					_threadTable.get(r).stopTheThread();
-					_threadTable.remove(r);
-				}
-				tryTrivialEndOfReaction();
-			}
+
+	synchronized void deleteReaction(ReactionRule r){
+
+		if(_mapElements.remove(r.getClass().getName()) != null) {
+			_threadTable.get(r).stopTheThread();
+			_threadTable.remove(r);
+
+			tryTrivialEndOfReaction();
+
 		}
 	}
 
@@ -361,7 +356,7 @@ public final class Solution implements Collection<Object>{
 	 * if the end of the reaction isn't reached, this function wakes all the reaction
 	 * rule threads. 
 	 */
-	private void tryTrivialEndOfReaction() {
+	private synchronized void tryTrivialEndOfReaction() {
 		if(_threadTable.size() == 0 && !containsNonInertSubSol())
 			endOfReaction();
 		else {
@@ -412,20 +407,20 @@ public final class Solution implements Collection<Object>{
 	 * @return The number of active threads of this solution.
 	 * @see ChemicalThread
 	 */
-	private int getNumberOfActiveThreads(){
+	private synchronized int getNumberOfActiveThreads(){
 		int nb = 0;
-		synchronized (this) {
-			//Count the number of thread that are awaken right now, 
-			//apart from the one running this function
-			Utils.logger.info("==========="+Thread.currentThread()+ " "+Thread.currentThread().getState()+ " nb:"+_threadTable.size());
-			for(Thread t : _threadTable.values()){
-				Utils.logger.info("++++ "+t+" : "+t.getState());
-				if(!t.getState().equals(Thread.State.WAITING) && !t.getState().equals(Thread.State.TERMINATED)){
-					nb++;
-					Utils.logger.info("Je suis actif -> "+t+" : "+t.getState());
-				}
+		//Count the number of thread that are awaken right now, 
+		//apart from the one running this function
+		Utils.logger.info("==========="+Thread.currentThread()+ " "+Thread.currentThread().getState()+ " nb:"+_threadTable.size());
+		for(Thread t : _threadTable.values()){
+			Utils.logger.info("++++ "+t+" : "+t.getState());
+			if(!t.getState().equals(Thread.State.WAITING) && !t.getState().equals(Thread.State.TERMINATED)){
+				nb++;
+				Utils.logger.info("Je suis actif -> "+t+" : "+t.getState());
 			}
 		}
+
+
 		return nb;
 	}
 
@@ -436,7 +431,7 @@ public final class Solution implements Collection<Object>{
 	private synchronized boolean containsNonInertSubSol() {
 		Utils.logger.info("Début de containesNonInertSubSol");
 		List<Object> subSols = _mapElements.get(Solution.class.getName());
-		
+
 		Utils.logger.info("subSol containesNonInertSubSol");
 		if(subSols == null)
 			return false;
@@ -550,6 +545,8 @@ public final class Solution implements Collection<Object>{
 				}
 			} while(interrupted);
 
+		}else if(!_threadTable.containsValue(Thread.currentThread())){
+
 		}else {
 			//If the current thread is the last one standing, kill all the threads by switching the
 			//boolean _keepOnReacting to false (all thread are in a loop on this boolean).
@@ -566,37 +563,37 @@ public final class Solution implements Collection<Object>{
 	 * All the threads of the reaction rules from this solutions and its inner solutions are started all together.
 	 * In case this solution does not contain any inner solution nor reaction rule, nothing happens.
 	 */
-	public void react() {
-		synchronized (this) {
-			_reactionInProgress = true;
-			_inert = false;
-			//We try to launch all the inner solutions
-			if(_mapElements.get(Solution.class.getName()) != null){
-				for(Object o : _mapElements.get(Solution.class.getName())){
-					Solution s = (Solution) o;
-					/*
-					 * We add an InertEvenListener that will notify this
-					 * when s will become inert. The notification will awake all the ReactionRules which are
-					 * included in _mapElements.
-					 */
-					s.addInertEventListener(new InertEventListener() {
-						public void isInert(InertEvent e) {
-							Solution.this.tryTrivialEndOfReaction();
-						}
-					});
-					s.react();
-				}
-			}else if(_threadTable.size() == 0){
-				//If there is no ReactionRule (thus no thread) in the solution, 
-				//the solution can not react.
-				endOfReaction();
-				return;
-			}
+	public synchronized void react() {
 
-			//Finally, launch all the reaction rule threads
-			for(ChemicalThread t : _threadTable.values())
-				t.start();
+		_reactionInProgress = true;
+		_inert = false;
+		//We try to launch all the inner solutions
+		if(_mapElements.get(Solution.class.getName()) != null){
+			for(Object o : _mapElements.get(Solution.class.getName())){
+				Solution s = (Solution) o;
+				/*
+				 * We add an InertEvenListener that will notify this
+				 * when s will become inert. The notification will awake all the ReactionRules which are
+				 * included in _mapElements.
+				 */
+				s.addInertEventListener(new InertEventListener() {
+					public void isInert(InertEvent e) {
+						Solution.this.tryTrivialEndOfReaction();
+					}
+				});
+				s.react();
+			}
+		}else if(_threadTable.size() == 0){
+			//If there is no ReactionRule (thus no thread) in the solution, 
+			//the solution can not react.
+			endOfReaction();
+			return;
 		}
+
+		//Finally, launch all the reaction rule threads
+		for(ChemicalThread t : _threadTable.values())
+			t.start();
+
 	}
 
 	/**
@@ -631,13 +628,11 @@ public final class Solution implements Collection<Object>{
 	 * @param c Collection containing elements to be removed from this solution. 
 	 * @return <code>true</code> if this solution changed as a result of the call. 
 	 */
-	public boolean removeAll(Collection<? extends Object> c) {
+	public synchronized boolean removeAll(Collection<? extends Object> c) {
 		boolean res = false;
 
-		synchronized (this) {
-			for(Object obj : c) {
-				res = res || this.remove(obj);
-			}
+		for(Object obj : c) {
+			res = res || this.remove(obj);
 		}
 
 		return res;
@@ -892,24 +887,23 @@ public final class Solution implements Collection<Object>{
 	 * @param c Collection containing elements to be retained in this solution.
 	 * @return <code>true</code> if this collection changed as a result of the call. 
 	 */
-	public boolean retainAll(Collection<?> c) {
+	public synchronized boolean retainAll(Collection<?> c) {
 		boolean res = false;
 		String reagentName;
 
 		//The write/remove operations on the hash map have to be atomic
-		synchronized (this) {
-			Iterator<Object> it = this.iterator();
-			Object obj = null;
-			while(it.hasNext()) {
-				obj = it.next();
+		Iterator<Object> it = this.iterator();
+		Object obj = null;
+		while(it.hasNext()) {
+			obj = it.next();
 
-				if(!c.contains(obj)) {
-					reagentName = getReagentType(obj);
-					_mapElements.get(reagentName).remove(obj);
-					res = true;
-				}
+			if(!c.contains(obj)) {
+				reagentName = getReagentType(obj);
+				_mapElements.get(reagentName).remove(obj);
+				res = true;
 			}
 		}
+
 
 		return res;
 	}
@@ -973,7 +967,7 @@ public final class Solution implements Collection<Object>{
 		String res = solutionBeginning+this.prettyPrint(0)+solutionEnd;
 		return res;
 	}
-	
+
 	/**
 	 * A somewhat useful pretty printer, which works recursively
 	 * @param level the depth level
