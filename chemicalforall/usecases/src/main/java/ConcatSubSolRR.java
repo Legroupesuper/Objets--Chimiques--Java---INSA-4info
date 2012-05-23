@@ -46,7 +46,7 @@ public class ConcatSubSolRR implements ReactionRule{
 		
 		System.out.println("J'ai s = "+s+", t = "+t);
 		
-		return new String[]{s+" "+t};
+		return new Object[]{s+" "+t};
 	}
 	public boolean computeSelect() {
 		return true;

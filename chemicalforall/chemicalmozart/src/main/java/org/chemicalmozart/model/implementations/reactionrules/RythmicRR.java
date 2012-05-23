@@ -111,7 +111,7 @@ public class RythmicRR implements ReactionRule{
 		l.add(RythmePull.class);
 		l.add(RythmPattern.class);
 		elts.setTypeList(l);
-		_rythmeSolution = new SubSolution<SubSolutionElements>(elts);
+		//_rythmeSolution = new SubSolution<SubSolutionElements>(elts);
 //		this._chordNumber = 0;
 //		this._max = 0;
 	}
