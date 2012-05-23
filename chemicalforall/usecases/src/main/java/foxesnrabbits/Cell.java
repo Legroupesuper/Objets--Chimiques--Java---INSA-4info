@@ -33,6 +33,8 @@ public class Cell {
 	
 	public void setAnimal(Animal animal) {
 		_animal = animal;
+		if (_field.isViewReady())
+			_field.update();
 	}
 	
 	public Field getField() {
@@ -49,5 +51,9 @@ public class Cell {
 	
 	public Cell findFreeAdjacentCell() {
 		return _field.findFreeAdjacentCell(_x, _y);
+	}
+	
+	public String toString(){
+		return "Case ["+_x+","+_y+"]";
 	}
 }

@@ -12,8 +12,12 @@ public class Field {
 	private static final Random rand = new Random();
 	
 	private Cell[][] _cells;
+	private View view;
+	
+	
 	
 	public Field(int n, int m) {
+		view = null;
 		N = n;
 		M = m;
 		_cells = new Cell[N][M];
@@ -43,6 +47,15 @@ public class Field {
         return null;
 	}
 	
+	public int getNbRows(){
+		return N;
+	}
+	
+	
+	public int getNbColumns(){
+		return M;
+	}
+	
 	public Cell getCell(int x, int y) {
 		if(x < 0 || x >= N || y < 0 || y >= M) {
 			return null;
@@ -60,5 +73,18 @@ public class Field {
 		}
 		
 		return result;
+	}
+	
+	public void setView(View v){
+		view = v;
+	}
+
+	
+	public void update(){
+		view.update();
+	}
+
+	public boolean isViewReady() {
+		return view != null;
 	}
 }

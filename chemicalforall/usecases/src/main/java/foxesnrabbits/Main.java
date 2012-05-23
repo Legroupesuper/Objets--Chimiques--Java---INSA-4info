@@ -11,13 +11,14 @@ import fr.insa.rennes.info.chemical.user.InertEventListener;
 
 public class Main {
 	public static long time = 0;
+	public static View view;
 	
 	public static void main(String[] args) {
 		Solution solution = new Solution();
 		
 		//Create the fields
-		int N = 100;
-		int M = 20;
+		int N = 13;
+		int M = 13;
 		Field field = new Field(N, M);
 		
 		//Add all the cells
@@ -34,9 +35,8 @@ public class Main {
 		
 		//Add the foxes and rabbits
 		Random rand = new Random();
-		double RABBIT_PROBA = 0.08;
-		double FOX_PROBA = 0.05;
-		int r;
+		double RABBIT_PROBA = 0.1;
+		double FOX_PROBA = 0.16;
 		for(int i = 0; i < N; i++) {
 			for(int j = 0; j < M; j++) {
 				if(rand.nextDouble() <= RABBIT_PROBA) {
@@ -49,13 +49,18 @@ public class Main {
 			}
 		}
 		
+		view = new View(field,solution);
+		field.setView(view);
+		
 		solution.addInertEventListener(new InertEventListener() {
-			public void isInert(InertEvent e) {
+			public void isInert(InertEvent e) {				
 				time = System.currentTimeMillis()-time;
 				System.out.println("\n\nRéaction terminée :");
 				System.out.println(e.getSource());
 				printNbRabbitsAndFoxes((Solution)e.getSource(), -1);
 				System.out.println("Time : "+time+"ms");
+				view.update();
+				view.finalUpdate();			
 			}
 			
 		});
@@ -63,7 +68,6 @@ public class Main {
 		System.out.println(solution);
 		time = System.currentTimeMillis();
 		solution.react();
-		
 		/*int seconds = 0;
 		while(!solution.is_inert()) {
 			seconds++;
@@ -83,4 +87,5 @@ public class Main {
 				" => Rabbits "+solution.getReactivesFromType(Rabbit.class).size()+
 				"/ Foxes : "+solution.getReactivesFromType(Fox.class).size());
 	}
+	
 }
