@@ -416,9 +416,9 @@ public final class Solution implements Collection<Object>{
 			//Count the number of thread that are awaken right now, 
 			//apart from the one running this function
 			for(Thread t : _threadTable.values()){
-				if(!t.getState().equals(Thread.State.WAITING)){
+				if(!t.getState().equals(Thread.State.WAITING) && !t.getState().equals(Thread.State.TERMINATED)){
 					nb++;
-					System.err.println("Je suis actif -> "+t);
+					System.err.println("Je suis actif -> "+t+" : "+t.getState());
 				}
 			}
 		}
@@ -431,11 +431,8 @@ public final class Solution implements Collection<Object>{
 	 */
 	private synchronized boolean containsNonInertSubSol() {
 		System.err.println("Début de containesNonInertSubSol");
-		/**
-		 * TODO : On a un deadlock ici, putain de map synchronized à mon avis
-		 */
-		List<Object> subSols = null;
-			subSols = _mapElements.get(Solution.class.getName());
+		
+		List<Object> subSols = _mapElements.get(Solution.class.getName());
 		
 		System.err.println("subSol containesNonInertSubSol");
 		if(subSols == null)

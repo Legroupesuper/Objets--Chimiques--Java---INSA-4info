@@ -73,7 +73,6 @@ public class MaxIntRR implements ReactionRule{
 	}
 
 	public boolean computeSelect() {
-		System.err.println("I'm heeeeeetre");
 		return true;
 	}
 
