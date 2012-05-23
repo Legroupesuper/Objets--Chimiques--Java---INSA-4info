@@ -181,7 +181,7 @@ public final class Solution implements Collection<Object>{
 
 
 		//If the reaction rule doesn't exist, we add it in the table
-		if(true /*!_threadTable.containsKey(reactionRuleObject)*/){
+		if(!_threadTable.containsKey(reactionRuleObject)){
 			Utils.logger.info("############On ajoute a la table "+reactionRuleObject);
 			ReactionRule r = (ReactionRule)reactionRuleObject;
 
@@ -191,8 +191,9 @@ public final class Solution implements Collection<Object>{
 			//Only if the reaction is in progress, we start the thread
 			if(_reactionInProgress)
 				t.start();
-		} else 
-			return false;
+		} else {
+			return true;
+		}
 
 		return true;
 	}
@@ -341,6 +342,7 @@ public final class Solution implements Collection<Object>{
 	 * @see Solution#endOfReaction()
 	 */
 	void deleteReaction(ReactionRule r){
+		Utils.logger.info("On supprime "+r);
 		synchronized (this) {
 			if(_mapElements.remove(r.getClass().getName()) != null) {
 				synchronized (this) {
@@ -534,7 +536,7 @@ public final class Solution implements Collection<Object>{
 		//it means other reaction rules may still be reacting, so just make this thread wait.
 		//Same thing with the number of inert solution: a solution can't be inert if one or more
 		//of its inner solutions isn't inert.
-		if(nbThreadAwaken > 1 || containsNonInertSubSolutions || !_threadTable.containsValue(Thread.currentThread())){
+		if(nbThreadAwaken > 1 || containsNonInertSubSolutions){
 			//Loop on the wait (always)
 			boolean interrupted;
 			do {
@@ -816,7 +818,8 @@ public final class Solution implements Collection<Object>{
 				}
 			} else if(getReagentType(react.get_second()).equals(ReactionRule.class.getName())) {
 				//For a reaction rule, use the dedicated function
-				react.get_first().deleteReaction((ReactionRule)react.get_second());
+				//react.get_first().deleteReaction((ReactionRule)react.get_second());
+				react.get_first()._mapElements.get(react.get_second().getClass().getName()).remove(react.get_second());
 			} else{
 				//For a simple reagent (not a SubSolution object), just delete it from its solution
 				react.get_first()._mapElements.get(react.get_second().getClass().getName()).remove(react.get_second());
