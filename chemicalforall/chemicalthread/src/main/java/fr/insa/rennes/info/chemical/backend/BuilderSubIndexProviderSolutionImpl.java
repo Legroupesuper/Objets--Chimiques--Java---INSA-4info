@@ -188,7 +188,7 @@ class BuilderSubIndexProviderSolutionImpl implements BuilderSubIndexProviderSolu
 						sipSolAccumulation.merge(sipSol);
 				}
 			}
-
+			
 			//As we are in the recursion, this _sipSol is only a option among others
 			//Thus, the response CAN be null (it is just a wrong way, and we can "backtrack"-sort of)
 			if(sipSolAccumulation == null) {
@@ -222,11 +222,13 @@ class BuilderSubIndexProviderSolutionImpl implements BuilderSubIndexProviderSolu
 				List<String> typeList = new ArrayList<String>();
 				for(Class<?> c : subSolObject.getTypeList()){
 					typeList.add(c.getName());
-
+					
+					SubIndexProviderElement sipElmt;
 					if(_solution.getMapElements().get(c.getName()) == null)
-						throw new ChemicalException("There is no reagent of the type asked ("+c.getName()+"), aborting index provider building. Solution concerned : "+_solution);
-
-					SubIndexProviderElement sipElmt = new SubIndexProviderElement(_solution.getMapElements().get(c.getName()).size());
+						sipElmt = new SubIndexProviderElement(0);
+						//throw new ChemicalException("There is no reagent of the type asked ("+c.getName()+"), aborting index provider building. Solution concerned : "+_solution);
+					else
+						sipElmt = new SubIndexProviderElement(_solution.getMapElements().get(c.getName()).size());
 					secondLevelList.add(sipElmt);
 				}
 
@@ -239,6 +241,8 @@ class BuilderSubIndexProviderSolutionImpl implements BuilderSubIndexProviderSolu
 				_sipSol = new SubIndexProviderSolution(firstLevelList, dependentIndexesList);
 			} catch(ChemicalException e1) {
 				_sipSol = null;
+				System.err.println("cacaaa");
+				e1.printStackTrace();
 			} catch (IllegalArgumentException e2) {
 				throw new ChemicalException("Invocation of the getter of a reaction rule SubSolution field failed.");
 			} catch (IllegalAccessException e3) {
@@ -303,8 +307,11 @@ class BuilderSubIndexProviderSolutionImpl implements BuilderSubIndexProviderSolu
 							else
 								sipSolAccumulation.merge(sipSol);
 						}
+						/*System.out.println("sipSol : "+sipSol);
+						System.out.println("Pour type "+Utils.getMethodFromReactionRule(_rr, "", f)+" et sol : "+s);*/
 					}
-
+					/*System.out.println("sipSolAccumulation : "+sipSolAccumulation);
+					System.out.println("Pour sol : "+_solution);*/
 					//The accumulation can not be null. 
 					//If it is, this mean the reagents will never be matched anyway
 					if(sipSolAccumulation == null) {
@@ -332,9 +339,6 @@ class BuilderSubIndexProviderSolutionImpl implements BuilderSubIndexProviderSolu
 		List<List<Integer>> dependantIndexesList = buildDependantIndexesListWithFields(_rrFields, _solution.getMapElements());
 
 		_sipSol = new SubIndexProviderSolution(firstLevelList, dependantIndexesList);
-		
-		System.out.println("LALALALALA");
-		System.out.println(_sipSol);
 	}
 
 
@@ -407,6 +411,10 @@ class BuilderSubIndexProviderSolutionImpl implements BuilderSubIndexProviderSolu
 		Map<String, List<Integer>> dependantIndexesMap = new HashMap<String, List<Integer>>();
 		String reagentTypeName;
 		for(int i = 0; i < typeList.size(); i++){
+			//If the type isn't even an entry of the hash map, return false (didn't find any reagents)
+			if(mapElements.get(typeList.get(i))== null)
+				continue;
+			
 			reagentTypeName = typeList.get(i);
 			if(dependantIndexesMap.containsKey(reagentTypeName)){
 				dependantIndexesMap.get(reagentTypeName).add(i);
@@ -415,10 +423,6 @@ class BuilderSubIndexProviderSolutionImpl implements BuilderSubIndexProviderSolu
 				l.add(i);
 				dependantIndexesMap.put(reagentTypeName, l);
 			}
-
-			//If the type isn't even an entry of the hash map, return false (didn't find any reagent)
-			if(mapElements.get(typeList.get(i))== null)
-				throw new ChemicalException("There is no reagent of this type, aborting IndexProvider instanciation.");
 		}
 
 		//We have to provide the IndexProvider a list of a list of int, so

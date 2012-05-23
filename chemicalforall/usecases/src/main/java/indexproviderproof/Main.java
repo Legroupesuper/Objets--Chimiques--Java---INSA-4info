@@ -17,27 +17,26 @@ public class Main {
 		}
 		
 		Solution subSolution1 = new Solution();
-		subSolution1.add(new Object());
-		subSolution1.add(new Object());
-		subSolution1.add(new Object());
+		subSolution1.add(new String("a"));
+		subSolution1.add(new String("b"));
+		subSolution1.add(new String("c"));
 		
 		Solution subSolution2 = new Solution();
 		subSolution2.add(new Integer(1));
 		subSolution2.add(new Integer(2));
 		subSolution2.add(new Integer(3));
-		subSolution2.add(new Object());
-		subSolution2.add(new Object());
 		
 		solution.add(subSolution1);
 		solution.add(subSolution2);
 		
-		/*solution.add(new DummyReaction());
-		solution.add(new DummyReaction2());*/
+//		solution.add(new DummyReaction());
+//		solution.add(new DummyReaction2());
 		solution.add(new DummyReactionSub());
 		
 		solution.addInertEventListener(new InertEventListener() {
 			public void isInert(InertEvent e) {
 				System.out.println("End of reaction");
+				System.out.println(e.getSource());
 			}
 		});
 		

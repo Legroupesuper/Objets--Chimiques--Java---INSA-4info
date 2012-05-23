@@ -21,11 +21,10 @@ package fr.insa.rennes.info.chemical.backend;
 
 
 
-import java.io.File;
-import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -34,7 +33,6 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.FileHandler;
 
 import fr.insa.rennes.info.chemical.user.Dontreact;
 import fr.insa.rennes.info.chemical.user.InertEvent;
@@ -690,13 +688,14 @@ public final class Solution implements Collection<Object>{
 				ipBuilder.setStrategy(_strategy);
 				ipBuilder.build();
 				indexProvider = ipBuilder.getProduct();
-			} /*catch (ChemicalException e1) {
+			} catch (ChemicalException e1) {
 				return false;
 			} catch(NullPointerException e) { 
 				throw e;
-			} */catch(Exception e) {
+			} catch(Exception e) {
 				//Just in case there is any other exception, and in order to avoid 
 				//to annoy the user with a stack trace, just return false 
+				e.printStackTrace();
 				return false;
 			}
 		}
@@ -718,17 +717,13 @@ public final class Solution implements Collection<Object>{
 					return false;
 				}
 
-			} catch (IllegalArgumentException e) {
-				return false;
-			} catch (IllegalAccessException e) {
-				return false;
-			} catch (InvocationTargetException e) {
-				return false;
 			} catch(NullPointerException e) { 
 				throw e;
 			} catch(Exception e) {
 				//Just in case there is any other exception, and in order to avoid 
 				//to annoy the user with a stack trace, just return false 
+				System.err.println("Internal error, sorry !");
+				e.printStackTrace();
 				return false;
 			}
 		}
@@ -764,7 +759,7 @@ public final class Solution implements Collection<Object>{
 		//Loop until the reagents has been found OR all combination have been tested
 		while(!indexProvider.is_overflowReached()) {
 			SubIndexProviderSolution sipSol = indexProvider.getSubIndexProvider();
-
+			
 			i = 0;
 			tryComputeSelect = true;
 			for(Field f : rrFields) {
@@ -773,9 +768,9 @@ public final class Solution implements Collection<Object>{
 					setterNumber = _mapReactionRulesSetters.get(rr.getClass().getName()+"."+f.getName());
 					setter = rr.getClass().getDeclaredMethods()[setterNumber];
 
-					//..instanciate the (value) of the field...
+					//..instantiate the (value) of the field...
 					reagentObject = instanciateField(f, sipSol.get_listSubIP().get(i), rr);
-					//If instanciateField returned false, an error occured, go on the the next increment of the index provider
+					//If instanciateField returned false, an error occurred, go on the the next increment of the index provider
 					if(reagentObject == null) {
 						tryComputeSelect = false;
 						break;
@@ -788,7 +783,8 @@ public final class Solution implements Collection<Object>{
 					i++;
 				}
 			}
-
+			
+			System.out.println("Pre-avant : "+indexProvider.getSubIndexProvider());
 			//When we get here, the right types have been found, now test the selection rule
 			if(tryComputeSelect && rr.computeSelect()) {
 				//If the computeSelect says OK, return the found set of reagents
@@ -858,7 +854,7 @@ public final class Solution implements Collection<Object>{
 		if(sip instanceof SubIndexProviderElement){
 			return new Pair<Solution, Object>(this, _mapElements.get(f.getType().getName()).get(sip.getValue()));
 		}
-		//TIf the field is a set of elements in a subsolution, it will be more complex
+		//If the field is a set of elements in a subsolution, it will be more complex
 		else{
 			Method getter = Utils.getMethodFromReactionRule(r, "get", f);
 			SubSolution<SubSolutionReagentsAccessor> subSolObject = (SubSolution<SubSolutionReagentsAccessor>) getter.invoke(r, new Object[0]);
@@ -881,21 +877,11 @@ public final class Solution implements Collection<Object>{
 			//so that we can instantiate the elementList of the SubSolution object
 			List<Object> l = new ArrayList<Object>();
 			int i = 0;
-			for(Class<?> c : subSolObject.getTypeList()){
-				System.out.println("1");
-				c.getName();
-				System.out.println("2");
-				sipSol.get_listSubIP();
-				System.out.println("3");
-				sipSol.get_listSubIP().get(i);
-				System.out.println("4");
-				sipSol.get_listSubIP().get(i).getValue();
-				System.out.println("5 "+nextSol._mapElements+" "+c.getName());
-				nextSol._mapElements.get(c.getName()).get(sipSol.get_listSubIP().get(i).getValue());
-				System.out.println("6");
-				
-				
-				
+			for(Class<?> c : subSolObject.getTypeList()){				
+				//If the sub index provider says that there is no elements of this type in nextSol, abort
+				if(sipSol.get_listSubIP().get(i).getNumberOfElements().compareTo(BigInteger.ZERO) == 0) {
+					return null;
+				}
 				
 				l.add(nextSol._mapElements.get(c.getName()).get(sipSol.get_listSubIP().get(i).getValue()));
 				i++;

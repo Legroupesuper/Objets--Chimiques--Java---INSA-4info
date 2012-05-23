@@ -6,6 +6,13 @@ public class DeadRabbitCollector implements ReactionRule {
 	private Rabbit _deadRabbit;
 	
 	public Object[] computeResult() {
+//		try {
+//			Thread.sleep(500);
+//		} catch (InterruptedException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+		_deadRabbit.setDead();
 		return new Object[] {};
 	}
 

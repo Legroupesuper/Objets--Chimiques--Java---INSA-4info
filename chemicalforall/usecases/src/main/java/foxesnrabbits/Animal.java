@@ -31,8 +31,9 @@ public class Animal {
 
 	public void incrementAge() {
 		_age++;
-		if(_age > _maxAge)
-			_alive = false;
+		if(_age > _maxAge){
+			setDead();		
+		}
 	}
 	
 	public int breed() {
@@ -63,5 +64,7 @@ public class Animal {
 	
 	public void setDead() {
 		_alive = false;
+		_location.setAnimal(null);
 	}
+	
 }
