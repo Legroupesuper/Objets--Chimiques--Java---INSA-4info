@@ -65,12 +65,12 @@ public class RythmicRRTest extends TestCase{
 		chord.set_degrees(new DegreeImpl(1));
 		chord.set_position(0);
 
-		rr.set_melodicRR(new MelodicRR());
-		rr.set_rythmeSolution(this._rythmeSolution);
-		rr.setChordImpl(chord);
-		rr.setNum(2);
-		rr.set_max(0);
-		rr.set_chordNumber(0);
+//		rr.set_melodicRR(new MelodicRR());
+//		rr.set_rythmeSolution(this._rythmeSolution);
+//		rr.setChordImpl(chord);
+//		rr.setNum(2);
+//		rr.set_max(0);
+//		rr.set_chordNumber(0);
 		this._tabResult = rr.computeResult();
 	}
 
@@ -157,12 +157,12 @@ public class RythmicRRTest extends TestCase{
 		chord.set_degrees(new DegreeImpl(1));
 		chord.set_position(1);
 
-		rr.set_melodicRR(new MelodicRR());
-		rr.set_rythmeSolution(rythmeSolution);
-		rr.setChordImpl(chord);
-		rr.setNum(2);
-		rr.set_max(0);
-		rr.set_chordNumber(1);
+//		rr.set_melodicRR(new MelodicRR());
+//		rr.set_rythmeSolution(rythmeSolution);
+//		rr.setChordImpl(chord);
+//		rr.setNum(2);
+//		rr.set_max(0);
+//		rr.set_chordNumber(1);
 
 		Object[] tabResult = rr.computeResult();
 		boolean solPresent = false;
@@ -251,12 +251,12 @@ public class RythmicRRTest extends TestCase{
 		chord.set_degrees(new DegreeImpl(1));
 		chord.set_position(0);
 
-		rr.set_melodicRR(new MelodicRR());
-		rr.set_rythmeSolution(rythmeSolution);
-		rr.setChordImpl(chord);
-		rr.setNum(2);
-		rr.set_max(0);
-		rr.set_chordNumber(1);
+//		rr.set_melodicRR(new MelodicRR());
+//		rr.set_rythmeSolution(rythmeSolution);
+//		rr.setChordImpl(chord);
+//		rr.setNum(2);
+//		rr.set_max(0);
+//		rr.set_chordNumber(1);
 		assertFalse("The compute select shouldn't pass in this configuration, ChordNumber and the ChordImpl position doesn't correspond", rr.computeSelect());
 	}
 
