@@ -28,6 +28,7 @@ import org.chemicalmozart.model.implementations.solutionindentification.RythmePu
 
 import fr.insa.rennes.info.chemical.backend.SubSolution;
 import fr.insa.rennes.info.chemical.backend.SubSolutionElements;
+import fr.insa.rennes.info.chemical.backend.Utils;
 import fr.insa.rennes.info.chemical.user.Dontreact;
 import fr.insa.rennes.info.chemical.user.ReactionRule;
 
@@ -101,12 +102,14 @@ public class RythmicRR implements ReactionRule{
 	 */
 	public RythmicRR() {
 		super();
-		SubSolutionElements elts = new SubSolutionElements();
+		/*SubSolutionElements elts = new SubSolutionElements();
 		List<Class<? extends Object>> l = new ArrayList<Class<? extends Object>>();
 		l.add(RythmePull.class);
 		l.add(RythmPattern.class);
-		elts.setTypeList(l);
-		_rythmeSolution = new SubSolution<SubSolutionElements>(elts);
+		elts.setTypeList(l);*/
+		_rythmeSolution = new SubSolution<SubSolutionElements>();
+		_rythmeSolution.addType(RythmePull.class);
+		_rythmeSolution.addType(RythmPattern.class);
 		this._chordNumber = 0;
 		this._max = 0;
 	}
@@ -153,28 +156,30 @@ public class RythmicRR implements ReactionRule{
 		 */
 		if( chordImplPosition < this._num-1){
 			this._melodicRR.set_max(melodicRRmax + nbNotesInChosenRythm);
-			this._chordImpl.set_position(this._chordImpl.get_position()+this._max);
 			this._chordNumber++;
 			
 			for(Note n : listNotes){
 				n.set_position(n.get_position()+_max);
+				n.set_chord(_chordImpl);
 			}
-			
 			this._max += nbNotesInChosenRythm;
 			List<Object> lres = new ArrayList<Object>();
 			lres.addAll(listNotes);
 			lres.add(new Integer(this._num));
 			lres.add(this._chordImpl);
+			Utils.logger.severe("On ajoute MelodicRR");
 			lres.add(this._melodicRR);
+			Utils.logger.severe("On ajoute this");
 			lres.add(this);
+			Utils.logger.severe("On a ajouté this");
 			result = lres.toArray();
 		}else{
 			this._melodicRR.set_max(melodicRRmax + nbNotesInChosenRythm);
 			this._melodicRR.set_activated(true);
-			this._chordImpl.set_position(this._chordImpl.get_position()+this._max);
 			this._chordNumber++;
 			for(Note n : listNotes){
 				n.set_position(n.get_position()+_max);
+				n.set_chord(_chordImpl);
 			}
 			this._max += nbNotesInChosenRythm;
 			List<Object> lres = new ArrayList<Object>();

@@ -65,13 +65,17 @@ public class RythmeHRR implements ReactionRule{
 	 */
 	public RythmeHRR() {
 		super();
-		_sol = new SubSolution<SubSolutionElements>(new SubSolutionElements());
-		List<Class<? extends Object>> l = new ArrayList<Class<? extends Object>>();
+		_sol = new SubSolution<SubSolutionElements>();
+		_sol.addType(BarInCreation.class);
+		_sol.addType(Integer.class);
+		_sol.addType(DegreeImpl.class);
+		_sol.addType(QuaterLeft.class);
+		/*List<Class<? extends Object>> l = new ArrayList<Class<? extends Object>>();
 		l.add(BarInCreation.class);
 		l.add(Integer.class);
 		l.add(DegreeImpl.class);
 		l.add(QuaterLeft.class);
-		_sol.setTypeList(l);
+		_sol.setTypeList(l);*/
 	}
 
 	/**

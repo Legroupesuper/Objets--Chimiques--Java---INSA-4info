@@ -64,11 +64,12 @@ public class HarmonicRR3 implements ReactionRule{
 	 */
 	public HarmonicRR3() {
 		super();
-		SubSolutionElements elts = new SubSolutionElements();
+		/*SubSolutionElements elts = new SubSolutionElements();
 		List<Class<? extends Object>> l = new ArrayList<Class<? extends Object>>();
 		l.add(BarInCreation.class);
-		elts.setTypeList(l);
-		_barInCreationSolution = new SubSolution<SubSolutionElements>(elts);
+		elts.setTypeList(l);*/
+		_barInCreationSolution = new SubSolution<SubSolutionElements>();
+		_barInCreationSolution.addType(BarInCreation.class);
 	}
 
 	/**

@@ -16,10 +16,7 @@
     You should have received a copy of the GNU Lesser General Public License
     along with ChemicalLibSuper.  If not, see <http://www.gnu.org/licenses/>
 */
-import java.io.IOException;
-
 import fr.insa.rennes.info.chemical.backend.Solution;
-import fr.insa.rennes.info.chemical.backend.Utils;
 import fr.insa.rennes.info.chemical.user.InertEvent;
 import fr.insa.rennes.info.chemical.user.InertEventListener;
 
@@ -126,12 +123,12 @@ public class Test {
 		s.add(" Le ");
 		s.add(" Gros ");
 		s.add(" Eléphant ");
-		s.add(new MaxIntRR(0));
+//		s.add(new MaxIntRR(0));
 //		s.add(new MaxIntSubSolRR());
 //		s.add(new ConcatRR());
 //		s.add(new RandomNumberRR());
 //		s.add(new TrucRR());
-//		s.add(new ConcatSubSolRR());
+		s.add(new ConcatSubSolRR());
 		System.out.println("AVANT : ");
 		System.out.println(s);
 		final long time = System.currentTimeMillis();
@@ -146,12 +143,6 @@ public class Test {
 			}
 		});
 	
-		try {
-			Utils.setLogFile("/tmp/coucou.txt");
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
 		
 		try {
 			s.react();

@@ -63,18 +63,21 @@ public class PickOneRR implements ReactionRule{
 	public PickOneRR(){
 		super();
 		
-		SubSolutionElements eltsSolTemporary = new SubSolutionElements();
+		/*SubSolutionElements eltsSolTemporary = new SubSolutionElements();
 		List<Class<? extends Object>> typeListSolTemporary = new ArrayList<Class<? extends Object>>();
 		typeListSolTemporary.add(Temporary.class);
 		typeListSolTemporary.add(DegreeImpl.class);
-		eltsSolTemporary.setTypeList(typeListSolTemporary);
-		_temporaryBar = new SubSolution<SubSolutionElements>(eltsSolTemporary);
+		eltsSolTemporary.setTypeList(typeListSolTemporary);*/
+		_temporaryBar = new SubSolution<SubSolutionElements>();
+		_temporaryBar.addType(Temporary.class);
+		_temporaryBar.addType(DegreeImpl.class);
 		
-		SubSolutionElements eltsSolInCreation = new SubSolutionElements();
+		/*SubSolutionElements eltsSolInCreation = new SubSolutionElements();
 		List<Class<? extends Object>> typeListSolInCreation = new ArrayList<Class<? extends Object>>();
 		typeListSolInCreation.add(BarInCreation.class);
-		eltsSolInCreation.setTypeList(typeListSolInCreation);
-		_barInCreation = new SubSolution<SubSolutionElements>(eltsSolInCreation);
+		eltsSolInCreation.setTypeList(typeListSolInCreation);*/
+		_barInCreation = new SubSolution<SubSolutionElements>();
+		_barInCreation.addType(BarInCreation.class);
 	}
 
 	/**

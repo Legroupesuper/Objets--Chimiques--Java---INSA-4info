@@ -32,12 +32,13 @@ public class DeleteRuleMax implements ReactionRule{
 	
 	public DeleteRuleMax() {
 		super();
-		SubSolutionElements e = new SubSolutionElements();
+		/*SubSolutionElements e = new SubSolutionElements();
 		List<Class<? extends Object>> l = new ArrayList<Class<? extends Object>>();
 		l.add(Integer.class);
-		l.add(Integer.class);
-		_subSol = new SubSolution<SubSolutionElements>(e);
-		_subSol.setTypeList(l);
+		l.add(Integer.class);*/
+		_subSol = new SubSolution<SubSolutionElements>();
+		_subSol.addType(Integer.class);
+		_subSol.addType(Integer.class);
 	}
 
 	public SubSolution<SubSolutionElements> get_subSol() {

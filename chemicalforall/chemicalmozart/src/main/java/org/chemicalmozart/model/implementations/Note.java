@@ -134,7 +134,7 @@ public class Note {
 	@Override
 	public String toString() {
 		String result;
-		result = "{Note : "+this._pitch+" position:"+_position+"}";
+		result = "{Note : "+this._pitch+" position:"+_position+" rythme:"+_rythme+"}";
 		return result;
 	}
 }
