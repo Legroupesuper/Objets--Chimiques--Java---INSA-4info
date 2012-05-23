@@ -19,7 +19,6 @@
 package fr.insa.rennes.info.chemical.backend;
 
 import junit.framework.TestCase;
-import fr.insa.rennes.info.chemical.user.ReactionRule;
 
 /**
  * @author ArthurTemple
@@ -28,7 +27,7 @@ import fr.insa.rennes.info.chemical.user.ReactionRule;
 
 public class SubSolutionTest extends TestCase {
 
-	private SubSolution testSubSolution;
+	private SubSolution<?> testSubSolution;
 	
 	/**
 	 * @param name
@@ -42,6 +41,13 @@ public class SubSolutionTest extends TestCase {
 	 */
 	protected void setUp() throws Exception {
 		super.setUp();
+		Solution s = new Solution();
+		char[] content = "Super toto_lala".toCharArray();
+		for(char c : content)
+			s.add(c);
+		
+		testSubSolution = new SubSolution<SubSolutionReagentsAccessor>();
+		testSubSolution.setSolution(s);
 	}
 
 	/* (non-Javadoc)
@@ -49,12 +55,18 @@ public class SubSolutionTest extends TestCase {
 	 */
 	protected void tearDown() throws Exception {
 		super.tearDown();
+		
 	}
 
 	/**
-	 * Test method for {@link SubSolution#fooTest()}.
+	 * Test method for {@link SubSolution#SubSolution()}.
 	 */
-	public void testFooTest() {
-		assertTrue(true);
+	public void testConstructor() {
+		testSubSolution = new SubSolution<SubSolution<?>>();
+		assertTrue("A SubSolution built with first constructor should implement SubSolutionReagentsAccessor", testSubSolution instanceof SubSolutionReagentsAccessor);
+		testSubSolution = new SubSolution<SubSolutionElements>(new SubSolutionElements());
+		assertTrue("A SubSolution built with second constructor should implement SubSolutionReagentsAccessor", testSubSolution instanceof SubSolutionReagentsAccessor);
+//		assertTrue("A SubSolution initialized with the SubSolution type should contain a SubSolution object", testSubSolution.);
+//		assertTrue("A SubSolution initialized with a non-SubSolution type should contain a SubSolutionElements object", );
 	}
 }

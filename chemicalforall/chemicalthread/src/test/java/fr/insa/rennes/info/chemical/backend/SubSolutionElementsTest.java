@@ -18,6 +18,10 @@
 */
 package fr.insa.rennes.info.chemical.backend;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+
 import junit.framework.TestCase;
 
 /**
@@ -41,6 +45,7 @@ public class SubSolutionElementsTest extends TestCase {
 	 */
 	protected void setUp() throws Exception {
 		super.setUp();
+		testSubSolutionElements = new SubSolutionElements();
 	}
 
 	/* (non-Javadoc)
@@ -56,5 +61,48 @@ public class SubSolutionElementsTest extends TestCase {
 	public void testConstructor() {
 		this.testSubSolutionElements = new SubSolutionElements();
 		assertTrue("SubSolutionElements should implement SubSolutionReagentsAccessor", this.testSubSolutionElements instanceof SubSolutionReagentsAccessor);
+	}
+
+	/**
+	 * Test method for {@link SubSolutionElements#getElements()}
+	 * and {@link SubSolutionElements#setElements(List<Object>)}.
+	 */
+	public void testElements() {
+		assertTrue("getElements should return a List", testSubSolutionElements.getElements() instanceof List);
+		List<Object> l = new LinkedList<Object>();
+		l.add(new Object());
+		l.add("65");
+		testSubSolutionElements.setElements(l);
+		assertTrue("getElements should return the correct Object List", testSubSolutionElements.getElements().equals(l));
+	}
+
+	/**
+	 * Test method for {@link SubSolutionElements#getTypeList()}
+	 * and {@link SubSolutionElements#setTypeList(List<Class<? extends Object>>)}.
+	 */
+	public void testTypeList() {
+		assertTrue("getTypeList should return a List", testSubSolutionElements.getTypeList() instanceof List);
+		List<Class<?>> l = new LinkedList<Class<?>>();
+		testSubSolutionElements.setTypeList(l);
+		assertTrue("getTypeList should return the correct Type List", testSubSolutionElements.getTypeList().equals(l));
+		testSubSolutionElements.setTypeList(new ArrayList<Class<?>>());
+		testSubSolutionElements.addType(getClass());
+		assertTrue("addType should be effective", testSubSolutionElements.getTypeList().contains(getClass()));
+	}
+
+	/**
+	 * Test method for {@link SubSolutionElements#getSolution()}
+	 * and {@link SubSolutionElements#setSolution(Solution)}.
+	 */
+	public void testSolution() {
+		assertTrue("getSolution should return a Solution", testSubSolutionElements.getSolution() instanceof Solution);
+
+		Solution s = new Solution();
+		char[] content = "Super toto_lala".toCharArray();
+		for(char c : content)
+			s.add(c);
+		
+		testSubSolutionElements.setSolution(s);
+		assertTrue("getSolution should return the correct Solution", testSubSolutionElements.getSolution().equals(s));
 	}
 }
