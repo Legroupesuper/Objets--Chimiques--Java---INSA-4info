@@ -3,14 +3,12 @@ package foxesnrabbits;
 import javax.swing.JFrame;
 import javax.swing.JTable;
 import java.awt.BorderLayout;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.util.List;
 
 import javax.swing.JLabel;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableCellRenderer;
 
 import fr.insa.rennes.info.chemical.backend.Solution;
 import java.awt.Font;
@@ -20,6 +18,10 @@ import java.awt.Color;
 
 public class View extends JFrame{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Field field;
 	private Solution solution;
 	private JTable table;

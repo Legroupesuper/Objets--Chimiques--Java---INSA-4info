@@ -1,15 +1,12 @@
 package foxesnrabbits;
 
-import java.util.Collections;
-import java.util.Iterator;
+
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Random;
 
 public class Field {
 	private int N;
 	private int M;
-	private static final Random rand = new Random();
 	
 	private Cell[][] _cells;
 	private View view;
