@@ -8,15 +8,22 @@ public class MoveFox implements ReactionRule {
 	private Rabbit _oneAliveRabbit;
 	
 	public Object[] computeResult() {
+//		try {
+//			Thread.sleep(500);
+//		} catch (InterruptedException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+		_fox.changeLocation(_nextMove);
+		_fox.incrementAge();
 		if(_nextMove.getAnimal() instanceof Rabbit) {
 			Animal eatenRabbit = _nextMove.getAnimal();
 			eatenRabbit.setDead();
+			return new Object[] {_fox, _nextMove};
 		}
 		
-		_fox.changeLocation(_nextMove);
+		return new Object[] {_fox, _nextMove, _oneAliveRabbit};
 		
-		_fox.incrementAge();
-		return new Object[] {_fox, _nextMove};
 	}
 
 	public boolean computeSelect() {
