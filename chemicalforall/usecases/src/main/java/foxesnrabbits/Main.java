@@ -15,8 +15,8 @@ public class Main {
 		Solution solution = new Solution();
 		
 		//Create the fields
-		int N = 13;
-		int M = 13;
+		int N = 12;
+		int M = 12;
 		Field field = new Field(N, M);
 		
 		//Add all the cells
@@ -33,8 +33,8 @@ public class Main {
 		
 		//Add the foxes and rabbits
 		Random rand = new Random();
-		double RABBIT_PROBA = 0.1;
-		double FOX_PROBA = 0.16;
+		double RABBIT_PROBA = 0.15;
+		double FOX_PROBA = 0.45;
 		for(int i = 0; i < N; i++) {
 			for(int j = 0; j < M; j++) {
 				if(rand.nextDouble() <= RABBIT_PROBA) {
