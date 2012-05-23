@@ -19,7 +19,6 @@
 package fr.insa.rennes.info.chemical.backend;
 
 import junit.framework.TestCase;
-import fr.insa.rennes.info.chemical.user.ReactionRule;
 
 /**
  * @author ArthurTemple
@@ -28,8 +27,6 @@ import fr.insa.rennes.info.chemical.user.ReactionRule;
 
 public class PairTest extends TestCase {
 
-	private Pair testPair;
-	
 	/**
 	 * @param name
 	 */
@@ -52,9 +49,40 @@ public class PairTest extends TestCase {
 	}
 
 	/**
-	 * Test method for {@link Pair#fooTest()}.
+	 * Test method for {@link Pair#Pair()}.
 	 */
-	public void testFooTest() {
-		assertTrue(true);
+	public void testConstructor() {
+		Pair<?, ?> testPair;
+		testPair = new Pair<Object, String>(new Object(), "foo");
+		assertTrue("The constructor for Pair should not be fatal", testPair instanceof Pair<?, ?>);
+	}
+
+	/**
+	 * Test method for Pair's attribute getters.
+	 */
+	public void testGetters() {
+		Pair<?, ?> testPair;
+		String s2 = "qux";
+		Object o = new Object();
+		testPair = new Pair<String, Object>(s2, o);
+		assertTrue("Access to the first element of a Pair should be correct", testPair.get_first().equals(s2));
+		assertTrue("Access to the second element of a Pair should be correct", testPair.get_second().equals(o));
+	}
+
+	/**
+	 * Test method for Pair's attribute setters.
+	 */
+	public void testSetters() {
+		Pair<String, Object> testPair;
+		
+		String s1 = "baz";
+		Object o = new Object();
+		testPair = new Pair<String, Object>("bam", "boum");
+
+		testPair.set_first(s1);
+		testPair.set_second(o);
+		
+		assertTrue("Modifying the first element of a Pair should be relevant", testPair.get_first().equals(s1));
+		assertTrue("Modifying the second element of a Pair should be relevant", testPair.get_second().equals(o));
 	}
 }

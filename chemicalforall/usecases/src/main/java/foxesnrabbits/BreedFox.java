@@ -10,6 +10,13 @@ public class BreedFox implements ReactionRule {
 	private Rabbit _oneAliveRabbit;
 
 	public Object[] computeResult() {
+//		try {
+//			Thread.sleep(500);
+//		} catch (InterruptedException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+		
 		List<Object> result = new ArrayList<Object>();
 		int nbBirths = _fox.breed();
 		
