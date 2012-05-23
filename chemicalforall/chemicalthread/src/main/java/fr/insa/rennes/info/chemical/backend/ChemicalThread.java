@@ -77,38 +77,37 @@ public class ChemicalThread extends Thread {
 		//Run as long as the solution is not inert AND as long
 		//as we didn't stop the thread "manually"
 		while(!_solutionContainer.is_inert() && _continue){
-			System.err.println("Un tour de boucle "+_reactionRule);
+			Utils.logger.info("Un tour de boucle "+_reactionRule);
 			//If we find enough valid parameters...
 			if(_solutionContainer.requestForParameters(_reactionRule)){
-				System.err.println("On a passé le computeSelect "+_reactionRule);
+				Utils.logger.info("On a passé le computeSelect");
 				//...we compute reaction result
 				Object obj[] = _reactionRule.computeResult();
-				System.err.println("impression temps du retour de compute result ->\n");
+				Utils.logger.info("impression temps du retour de compute result ->\n");
 				for(Object ob : obj)
 				System.err.print(" "+ob);
 				boolean b = false;
 				//add the results to the solution
 				if(obj != null)
 					b = _solutionContainer.addAll(Arrays.asList(obj));
-				System.err.println();
-				System.err.println("<- impression temps du retour de compute result fin : "+b+ " "+_reactionRule);
+				Utils.logger.info("<- impression temps du retour de compute result fin : "+b+ " "+_reactionRule);
 				//Then wake all ReactionRules (as the solution has been modified)
-				_solutionContainer.wakeAll();
-				System.err.println("on fait le wakeAll depuis "+_reactionRule);
+				//_solutionContainer.wakeAll();
+				Utils.logger.info("on fait le wakeAll");
 				//If the reaction rule is ONE SHOT, we must delete it and stop this thread
 				if(_reactionRule.getMultiplicity().equals(Multiplicity.ONE_SHOT)){
 					_solutionContainer.deleteReaction(_reactionRule);
-					System.err.println("C'était une One-shot "+_reactionRule);
+					Utils.logger.info("C'était une One-shot");
 					break;
 				}
 			}else{
 				//If we do not find valid parameters, the reaction goes to sleep
 				//A sleeping reaction waits for the solution to go inert or to see its inner elements modified
-				System.err.println("On fait faire dodo à "+_reactionRule);
-				_solutionContainer.makeSleep(_reactionRule);
+				Utils.logger.info("On fait faire dodo à "+_reactionRule);
+				_solutionContainer.makeSleep();
 			}
 		}
-		System.err.println("On sort de "+_reactionRule);
+		Utils.logger.info("On sort");
 	}
 	
 	/**

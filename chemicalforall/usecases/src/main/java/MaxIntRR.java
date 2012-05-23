@@ -67,13 +67,12 @@ public class MaxIntRR implements ReactionRule{
 	public Object[] computeResult() {
 		
 		if(a>b)
-			return new Object[]{a, new MaxIntRR(0)};
+			return new Object[]{a};
 
-		return new Object[]{b, new MaxIntRR(0)};
+		return new Object[]{b};
 	}
 
 	public boolean computeSelect() {
-		System.err.println("I'm heeeeeetre");
 		return true;
 	}
 

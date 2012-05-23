@@ -181,7 +181,8 @@ public final class Solution implements Collection<Object>{
 
 
 		//If the reaction rule doesn't exist, we add it in the table
-		if(!_threadTable.containsKey(reactionRuleObject)){
+		if(true /*!_threadTable.containsKey(reactionRuleObject)*/){
+			Utils.logger.info("############On ajoute a la table "+reactionRuleObject);
 			ReactionRule r = (ReactionRule)reactionRuleObject;
 
 			ChemicalThread t = new ChemicalThread(r, this, _threadGroup);
@@ -232,7 +233,7 @@ public final class Solution implements Collection<Object>{
 			boolean addElement = true;
 
 			//It is a ReactionRule, hence special treatment
-			if(className.equals(ReactionRule.class.getName())) {
+			if(newReagent instanceof ReactionRule) {
 				addElement = checkReactionRuleReagent(newReagent);
 			} else if(className.equals(Solution.class.getName())){
 				processAddSubSolution(newReagent);
@@ -346,7 +347,6 @@ public final class Solution implements Collection<Object>{
 					_threadTable.get(r).stopTheThread();
 					_threadTable.remove(r);
 				}
-
 				tryTrivialEndOfReaction();
 			}
 		}
@@ -415,11 +415,12 @@ public final class Solution implements Collection<Object>{
 		synchronized (this) {
 			//Count the number of thread that are awaken right now, 
 			//apart from the one running this function
-			System.err.println(Thread.currentThread()+ " "+Thread.currentThread().getState());
+			Utils.logger.info("==========="+Thread.currentThread()+ " "+Thread.currentThread().getState()+ " nb:"+_threadTable.size());
 			for(Thread t : _threadTable.values()){
-				if(!t.getState().equals(Thread.State.WAITING)){
+				Utils.logger.info("++++ "+t+" : "+t.getState());
+				if(!t.getState().equals(Thread.State.WAITING) && !t.getState().equals(Thread.State.TERMINATED)){
 					nb++;
-					System.err.println("Je suis actif -> "+t+ " "+t.getState());
+					Utils.logger.info("Je suis actif -> "+t+" : "+t.getState());
 				}
 			}
 		}
@@ -431,11 +432,10 @@ public final class Solution implements Collection<Object>{
 	 * @return <code>true</code> if this solution contains at least one non inert inner solution.
 	 */
 	private synchronized boolean containsNonInertSubSol() {
-		System.err.println("Début de containesNonInertSubSol");
-		List<Object> subSols = null;
-			subSols = _mapElements.get(Solution.class.getName());
+		Utils.logger.info("Début de containesNonInertSubSol");
+		List<Object> subSols = _mapElements.get(Solution.class.getName());
 		
-		System.err.println("subSol containesNonInertSubSol");
+		Utils.logger.info("subSol containesNonInertSubSol");
 		if(subSols == null)
 			return false;
 
@@ -524,12 +524,12 @@ public final class Solution implements Collection<Object>{
 	 * @see ChemicalThread
 	 * @see Solution#_inert
 	 */
-	synchronized void makeSleep(ReactionRule r){
-		System.err.println("Début de make sleep "+r);
+	synchronized void makeSleep(){
+		Utils.logger.info("Début de make sleep");
 		int nbThreadAwaken = getNumberOfActiveThreads();
-		System.err.println("nbThreadsAwaken : "+nbThreadAwaken +" "+r);
+		Utils.logger.info("nbThreadsAwaken : "+nbThreadAwaken);
 		boolean containsNonInertSubSolutions = containsNonInertSubSol();
-System.err.println("ContainesNonInert : "+containsNonInertSubSolutions+" "+r);
+		Utils.logger.info("ContainesNonInert : "+containsNonInertSubSolutions);
 		//If there is more than one thread alive (including the current one)
 		//it means other reaction rules may still be reacting, so just make this thread wait.
 		//Same thing with the number of inert solution: a solution can't be inert if one or more
@@ -539,16 +539,18 @@ System.err.println("ContainesNonInert : "+containsNonInertSubSolutions+" "+r);
 			boolean interrupted;
 			do {
 				interrupted = false;
-				System.err.println("On va tenter le wait");
+				Utils.logger.info("On va tenter le wait");
 				try {
 					wait();
 				} catch (InterruptedException e) {
-					System.err.println("On a une exception au moment de faire wait");
+					Utils.logger.info("On a une exception au moment de faire wait");
 					interrupted = true;
 				}
 			} while(interrupted);
 
-		} else {
+		}else if(!_threadTable.containsValue(Thread.currentThread())){
+			
+		}else {
 			//If the current thread is the last one standing, kill all the threads by switching the
 			//boolean _keepOnReacting to false (all thread are in a loop on this boolean).
 			endOfReaction();
@@ -1033,20 +1035,5 @@ System.err.println("ContainesNonInert : "+containsNonInertSubSolutions+" "+r);
 	 */
 	Map<String, List<Object>> getMapElements() {
 		return _mapElements;
-	}
-
-	/**
-	 * Sets the log file of the chemical library.
-	 * For information, logs are set not to be bigger than 10,000 bytes long
-	 * and rotate over 5 files
-	 * Anyhow, System.err is default log output stream whether this
-	 * method is called or not
-	 * @param fileName File name of the log file (a number from 0 to 4
-	 * will be appended during logs rotation)
-	 * @throws IOException
-	 */
-	public static void setLogFile(String fileName) throws IOException{
-		Utils.logger.addHandler(new FileHandler(fileName, 10000, 5, false));
-
 	}
 }
