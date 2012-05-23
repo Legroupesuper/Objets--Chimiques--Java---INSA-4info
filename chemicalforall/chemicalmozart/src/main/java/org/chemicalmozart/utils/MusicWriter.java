@@ -70,7 +70,14 @@ public class MusicWriter {
 	 * The file which we are exporting the track into.
 	 */
 	private File _file;
-	
+	/**
+	 * The delta time of the next chord
+	 */
+	private int _chordDelta;
+	/**
+	 * The delta time of the next melody note
+	 */
+	private int _melodyDelta;
 	/**
 	 * Default constructor
 	 * @param tempo The tempo of the track
@@ -87,7 +94,8 @@ public class MusicWriter {
 		/*Obtain a MIDI track from the sequence  */
 		_chordTrack = _sequence.createTrack();
 		_melodicTrack = _sequence.createTrack();
-		
+		_chordDelta = 0;
+		_melodyDelta = 0;
 		/*General MIDI sysex -- turn on General MIDI sound set*/
 		byte[] b = {(byte)0xF0, 0x7E, 0x7F, 0x09, 0x01, (byte)0xF7};
 		SysexMessage sm = new SysexMessage();
@@ -139,7 +147,7 @@ public class MusicWriter {
 	 * @throws ChemicalException
 	 * @throws InvalidMidiDataException
 	 */
-	public void addChord(int deltaTime, ChordImpl c) throws ChemicalException, InvalidMidiDataException{
+	public void addChord(ChordImpl c) throws ChemicalException, InvalidMidiDataException{
 		int fond = DegresAssociation.getChordValue(_degreeValue, c);
 		int tier, qte;
 		long duration = DegresAssociation.getDuration(c);
@@ -157,33 +165,34 @@ public class MusicWriter {
 		/*Set the notes on*/
 		ShortMessage mm = new ShortMessage();
 		mm.setMessage(ShortMessage.NOTE_ON,fond,0x60);
-		MidiEvent me = new MidiEvent(mm,(long)deltaTime+DIVISION);
+		MidiEvent me = new MidiEvent(mm,(long)_chordDelta+DIVISION);
 		_chordTrack.add(me);
 		
 		mm = new ShortMessage();
 		mm.setMessage(ShortMessage.NOTE_ON,tier,0x60);
-		me = new MidiEvent(mm,(long)deltaTime+DIVISION);
+		me = new MidiEvent(mm,(long)_chordDelta+DIVISION);
 		_chordTrack.add(me);
 		
 		mm = new ShortMessage();
 		mm.setMessage(ShortMessage.NOTE_ON,qte,0x60);
-		me = new MidiEvent(mm,(long)deltaTime+DIVISION);
+		me = new MidiEvent(mm,(long)_chordDelta+DIVISION);
 		_chordTrack.add(me);
 		
+		_chordDelta+=duration;
 		/*Set the notes off*/
 		mm = new ShortMessage();
 		mm.setMessage(ShortMessage.NOTE_OFF,fond,0x40);
-		me = new MidiEvent(mm,(long)deltaTime+duration+DIVISION);
+		me = new MidiEvent(mm,(long)_chordDelta+DIVISION);
 		_chordTrack.add(me);
 		
 		mm = new ShortMessage();
 		mm.setMessage(ShortMessage.NOTE_OFF,tier,0x40);
-		me = new MidiEvent(mm,(long)deltaTime+duration+DIVISION);
+		me = new MidiEvent(mm,(long)_chordDelta+DIVISION);
 		_chordTrack.add(me);
 		
 		mm = new ShortMessage();
 		mm.setMessage(ShortMessage.NOTE_OFF,qte,0x40);
-		me = new MidiEvent(mm,(long)deltaTime+duration+DIVISION);
+		me = new MidiEvent(mm,(long)_chordDelta+DIVISION);
 		_chordTrack.add(me);
 	}
 	
@@ -194,19 +203,19 @@ public class MusicWriter {
 	 * @throws ChemicalException
 	 * @throws InvalidMidiDataException
 	 */
-	public void addNote(int deltaTime, Note n) throws ChemicalException, InvalidMidiDataException{
+	public void addNote(Note n) throws ChemicalException, InvalidMidiDataException{
 		Rythme rythm= n.get_rythme();
 		long duration = DegresAssociation.getDuration(rythm);
 		long note = DegresAssociation.getNoteValue(_degreeValue, n);
 		
 		ShortMessage mm = new ShortMessage();
 		mm.setMessage(ShortMessage.NOTE_ON,(int) note,0x60);
-		MidiEvent me = new MidiEvent(mm,(long)deltaTime+DIVISION);
+		MidiEvent me = new MidiEvent(mm,(long)_melodyDelta+DIVISION);
 		_melodicTrack.add(me);
-		
+		_melodyDelta+=duration;
 		mm = new ShortMessage();
 		mm.setMessage(ShortMessage.NOTE_OFF,(int) note,0x40);
-		me = new MidiEvent(mm,(long)deltaTime+duration+DIVISION);
+		me = new MidiEvent(mm,(long)_melodyDelta+DIVISION);
 		_melodicTrack.add(me);
 	}
 	

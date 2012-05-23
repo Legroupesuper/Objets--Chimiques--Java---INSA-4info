@@ -23,35 +23,35 @@ public class MainMidi {
 			cim.set_position(0);
 			DegreeImpl d = new DegreeImpl(1);
 			cim.set_degrees(d);
-			writer.addChord(4, cim);
+			writer.addChord(cim);
 			
 			cim = new ChordImpl();
 			cim.setDuration(Rythme.half);
 			cim.set_position(0);
 			d = new DegreeImpl(4);
 			cim.set_degrees(d);
-			writer.addChord(12, cim);
+			writer.addChord(cim);
 			
 			cim = new ChordImpl();
 			cim.setDuration(Rythme.half);
 			cim.set_position(0);
 			d = new DegreeImpl(5);
 			cim.set_degrees(d);
-			writer.addChord(20, cim);
+			writer.addChord(cim);
 			
 			cim = new ChordImpl();
 			cim.setDuration(Rythme.half);
 			cim.set_position(0);
 			d = new DegreeImpl(5);
 			cim.set_degrees(d);
-			writer.addChord(28, cim);
+			writer.addChord(cim);
 			
 			cim = new ChordImpl();
 			cim.setDuration(Rythme.half);
 			cim.set_position(0);
 			d = new DegreeImpl(1);
 			cim.set_degrees(d);
-			writer.addChord(36, cim);
+			writer.addChord(cim);
 			
 			
 			Note n = new Note();
@@ -60,7 +60,7 @@ public class MainMidi {
 			pitch.setOctave(3);
 			n.set_pitch(pitch);
 			n.set_rythme(Rythme.quater);
-			writer.addNote(4, n);
+			writer.addNote(n);
 			
 			n = new Note();
 			pitch = new Pitch();
@@ -68,7 +68,7 @@ public class MainMidi {
 			pitch.setOctave(3);
 			n.set_pitch(pitch);
 			n.set_rythme(Rythme.quater);
-			writer.addNote(8, n);
+			writer.addNote(n);
 			
 			n = new Note();
 			pitch = new Pitch();
@@ -76,7 +76,7 @@ public class MainMidi {
 			pitch.setOctave(3);
 			n.set_pitch(pitch);
 			n.set_rythme(Rythme.quater);
-			writer.addNote(12, n);
+			writer.addNote(n);
 			
 			n = new Note();
 			pitch = new Pitch();
@@ -84,7 +84,7 @@ public class MainMidi {
 			pitch.setOctave(3);
 			n.set_pitch(pitch);
 			n.set_rythme(Rythme.quater);
-			writer.addNote(16, n);
+			writer.addNote(n);
 			
 			n = new Note();
 			pitch = new Pitch();
@@ -92,7 +92,7 @@ public class MainMidi {
 			pitch.setOctave(3);
 			n.set_pitch(pitch);
 			n.set_rythme(Rythme.quater);
-			writer.addNote(20, n);
+			writer.addNote( n);
 			
 			n = new Note();
 			pitch = new Pitch();
@@ -100,7 +100,7 @@ public class MainMidi {
 			pitch.setOctave(3);
 			n.set_pitch(pitch);
 			n.set_rythme(Rythme.quater);
-			writer.addNote(24, n);
+			writer.addNote(n);
 			
 			n = new Note();
 			pitch = new Pitch();
@@ -108,7 +108,7 @@ public class MainMidi {
 			pitch.setOctave(3);
 			n.set_pitch(pitch);
 			n.set_rythme(Rythme.quater);
-			writer.addNote(28, n);
+			writer.addNote(n);
 			
 			n = new Note();
 			pitch = new Pitch();
@@ -116,7 +116,7 @@ public class MainMidi {
 			pitch.setOctave(3);
 			n.set_pitch(pitch);
 			n.set_rythme(Rythme.quater);
-			writer.addNote(32, n);
+			writer.addNote(n);
 			
 			n = new Note();
 			pitch = new Pitch();
@@ -124,7 +124,7 @@ public class MainMidi {
 			pitch.setOctave(3);
 			n.set_pitch(pitch);
 			n.set_rythme(Rythme.quater);
-			writer.addNote(36, n);
+			writer.addNote(n);
 			try {
 				writer.writeFile();
 			} catch (IOException e) {

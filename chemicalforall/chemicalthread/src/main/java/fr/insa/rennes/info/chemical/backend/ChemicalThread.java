@@ -83,19 +83,15 @@ public class ChemicalThread extends Thread {
 				Utils.logger.info("On a passé le computeSelect");
 				//...we compute reaction result
 				Object obj[] = _reactionRule.computeResult();
-				Utils.logger.info("impression temps du retour de compute result ->\n");
-				for(Object ob : obj)
-				System.err.print(" "+ob);
+				
 				boolean b = false;
 				//add the results to the solution
 				if(obj != null)
 					b = _solutionContainer.addAll(Arrays.asList(obj));
-				Utils.logger.info("<- impression temps du retour de compute result fin : "+b+ " "+_reactionRule);
 				//Then wake all ReactionRules (as the solution has been modified)
 				//_solutionContainer.wakeAll();
-				Utils.logger.info("on fait le wakeAll");
 				//If the reaction rule is ONE SHOT, we must delete it and stop this thread
-				if(_reactionRule.getMultiplicity().equals(Multiplicity.ONE_SHOT)){
+				if(_reactionRule.getMultiplicity().equals(Multiplicity.ONE_SHOT) && obj!=null &&  !Arrays.asList(obj).contains(_reactionRule)){
 					_solutionContainer.deleteReaction(_reactionRule);
 					_solutionContainer.wakeAll();
 					Utils.logger.info("C'était une One-shot");
