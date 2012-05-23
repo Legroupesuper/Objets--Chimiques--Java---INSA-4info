@@ -1,20 +1,26 @@
-package nbPremiers;
+package testOperationsSurDesNombres;
 
 import fr.insa.rennes.info.chemical.backend.Solution;
 import fr.insa.rennes.info.chemical.user.InertEvent;
 import fr.insa.rennes.info.chemical.user.InertEventListener;
 
-public class Test_NbPremiers {
+public class Test {
 	public static long time = 0;
 
 	public static void main(String[] args) {
-		Solution s = new Solution();
-		for(Integer i = 2; i<100; i++){
-			s.add(i);
-		}
-		s.add(new calculNbPremierRR());
+		Solution mainSol = new Solution();
+		Solution sousSol = new Solution();
 
-		s.addInertEventListener(new InertEventListener() {
+		sousSol.add(new Integer(2));
+		sousSol.add(new Integer(5));
+		sousSol.add(new Mult2RR(5));
+
+		mainSol.add(new Integer(17));
+		mainSol.add(new Add10_17());
+		mainSol.add(new Affiche());
+		mainSol.add(sousSol);
+
+		mainSol.addInertEventListener(new InertEventListener() {
 			public void isInert(InertEvent e) {
 				time = System.currentTimeMillis()-time;
 				System.out.println("\n\nRéaction terminée :");
@@ -23,8 +29,8 @@ public class Test_NbPremiers {
 			}
 		});
 
-		System.out.println(s);
+		System.out.println(mainSol);
 		time = System.currentTimeMillis();
-		s.react();
+		mainSol.react();
 	}
 }
