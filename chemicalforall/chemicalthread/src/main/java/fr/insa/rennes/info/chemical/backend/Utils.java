@@ -18,7 +18,9 @@
 */
 package fr.insa.rennes.info.chemical.backend;
 
+import java.io.File;
 import java.io.IOException;
+import java.io.PrintStream;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.logging.FileHandler;
@@ -86,7 +88,6 @@ public class Utils {
 	 */
 	public static void setLogFile(String fileName) throws IOException{
 		logger.addHandler(new FileHandler(fileName, 50000, 1, false));
-		//logger.removeHandler(System.err))
 	}
 	
 	/**
