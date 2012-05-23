@@ -20,8 +20,13 @@ package org.chemicalmozart.model.implementations.reactionrules;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import org.chemicalmozart.model.implementations.ChordImpl;
+import org.chemicalmozart.model.implementations.Note;
 import org.chemicalmozart.model.implementations.rythme.RythmPattern;
 import org.chemicalmozart.model.implementations.solutionindentification.RythmePull;
+
+import fr.insa.rennes.info.chemical.backend.SubSolution;
 import fr.insa.rennes.info.chemical.backend.SubSolutionElements;
 import fr.insa.rennes.info.chemical.user.Dontreact;
 import fr.insa.rennes.info.chemical.user.ReactionRule;
@@ -48,28 +53,28 @@ public class RythmicRR implements ReactionRule{
 	/**
 	 * The solution which contains the rhythmic patterns and identified by a RythmePull object
 	 */
-//	private SubSolution<SubSolutionElements> _rythmeSolution;
-//	public SubSolution<SubSolutionElements> get_rythmeSolution() {
-//		return _rythmeSolution;
-//	}
-//
-//	public void set_rythmeSolution(SubSolution<SubSolutionElements> _rythmeSolution) {
-//		this._rythmeSolution = _rythmeSolution;
-//	}
+	private SubSolution<SubSolutionElements> _rythmeSolution;
+	public SubSolution<SubSolutionElements> get_rythmeSolution() {
+		return _rythmeSolution;
+	}
+
+	public void set_rythmeSolution(SubSolution<SubSolutionElements> _rythmeSolution) {
+		this._rythmeSolution = _rythmeSolution;
+	}
 
 	/**
 	 * The current selected ChordImpl
 	 */
-//	private ChordImpl _chordImpl;
+	private ChordImpl _chordImpl;
 	/**
 	 * The solution which contains the patterns
 	 */
-	//private Solution _solution;
+//	private Solution _solution;
 	/**
 	 * The current ChordNumber.<br />
 	 * This parameter doesn't react and the same instance will be used for a same RythmicRR. The constructor must initialize it to 0.
 	 */
-//	@Dontreact private int _chordNumber;
+	@Dontreact private int _chordNumber;
 	/**
 	 * The total number of ChordImpl in the current bar
 	 */
@@ -79,8 +84,8 @@ public class RythmicRR implements ReactionRule{
 	 * It will be used to set the position of every new note in the bar.<br />
 	 * This parameter doesn't react. The constructor must initialize it to 0.
 	 */
-//	@Dontreact
-//	private int _max;
+	@Dontreact
+	private int _max;
 
 	/**
 	 * It starts to become META ! :)<br />
@@ -88,7 +93,7 @@ public class RythmicRR implements ReactionRule{
 	 * <br />
 	 * Each time the rythmicRR react, it increases the max parameter of the MelodicRR.
 	 */
-	//private MelodicRR _melodicRR;
+	private MelodicRR _melodicRR;
 
 	/**
 	 * Constructor
@@ -101,9 +106,9 @@ public class RythmicRR implements ReactionRule{
 		l.add(RythmePull.class);
 		l.add(RythmPattern.class);
 		elts.setTypeList(l);
-//		_rythmeSolution = new SubSolution<SubSolutionElements>(elts);
-//		this._chordNumber = 0;
-//		this._max = 0;
+		_rythmeSolution = new SubSolution<SubSolutionElements>(elts);
+		this._chordNumber = 0;
+		this._max = 0;
 	}
 
 	/**
@@ -136,55 +141,52 @@ public class RythmicRR implements ReactionRule{
 	 * notes returned by the chosen element in _rythmeSolution).
 	 */
 	public Object[] computeResult() {
-//		Object[] result = null;
-//		RythmPattern chosenRythm = (RythmPattern) this._rythmeSolution.getElements().get(1);
-//		List<Note> listNotes = chosenRythm.getListNotes();
-//		int nbNotesInChosenRythm = listNotes.size();
-//		int chordImplPosition = this._chordImpl.get_position();
-//		int melodicRRmax = this._melodicRR.get_max();
-//
-//		/*
-//		 * If the position of the ChordImpl is smaller than _num
-//		 */
-//		if( chordImplPosition < this._num-1){
-//			this._melodicRR.set_max(melodicRRmax + nbNotesInChosenRythm);
-//			this._chordImpl.set_position(this._chordImpl.get_position()+this._max);
-//			this._chordNumber++;
-//			
-//			for(Note n : listNotes){
-//				n.set_position(n.get_position()+_max);
-//			}
-//			
-//			this._max += nbNotesInChosenRythm;
-//			List<Object> lres = new ArrayList<Object>();
-//			lres.addAll(listNotes);
-//			lres.add(this._num);
-//			lres.add(this._chordImpl);
-//			lres.add(this._melodicRR);
-//			lres.add(_solution);
-//			lres.add(this);
-//			result = lres.toArray();
-//		}else{
-//			this._melodicRR.set_max(melodicRRmax + nbNotesInChosenRythm);
-//			this._melodicRR.set_activated(true);
-//			this._chordImpl.set_position(this._chordImpl.get_position()+this._max);
-//			this._chordNumber++;
-//			for(Note n : listNotes){
-//				n.set_position(n.get_position()+_max);
-//			}
-//			this._max += nbNotesInChosenRythm;
-//			List<Object> lres = new ArrayList<Object>();
-//			lres.addAll(listNotes);
-//			lres.add(this._num);
-//			lres.add(this._chordImpl);
-//			lres.add(this._melodicRR);
-//			result = lres.toArray();
-//		}
-		
-//		return result;
-//		_rythmeSolution.getSolution().add(new RythmePull());
-		System.err.println("On met le pâté");
-		return  new Object[]{_num+1};
+		Object[] result = null;
+		RythmPattern chosenRythm = (RythmPattern) this._rythmeSolution.getElements().get(1);
+		List<Note> listNotes = chosenRythm.getListNotes();
+		int nbNotesInChosenRythm = listNotes.size();
+		int chordImplPosition = this._chordImpl.get_position();
+		int melodicRRmax = this._melodicRR.get_max();
+
+		/*
+		 * If the position of the ChordImpl is smaller than _num
+		 */
+		if( chordImplPosition < this._num-1){
+			this._melodicRR.set_max(melodicRRmax + nbNotesInChosenRythm);
+			this._chordImpl.set_position(this._chordImpl.get_position()+this._max);
+			this._chordNumber++;
+			
+			for(Note n : listNotes){
+				n.set_position(n.get_position()+_max);
+			}
+			
+			this._max += nbNotesInChosenRythm;
+			List<Object> lres = new ArrayList<Object>();
+			lres.addAll(listNotes);
+			lres.add(new Integer(this._num));
+			lres.add(this._chordImpl);
+			lres.add(this._melodicRR);
+			lres.add(this);
+			result = lres.toArray();
+		}else{
+			this._melodicRR.set_max(melodicRRmax + nbNotesInChosenRythm);
+			this._melodicRR.set_activated(true);
+			this._chordImpl.set_position(this._chordImpl.get_position()+this._max);
+			this._chordNumber++;
+			for(Note n : listNotes){
+				n.set_position(n.get_position()+_max);
+			}
+			this._max += nbNotesInChosenRythm;
+			List<Object> lres = new ArrayList<Object>();
+			lres.addAll(listNotes);
+			lres.add(new Integer(this._num));
+			lres.add(this._chordImpl);
+			lres.add(this._melodicRR);
+			lres.add(new RemovePullRR());
+			result = lres.toArray();
+		}
+		_rythmeSolution.getSolution().add(new RythmePull());
+		return result;
 	}
  
 
@@ -194,44 +196,28 @@ public class RythmicRR implements ReactionRule{
 	 */
 	public boolean computeSelect() {
 		System.err.println("On est là : "+_num);
-//		boolean validPosition = _chordImpl.get_position() == _chordNumber;
-//		boolean sameDuration = ((RythmPattern)_rythmeSolution.getElements().get(1)).getDuration() == _chordImpl.getDuration();
-//		boolean containsPattern = false;
-//		for(Object o : _solution){
-//			if(o instanceof RythmePull)
-//				containsPattern = true;
-//		}
-//		System.err.println("Compute select");
-//		System.err.println("validPosition : "+validPosition+" sameDuration : "+sameDuration+" containsPattern : "+containsPattern);
-//		return validPosition && sameDuration && containsPattern;
-		return true;
+		boolean validPosition = _chordImpl.get_position() == _chordNumber;
+		boolean sameDuration = ((RythmPattern)_rythmeSolution.getElements().get(1)).getDuration() == _chordImpl.getDuration();
+
+		return validPosition && sameDuration;
 	}
 	
 
-//	public ChordImpl get_chordImpl() {
-//		return _chordImpl;
-//	}
-//
-//	public void set_chordImpl(ChordImpl _chordImpl) {
-//		this._chordImpl = _chordImpl;
-//	}
-//
-//	public Solution get_solution() {
-//		return _solution;
-//	}
-//
-//	public void set_solution(Solution _solution) {
-//		this._solution = _solution;
-//	}
+	public ChordImpl get_chordImpl() {
+		return _chordImpl;
+	}
 
+	public void set_chordImpl(ChordImpl _chordImpl) {
+		this._chordImpl = _chordImpl;
+	}
 
-//	public int get_chordNumber() {
-//		return _chordNumber;
-//	}
-//
-//	public void set_chordNumber(int _chordNumber) {
-//		this._chordNumber = _chordNumber;
-//	}
+	public int get_chordNumber() {
+		return _chordNumber;
+	}
+
+	public void set_chordNumber(int _chordNumber) {
+		this._chordNumber = _chordNumber;
+	}
 
 	public Integer get_num() {
 		return _num;
@@ -241,21 +227,21 @@ public class RythmicRR implements ReactionRule{
 		this._num = _num;
 	}
 
-//	public int get_max() {
-//		return _max;
-//	}
-//
-//	public void set_max(int _max) {
-//		this._max = _max;
-//	}
+	public int get_max() {
+		return _max;
+	}
 
-//	public MelodicRR get_melodicRR() {
-//		return _melodicRR;
-//	}
-//
-//	public void set_melodicRR(MelodicRR _melodicRR) {
-//		this._melodicRR = _melodicRR;
-//	}
+	public void set_max(int _max) {
+		this._max = _max;
+	}
+
+	public MelodicRR get_melodicRR() {
+		return _melodicRR;
+	}
+
+	public void set_melodicRR(MelodicRR _melodicRR) {
+		this._melodicRR = _melodicRR;
+	}
 
 	/**
 	 * One-shot
@@ -263,7 +249,4 @@ public class RythmicRR implements ReactionRule{
 	public Multiplicity getMultiplicity() {
 		return Multiplicity.ONE_SHOT;
 	}
-
-	
-
 }

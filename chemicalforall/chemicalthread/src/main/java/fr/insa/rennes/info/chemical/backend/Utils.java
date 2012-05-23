@@ -18,8 +18,12 @@
 */
 package fr.insa.rennes.info.chemical.backend;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintStream;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.util.logging.FileHandler;
 import java.util.logging.Logger;
 
 import fr.insa.rennes.info.chemical.user.ReactionRule;
@@ -67,7 +71,24 @@ public class Utils {
  * 
  */
 	// Scope is set to "default" on purpose : only this library should use this log
+	/**
+	 * The library logger
+	 */
 	public static Logger logger = Logger.getLogger("fr.insa.rennes.info.chemical");
+	
+	/**
+	 * Sets the log file of the chemical library.
+	 * For information, logs are set not to be bigger than 10,000 bytes long
+	 * and rotate over 5 files
+	 * Anyhow, System.err is default log output stream whether this
+	 * method is called or not
+	 * @param fileName File name of the log file (a number from 0 to 4
+	 * will be appended during logs rotation)
+	 * @throws IOException
+	 */
+	public static void setLogFile(String fileName) throws IOException{
+		logger.addHandler(new FileHandler(fileName, 50000, 1, false));
+	}
 	
 	/**
 	 * This method is used to get a Method associated to a field and a ReactionRule.

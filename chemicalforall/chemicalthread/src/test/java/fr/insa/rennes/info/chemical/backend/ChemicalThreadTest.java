@@ -73,8 +73,23 @@ public class ChemicalThreadTest extends TestCase {
 	/**
 	 * Test method for {@link ChemicalThread#ChemicalThread()}.
 	 */
-
 	public void testConstructor() {
 		assertTrue("A ChemicalThread must be a Thread", testChemicalThread instanceof Thread);
+	}
+
+	/**
+	 * Test method for {@link ChemicalThread#run()}.
+	 */
+	public void testRun() {
+		testChemicalThread.run();
+		System.err.println("BLA");
+		assertTrue("A ChemicalThread must be runnable", testChemicalThread.isAlive());
+		testChemicalThread.interrupt();
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		assertTrue("A ChemicalThread must be interruptable", testChemicalThread.isInterrupted());
 	}
 }
