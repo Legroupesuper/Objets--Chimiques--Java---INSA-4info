@@ -86,7 +86,7 @@ public class Utils {
 	 */
 	public static void setLogFile(String fileName) throws IOException{
 		logger.addHandler(new FileHandler(fileName, 50000, 1, false));
-		logger.removeHandler(System.err))
+		//logger.removeHandler(System.err))
 	}
 	
 	/**
