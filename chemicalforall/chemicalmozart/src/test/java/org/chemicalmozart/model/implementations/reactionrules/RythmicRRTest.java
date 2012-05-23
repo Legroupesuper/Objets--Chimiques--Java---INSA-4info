@@ -40,7 +40,7 @@ public class RythmicRRTest extends TestCase{
 	Object[] _tabResult = null;
 	private SubSolution<SubSolutionElements> _rythmeSolution;
 
-	@Override
+/*	@Override
 	protected void setUp() throws Exception {
 		super.setUp();
 		MozartSolutionFactory factory = new MozartSolutionFactoryImpl();
@@ -227,7 +227,7 @@ public class RythmicRRTest extends TestCase{
 		assertTrue("The compute select should pass in this configuration", rr.computeSelect());
 	}
 	*/
-	@Test
+	/*@Test
 	public void testComputeSelect2() {
 		MozartSolutionFactory factory = new MozartSolutionFactoryImpl();
 		RythmicRR rr = new RythmicRR();
@@ -259,7 +259,7 @@ public class RythmicRRTest extends TestCase{
 //		rr.set_chordNumber(1);
 		assertFalse("The compute select shouldn't pass in this configuration, ChordNumber and the ChordImpl position doesn't correspond", rr.computeSelect());
 	}
-
+*/
 
 
 }
