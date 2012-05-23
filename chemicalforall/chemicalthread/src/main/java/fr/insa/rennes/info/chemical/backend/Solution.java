@@ -418,6 +418,7 @@ public final class Solution implements Collection<Object>{
 			for(Thread t : _threadTable.values()){
 				if(!t.getState().equals(Thread.State.WAITING)){
 					nb++;
+					System.err.println("Je suis actif -> "+t);
 				}
 			}
 		}
@@ -429,7 +430,12 @@ public final class Solution implements Collection<Object>{
 	 * @return <code>true</code> if this solution contains at least one non inert inner solution.
 	 */
 	private boolean containsNonInertSubSol() {
+		System.err.println("Début de containesNonInertSubSol");
+		/**
+		 * TODO : On a un deadlock ici, putain de map synchronized à mon avis
+		 */
 		List<Object> subSols = _mapElements.get(Solution.class.getName());
+		System.err.println("subSol containesNonInertSubSol");
 		if(subSols == null)
 			return false;
 
@@ -519,9 +525,11 @@ public final class Solution implements Collection<Object>{
 	 * @see Solution#_inert
 	 */
 	synchronized void makeSleep(){
+		System.err.println("Début de make sleep");
 		int nbThreadAwaken = getNumberOfActiveThreads();
+		System.err.println("nbThreadsAwaken : "+nbThreadAwaken);
 		boolean containsNonInertSubSolutions = containsNonInertSubSol();
-
+System.err.println("ContainesNonInert : "+containsNonInertSubSolutions);
 		//If there is more than one thread alive (including the current one)
 		//it means other reaction rules may still be reacting, so just make this thread wait.
 		//Same thing with the number of inert solution: a solution can't be inert if one or more
@@ -531,9 +539,11 @@ public final class Solution implements Collection<Object>{
 			boolean interrupted;
 			do {
 				interrupted = false;
+				System.err.println("On va tenter le wait");
 				try {
 					wait();
 				} catch (InterruptedException e) {
+					System.err.println("On a une exception au moment de faire wait");
 					interrupted = true;
 				}
 			} while(interrupted);
