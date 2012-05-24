@@ -184,11 +184,11 @@ public class SubIndexProviderSolution implements SubIndexProvider{
 		String result = "";
 		int i = 0;
 		for(List<SubIndexProvider> lSip : _listSubIP) {
-			result += "[ "+i+" : ";
+			result += "{ "+i+" : ";
 			for(SubIndexProvider sip : lSip) {
 				result += sip.toString();
 			}
-			result += "]";
+			result += "}";
 
 			i++;
 		}
@@ -222,6 +222,34 @@ public class SubIndexProviderSolution implements SubIndexProvider{
 		}
 		return result;
 	}
+	
+	/**
+	 * Computes the number of increments that this sub index provider can (and must) perform.
+	 * This number may differ from the number returned by {@link #getNumberOfElements()}.
+	 * This number can be consequent (thus the {@link BigInteger} value returned).
+	 * Basically, this function multiplies the value returned by
+	 * {@link SubIndexProvider#getNumberOfIncrements()} for each sub index provider,
+	 * and sums these values for all the sub solutions.
+	 * @return the number of increments that this sub index provider can (and must) perform.
+	 */
+	public BigInteger getNumberOfIncrements() {
+		BigInteger result = BigInteger.valueOf(0);
+
+		for(List<SubIndexProvider> l : _listSubIP){
+			BigInteger aux = BigInteger.valueOf(1);
+			for(SubIndexProvider e : l){
+				try{
+					aux = aux.
+							multiply(
+									e.getNumberOfIncrements());
+				}catch(Exception ex){
+					return BigInteger.valueOf(0);
+				}
+			}
+			result = result.add(aux);
+		}
+		return result;
+	}
 
 	/**
 	 * Returns <code>true</code> if the current state of the sub index provider is valid.
@@ -236,16 +264,18 @@ public class SubIndexProviderSolution implements SubIndexProvider{
 		boolean isCurrentIndexValid;
 
 		for(SubIndexProvider e : _listSubIP.get(_currentSubSol)){
-
 			if(!e.isValid())
 				return false;
 		}
-
+		System.out.println("Pour sip : "+_listSubIP.get(_currentSubSol));
+		System.out.println("depIndList : "+_dependentIndexes);
+		/*System.out.println("_currentSubSol/max = "+_currentSubSol+"/"+_listSubIP.size());*/
+		
 		for(List<Integer> l : _dependentIndexes){
 			valuesIndexProvider = new ArrayList<Integer>();
 			isCurrentIndexValid = true;
 			//TODO : Vérifier le l != null
-
+			
 			if(l!=null){
 				for(int n : l){
 					if(valuesIndexProvider.contains(_listSubIP.
@@ -275,6 +305,13 @@ public class SubIndexProviderSolution implements SubIndexProvider{
 	 * @param sipSol The sub index provider on a solution that needs to be merged with this sub index provider.
 	 */
 	public void merge(SubIndexProviderSolution sipSol) {
+		System.err.println("Merge de "+this+" ("+this._dependentIndexes+")");
+		System.err.println("\t et "+sipSol+" ("+sipSol._dependentIndexes+")");
+		
+		
 		_listSubIP.addAll(sipSol._listSubIP);
+		_dependentIndexes.addAll(sipSol._dependentIndexes);
+		
+		System.err.println("Resultat "+this+" ("+this._dependentIndexes+")");
 	}
 }

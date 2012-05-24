@@ -784,7 +784,6 @@ public final class Solution implements Collection<Object>{
 				}
 			}
 			
-			System.out.println("Pre-avant : "+indexProvider.getSubIndexProvider());
 			//When we get here, the right types have been found, now test the selection rule
 			if(tryComputeSelect && rr.computeSelect()) {
 				//If the computeSelect says OK, return the found set of reagents

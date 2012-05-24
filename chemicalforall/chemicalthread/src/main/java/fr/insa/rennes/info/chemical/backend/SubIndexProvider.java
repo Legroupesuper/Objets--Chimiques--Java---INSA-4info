@@ -65,6 +65,13 @@ public interface SubIndexProvider {
 	public BigInteger getNumberOfElements();
 	
 	/**
+	 * Returns the number of increments that this index provider must perform to try all combination. 
+	 * This number may be the same value as the number of elements, but can differ in some cases.
+	 * @return The number of increments that this index provider must perform to try all combination. 
+	 */
+	public BigInteger getNumberOfIncrements();
+	
+	/**
 	 * Returns <code>true</code> if the current state of the sub index provider is valid.
 	 * A valid state is a state where there is no conflict between two dependent indexes. Two indexes
 	 * are said dependent when they are pointing on the same type of object/reagent, in the same solution.

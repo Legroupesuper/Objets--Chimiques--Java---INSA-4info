@@ -239,9 +239,10 @@ class BuilderSubIndexProviderSolutionImpl implements BuilderSubIndexProviderSolu
 				List<List<Integer>> dependentIndexesList = this.buildDependantIndexesListWithTypes(typeList, _solution.getMapElements());
 
 				_sipSol = new SubIndexProviderSolution(firstLevelList, dependentIndexesList);
+				System.out.println("DU COUP : "+_sipSol);
+				System.out.println("\t => "+dependentIndexesList);
 			} catch(ChemicalException e1) {
 				_sipSol = null;
-				System.err.println("cacaaa");
 				e1.printStackTrace();
 			} catch (IllegalArgumentException e2) {
 				throw new ChemicalException("Invocation of the getter of a reaction rule SubSolution field failed.");
@@ -307,11 +308,7 @@ class BuilderSubIndexProviderSolutionImpl implements BuilderSubIndexProviderSolu
 							else
 								sipSolAccumulation.merge(sipSol);
 						}
-						/*System.out.println("sipSol : "+sipSol);
-						System.out.println("Pour type "+Utils.getMethodFromReactionRule(_rr, "", f)+" et sol : "+s);*/
 					}
-					/*System.out.println("sipSolAccumulation : "+sipSolAccumulation);
-					System.out.println("Pour sol : "+_solution);*/
 					//The accumulation can not be null. 
 					//If it is, this mean the reagents will never be matched anyway
 					if(sipSolAccumulation == null) {
@@ -339,6 +336,8 @@ class BuilderSubIndexProviderSolutionImpl implements BuilderSubIndexProviderSolu
 		List<List<Integer>> dependantIndexesList = buildDependantIndexesListWithFields(_rrFields, _solution.getMapElements());
 
 		_sipSol = new SubIndexProviderSolution(firstLevelList, dependantIndexesList);
+		System.out.println("DU COUP : "+_sipSol);
+		System.out.println("\t => "+dependantIndexesList);
 	}
 
 
@@ -381,7 +380,13 @@ class BuilderSubIndexProviderSolutionImpl implements BuilderSubIndexProviderSolu
 				index++;
 			} 
 		}
-
+		
+		System.out.print("Pour rrField [");
+		for(Field f : rrFields) {
+			System.out.print(f.getName()+", ");
+		}
+		System.out.println("], DepIndexMap : "+dependantIndexesMap);
+		
 		//We have to provide the IndexProvider a list of a list of int, so
 		//we need to transform the map of list in a list of list
 		List<List<Integer>> dependantIndexesList = new ArrayList<List<Integer>>();
@@ -411,11 +416,12 @@ class BuilderSubIndexProviderSolutionImpl implements BuilderSubIndexProviderSolu
 		Map<String, List<Integer>> dependantIndexesMap = new HashMap<String, List<Integer>>();
 		String reagentTypeName;
 		for(int i = 0; i < typeList.size(); i++){
-			//If the type isn't even an entry of the hash map, return false (didn't find any reagents)
-			if(mapElements.get(typeList.get(i))== null)
-				continue;
-			
 			reagentTypeName = typeList.get(i);
+			
+			//If the type isn't even an entry of the hash map, return false (didn't find any reagents)
+			if(mapElements.get(reagentTypeName)== null)
+				dependantIndexesMap.put(reagentTypeName, new ArrayList<Integer>());
+			
 			if(dependantIndexesMap.containsKey(reagentTypeName)){
 				dependantIndexesMap.get(reagentTypeName).add(i);
 			}else{
@@ -424,12 +430,14 @@ class BuilderSubIndexProviderSolutionImpl implements BuilderSubIndexProviderSolu
 				dependantIndexesMap.put(reagentTypeName, l);
 			}
 		}
-
+		
+		System.out.println("Pour "+typeList+", DepIndexMap : "+dependantIndexesMap);
+		
 		//We have to provide the IndexProvider a list of a list of int, so
 		//we need to transform the map of list in a list of list
 		List<List<Integer>> dependantIndexesList = new ArrayList<List<Integer>>();
 		for(String s : dependantIndexesMap.keySet()){
-			if(dependantIndexesMap.get(s).size() > 1){
+			if(dependantIndexesMap.get(s).size() > -1){
 				dependantIndexesList.add(dependantIndexesMap.get(s));
 			}
 		}
