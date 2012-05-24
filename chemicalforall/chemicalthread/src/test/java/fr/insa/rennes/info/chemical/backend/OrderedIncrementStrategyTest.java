@@ -26,6 +26,8 @@ import junit.framework.TestCase;
  */
 
 public class OrderedIncrementStrategyTest extends TestCase {
+	
+	private OrderedIncrementStrategy testOrderedIncrementStrategy;
 
 	/**
 	 * @param name
@@ -39,6 +41,7 @@ public class OrderedIncrementStrategyTest extends TestCase {
 	 */
 	protected void setUp() throws Exception {
 		super.setUp();
+		testOrderedIncrementStrategy = new OrderedIncrementStrategy();
 	}
 
 	/* (non-Javadoc)
@@ -49,9 +52,9 @@ public class OrderedIncrementStrategyTest extends TestCase {
 	}
 
 	/**
-	 * Test method for {@link OrderedIncrementStrategy#fooTest()}.
+	 * Test method for {@link OrderedIncrementStrategy#OrderedIncrementStrategy()}.
 	 */
-	public void testFooTest() {
-		assertTrue(true);
+	public void testConstructor() {
+		assertTrue("RandomIncrementStrategy should be an IncrementStrategy", testOrderedIncrementStrategy instanceof IncrementStrategy);
 	}
 }
