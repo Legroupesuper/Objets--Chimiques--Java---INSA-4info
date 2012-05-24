@@ -78,7 +78,7 @@ public class ChemicalThread extends Thread {
 		//as we didn't stop the thread "manually"
 		while(!_solutionContainer.is_inert() && _continue){
 
-			//synchronized (_solutionContainer) {
+			synchronized (_solutionContainer) {
 			Utils.logger.info("Un tour de boucle "+_reactionRule);
 			//If we find enough valid parameters...
 				boolean rfp = _solutionContainer.requestForParameters(_reactionRule);
@@ -92,7 +92,7 @@ public class ChemicalThread extends Thread {
 					if(obj != null)
 						b = _solutionContainer.addAll(Arrays.asList(obj));
 					//Then wake all ReactionRules (as the solution has been modified)
-					//_solutionContainer.wakeAll();
+					_solutionContainer.wakeAll();
 					//If the reaction rule is ONE SHOT, we must delete it and stop this thread
 					if(_reactionRule.getMultiplicity().equals(Multiplicity.ONE_SHOT) && obj!=null &&  !Arrays.asList(obj).contains(_reactionRule)){
 						_solutionContainer.deleteReaction(_reactionRule);
@@ -106,7 +106,7 @@ public class ChemicalThread extends Thread {
 					Utils.logger.info("On fait faire dodo à "+_reactionRule);
 					_solutionContainer.makeSleep(_reactionRule);
 				}
-			//}
+			}
 		}
 		Utils.logger.info("On sort");
 	}

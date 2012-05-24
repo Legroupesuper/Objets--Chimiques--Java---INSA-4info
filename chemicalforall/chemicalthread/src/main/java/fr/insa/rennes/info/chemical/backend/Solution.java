@@ -219,6 +219,7 @@ public final class Solution implements Collection<Object>{
 		Solution sol = (Solution) solutionObject;
 		sol.addInertEventListener(new InertEventListener() {
 			public void isInert(InertEvent e) {
+				Utils.logger.info("On fait remonter un inerte event à son papa");
 				Solution.this.tryTrivialEndOfReaction();
 			}
 		});
@@ -397,6 +398,13 @@ public final class Solution implements Collection<Object>{
 				_threadTable.get(r).stopTheThread();
 		}
 		Utils.logger.info("On a stoppé tous les threads");
+		if(_mapElements.get(Solution.class.getName())!=null){
+			for(Object o : _mapElements.get(Solution.class.getName())){
+				Utils.logger.info("Thread stoppé dans une solution");
+				Solution so = (Solution) o;
+				so.endOfReaction();
+			}
+		}
 		notifyAll();
 		Utils.logger.info("On a fait le notifyAll");
 		fireInertEvent(new InertEvent(this));
@@ -410,9 +418,14 @@ public final class Solution implements Collection<Object>{
 	 * @see InertEvent
 	 * @see InertEventListener
 	 */
-	public void fireInertEvent(InertEvent e){
-		if(_listener != null)
+	public synchronized void fireInertEvent(InertEvent e){
+		Utils.logger.info("On fire un inert event");
+		if(_listener != null){
+			Utils.logger.info("Il est pas null");
 			_listener.isInert(e);
+		}else{
+			Utils.logger.info("Il est null");
+		}
 	}
 
 	/**
@@ -1023,6 +1036,7 @@ public final class Solution implements Collection<Object>{
 		String solutionStart = "{\n";
 
 		String res = "";
+		res = res +" isInert ? "+_inert+" ";
 		String alinea = "";
 		// Prepare indentation
 		for(int i = 0 ; i < level+1 ; i++){

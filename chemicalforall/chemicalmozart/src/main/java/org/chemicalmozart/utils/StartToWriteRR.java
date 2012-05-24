@@ -64,4 +64,9 @@ public class StartToWriteRR implements ReactionRule {
 		return Multiplicity.INFINITY_SHOT;
 	}
 	
+	@Override
+	public String toString() {
+		return super.toString();
+	}
+	
 }
