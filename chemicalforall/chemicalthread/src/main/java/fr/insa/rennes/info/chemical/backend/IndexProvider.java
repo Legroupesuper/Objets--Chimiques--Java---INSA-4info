@@ -71,12 +71,12 @@ class IndexProvider {
 	/**
 	 * Builds an index provider, with the specified initial sub index provider on a solution. 
 	 * The default strategy is random.
-	 * @param ipss the initial (and fully built) sub index provider on a solution.
+	 * @param sipSol the initial (and fully built) sub index provider on a solution.
 	 * @throws ChemicalException
 	 * @see IncrementStrategy
 	 */
-	public IndexProvider(SubIndexProviderSolution ipss) throws ChemicalException {
-		this(ipss, Strategy.RANDOM);
+	public IndexProvider(SubIndexProviderSolution sipSol) throws ChemicalException {
+		this(sipSol, Strategy.RANDOM);
 	}
 	
 	/**
@@ -99,12 +99,13 @@ class IndexProvider {
 		}
 		
 		//Initialize the sub index provider, and increment it until it reaches a valid state
-		_subIndexProviderSub.init();
+		increment();
+		/*_subIndexProviderSub.init();
 		while(!_subIndexProviderSub.isValid()){
 			increment();
 			if(_overflowReached)
-				throw new ChemicalException("It's not possible to create the IndexProvider");
-		}
+				throw new ChemicalException("It's not possible to initialize the IndexProvider");
+		}*/
 	}
 	
 	/**
