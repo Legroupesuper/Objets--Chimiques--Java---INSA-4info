@@ -1,5 +1,9 @@
 package org.chemicalmozart.littletests;
 
+import java.io.IOException;
+
+import javax.sound.midi.InvalidMidiDataException;
+
 import org.chemicalmozart.model.implementations.BarNumber;
 import org.chemicalmozart.model.implementations.ChordImpl;
 import org.chemicalmozart.model.implementations.DegreeImpl;
@@ -8,13 +12,17 @@ import org.chemicalmozart.model.implementations.Rythme;
 import org.chemicalmozart.model.implementations.reactionrules.GetPitchRR;
 import org.chemicalmozart.model.implementations.reactionrules.StartMelodicRR;
 import org.chemicalmozart.model.implementations.solutionindentification.BarInCreation;
+import org.chemicalmozart.utils.MusicWriter;
+import org.chemicalmozart.utils.StartToWriteRR;
+import org.chemicalmozart.utils.MusicWriter.NoteValues;
 
+import fr.insa.rennes.info.chemical.backend.ChemicalException;
 import fr.insa.rennes.info.chemical.backend.Solution;
 import fr.insa.rennes.info.chemical.user.InertEvent;
 import fr.insa.rennes.info.chemical.user.InertEventListener;
 
 public class StartMelodicRRTest {
-	public static void main(String[] args) {
+	public static void main(String[] args) throws ChemicalException, InvalidMidiDataException {
 		Solution mainSol = new Solution();
 		mainSol.add(new BarNumber(0));
 		mainSol.add(new Pitch(2, new DegreeImpl(1)));
@@ -57,8 +65,33 @@ public class StartMelodicRRTest {
 		mainSol.addInertEventListener(new InertEventListener() {
 			
 			public void isInert(InertEvent e) {
+				Solution s = (Solution) e.getSource();
 				System.out.println("Apres : ");
-				System.out.println(e.getSource());
+				System.out.println(s);
+				try {
+					final MusicWriter writer = new MusicWriter(60, NoteValues.DO, "outputMidi.mid");
+					s.add(writer);
+					s.add(new StartToWriteRR());
+					s.addInertEventListener(new InertEventListener() {
+						
+						public void isInert(InertEvent e) {
+							System.out.println("On a fait ce truc de merde");
+							try {
+								writer.writeFile();
+							} catch (IOException e1) {
+								e1.printStackTrace();
+							} catch (InvalidMidiDataException e1) {
+								e1.printStackTrace();
+							}
+						}
+					});
+//					s.react();
+				} catch (ChemicalException e1) {
+					e1.printStackTrace();
+				} catch (InvalidMidiDataException e1) {
+					e1.printStackTrace();
+				}
+				
 			}
 		});
 		System.out.println("Avant : ");

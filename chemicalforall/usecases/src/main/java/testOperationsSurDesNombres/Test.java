@@ -24,8 +24,8 @@ public class Test {
 			public void isInert(InertEvent e) {
 				time = System.currentTimeMillis()-time;
 				System.out.println("\n\nRéaction terminée :");
-				System.out.println(e.getSource());
 				System.out.println("Time : "+time+"ms");
+				System.out.println(e.getSource());
 			}
 		});
 

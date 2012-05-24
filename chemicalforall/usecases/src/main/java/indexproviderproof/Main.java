@@ -5,6 +5,10 @@ import fr.insa.rennes.info.chemical.user.InertEvent;
 import fr.insa.rennes.info.chemical.user.InertEventListener;
 
 public class Main {
+	public static void testDummy1() {
+		
+	}
+	
 	public static void main(String[] args) {
 		Solution solution = new Solution();
 
@@ -27,7 +31,11 @@ public class Main {
 		Solution subSolution2 = new Solution();
 		subSolution2.add(new Integer(1));
 		subSolution2.add(new Integer(2));
-
+		
+		Solution subSubSolution42 = new Solution();
+		subSubSolution42.add("x");
+		subSubSolution42.add("y");
+		
 		Solution subsubSolution0 = new Solution();
 		subsubSolution0.add(new Integer(4));
 		subsubSolution0.add(new Integer(5));
@@ -42,14 +50,21 @@ public class Main {
 		subsubSolution1.add(new String("h"));
 		subsubSolution1.add(new String("i"));
 		subsubSolution1.add(new String("j"));
-		subsubSolution1.add(new String("k"));
 
-		solution.add(subSolution0);
+		
+		Solution subSubSubSolution0 = new Solution();
+		subSubSubSolution0.add(new Integer(12));
+		subSubSubSolution0.add(new Integer(42));
+		subSubSubSolution0.add("subsubstring0");
+		subSubSubSolution0.add("subsubstring1");
+		
+		subsubSolution0.add(subSubSubSolution0);
+		subSolution0.add(subSubSolution42);
 		subSolution1.add(subsubSolution0);
-		solution.add(subSolution1);
 		subSolution2.add(subsubSolution1);
+		solution.add(subSolution0);
+		solution.add(subSolution1);
 		solution.add(subSolution2);
-
 
 		//		solution.add(new DummyReaction());
 		//		solution.add(new DummyReaction2());

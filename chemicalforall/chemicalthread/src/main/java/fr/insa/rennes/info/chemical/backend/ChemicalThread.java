@@ -77,7 +77,8 @@ public class ChemicalThread extends Thread {
 		//Run as long as the solution is not inert AND as long
 		//as we didn't stop the thread "manually"
 		while(!_solutionContainer.is_inert() && _continue){
-			synchronized (_solutionContainer) {
+
+			//synchronized (_solutionContainer) {
 			Utils.logger.info("Un tour de boucle "+_reactionRule);
 			//If we find enough valid parameters...
 				boolean rfp = _solutionContainer.requestForParameters(_reactionRule);
@@ -105,7 +106,7 @@ public class ChemicalThread extends Thread {
 					Utils.logger.info("On fait faire dodo à "+_reactionRule);
 					_solutionContainer.makeSleep(_reactionRule);
 				}
-			}
+			//}
 		}
 		Utils.logger.info("On sort");
 	}

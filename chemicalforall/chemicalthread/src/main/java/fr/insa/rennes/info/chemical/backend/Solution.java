@@ -194,12 +194,14 @@ public final class Solution implements Collection<Object>{
 			_threadTable.put(r, t);
 
 			//Only if the reaction is in progress, we start the thread
-			if(_reactionInProgress)
+			if(_reactAlreadyHappened){
 				t.start();
+				notifyAll();
+			}
 		} else {
-			//			ReactionRule r = (ReactionRule)reactionRuleObject;
+//						ReactionRule r = (ReactionRule)reactionRuleObject;
 			//			_threadTable.put(r, new ChemicalThread(r, this, _threadGroup));
-			//			_threadTable.get(r).start();
+			notifyAll();
 			return true;
 		}
 
@@ -242,13 +244,13 @@ public final class Solution implements Collection<Object>{
 
 		//It is a ReactionRule, hence special treatment
 		if(newReagent instanceof ReactionRule) {
-			Utils.logger.severe("#}#}#}#}#}#}#}Ajout de la reaction rule "+newReagent);
+			Utils.logger.info("#}#}#}#}#}#}#}Ajout de la reaction rule "+newReagent);
 			addElement = checkReactionRuleReagent(newReagent);
 		} else if(className.equals(Solution.class.getName())){
-			Utils.logger.severe("#}#}#}#}#}#}#}Ajout d'une solution "+newReagent);
+			Utils.logger.info("#}#}#}#}#}#}#}Ajout d'une solution "+newReagent);
 			processAddSubSolution(newReagent);
 		}else{
-			Utils.logger.severe("#}#}#}#}#}#}#}Ajout d'un reactif normal "+newReagent);
+			Utils.logger.info("#}#}#}#}#}#}#}Ajout d'un reactif normal "+newReagent);
 		}
 		if(_reactAlreadyHappened)
 			_reactionInProgress = true;
@@ -267,7 +269,6 @@ public final class Solution implements Collection<Object>{
 				result = l.add(newReagent);
 				_mapElements.put(rawClassName, l);
 			}
-
 			tryTrivialEndOfReaction();
 
 			return result;
@@ -390,8 +391,16 @@ public final class Solution implements Collection<Object>{
 		_reactionInProgress = false;
 		_inert = true;
 		Utils.logger.info("End of reaction is called");
+		for(ReactionRule r : _threadTable.keySet()){
+			Utils.logger.info("Thread final ->"+r+" : "+_threadTable.get(r).getState());
+			if(_threadTable.get(r)!=null)
+				_threadTable.get(r).stopTheThread();
+		}
+		Utils.logger.info("On a stoppé tous les threads");
 		notifyAll();
+		Utils.logger.info("On a fait le notifyAll");
 		fireInertEvent(new InertEvent(this));
+		Utils.logger.info("On a fait le fireInertEvent");
 	}
 
 	/**
@@ -789,7 +798,7 @@ public final class Solution implements Collection<Object>{
 				}
 			}
 
-			System.out.println("Pre-avant : "+indexProvider.getSubIndexProvider());
+			
 			//When we get here, the right types have been found, now test the selection rule
 			if(tryComputeSelect && rr.computeSelect()) {
 				//If the computeSelect says OK, return the found set of reagents
@@ -866,21 +875,30 @@ public final class Solution implements Collection<Object>{
 		}
 		//If the field is a set of elements in a subsolution, it will be more complex
 		else{
-			System.out.println("On passe ici pour récupérer un "+f.getType());
 			Method getter = Utils.getMethodFromReactionRule(r, "get", f);
 			SubSolution<SubSolutionReagentsAccessor> subSolObject = (SubSolution<SubSolutionReagentsAccessor>) getter.invoke(r, new Object[0]);
-
-			//In order to instanciate a SubSolution object, we have to go down the 
+			
+			//System.out.println("INSTANTIATE "+f.getName());
+			
+			//In order to instantiate a SubSolution object, we have to go down the 
 			//nested solutions... (recursion)
 			SubIndexProviderSolution sipSol = (SubIndexProviderSolution)sip;
 			Solution nextSol = (Solution)this._mapElements.get(Solution.class.getName()).get(sip.getValue());
+			//System.out.println("sipSol = "+sipSol+", prochain sipSol = "+sipSol.get_listSubIP().get(0)+", sip = "+sip+", pasnextSol : "+this);
 			while(sipSol.get_listSubIP().size() == 1 && sipSol.get_listSubIP().get(0) instanceof SubIndexProviderSolution){
+				//System.out.println("\t"+sipSol.get_listSubIP().get(0).getValue()+", "+nextSol._mapElements.get(Solution.class.getName()));
+				
+				/*if(nextSol._mapElements.get(Solution.class.getName()) == null)
+					return null;*/
+				Solution tmp = nextSol;
 				nextSol = (Solution) nextSol._mapElements.get(Solution.class.getName()).get(sipSol.get_listSubIP().get(0).getValue());
 				sipSol = (SubIndexProviderSolution) sipSol.get_listSubIP().get(0);
+				//System.out.println("sipSol = "+sipSol+", prochain sipSol = "+sipSol.get_listSubIP().get(0)+", sip = "+sip+", pasnextSol : "+tmp);
 			}
+			//System.out.println("\n");
 
 			//If the solution in which the reagents are going to be selected
-			//isn't inert, then return null to mean an error occured
+			//isn't inert, then return null to mean an error occurred
 			if(!nextSol.is_inert())
 				return null;
 
