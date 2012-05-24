@@ -8,7 +8,7 @@ public class Main {
 	public static void main(String[] args) {
 		Solution solution = new Solution();
 		
-		for(Integer i = 0; i < 4; i++) {
+		for(Integer i = 0; i < 3; i++) {
 			solution.add(i);
 		}
 		
@@ -17,9 +17,7 @@ public class Main {
 		}
 		
 		Solution subSolution0 = new Solution();
-		subSolution0.add(new Integer(4));
-		//subSolution0.add(new Integer(5));
-		//subSolution0.add(new Integer(6));
+		subSolution0.add(new Integer(3));
 		
 		Solution subSolution1 = new Solution();
 		subSolution1.add(new String("a"));
@@ -27,9 +25,8 @@ public class Main {
 		subSolution1.add(new String("c"));
 		
 		Solution subSolution2 = new Solution();
-		//subSolution2.add(new Integer(1));
+		subSolution2.add(new Integer(1));
 		subSolution2.add(new Integer(2));
-		subSolution2.add(new Integer(3));
 		
 		solution.add(subSolution0);
 		solution.add(subSolution1);
@@ -37,7 +34,7 @@ public class Main {
 		
 //		solution.add(new DummyReaction());
 //		solution.add(new DummyReaction2());
-		solution.add(new DummyReactionSub());
+//		solution.add(new DummyReactionSub());
 		
 		solution.addInertEventListener(new InertEventListener() {
 			public void isInert(InertEvent e) {
