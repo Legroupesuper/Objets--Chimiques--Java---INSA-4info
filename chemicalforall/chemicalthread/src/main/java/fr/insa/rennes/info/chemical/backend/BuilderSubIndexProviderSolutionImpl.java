@@ -239,8 +239,6 @@ class BuilderSubIndexProviderSolutionImpl implements BuilderSubIndexProviderSolu
 				List<List<Integer>> dependentIndexesList = this.buildDependantIndexesListWithTypes(typeList, _solution.getMapElements());
 
 				_sipSol = new SubIndexProviderSolution(firstLevelList, dependentIndexesList);
-				System.out.println("DU COUP : "+_sipSol);
-				System.out.println("\t => "+dependentIndexesList);
 			} catch(ChemicalException e1) {
 				_sipSol = null;
 				e1.printStackTrace();
@@ -336,8 +334,6 @@ class BuilderSubIndexProviderSolutionImpl implements BuilderSubIndexProviderSolu
 		List<List<Integer>> dependantIndexesList = buildDependantIndexesListWithFields(_rrFields, _solution.getMapElements());
 
 		_sipSol = new SubIndexProviderSolution(firstLevelList, dependantIndexesList);
-		System.out.println("DU COUP : "+_sipSol);
-		System.out.println("\t => "+dependantIndexesList);
 	}
 
 
@@ -381,11 +377,11 @@ class BuilderSubIndexProviderSolutionImpl implements BuilderSubIndexProviderSolu
 			} 
 		}
 		
-		System.out.print("Pour rrField [");
+		/*System.out.print("Pour rrField [");
 		for(Field f : rrFields) {
 			System.out.print(f.getName()+", ");
 		}
-		System.out.println("], DepIndexMap : "+dependantIndexesMap);
+		System.out.println("], DepIndexMap : "+dependantIndexesMap);*/
 		
 		//We have to provide the IndexProvider a list of a list of int, so
 		//we need to transform the map of list in a list of list
@@ -419,9 +415,11 @@ class BuilderSubIndexProviderSolutionImpl implements BuilderSubIndexProviderSolu
 			reagentTypeName = typeList.get(i);
 			
 			//If the type isn't even an entry of the hash map, return false (didn't find any reagents)
-			if(mapElements.get(reagentTypeName)== null)
+			if(mapElements.get(reagentTypeName)== null) {
 				dependantIndexesMap.put(reagentTypeName, new ArrayList<Integer>());
-			
+				continue;
+			}
+				
 			if(dependantIndexesMap.containsKey(reagentTypeName)){
 				dependantIndexesMap.get(reagentTypeName).add(i);
 			}else{
@@ -431,15 +429,13 @@ class BuilderSubIndexProviderSolutionImpl implements BuilderSubIndexProviderSolu
 			}
 		}
 		
-		System.out.println("Pour "+typeList+", DepIndexMap : "+dependantIndexesMap);
+		//System.out.println("Pour "+typeList+", DepIndexMap : "+dependantIndexesMap);
 		
 		//We have to provide the IndexProvider a list of a list of int, so
 		//we need to transform the map of list in a list of list
 		List<List<Integer>> dependantIndexesList = new ArrayList<List<Integer>>();
 		for(String s : dependantIndexesMap.keySet()){
-			if(dependantIndexesMap.get(s).size() > 1){
 				dependantIndexesList.add(dependantIndexesMap.get(s));
-			}
 		}
 
 		return dependantIndexesList;

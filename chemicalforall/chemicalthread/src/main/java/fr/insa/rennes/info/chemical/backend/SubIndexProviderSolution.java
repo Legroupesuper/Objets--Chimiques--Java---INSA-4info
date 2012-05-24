@@ -267,9 +267,9 @@ public class SubIndexProviderSolution implements SubIndexProvider{
 			if(!e.isValid())
 				return false;
 		}
-		System.out.println("Pour sip : "+_listSubIP.get(_currentSubSol));
+		/*System.out.println("Pour sip : "+_listSubIP.get(_currentSubSol));
 		System.out.println("depIndList : "+_dependentIndexes);
-		/*System.out.println("_currentSubSol/max = "+_currentSubSol+"/"+_listSubIP.size());*/
+		System.out.println("_currentSubSol/max = "+_currentSubSol+"/"+_listSubIP.size());*/
 		
 		for(List<Integer> l : _dependentIndexes){
 			valuesIndexProvider = new ArrayList<Integer>();
@@ -305,13 +305,7 @@ public class SubIndexProviderSolution implements SubIndexProvider{
 	 * @param sipSol The sub index provider on a solution that needs to be merged with this sub index provider.
 	 */
 	public void merge(SubIndexProviderSolution sipSol) {
-		System.err.println("Merge de "+this+" ("+this._dependentIndexes+")");
-		System.err.println("\t et "+sipSol+" ("+sipSol._dependentIndexes+")");
-		
-		
 		_listSubIP.addAll(sipSol._listSubIP);
 		_dependentIndexes.addAll(sipSol._dependentIndexes);
-		
-		System.err.println("Resultat "+this+" ("+this._dependentIndexes+")");
 	}
 }

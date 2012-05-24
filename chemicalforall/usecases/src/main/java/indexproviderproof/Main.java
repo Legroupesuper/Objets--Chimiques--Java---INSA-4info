@@ -18,8 +18,8 @@ public class Main {
 		
 		Solution subSolution0 = new Solution();
 		subSolution0.add(new Integer(4));
-		subSolution0.add(new Integer(5));
-		subSolution0.add(new Integer(6));
+		//subSolution0.add(new Integer(5));
+		//subSolution0.add(new Integer(6));
 		
 		Solution subSolution1 = new Solution();
 		subSolution1.add(new String("a"));
@@ -27,7 +27,7 @@ public class Main {
 		subSolution1.add(new String("c"));
 		
 		Solution subSolution2 = new Solution();
-		subSolution2.add(new Integer(1));
+		//subSolution2.add(new Integer(1));
 		subSolution2.add(new Integer(2));
 		subSolution2.add(new Integer(3));
 		

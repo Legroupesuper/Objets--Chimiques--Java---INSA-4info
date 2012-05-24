@@ -31,7 +31,6 @@ public class DummyReactionSub implements ReactionRule {
 	public boolean computeSelect() {
 		nbCombination++;
 		System.out.println("DummySub : Test a0 = "+a.getElements().get(0)+", a1 = "+a.getElements().get(1)+", b = "+b.getElements().get(0)+", combination #"+nbCombination);
-		//System.out.println("b = "+b.getElements().get(0)+", combination #"+nbCombination);
 		
 		try {
 			Thread.sleep(250);
