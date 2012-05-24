@@ -4,9 +4,12 @@
     <artifactId>chemicalPOM</artifactId>
     <groupId>fr.insa-rennes</groupId>
     <version>0.0.1-SNAPSHOT</version>
-    <relativePath>..</relativePath>
   </parent>
+  <groupId>fr.insa-rennes</groupId>
   <artifactId>sentenceCreator</artifactId>
+  <version>0.0.1</version>
+  <description>Example for the user's manual. Simply creates basic sentences using subsolutions.</description>
+  <name>SentenceCreator</name>
   <dependencies>
   	<dependency>
   		<groupId>fr.insa-rennes</groupId>
@@ -20,8 +23,4 @@
   		<version>0.0.1-SNAPSHOT</version>
   	</dependency>
   </dependencies>
-  <version>0.0.1</version>
-  <groupId>fr.insa-rennes</groupId>
-  <description>Example for the user's manual. Simply creats basic sentences using subsolutions.</description>
-  <name>SentenceCreator</name>
 </project>

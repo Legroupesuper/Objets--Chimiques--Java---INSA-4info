@@ -19,7 +19,7 @@
   	<module>usecases</module>
 	<module>chemicalmozart</module>
 	<module>sentenceCreator</module>
-	
+	<module>distribution</module>
   </modules>
   <dependencies>
   	<dependency>
@@ -35,4 +35,5 @@
           <scope>compile</scope>
       </dependency>
   </dependencies>
+
 </project>
