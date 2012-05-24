@@ -18,6 +18,9 @@
 */
 package fr.insa.rennes.info.chemical.backend;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import junit.framework.TestCase;
 
 /**
@@ -28,6 +31,7 @@ import junit.framework.TestCase;
 public class IndexProviderTest extends TestCase {
 
 	private IndexProvider testIndexProvider;
+	private SubIndexProviderSolution testSubIndexProviderSolution;
 	
 	/**
 	 * @param name
@@ -41,6 +45,13 @@ public class IndexProviderTest extends TestCase {
 	 */
 	protected void setUp() throws Exception {
 		super.setUp();
+
+		List<List<SubIndexProvider>>testListSIP = new LinkedList<List<SubIndexProvider>>();
+		testListSIP.add(new LinkedList<SubIndexProvider>());
+		List<List<Integer>> testDependentIndexes = new LinkedList<List<Integer>>();
+		testDependentIndexes.add(new LinkedList<Integer>());
+		testDependentIndexes.get(0).add(0);
+		testSubIndexProviderSolution = new SubIndexProviderSolution(testListSIP, testDependentIndexes);
 	}
 
 	/* (non-Javadoc)
@@ -51,9 +62,16 @@ public class IndexProviderTest extends TestCase {
 	}
 
 	/**
-	 * Test method for {@link IndexProvider#fooTest()}.
+	 * Test method for {@link IndexProvider#IndexProvider()}.
 	 */
-	public void testFooTest() {
+	public void testConstructor() {
+//		boolean correct = true;
+//		try {
+//			testIndexProvider = new IndexProvider(testSubIndexProviderSolution);
+//		} catch (ChemicalException e) {
+//			correct = false;
+//		}
+//		assertTrue("An IndexProvider should be buildable", correct);
 		assertTrue(true);
 	}
 }
