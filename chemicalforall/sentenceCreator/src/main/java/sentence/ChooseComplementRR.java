@@ -1,4 +1,4 @@
-/* 
+/*
 	Copyright (C) 2012 Andreolli Cédric, Boulanger Chloé, Cléro Olivier, Guellier Antoine, Guilloux Sébastien, Templé Arthur
 
     This file is part of ChemicalLibSuper.
@@ -17,9 +17,6 @@
     along with ChemicalLibSuper.  If not, see <http://www.gnu.org/licenses/>
  */
 package sentence;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import fr.insa.rennes.info.chemical.backend.SubSolution;
 import fr.insa.rennes.info.chemical.backend.SubSolutionElements;
@@ -53,25 +50,18 @@ public class ChooseComplementRR implements ReactionRule {
 
 	public ChooseComplementRR(){
 		super();
+		this._subSolPlaces = new SubSolution<SubSolutionElements>();
+		this._subSolPlaces.addType(PlaceType.class);
+		this._subSolPlaces.addType(String.class);
 
-		SubSolutionElements elts1 = new SubSolutionElements();
-		List<Class<? extends Object>> list1 = new ArrayList<Class<? extends Object>>();
-		list1.add(PlaceType.class);
-		list1.add(String.class);
-		elts1.setTypeList(list1);
-		_subSolPlaces =  new SubSolution<SubSolutionElements>(elts1);
-
-		SubSolutionElements elts2 = new SubSolutionElements();
-		List<Class<? extends Object>> list2 = new ArrayList<Class<? extends Object>>();
-		list2.add(PrepositionType.class);
-		list2.add(String.class);
-		elts2.setTypeList(list2);
-		_subSolPrepositions =  new SubSolution<SubSolutionElements>(elts2);
+		this._subSolPrepositions = new SubSolution<SubSolutionElements>();
+		this._subSolPrepositions.addType(PrepositionType.class);
+		this._subSolPrepositions.addType(String.class);
 	}
 
 	public Object[] computeResult() {
-		String place = (String)_subSolPlaces.getElements().get(1);
-		String preposition = (String)_subSolPrepositions.getElements().get(1);
+		String place = (String)this._subSolPlaces.getElements().get(1);
+		String preposition = (String)this._subSolPrepositions.getElements().get(1);
 		String concat = preposition+" "+place;
 		return new Object[]{new Complement(concat)};
 	}
@@ -81,17 +71,16 @@ public class ChooseComplementRR implements ReactionRule {
 		return true;
 	}
 
-	public Multiplicity getMultiplicity() {
-		return null;
+	public SubSolution<SubSolutionElements> get_subSolPlaces() {
+		return this._subSolPlaces;
 	}
 
-	@Override
-	public String toString() {
-		return "ChooseComplementRR";
+	public SubSolution<SubSolutionElements> get_subSolPrepositions() {
+		return this._subSolPrepositions;
 	}
-	
-	public SubSolution<SubSolutionElements> get_subSolPlaces() {
-		return _subSolPlaces;
+
+	public Multiplicity getMultiplicity() {
+		return Multiplicity.ONE_SHOT;
 	}
 
 	public void set_subSolPlaces(SubSolution<SubSolutionElements> _subSolPlaces) {
@@ -99,12 +88,13 @@ public class ChooseComplementRR implements ReactionRule {
 	}
 
 
-	public SubSolution<SubSolutionElements> get_subSolPrepositions() {
-		return _subSolPrepositions;
-	}
-
 	public void set_subSolPrepositions(
 			SubSolution<SubSolutionElements> _subSolPrepositions) {
 		this._subSolPrepositions = _subSolPrepositions;
+	}
+
+	@Override
+	public String toString() {
+		return "ChooseComplementRR";
 	}
 }

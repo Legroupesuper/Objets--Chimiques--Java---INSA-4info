@@ -68,11 +68,11 @@ public class SubSolutionElementsTest extends TestCase {
 	 * and {@link SubSolutionElements#setElements(List<Object>)}.
 	 */
 	public void testElements() {
-		assertTrue("getElements should return a List", testSubSolutionElements.getElements() instanceof List);
 		List<Object> l = new LinkedList<Object>();
 		l.add(new Object());
 		l.add("65");
 		testSubSolutionElements.setElements(l);
+		assertTrue("getElements should return a List", testSubSolutionElements.getElements() instanceof List);
 		assertTrue("getElements should return the correct Object List", testSubSolutionElements.getElements().equals(l));
 	}
 
@@ -95,14 +95,14 @@ public class SubSolutionElementsTest extends TestCase {
 	 * and {@link SubSolutionElements#setSolution(Solution)}.
 	 */
 	public void testSolution() {
-		assertTrue("getSolution should return a Solution", testSubSolutionElements.getSolution() instanceof Solution);
-
+		
 		Solution s = new Solution();
 		char[] content = "Super toto_lala".toCharArray();
 		for(char c : content)
 			s.add(c);
 		
 		testSubSolutionElements.setSolution(s);
+		assertTrue("getSolution should return a Solution", testSubSolutionElements.getSolution() instanceof Solution);
 		assertTrue("getSolution should return the correct Solution", testSubSolutionElements.getSolution().equals(s));
 	}
 }
