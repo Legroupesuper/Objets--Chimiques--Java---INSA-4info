@@ -56,7 +56,7 @@ public class MoveToResultRR implements ReactionRule{
 	/**
 	 * This subsolution represents the BarInCreation solution
 	 */
-	private SubSolution<SubSolutionElements> _subSolInCreation;
+	private Solution _subSolInCreation;
 	/**
 	 * This subsolution represents the result solution
 	 */
@@ -67,13 +67,6 @@ public class MoveToResultRR implements ReactionRule{
 	 */
 	public MoveToResultRR() {
 		super();
-		_subSolInCreation = new SubSolution<SubSolutionElements>();
-		_subSolInCreation.addType(BarInCreation.class);
-
-		/*SubSolutionElements eltsSolResult = new SubSolutionElements();
-		List<Class<? extends Object>> typeListSolResult = new ArrayList<Class<? extends Object>>();
-		typeListSolResult.add(Result.class);
-		eltsSolResult.setTypeList(typeListSolResult);*/
 		_subSolResult = new SubSolution<SubSolutionElements>();
 		_subSolResult.addType(Result.class);
 	}
@@ -83,21 +76,16 @@ public class MoveToResultRR implements ReactionRule{
 	 * <br />
 	 * It must put back the BarInCreation and the QuaterLeft in the BarInCreation solution and then add the BarInCreationSolution into
 	 * the Result solution. It must also put back the Result object into the Result solution.
-	 * @return The Result solution as described
+	 * @return Nothing
 	 */
 	public Object[] computeResult() {
-		Solution inCreationSolution = _subSolInCreation.getSolution();
-		BarInCreation babar = new BarInCreation();
-		QuaterLeft qLeft = new QuaterLeft(0);
-		inCreationSolution.add(babar);
-		inCreationSolution.add(qLeft);
-
+		System.out.println("On est dans le compute result");
 		Solution resultSolution = _subSolResult.getSolution();
 		Result resultID = new Result();
 		resultSolution.add(resultID);
-		resultSolution.add(inCreationSolution);
-
-		return new Object[]{resultSolution};
+		resultSolution.add(_subSolInCreation);
+		resultSolution.react();
+		return new Object[]{};
 	}
 
 	/**
@@ -106,51 +94,36 @@ public class MoveToResultRR implements ReactionRule{
 	 * one or several ChordImpl.
 	 */
 	public boolean computeSelect() {
-		List<Object> subSolInCreationElements = _subSolInCreation.getElements();
-		List<Object> subSolResultElements = _subSolResult.getElements();
-		boolean subSolInCreation_ContainsBarInCreation = false;
-		boolean subSolInCreation_ContainsQuaterLeft = false;
-		boolean subSolInCreation_quaterLeftWithAValue0 = false;
-		boolean subSolInCreation_containsAtLeastOneChodImpl = false;
-		boolean subSolResult_containsResult = false;
-		
-		if(subSolInCreationElements != null && subSolResultElements != null){
-			if(subSolInCreationElements.size()>=2){
-				subSolInCreation_ContainsBarInCreation = subSolInCreationElements.get(0) instanceof BarInCreation;
-				subSolInCreation_ContainsQuaterLeft = subSolInCreationElements.get(1) instanceof QuaterLeft;
-				if(subSolInCreation_ContainsQuaterLeft){
-					subSolInCreation_quaterLeftWithAValue0 = ((QuaterLeft)subSolInCreationElements.get(1)).getValue() == 0;
-				}
-				for (Object o : subSolInCreationElements){
-					if(o instanceof ChordImpl){
-						subSolInCreation_containsAtLeastOneChodImpl = true;
-					}
-				}
-
-			}
-			if(subSolResultElements.size()>=1){
-				subSolResult_containsResult = subSolResultElements.get(0) instanceof Result;
-			}
+		System.out.println("On est dans le compute select de moveToResult");
+		System.out.println(_subSolResult.getSolution());
+		boolean barInCreationFound = false;
+		boolean quaterLeftValid = false;
+		for(Object o : _subSolInCreation){
+			if(o instanceof BarInCreation)
+				barInCreationFound = true;
+			else if(o instanceof QuaterLeft)
+				quaterLeftValid = ((QuaterLeft) o).getValue()==0;
 		}
-			return subSolInCreation_ContainsBarInCreation && 
-					subSolInCreation_quaterLeftWithAValue0 && 
-					subSolInCreation_containsAtLeastOneChodImpl &&
-					subSolResult_containsResult;
+		System.out.println(barInCreationFound && quaterLeftValid);
+		return barInCreationFound && quaterLeftValid;
 	}
 
-	public SubSolution<SubSolutionElements> get_subSolInCreation() {
-		return this._subSolInCreation;
-	}
 	public SubSolution<SubSolutionElements> get_subSolResult() {
 		return this._subSolResult;
 	}
 	public Multiplicity getMultiplicity() {
-		return null;
-	}
-	public void set_subSolInCreation(SubSolution<SubSolutionElements> _subSolInCreation) {
-		this._subSolInCreation = _subSolInCreation;
+		return Multiplicity.ONE_SHOT;
 	}
 	public void set_subSolResult(SubSolution<SubSolutionElements> _subSolResult) {
 		this._subSolResult = _subSolResult;
 	}
+
+	public Solution get_subSolInCreation() {
+		return _subSolInCreation;
+	}
+
+	public void set_subSolInCreation(Solution _subSolInCreation) {
+		this._subSolInCreation = _subSolInCreation;
+	}
+	
 }

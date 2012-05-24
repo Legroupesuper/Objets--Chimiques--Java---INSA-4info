@@ -35,7 +35,7 @@ import fr.insa.rennes.info.chemical.backend.SubSolution;
 import fr.insa.rennes.info.chemical.backend.SubSolutionElements;
 
 public class MoveToResultRRTest extends TestCase{
-	Object[] _tabResult;
+	/*Object[] _tabResult;
 	@Override
 	protected void setUp() throws Exception {
 		super.setUp();
@@ -75,7 +75,7 @@ public class MoveToResultRRTest extends TestCase{
 		assertTrue("No Result object was found in the computeResult", bool);
 	}
 	*/
-
+/*
 	@Test
 	public void testComputeResult2(){
 		List<Object> l = new ArrayList<Object>(Arrays.asList(this._tabResult));
@@ -155,7 +155,7 @@ public class MoveToResultRRTest extends TestCase{
 		MoveToResultRR rr = new MoveToResultRR();
 		assertTrue("The type list shouldn't be null in the subsolution Result Mouahahahahahaha !", rr.get_subSolResult().getTypeList() != null);
 	}
-
+*/
 	/*
 	@Test
 	public void testComputeSelect4() {

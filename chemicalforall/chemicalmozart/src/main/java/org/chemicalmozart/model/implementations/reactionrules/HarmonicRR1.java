@@ -12,10 +12,10 @@
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU Lesser General Public License for more details.
-	
+
     You should have received a copy of the GNU Lesser General Public License
     along with ChemicalLibSuper.  If not, see <http://www.gnu.org/licenses/>
-*/
+ */
 package org.chemicalmozart.model.implementations.reactionrules;
 
 import java.util.ArrayList;
@@ -59,18 +59,43 @@ public class HarmonicRR1 implements ReactionRule{
 	private SubSolution<SubSolutionElements> _barInCreationSolution;
 
 	/**
+	 * @return the _degree
+	 */
+	public DegreeImpl get_degree() {
+		return _degree;
+	}
+
+	/**
+	 * @param _degree the _degree to set
+	 */
+	public void set_degree(DegreeImpl _degree) {
+		this._degree = _degree;
+	}
+
+	/**
+	 * @return the _barInCreationSolution
+	 */
+	public SubSolution<SubSolutionElements> get_barInCreationSolution() {
+		return _barInCreationSolution;
+	}
+
+	/**
+	 * @param _barInCreationSolution the _barInCreationSolution to set
+	 */
+	public void set_barInCreationSolution(
+			SubSolution<SubSolutionElements> _barInCreationSolution) {
+		this._barInCreationSolution = _barInCreationSolution;
+	}
+
+	/**
 	 * The constructor is used by the library to instantiate the _barInCreationSolution element.
 	 */
 	public HarmonicRR1() {
 		super();
-		/*SubSolutionElements elts = new SubSolutionElements();
-		List<Class<? extends Object>> l = new ArrayList<Class<? extends Object>>();
-		l.add(BarInCreation.class);
-		elts.setTypeList(l);*/
 		_barInCreationSolution = new SubSolution<SubSolutionElements>();
 		_barInCreationSolution.addType(BarInCreation.class);
 	}
-	
+
 	/**
 	 * It must not return _degree into the main solution !<br />
 	 * After a 1st degree, you can go :<br />
@@ -101,8 +126,8 @@ public class HarmonicRR1 implements ReactionRule{
 		Solution temporarySolution = new Solution();
 		Temporary temporaryID = new Temporary();
 		temporarySolution.add(temporaryID);
-		temporarySolution.add(_degree);
 		
+
 		//Percentages
 		int chancesOfGoingOnADegree1 = 10;
 		int chancesOfGoingOnADegree2 = 10;
@@ -110,41 +135,37 @@ public class HarmonicRR1 implements ReactionRule{
 		int chancesOfGoingOnADegree4 = 25;
 		int chancesOfGoingOnADegree5 = 30;
 		int chancesOfGoingOnADegree6 = 15;
-		
+
 		//Modification of _barInCreationSolution
 		Solution barInCreationSolution = _barInCreationSolution.getSolution();
+		barInCreationSolution.add(_degree);
 		BarInCreation babar = new BarInCreation();
 		babar.set_state(BarInCreationState.RYTHMEHRR);
 		barInCreationSolution.add(babar);
 		barInCreationSolution.add(_degree);
-		
+
 		//Creation of the harmonicSolution which will be in the return statement
-		Solution harmonicSolution = new Solution();
-		ArrayList<DegreeImpl> degreeList = new ArrayList<DegreeImpl>();
 		for(int i = 0; i<chancesOfGoingOnADegree1;i++){
-			degreeList.add(new DegreeImpl(1));	
+			temporarySolution.add(new DegreeImpl(1));	
 		}
 		for(int i = 0; i<chancesOfGoingOnADegree2;i++){
-			degreeList.add(new DegreeImpl(2));
+			temporarySolution.add(new DegreeImpl(2));
 		}
 		for(int i = 0; i<chancesOfGoingOnADegree3;i++){
-			degreeList.add(new DegreeImpl(3));
+			temporarySolution.add(new DegreeImpl(3));
 		}
 		for(int i = 0; i<chancesOfGoingOnADegree4;i++){
-			degreeList.add(new DegreeImpl(4));
+			temporarySolution.add(new DegreeImpl(4));
 		}
 		for(int i = 0; i<chancesOfGoingOnADegree5;i++){
-			degreeList.add(new DegreeImpl(5));
+			temporarySolution.add(new DegreeImpl(5));
 		}
 		for(int i = 0; i<chancesOfGoingOnADegree6;i++){
-			degreeList.add(new DegreeImpl(6));
+			temporarySolution.add(new DegreeImpl(6));
 		}
-		for (DegreeImpl deg : degreeList) {
-			harmonicSolution.add(deg);
-		}
-		
+
 		//Return statement
-		return new Object[]{harmonicSolution,temporarySolution,new PickOneRR(),new RythmeHRR()};
+		return new Object[]{temporarySolution,new PickOneRR()/*,new RythmeHRR()*/};
 
 	}
 
@@ -155,53 +176,17 @@ public class HarmonicRR1 implements ReactionRule{
 	 */
 	public boolean computeSelect() {
 		List<Object> barInCreationElements = _barInCreationSolution.getElements();
-		boolean containsABarInCreationElement = false;
 		boolean barInCreationInGoodState = false;
-		if(barInCreationElements != null){
-			if(barInCreationElements.size()>=1){
-				containsABarInCreationElement = barInCreationElements.get(0) instanceof BarInCreation;
-				if(containsABarInCreationElement){
-					barInCreationInGoodState = 
-					((BarInCreation)barInCreationElements.get(0)).get_state().equals(BarInCreation.BarInCreationState.HARMONICRR);
-				}
-			}
-		}
+		barInCreationInGoodState = 
+				((BarInCreation)barInCreationElements.get(0)).get_state().equals(BarInCreation.BarInCreationState.HARMONICRR);
 		return barInCreationInGoodState && (_degree.get_value()==1);
 	}
 
-	/**
-	 * @return the _barInCreationSolution
-	 */
-	public SubSolution<SubSolutionElements> get_barInCreationSolution() {
-		return this._barInCreationSolution;
-	}
-
-	/**
-	 * @return the _degree
-	 */
-	public DegreeImpl get_degree() {
-		return this._degree;
-	}
 
 	/**
 	 * This is an infinity-shot rule
 	 */
 	public Multiplicity getMultiplicity() {
 		return Multiplicity.INFINITY_SHOT;
-	}
-
-	/**
-	 * @param _barInCreationSolution the _barInCreationSolution to set
-	 */
-	public void set_barInCreationSolution(
-			SubSolution<SubSolutionElements> _barInCreationSolution) {
-		this._barInCreationSolution = _barInCreationSolution;
-	}
-
-	/**
-	 * @param _degree the _degree to set
-	 */
-	public void set_degree(DegreeImpl _degree) {
-		this._degree = _degree;
 	}
 }

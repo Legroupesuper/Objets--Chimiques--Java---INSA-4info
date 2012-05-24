@@ -21,6 +21,7 @@ package fr.insa.rennes.info.chemical.backend;
 
 
 
+import java.lang.Thread.State;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -140,7 +141,7 @@ public final class Solution implements Collection<Object>{
 		_threadGroup = new ThreadGroup("ChemicalGroup");
 		_threadTable = Collections.synchronizedMap(new HashMap<ReactionRule, ChemicalThread>());
 		_strategy = s;
-		_inert = false;
+		_inert = true;
 		_lock = this;
 	}
 
@@ -255,6 +256,7 @@ public final class Solution implements Collection<Object>{
 		if(newReagent instanceof ReactionRule) {
 			Utils.logger.info("#}#}#}#}#}#}#}Ajout de la reaction rule "+newReagent+"  "+this.hashCode());
 			addElement = checkReactionRuleReagent(newReagent);
+			_inert = false;
 		} else if(className.equals(Solution.class.getName())){
 			Utils.logger.info("#}#}#}#}#}#}#}Ajout d'une solution "+newReagent+"  "+this.hashCode());
 			processAddSubSolution(newReagent);
@@ -262,13 +264,15 @@ public final class Solution implements Collection<Object>{
 		}else{
 			Utils.logger.info("#}#}#}#}#}#}#}Ajout d'un reactif normal "+newReagent+"  "+this.hashCode());
 		}
-		if(_reactAlreadyHappened)
+		if(_reactAlreadyHappened){
 			_reactionInProgress = true;
-
+			_inert = false;
+			//_lock.notifyAll();
+		}
 		if(!className.equals(SubSolutionReagentsAccessor.class.getName()) && addElement){
 			boolean result;
 			//When you add an element in the solution, the solution is no more inert
-			_inert = false;
+			//_inert = false;
 			//There is already an entry in the map for this reagent, so we just add the element
 			if(_mapElements.get(rawClassName) != null){
 				result = _mapElements.get(rawClassName).add(newReagent);
@@ -411,6 +415,7 @@ public final class Solution implements Collection<Object>{
 			Utils.logger.info("Thread final ->"+r+" : "+_threadTable.get(r).getState()+" "+this.hashCode());
 			if(_threadTable.get(r)!=null)
 				_threadTable.get(r).stopTheThread();
+				
 		}
 		Utils.logger.info("On a stoppé tous les threads "+this.hashCode());
 		if(_mapElements.get(Solution.class.getName())!=null){
@@ -497,6 +502,11 @@ public final class Solution implements Collection<Object>{
 		for(Object o : subSols) {
 			Solution s = (Solution)o;
 			if(!s.is_inert()) {
+				Utils.logger.info("la solution non inerte est la  "+s.hashCode()+" threadTable :"+s._threadTable.size());
+				for(ReactionRule r : s._threadTable.keySet())
+					Utils.logger.info("la reaction rule "+r+" est dans l'état "+s._threadTable.get(r).getState());
+				Utils.logger.info(s+"");
+				
 				return true;
 			}
 		}
@@ -582,7 +592,7 @@ public final class Solution implements Collection<Object>{
 	 */
 	void makeSleep(ReactionRule r){
 		synchronized(_lock){
-		Utils.logger.info("Début de make sleep : "+r+" "+this.hashCode());
+		Utils.logger.info("D�but de make sleep : "+r+" "+this.hashCode());
 		int nbThreadAwaken = getNumberOfActiveThreads();
 		Utils.logger.info("nbThreadsAwaken : "+nbThreadAwaken+"  "+this.hashCode());
 		boolean containsNonInertSubSolutions = containsNonInertSubSol();
@@ -598,6 +608,7 @@ public final class Solution implements Collection<Object>{
 				interrupted = false;
 				Utils.logger.info("On va tenter le wait "+this.hashCode());
 				try {
+					_lock.notifyAll();
 					_lock.wait();
 				} catch (InterruptedException e) {
 					Utils.logger.info("On a une exception au moment de faire wait "+this.hashCode());
@@ -627,7 +638,7 @@ public final class Solution implements Collection<Object>{
 		synchronized(_lock){
 		_reactAlreadyHappened = true;
 		_reactionInProgress = true;
-		_inert = false;
+		//_inert = false;
 		//We try to launch all the inner solutions
 		if(_mapElements.get(Solution.class.getName()) != null){
 			for(Object o : _mapElements.get(Solution.class.getName())){
@@ -637,11 +648,11 @@ public final class Solution implements Collection<Object>{
 				 * when s will become inert. The notification will awake all the ReactionRules which are
 				 * included in _mapElements.
 				 */
-				s.addInertEventListener(new InertEventListener() {
+				/*s.addInertEventListener(new InertEventListener() {
 					public void isInert(InertEvent e) {
 						Solution.this.tryTrivialEndOfReaction();
 					}
-				});
+				});*/
 				s.react();
 			}
 		}else if(_threadTable.size() == 0 && _reactionInProgress){
@@ -650,13 +661,23 @@ public final class Solution implements Collection<Object>{
 			endOfReaction();
 			return;
 		}
-
+		Utils.logger.info("On va lancer les threads un par un");
 		//Finally, launch all the reaction rule threads
-		for(ChemicalThread t : _threadTable.values()){
+		for(ReactionRule r : _threadTable.keySet()){
+			ChemicalThread t = _threadTable.get(r);
 			try{
-				if(t!=null)
+				if(t!=null){
 					t.start();
-			}catch(Exception e){}
+				}
+			}catch(Exception e){
+				System.out.println("state : "+t.getState());
+				if(t.getState()==State.TERMINATED){
+					System.out.println("On passe dans STATE_TERMINATED");
+				_threadTable.put(r, new ChemicalThread(r, this, _threadGroup));
+				_threadTable.get(r).start();
+				}
+				e.printStackTrace();
+			}
 		}
 		}
 	}
@@ -1040,7 +1061,7 @@ public final class Solution implements Collection<Object>{
 	 */
 	@Override
 	public String toString(){
-		String solutionBeginning = "Solution (isInert ? "+_inert+")\n{\n";
+		String solutionBeginning = "Solution "+hashCode()+" (isInert ? "+_inert+")\n{\n";
 		String solutionEnd ="}\n";
 		String res = solutionBeginning+this.prettyPrint(0)+solutionEnd;
 		return res;
@@ -1065,7 +1086,7 @@ public final class Solution implements Collection<Object>{
 			String type = entry.getKey();
 			if(type.equals(Solution.class.getName())){
 				for(Object sol : entry.getValue()) {
-					res += alinea+"Solution "+this.hashCode()+" (isInert ? "+_inert+")\n"+ alinea + solutionStart;
+					res += alinea+"Solution "+sol.hashCode()+" (isInert ? "+((Solution)sol)._inert+")\n"+ alinea + solutionStart;
 					res += ((Solution)sol).prettyPrint(level+1);
 					res += alinea+solutionEnd;
 				}

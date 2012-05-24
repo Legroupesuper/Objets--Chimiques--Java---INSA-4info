@@ -94,10 +94,10 @@ public class MelodicRR implements ReactionRule{
 				notePitch = degreeValue;
 				break;
 			case 1: 
-				notePitch = (degreeValue + 2)%7 + 1;
+				notePitch = (degreeValue + 2 >7)?(degreeValue + 2)%8 + 1 : degreeValue + 2;
 				break;
 			default:
-				notePitch = (degreeValue + 4)%7 + 1;
+				notePitch = (degreeValue + 4 >7)?(degreeValue + 4)%8 + 1 : degreeValue + 4;
 			}
 			int octave = 0;
 			if(Math.abs(notePitch - _pitch.getDegree().get_value())>3){
@@ -114,9 +114,9 @@ public class MelodicRR implements ReactionRule{
 			int notePitch = _pitch.getDegree().get_value();
 			int randNumber = (int)(Math.random()*2 %2);
 			if(randNumber==0){
-				notePitch = (notePitch + 1)%7 + 1;
+				notePitch = (notePitch + 1 >7)?(notePitch + 1)%8 + 1 : notePitch + 1;
 			}else{
-				notePitch = (notePitch + 7)%7 + 1;
+				notePitch = (notePitch + 7 >7)?(notePitch + 7)%8 + 1 : notePitch + 7;
 			}
 			int octave = 0;
 			if(Math.abs(notePitch - _pitch.getDegree().get_value())>3){
@@ -136,8 +136,8 @@ public class MelodicRR implements ReactionRule{
 	 * Succeeds if the position of _note is equal to the melodic number and the MelodicRR is activated
 	 */
 	public boolean computeSelect() {
-		System.err.println("Compute select avec activated = "+_activated);
-		System.err.println("melodicNumber = "+_melodicNumber+" note.getPosition = "+_note.get_position()+" -> "+(_melodicNumber == _note.get_position() && _activated && _melodicNumber<_max));
+		//System.err.println("Compute select avec activated = "+_activated);
+		//System.err.println("melodicNumber = "+_melodicNumber+" note.getPosition = "+_note.get_position()+" -> "+(_melodicNumber == _note.get_position() && _activated && _melodicNumber<_max));
 		
 		return _melodicNumber == _note.get_position() && _activated && _melodicNumber<_max;
 	}
