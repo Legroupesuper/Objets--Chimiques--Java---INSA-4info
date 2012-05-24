@@ -24,6 +24,7 @@ import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -181,6 +182,8 @@ class BuilderSubIndexProviderSolutionImpl implements BuilderSubIndexProviderSolu
 				sipSolBuilder.build();
 
 				SubIndexProviderSolution sipSol = sipSolBuilder.getProduct();
+				//System.out.println("sipSol construit = "+sipSol+" pour subSolFieldTypes = "+_rrSubSolField.getName()+" et pour la subSol "+subSubSol);
+				
 				if(sipSol != null) {
 					if(sipSolAccumulation == null)
 						sipSolAccumulation = sipSol;
@@ -192,7 +195,11 @@ class BuilderSubIndexProviderSolutionImpl implements BuilderSubIndexProviderSolu
 			//As we are in the recursion, this _sipSol is only a option among others
 			//Thus, the response CAN be null (it is just a wrong way, and we can "backtrack"-sort of)
 			if(sipSolAccumulation == null) {
-				_sipSol = null;
+				List<List<SubIndexProvider>> listSIP = new LinkedList<List<SubIndexProvider>>();
+				List<SubIndexProvider> sIP = new LinkedList<SubIndexProvider>();
+				sIP.add(new SubIndexProviderElement(0));
+				listSIP.add(sIP);
+				_sipSol = new SubIndexProviderSolution(listSIP, new LinkedList<List<Integer>>());
 			} else {
 				secondLevelList.add(sipSolAccumulation);
 				firstLevelList.add(secondLevelList);
@@ -300,6 +307,8 @@ class BuilderSubIndexProviderSolutionImpl implements BuilderSubIndexProviderSolu
 						sipSolBuilder.build();
 
 						SubIndexProviderSolution sipSol = sipSolBuilder.getProduct();
+						//System.out.println("ROOT sipSol construit = "+sipSol+" pour subSolFieldTypes = "+f.getName()+" et pour la subSol "+s);
+						
 						if(sipSol != null) {
 							if(sipSolAccumulation == null)
 								sipSolAccumulation = sipSol;
@@ -377,11 +386,11 @@ class BuilderSubIndexProviderSolutionImpl implements BuilderSubIndexProviderSolu
 			} 
 		}
 		
-		/*System.out.print("Pour rrField [");
+		/*//System.out.print("Pour rrField [");
 		for(Field f : rrFields) {
-			System.out.print(f.getName()+", ");
+			//System.out.print(f.getName()+", ");
 		}
-		System.out.println("], DepIndexMap : "+dependantIndexesMap);*/
+		//System.out.println("], DepIndexMap : "+dependantIndexesMap);*/
 		
 		//We have to provide the IndexProvider a list of a list of int, so
 		//we need to transform the map of list in a list of list
@@ -429,7 +438,7 @@ class BuilderSubIndexProviderSolutionImpl implements BuilderSubIndexProviderSolu
 			}
 		}
 		
-		//System.out.println("Pour "+typeList+", DepIndexMap : "+dependantIndexesMap);
+		////System.out.println("Pour "+typeList+", DepIndexMap : "+dependantIndexesMap);
 		
 		//We have to provide the IndexProvider a list of a list of int, so
 		//we need to transform the map of list in a list of list
