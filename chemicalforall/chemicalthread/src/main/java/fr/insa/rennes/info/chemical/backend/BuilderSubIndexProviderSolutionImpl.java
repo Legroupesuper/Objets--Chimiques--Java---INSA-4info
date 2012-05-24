@@ -437,7 +437,7 @@ class BuilderSubIndexProviderSolutionImpl implements BuilderSubIndexProviderSolu
 		//we need to transform the map of list in a list of list
 		List<List<Integer>> dependantIndexesList = new ArrayList<List<Integer>>();
 		for(String s : dependantIndexesMap.keySet()){
-			if(dependantIndexesMap.get(s).size() > -1){
+			if(dependantIndexesMap.get(s).size() > 1){
 				dependantIndexesList.add(dependantIndexesMap.get(s));
 			}
 		}
