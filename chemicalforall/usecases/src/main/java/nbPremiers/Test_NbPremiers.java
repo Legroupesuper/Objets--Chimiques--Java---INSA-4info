@@ -9,7 +9,7 @@ public class Test_NbPremiers {
 
 	public static void main(String[] args) {
 		Solution s = new Solution();
-		for(Integer i = 2; i<100; i++){
+		for(Integer i = 2; i<200; i++){
 			s.add(i);
 		}
 		s.add(new calculNbPremierRR());
