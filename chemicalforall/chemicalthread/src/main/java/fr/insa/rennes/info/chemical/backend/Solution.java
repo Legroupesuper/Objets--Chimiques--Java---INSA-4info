@@ -838,7 +838,7 @@ public final class Solution implements Collection<Object>{
 	 * This function is used to instantiate a field of a reaction rule in order to perform a reaction.
 	 * When a set of reagents matching the right types for the specified reaction rule are found, this function is
 	 * called (by {@link Solution#searchForReagents(ReactionRule, Field[], IndexProvider)} to instantiate the reaction rule's fields one by one.
-	 * To succeed this operation needs to use an SubIndexProvider which gives the index of the element/reagent
+	 * To succeed this operation needs to use a SubIndexProvider which gives the index of the element/reagent
 	 * to use in this solution or in its inner solutions.
 	 * @param f The ReactionRule field
 	 * @param sip The sub index provider
@@ -852,6 +852,7 @@ public final class Solution implements Collection<Object>{
 	private Pair<Solution, Object> instanciateField(Field f, SubIndexProvider sip, ReactionRule r) throws IllegalArgumentException, IllegalAccessException, InvocationTargetException{
 		//If the field is a simple element,it is direct
 		if(sip instanceof SubIndexProviderElement){
+			Utils.logger.info("SIP = "+sip+" TYPE = "+f.getType()+" and _mapElements = "+_mapElements);
 			return new Pair<Solution, Object>(this, _mapElements.get(f.getType().getName()).get(sip.getValue()));
 		}
 		//If the field is a set of elements in a subsolution, it will be more complex

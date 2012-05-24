@@ -103,19 +103,28 @@ public class StartMelodicRR implements ReactionRule{
 	 * @returns the solution contained in _sol as describe before, the increased BarNumber
 	 */
 	public Object[] computeResult() {
+		/*
 		System.out.println("On est dans le compute result");
-//		Solution sol = _sol.getSolution();
-//		sol.add(new RythmicRR());
-//		sol.add(new MelodicRR());
-//		sol.add(_pitch);
-//		MozartSolutionFactory factory = new MozartSolutionFactoryImpl();
-//		sol.add(factory.createRythmicPull());
-//		sol.add(_sol.getElements().get(1));
-//
-//		BarNumber tempBarNumber = _barNumber;
-//		tempBarNumber.increment();
-//		return new Object[]{sol, tempBarNumber};
-		return null;
+		Solution sol = _sol.getSolution();
+		sol.add(new RythmicRR());
+		sol.add(new MelodicRR());
+		sol.add(_pitch);
+		MozartSolutionFactory factory = new MozartSolutionFactoryImpl();
+		sol.add(factory.createRythmicPull());
+		sol.add(_sol.getElements().get(1));
+		BarNumber tempBarNumber = _barNumber;
+		tempBarNumber.increment();
+		return new Object[]{tempBarNumber};
+		*/
+		System.out.println("On est dans le compute result");
+		Solution sol = _sol.getSolution();
+		sol.add(_pitch);
+		sol.add(new BarInCreation());
+		sol.add(_barNumber);
+		//sol.add(new RythmicRR());
+		BarNumber tempBarNumber = _barNumber;
+		tempBarNumber.increment();
+		return new Object[]{tempBarNumber};
 	}
 
 	/**
@@ -124,9 +133,9 @@ public class StartMelodicRR implements ReactionRule{
 	 */
 	public boolean computeSelect() {
 		System.out.println("Compute select");
-		Integer bn = (Integer) _sol.getElements().get(1);
-		System.out.println("On est dans le compute select "+_barNumber.getValue()+" == "+bn);
-		return _barNumber.getValue() == bn.intValue();
+		BarNumber bn = (BarNumber) _sol.getElements().get(1);
+		System.out.println("On est dans le compute select "+_barNumber.getValue()+" == "+bn.getValue());
+		return _barNumber.getValue() == bn.getValue();
 	}
 
 	/**
