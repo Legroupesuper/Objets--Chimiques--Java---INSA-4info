@@ -16,6 +16,11 @@ public class Main {
 			solution.add("string"+i);
 		}
 		
+		Solution subSolution0 = new Solution();
+		subSolution0.add(new Integer(4));
+		subSolution0.add(new Integer(5));
+		subSolution0.add(new Integer(6));
+		
 		Solution subSolution1 = new Solution();
 		subSolution1.add(new String("a"));
 		subSolution1.add(new String("b"));
@@ -26,6 +31,7 @@ public class Main {
 		subSolution2.add(new Integer(2));
 		subSolution2.add(new Integer(3));
 		
+		solution.add(subSolution0);
 		solution.add(subSolution1);
 		solution.add(subSolution2);
 		

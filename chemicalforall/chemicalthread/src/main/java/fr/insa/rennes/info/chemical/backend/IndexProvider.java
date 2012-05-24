@@ -95,7 +95,7 @@ class IndexProvider {
 			_strategy = new OrderedIncrementStrategy();
 		}
 		else {
-			_strategy = new RandomIncrementStrategy(_subIndexProviderSub.getNumberOfElements());
+			_strategy = new RandomIncrementStrategy(_subIndexProviderSub.getNumberOfIncrements());
 		}
 		
 		//Initialize the sub index provider, and increment it until it reaches a valid state
@@ -124,7 +124,6 @@ class IndexProvider {
 	 */
 	public SubIndexProviderSolution increment(){		
 		//Loop until we reach a valid state or an overflow is detected
-		System.out.println("Avant : "+_subIndexProviderSub);
 		do{
 			try{
 				_strategy.increment(_subIndexProviderSub);
@@ -133,7 +132,6 @@ class IndexProvider {
 				return null;
 			}
 		}while(!_subIndexProviderSub.isValid());
-		System.out.println("Apres : "+_subIndexProviderSub);
 		
 		return _subIndexProviderSub;
 	}

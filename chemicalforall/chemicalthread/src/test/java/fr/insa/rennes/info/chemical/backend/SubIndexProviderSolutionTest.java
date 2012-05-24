@@ -12,16 +12,16 @@
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU Lesser General Public License for more details.
-	
+
     You should have received a copy of the GNU Lesser General Public License
     along with ChemicalLibSuper.  If not, see <http://www.gnu.org/licenses/>
-*/
+ */
 package fr.insa.rennes.info.chemical.backend;
 
-import java.math.BigInteger;
+import java.util.LinkedList;
+import java.util.List;
 
 import junit.framework.TestCase;
-import fr.insa.rennes.info.chemical.user.ReactionRule;
 
 /**
  * @author ArthurTemple
@@ -30,8 +30,10 @@ import fr.insa.rennes.info.chemical.user.ReactionRule;
 
 public class SubIndexProviderSolutionTest extends TestCase {
 
-	private SubIndexProviderSolution testIndexProviderSubSolution;
-	
+	private SubIndexProviderSolution testSubIndexProviderSolution;
+	private List<List<SubIndexProvider>> testListSIP;
+	private List<List<Integer>> testDependentIndexes;
+
 	/**
 	 * @param name
 	 */
@@ -44,7 +46,12 @@ public class SubIndexProviderSolutionTest extends TestCase {
 	 */
 	protected void setUp() throws Exception {
 		super.setUp();
-//		testIndexProviderSubSolution = new IndexProviderSubSolution(_listElements, dependantIndexes);
+		testListSIP = new LinkedList<List<SubIndexProvider>>();
+		testListSIP.add(new LinkedList<SubIndexProvider>());
+		testDependentIndexes = new LinkedList<List<Integer>>();
+		testDependentIndexes.add(new LinkedList<Integer>());
+		testDependentIndexes.get(0).add(0);
+		testSubIndexProviderSolution = new SubIndexProviderSolution(testListSIP, testDependentIndexes);
 	}
 
 	/* (non-Javadoc)
@@ -54,67 +61,33 @@ public class SubIndexProviderSolutionTest extends TestCase {
 		super.tearDown();
 	}
 
-//	/**
-//	 * Test method for {@link IndexProviderSimpleElement#getValue()}.
-//	 */
-//	public void testGetValue() {
-//		assertNotNull(testIndexProviderSubSolution.getValue());
-//	}
+	/**
+	 * Test method for {@link SubIndexProviderSolution#SubIndexProviderSolution()}.
+	 */
+	public void testConstructor() {
+		assertTrue("A SubIndexProviderSolution should be an instance of SubIndexProvider", testSubIndexProviderSolution instanceof SubIndexProvider);
+	}
+
+	/**
+	 * Test method for {@link SubIndexProviderSolution#get_listSubIP()}.
+	 */
+	public void testGet_listSubIP() {
+		assertTrue("get_listSubIP should return a List", testSubIndexProviderSolution.get_listSubIP() instanceof List);
+		assertSame("get_listSubIP should return the correct List", testListSIP.get(0), testSubIndexProviderSolution.get_listSubIP());
+	}
+
+	/**
+	 * Test method for {@link SubIndexProviderSolution#init()}.
+	 */
+	public void testInit() {
+		testSubIndexProviderSolution.init();
+		assertEquals("get_listSubIP should return 0 for a freshly initialized SubIndexProviderSolution", 0, testSubIndexProviderSolution.getValue());
+	}
 //
 //	/**
-//	 * Test method for {@link IndexProviderSimpleElement#init()}.
-//	 */
-//	public void testInit() {
-//		testIndexProviderSubSolution.init();
-//		assertTrue(0 == testIndexProviderSubSolution.getValue());
-//	}
-//
-//	/**
-//	 * Test method for {@link IndexProviderSimpleElement#increment()}.
-//	 */
-//	public void testIncrement() {
-//		boolean overflow = false;
-//		for(int i = 0 ; i < numberElementsInSolution ; i++){
-//			overflow |= testIndexProviderSubSolution.increment();
-//		}
-//		assertTrue(overflow);
-//		overflow = false;
-//		testIndexProviderSubSolution.init();
-//		int localMax = numberElementsInSolution-1;	//Maximum acceptable value without overflow
-//		for(int i = 0 ; i < localMax ; i++){
-//			overflow |= testIndexProviderSubSolution.increment();
-//		}
-//		assertFalse(overflow);
-//		assertTrue(localMax == testIndexProviderSubSolution.getValue());
-//	}
-//
-//	/**
-//	 * Test method for {@link IndexProviderSimpleElement#setValue(int)}.
-//	 */
-//	public void testSetValue() {
-//		int test = 42;
-//		testIndexProviderSubSolution.setValue(test);
-//		assertTrue(test == testIndexProviderSubSolution.getValue());
-//	}
-//
-//	/**
-//	 * Test method for {@link IndexProviderSimpleElement#getNumberOfElements()}.
-//	 */
-//	public void testGetNumberOfElements() {
-//		assertTrue(BigInteger.valueOf(numberElementsInSolution) == testIndexProviderSubSolution.getNumberOfElements());
-//	}
-//
-//	/**
-//	 * Test method for {@link IndexProviderSimpleElement#isValid()}.
+//	 * Test method for {@link SubIndexProviderSolution#isValid()}.
 //	 */
 //	public void testIsValid() {
-//		assertTrue(testIndexProviderSubSolution.isValid());
+//		assertTrue("A correct SubIndexProviderSolution should be valid", testSubIndexProviderSolution.isValid());
 //	}
-	
-	/**
-	 * Test method for {@link SubIndexProviderElement#fooTest()}.
-	 */
-	public void testFooTest() {
-		assertTrue(true);
-	}
 }

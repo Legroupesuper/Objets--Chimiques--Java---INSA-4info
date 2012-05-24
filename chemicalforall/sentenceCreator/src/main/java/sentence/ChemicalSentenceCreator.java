@@ -1,4 +1,4 @@
-/* 
+/*
 	Copyright (C) 2012 Andreolli Cédric, Boulanger Chloé, Cléro Olivier, Guellier Antoine, Guilloux Sébastien, Templé Arthur
 
     This file is part of ChemicalLibSuper.
@@ -24,12 +24,27 @@ import fr.insa.rennes.info.chemical.user.InertEventListener;
 
 public class ChemicalSentenceCreator {
 
+	public static void lauchReaction(final Solution s){
+		System.out.println("-- Before --");
+		System.out.println(s);
+		s.react();
+		s.addInertEventListener(new InertEventListener() {
+			public void isInert(InertEvent e) {
+				System.out.println("-- After --");
+				System.out.println(s);
+			}
+		});
+	}
+
+	public static void main(String[] args) {
+		test1();
+	}
+
 	public static void test1(){
 		// Initiliazing the solutions
 		Solution subjectsSolution = new Solution();
 		Solution prepositionsSolution = new Solution();
 		Solution placesSolution = new Solution();
-		Solution complementSolution = new Solution();
 		Solution verbsSolution = new Solution();
 		Solution mainSolution = new Solution();
 
@@ -63,14 +78,13 @@ public class ChemicalSentenceCreator {
 
 		// Preparing the main solution
 		mainSolution.add(new ChooseComplementRR());
-		mainSolution.add(new ChooseSubjectRR());
 		mainSolution.add(new ChooseVerbRR());
+		mainSolution.add(new ChooseSubjectRR());
 		mainSolution.add(new PutWordsTogetherRR());
 		mainSolution.add(prepositionsSolution);
 		mainSolution.add(placesSolution);
-		mainSolution.add(complementSolution);
-		mainSolution.add(verbsSolution);
 		mainSolution.add(subjectsSolution);
+		mainSolution.add(verbsSolution);
 
 		//letsgo
 		lauchReaction(mainSolution);
@@ -96,7 +110,7 @@ public class ChemicalSentenceCreator {
 	public static void test3() {
 		Solution mainSolution = new Solution();
 
-		mainSolution.add(new Subject("Ondine"));	
+		mainSolution.add(new Subject("Ondine"));
 		mainSolution.add(new Verb("is fucking"));
 		mainSolution.add(new Complement("on the couch"));
 		mainSolution.add(new PutWordsTogetherRR());
@@ -120,27 +134,11 @@ public class ChemicalSentenceCreator {
 		mainSolution.add(new Verb("is eating sausages"));
 		mainSolution.add(new Complement("on the couch"));
 		mainSolution.add(new PutWordsTogetherRR());
-		mainSolution.add(new Subject("Ondine"));	
+		mainSolution.add(new Subject("Ondine"));
 		mainSolution.add(new Verb("is fucking"));
 		mainSolution.add(new Complement("on the sofa"));
 
 		lauchReaction(mainSolution);
-	}
-
-	public static void lauchReaction(final Solution s){
-		System.out.println("-- Before --");
-		System.out.println(s);
-		s.react();
-		s.addInertEventListener(new InertEventListener() {		
-			public void isInert(InertEvent e) {
-				System.out.println("-- After --");
-				System.out.println(s);
-			}
-		});
-	}
-
-	public static void main(String[] args) {
-		test1();
 	}
 
 }

@@ -857,7 +857,11 @@ public final class Solution implements Collection<Object>{
 	private Pair<Solution, Object> instanciateField(Field f, SubIndexProvider sip, ReactionRule r) throws IllegalArgumentException, IllegalAccessException, InvocationTargetException{
 		//If the field is a simple element,it is direct
 		if(sip instanceof SubIndexProviderElement){
-			System.out.println("SIP = "+sip+" TYPE = "+f.getType()+" and _mapElements = "+_mapElements);
+			Utils.logger.info("SIP = "+sip+" TYPE = "+f.getType()+" and _mapElements = "+_mapElements);
+			
+			if(sip.getNumberOfElements().compareTo(BigInteger.ZERO) == 0)
+					return null;
+			
 			return new Pair<Solution, Object>(this, _mapElements.get(f.getType().getName()).get(sip.getValue()));
 		}
 		//If the field is a set of elements in a subsolution, it will be more complex

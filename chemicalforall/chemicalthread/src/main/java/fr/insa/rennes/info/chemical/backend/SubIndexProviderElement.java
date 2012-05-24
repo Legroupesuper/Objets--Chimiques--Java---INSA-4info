@@ -117,6 +117,13 @@ class SubIndexProviderElement  implements SubIndexProvider{
 		return BigInteger.valueOf(_numberOfElementsInSolution);
 	}
 	
+	public BigInteger getNumberOfIncrements() {
+		if(_numberOfElementsInSolution == 0)
+			return BigInteger.valueOf(1);
+		else
+			return BigInteger.valueOf(_numberOfElementsInSolution);
+	}
+	
 	/**
 	 * Returns <code>true</code> if the sub index provider is valid. In this
 	 * case it can not be invalid, as there can't be any conflict on indexes: there is
