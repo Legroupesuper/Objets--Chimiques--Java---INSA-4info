@@ -57,10 +57,11 @@ public class ChemicalSentenceCreator {
 		subjectsSolution.add(new SubjectType());
 
 		// Preparing the solution which contains verbs
+		verbsSolution.add(new Verb("is sexy and knows it"));
 		verbsSolution.add(new Verb("eats"));
 		verbsSolution.add(new Verb("runs"));
 		verbsSolution.add(new Verb("appears"));
-		verbsSolution.add(new Verb("is sexy and knows it"));
+		
 		verbsSolution.add(new VerbType());
 
 		// Preparing the solution which contains complements
