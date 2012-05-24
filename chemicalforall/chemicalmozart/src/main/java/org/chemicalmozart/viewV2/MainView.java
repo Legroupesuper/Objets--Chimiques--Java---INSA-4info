@@ -34,7 +34,7 @@ public class MainView extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JTextField tfTempo;
 	private JTextField tfBarNumber;
-	private JComboBox<String> tfScale;
+	private JComboBox tfScale;
 	private JTextField tfMidiOutput;
 	private File saveFile;
 	private File loadFile;
@@ -200,9 +200,9 @@ public class MainView extends JFrame {
 		tfBarNumber = new JTextField();
 		tfBarNumber.setText("");
 		tfBarNumber.setColumns(10);
-		tfScale = new JComboBox<String>();
+		tfScale = new JComboBox();
 		tfScale.setMaximumRowCount(12);
-		tfScale.setModel(new DefaultComboBoxModel<String>(new String[] {"Do", "Do #", "Ré", "Ré #", "Mi", "Fa", "Fa #", "Sol", "Sol #", "La", "La #", "Si"}));
+		tfScale.setModel(new DefaultComboBoxModel(new String[] {"Do", "Do #", "Ré", "Ré #", "Mi", "Fa", "Fa #", "Sol", "Sol #", "La", "La #", "Si"}));
 		tfScale.setSelectedIndex(0);
 		tfMidiOutput = new JTextField();
 		tfMidiOutput.setColumns(10);
