@@ -77,10 +77,10 @@ public class ChemicalThread extends Thread {
 		//Run as long as the solution is not inert AND as long
 		//as we didn't stop the thread "manually"
 		while(!_solutionContainer.is_inert() && _continue){
-			Utils.logger.info("Un tour de boucle "+_reactionRule);
+			Utils.logger.severe("Un tour de boucle "+_reactionRule);
 			//If we find enough valid parameters...
 			if(_solutionContainer.requestForParameters(_reactionRule)){
-				Utils.logger.info("On a passé le computeSelect");
+				Utils.logger.severe("On a passé le computeSelect "+_reactionRule);
 				//...we compute reaction result
 				Object obj[] = _reactionRule.computeResult();
 				boolean b = false;
@@ -99,7 +99,7 @@ public class ChemicalThread extends Thread {
 			}else{
 				//If we do not find valid parameters, the reaction goes to sleep
 				//A sleeping reaction waits for the solution to go inert or to see its inner elements modified
-				Utils.logger.info("On fait faire dodo à "+_reactionRule);
+				Utils.logger.severe("On fait faire dodo à "+_reactionRule);
 				_solutionContainer.makeSleep();
 			}
 		}
