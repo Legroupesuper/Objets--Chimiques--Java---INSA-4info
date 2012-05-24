@@ -194,12 +194,14 @@ public final class Solution implements Collection<Object>{
 			_threadTable.put(r, t);
 
 			//Only if the reaction is in progress, we start the thread
-			if(_reactionInProgress)
+			if(_reactAlreadyHappened){
 				t.start();
+				notifyAll();
+			}
 		} else {
-			//			ReactionRule r = (ReactionRule)reactionRuleObject;
+//						ReactionRule r = (ReactionRule)reactionRuleObject;
 			//			_threadTable.put(r, new ChemicalThread(r, this, _threadGroup));
-			//			_threadTable.get(r).start();
+			notifyAll();
 			return true;
 		}
 
@@ -242,13 +244,13 @@ public final class Solution implements Collection<Object>{
 
 		//It is a ReactionRule, hence special treatment
 		if(newReagent instanceof ReactionRule) {
-			Utils.logger.severe("#}#}#}#}#}#}#}Ajout de la reaction rule "+newReagent);
+			Utils.logger.info("#}#}#}#}#}#}#}Ajout de la reaction rule "+newReagent);
 			addElement = checkReactionRuleReagent(newReagent);
 		} else if(className.equals(Solution.class.getName())){
-			Utils.logger.severe("#}#}#}#}#}#}#}Ajout d'une solution "+newReagent);
+			Utils.logger.info("#}#}#}#}#}#}#}Ajout d'une solution "+newReagent);
 			processAddSubSolution(newReagent);
 		}else{
-			Utils.logger.severe("#}#}#}#}#}#}#}Ajout d'un reactif normal "+newReagent);
+			Utils.logger.info("#}#}#}#}#}#}#}Ajout d'un reactif normal "+newReagent);
 		}
 		if(_reactAlreadyHappened)
 			_reactionInProgress = true;
@@ -267,7 +269,6 @@ public final class Solution implements Collection<Object>{
 				result = l.add(newReagent);
 				_mapElements.put(rawClassName, l);
 			}
-
 			tryTrivialEndOfReaction();
 
 			return result;
@@ -390,8 +391,16 @@ public final class Solution implements Collection<Object>{
 		_reactionInProgress = false;
 		_inert = true;
 		Utils.logger.info("End of reaction is called");
+		for(ReactionRule r : _threadTable.keySet()){
+			Utils.logger.info("Thread final ->"+r+" : "+_threadTable.get(r).getState());
+			if(_threadTable.get(r)!=null)
+				_threadTable.get(r).stopTheThread();
+		}
+		Utils.logger.info("On a stoppé tous les threads");
 		notifyAll();
+		Utils.logger.info("On a fait le notifyAll");
 		fireInertEvent(new InertEvent(this));
+		Utils.logger.info("On a fait le fireInertEvent");
 	}
 
 	/**

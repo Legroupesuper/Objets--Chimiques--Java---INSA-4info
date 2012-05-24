@@ -35,10 +35,8 @@ public class WriteChordRR implements ReactionRule{
 		try {
 			_writer.addChord(_chord);
 		} catch (ChemicalException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (InvalidMidiDataException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		_chordPosition = _chordPosition + 1;
@@ -51,7 +49,6 @@ public class WriteChordRR implements ReactionRule{
 	}
 
 	public Multiplicity getMultiplicity() {
-		// TODO Auto-generated method stub
 		return Multiplicity.INFINITY_SHOT;
 	}
 
