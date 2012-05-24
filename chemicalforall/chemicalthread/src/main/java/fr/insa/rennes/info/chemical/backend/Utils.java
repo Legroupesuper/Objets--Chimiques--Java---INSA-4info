@@ -78,7 +78,7 @@ public class Utils {
 	public static Logger logger = Logger.getLogger("fr.insa.rennes.info.chemical");
 	
 	static {
-		logger.setLevel(Level.FINE);
+		logger.setLevel(Level.OFF);
 	}
 	
 	/**

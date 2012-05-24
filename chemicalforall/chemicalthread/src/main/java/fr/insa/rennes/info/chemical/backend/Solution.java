@@ -719,6 +719,7 @@ public final class Solution implements Collection<Object>{
 			//Once the index provider is created, we have to search for reagents matching,
 			//Meanwhile, we have to catch every Exception before the user get them
 			try {
+				System.out.println("Avant search for reagents : "+indexProvider);
 				List<Pair<Solution, Object>> reagents = searchForReagents(r, rrFields, indexProvider);
 
 				//If a valid set of reagent was found, erase the reagents from the solutions
@@ -746,7 +747,7 @@ public final class Solution implements Collection<Object>{
 	/**
 	 * Searches for reagents for the specified reaction rule.
 	 * The difference with {@link Solution#requestForParameters(ReactionRule)} is that this functions is given
-	 * a fully instanciated index provider.
+	 * a fully instantiated index provider.
 	 * If a set of reagents is found following the types, the {@link ReactionRule#computeSelect()}
 	 * is tested. In case of success, the reaction rule's fields are instantiated.
 	 * Returns the set of reagents one was found that passes the {@link ReactionRule#computeSelect()} function.
@@ -866,8 +867,6 @@ public final class Solution implements Collection<Object>{
 	private Pair<Solution, Object> instanciateField(Field f, SubIndexProvider sip, ReactionRule r) throws IllegalArgumentException, IllegalAccessException, InvocationTargetException{
 		//If the field is a simple element,it is direct
 		if(sip instanceof SubIndexProviderElement){
-			Utils.logger.info("SIP = "+sip+" TYPE = "+f.getType()+" and _mapElements = "+_mapElements);
-			
 			if(sip.getNumberOfElements().compareTo(BigInteger.ZERO) == 0)
 					return null;
 			
@@ -878,24 +877,14 @@ public final class Solution implements Collection<Object>{
 			Method getter = Utils.getMethodFromReactionRule(r, "get", f);
 			SubSolution<SubSolutionReagentsAccessor> subSolObject = (SubSolution<SubSolutionReagentsAccessor>) getter.invoke(r, new Object[0]);
 			
-			//System.out.println("INSTANTIATE "+f.getName());
-			
 			//In order to instantiate a SubSolution object, we have to go down the 
 			//nested solutions... (recursion)
 			SubIndexProviderSolution sipSol = (SubIndexProviderSolution)sip;
 			Solution nextSol = (Solution)this._mapElements.get(Solution.class.getName()).get(sip.getValue());
-			//System.out.println("sipSol = "+sipSol+", prochain sipSol = "+sipSol.get_listSubIP().get(0)+", sip = "+sip+", pasnextSol : "+this);
 			while(sipSol.get_listSubIP().size() == 1 && sipSol.get_listSubIP().get(0) instanceof SubIndexProviderSolution){
-				//System.out.println("\t"+sipSol.get_listSubIP().get(0).getValue()+", "+nextSol._mapElements.get(Solution.class.getName()));
-				
-				/*if(nextSol._mapElements.get(Solution.class.getName()) == null)
-					return null;*/
-				Solution tmp = nextSol;
 				nextSol = (Solution) nextSol._mapElements.get(Solution.class.getName()).get(sipSol.get_listSubIP().get(0).getValue());
 				sipSol = (SubIndexProviderSolution) sipSol.get_listSubIP().get(0);
-				//System.out.println("sipSol = "+sipSol+", prochain sipSol = "+sipSol.get_listSubIP().get(0)+", sip = "+sip+", pasnextSol : "+tmp);
 			}
-			//System.out.println("\n");
 
 			//If the solution in which the reagents are going to be selected
 			//isn't inert, then return null to mean an error occurred

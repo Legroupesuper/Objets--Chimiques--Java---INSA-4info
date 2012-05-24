@@ -82,7 +82,7 @@ public class ChemicalThread extends Thread {
 			Utils.logger.info("Un tour de boucle "+_reactionRule);
 			//If we find enough valid parameters...
 				boolean rfp = _solutionContainer.requestForParameters(_reactionRule);
-				Utils.logger.info("le request for parameter retourne "+rfp);
+				Utils.logger.info("le request for parameter retourne "+rfp+" pour "+_reactionRule);
 				if(rfp){
 					Utils.logger.info("On a passé le computeSelect de "+_reactionRule);
 					//...we compute reaction result

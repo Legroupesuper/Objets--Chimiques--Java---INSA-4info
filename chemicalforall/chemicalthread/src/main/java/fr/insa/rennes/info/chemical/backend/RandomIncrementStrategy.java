@@ -101,6 +101,8 @@ class RandomIncrementStrategy implements IncrementStrategy {
 		for(i=BigInteger.valueOf(0); position.add(i.negate()).signum()>0; i=i.add(BigInteger.valueOf(1))){
 			sipSol.increment();
 		}
+		
+		System.out.println("NbIncr = "+_nbIncrements+"/"+_maxIncrements+" pour sip = "+sipSol);
 	}
 
 }

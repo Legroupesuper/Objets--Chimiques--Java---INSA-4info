@@ -66,10 +66,10 @@ public class Main {
 		solution.add(subSolution1);
 		solution.add(subSolution2);
 
-		//		solution.add(new DummyReaction());
-		//		solution.add(new DummyReaction2());
-		//		solution.add(new DummyReactionSub());
-		solution.add(new DummyReactionSubSub());
+//		solution.add(new DummyReaction());
+//		solution.add(new DummyReaction2());
+		solution.add(new DummyReactionSub());
+//		solution.add(new DummyReactionSubSub());
 
 
 		solution.addInertEventListener(new InertEventListener() {
