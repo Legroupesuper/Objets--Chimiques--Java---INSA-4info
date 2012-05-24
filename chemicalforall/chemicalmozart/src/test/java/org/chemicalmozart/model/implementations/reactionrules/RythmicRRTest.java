@@ -40,6 +40,10 @@ public class RythmicRRTest extends TestCase{
 	Object[] _tabResult = null;
 	private SubSolution<SubSolutionElements> _rythmeSolution;
 
+	
+	public void test() {
+		assertTrue(true);
+	}
 /*	@Override
 	protected void setUp() throws Exception {
 		super.setUp();

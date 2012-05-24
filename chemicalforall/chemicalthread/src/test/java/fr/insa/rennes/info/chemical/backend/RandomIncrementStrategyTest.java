@@ -18,6 +18,8 @@
 */
 package fr.insa.rennes.info.chemical.backend;
 
+import java.math.BigInteger;
+
 import junit.framework.TestCase;
 import fr.insa.rennes.info.chemical.user.ReactionRule;
 
@@ -42,6 +44,7 @@ public class RandomIncrementStrategyTest extends TestCase {
 	 */
 	protected void setUp() throws Exception {
 		super.setUp();
+		testRandomIncrementStrategy = new RandomIncrementStrategy(BigInteger.valueOf(12));
 	}
 
 	/* (non-Javadoc)
@@ -52,10 +55,10 @@ public class RandomIncrementStrategyTest extends TestCase {
 	}
 
 	/**
-	 * Test method for {@link RandomIncrementStrategy#fooTest()}.
+	 * Test method for {@link RandomIncrementStrategy#RandomIncrementStrategy()}.
 	 */
-	public void testFooTest() {
-		assertTrue(true);
+	public void testConstructor() {
+		assertTrue("RandomIncrementStrategy should be an IncrementStrategy", testRandomIncrementStrategy instanceof IncrementStrategy);
 	}
 
 }

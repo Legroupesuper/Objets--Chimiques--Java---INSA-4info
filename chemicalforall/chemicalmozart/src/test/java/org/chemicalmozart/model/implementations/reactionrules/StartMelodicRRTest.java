@@ -198,4 +198,11 @@ public class StartMelodicRRTest extends TestCase{
 
 		assertFalse("The test shouldn't pass, The subsolution doesn't contain a BarNumber object", rr.computeSelect());
 	}*/
+	
+
+
+	@Test
+	public void testConstructor() {
+		assertFalse(false);
+	}
 }

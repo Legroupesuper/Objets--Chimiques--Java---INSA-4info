@@ -798,7 +798,7 @@ public final class Solution implements Collection<Object>{
 				}
 			}
 
-			System.out.println("Pre-avant : "+indexProvider.getSubIndexProvider());
+			
 			//When we get here, the right types have been found, now test the selection rule
 			if(tryComputeSelect && rr.computeSelect()) {
 				//If the computeSelect says OK, return the found set of reagents
@@ -875,21 +875,30 @@ public final class Solution implements Collection<Object>{
 		}
 		//If the field is a set of elements in a subsolution, it will be more complex
 		else{
-			System.out.println("On passe ici pour récupérer un "+f.getType());
 			Method getter = Utils.getMethodFromReactionRule(r, "get", f);
 			SubSolution<SubSolutionReagentsAccessor> subSolObject = (SubSolution<SubSolutionReagentsAccessor>) getter.invoke(r, new Object[0]);
-
-			//In order to instanciate a SubSolution object, we have to go down the 
+			
+			//System.out.println("INSTANTIATE "+f.getName());
+			
+			//In order to instantiate a SubSolution object, we have to go down the 
 			//nested solutions... (recursion)
 			SubIndexProviderSolution sipSol = (SubIndexProviderSolution)sip;
 			Solution nextSol = (Solution)this._mapElements.get(Solution.class.getName()).get(sip.getValue());
+			//System.out.println("sipSol = "+sipSol+", prochain sipSol = "+sipSol.get_listSubIP().get(0)+", sip = "+sip+", pasnextSol : "+this);
 			while(sipSol.get_listSubIP().size() == 1 && sipSol.get_listSubIP().get(0) instanceof SubIndexProviderSolution){
+				//System.out.println("\t"+sipSol.get_listSubIP().get(0).getValue()+", "+nextSol._mapElements.get(Solution.class.getName()));
+				
+				/*if(nextSol._mapElements.get(Solution.class.getName()) == null)
+					return null;*/
+				Solution tmp = nextSol;
 				nextSol = (Solution) nextSol._mapElements.get(Solution.class.getName()).get(sipSol.get_listSubIP().get(0).getValue());
 				sipSol = (SubIndexProviderSolution) sipSol.get_listSubIP().get(0);
+				//System.out.println("sipSol = "+sipSol+", prochain sipSol = "+sipSol.get_listSubIP().get(0)+", sip = "+sip+", pasnextSol : "+tmp);
 			}
+			//System.out.println("\n");
 
 			//If the solution in which the reagents are going to be selected
-			//isn't inert, then return null to mean an error occured
+			//isn't inert, then return null to mean an error occurred
 			if(!nextSol.is_inert())
 				return null;
 
