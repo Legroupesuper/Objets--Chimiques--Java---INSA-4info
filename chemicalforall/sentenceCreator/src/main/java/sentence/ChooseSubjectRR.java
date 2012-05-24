@@ -1,4 +1,4 @@
-/* 
+/*
 	Copyright (C) 2012 Andreolli Cédric, Boulanger Chloé, Cléro Olivier, Guellier Antoine, Guilloux Sébastien, Templé Arthur
 
     This file is part of ChemicalLibSuper.
@@ -12,21 +12,18 @@
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU Lesser General Public License for more details.
-	
+
     You should have received a copy of the GNU Lesser General Public License
     along with ChemicalLibSuper.  If not, see <http://www.gnu.org/licenses/>
-*/
+ */
 package sentence;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import fr.insa.rennes.info.chemical.backend.SubSolution;
 import fr.insa.rennes.info.chemical.backend.SubSolutionElements;
 import fr.insa.rennes.info.chemical.user.ReactionRule;
 
 public class ChooseSubjectRR implements ReactionRule{
-	
+
 	/**
 	 * Take a subject from the subjects solution then put it in the solution.
 	 * It takes the following reagents: (they must appear in this order)
@@ -40,27 +37,16 @@ public class ChooseSubjectRR implements ReactionRule{
 	 * </ul>
 	 */
 	private SubSolution<SubSolutionElements> _subSol;
-	
-	public SubSolution<SubSolutionElements> get_subSol() {
-		return _subSol;
-	}
-
-	public void set_subSol(SubSolution<SubSolutionElements> _subSol) {
-		this._subSol = _subSol;
-	}
 
 	public ChooseSubjectRR() {
 		super();
-		SubSolutionElements e = new SubSolutionElements();
-		List<Class<? extends Object>> l = new ArrayList<Class<? extends Object>>();
-		l.add(SubjectType.class);
-		l.add(Subject.class);
-		e.setTypeList(l);
-		_subSol = new SubSolution<SubSolutionElements>(e);
+		this._subSol = new SubSolution<SubSolutionElements>();
+		this._subSol.addType(SubjectType.class);
+		this._subSol.addType(Subject.class);
 	}
-	
+
 	public Object[] computeResult() {
-		Subject s = (Subject)_subSol.getElements().get(1);
+		Subject s = (Subject)this._subSol.getElements().get(1);
 		return new Object[]{s};
 	}
 
@@ -68,14 +54,22 @@ public class ChooseSubjectRR implements ReactionRule{
 		return true;
 	}
 
+	public SubSolution<SubSolutionElements> get_subSol() {
+		return this._subSol;
+	}
+
 	public Multiplicity getMultiplicity() {
 		return Multiplicity.ONE_SHOT;
+	}
+
+	public void set_subSol(SubSolution<SubSolutionElements> _subSol) {
+		this._subSol = _subSol;
 	}
 
 	@Override
 	public String toString() {
 		return "ChooseSubjectRR";
 	}
-	
-	
+
+
 }
