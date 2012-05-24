@@ -11,14 +11,6 @@
   <name>ChemicalMozart</name>
   <description>Example for the Chemical Library.</description>
   <dependencies>
-  	
-  	<dependency>
-  		<groupId>junit</groupId>
-  		<artifactId>junit</artifactId>
-  		<version>4.10</version>
-  		<type>jar</type>
-  		<scope>compile</scope>
-  	</dependency>
   	<dependency>
   		<groupId>fr.insa-rennes</groupId>
   		<artifactId>chemicalthread</artifactId>
@@ -26,4 +18,27 @@
   		<scope>compile</scope>
   	</dependency>
   </dependencies>
+
+  <build>
+	<plugins>
+		<plugin>
+			<groupId>org.apache.maven.plugins</groupId>
+			<artifactId>maven-jar-plugin</artifactId>
+			<version>2.3.1</version>
+			<configuration>
+				<archive>
+					<manifest>
+						<mainClass>org.chemicalmozart.Main</mainClass>
+						<addClasspath>true</addClasspath>
+              					<classpathPrefix>../../../..</classpathPrefix>
+						<classpathLayoutType>repository</classpathLayoutType>
+
+					</manifest>
+				</archive>
+			</configuration>
+		</plugin>
+
+	</plugins>
+	
+  </build>
 </project>
