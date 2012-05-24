@@ -1035,7 +1035,7 @@ public final class Solution implements Collection<Object>{
 			String type = entry.getKey();
 			if(type.equals(Solution.class.getName())){
 				for(Object sol : entry.getValue()) {
-					res += alinea+"Solution (isInert ? "+_inert+")\n"+ alinea + solutionStart;
+					res += alinea+"Solution "+this.hashCode()+" (isInert ? "+_inert+")\n"+ alinea + solutionStart;
 					res += ((Solution)sol).prettyPrint(level+1);
 					res += alinea+solutionEnd;
 				}
