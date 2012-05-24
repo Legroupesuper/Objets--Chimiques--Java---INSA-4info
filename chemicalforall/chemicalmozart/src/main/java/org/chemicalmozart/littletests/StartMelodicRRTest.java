@@ -12,6 +12,7 @@ import org.chemicalmozart.model.implementations.Rythme;
 import org.chemicalmozart.model.implementations.reactionrules.GetPitchRR;
 import org.chemicalmozart.model.implementations.reactionrules.StartMelodicRR;
 import org.chemicalmozart.model.implementations.solutionindentification.BarInCreation;
+import org.chemicalmozart.utils.GetWriterRR;
 import org.chemicalmozart.utils.MusicWriter;
 import org.chemicalmozart.utils.StartToWriteRR;
 import org.chemicalmozart.utils.MusicWriter.NoteValues;
@@ -71,11 +72,13 @@ public class StartMelodicRRTest {
 				try {
 					final MusicWriter writer = new MusicWriter(60, NoteValues.DO, "outputMidi.mid");
 					s.add(writer);
+					s.add(new GetWriterRR());
 					s.add(new StartToWriteRR());
 					s.addInertEventListener(new InertEventListener() {
 						
 						public void isInert(InertEvent e) {
 							System.out.println("On a fait ce truc de merde");
+							System.out.println(e.getSource());
 							try {
 								writer.writeFile();
 							} catch (IOException e1) {

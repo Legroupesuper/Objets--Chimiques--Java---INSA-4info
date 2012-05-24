@@ -103,19 +103,6 @@ public class StartMelodicRR implements ReactionRule{
 	 * @returns the solution contained in _sol as describe before, the increased BarNumber
 	 */
 	public Object[] computeResult() {
-		/*
-		System.out.println("On est dans le compute result");
-		Solution sol = _sol.getSolution();
-		sol.add(new RythmicRR());
-		sol.add(new MelodicRR());
-		sol.add(_pitch);
-		MozartSolutionFactory factory = new MozartSolutionFactoryImpl();
-		sol.add(factory.createRythmicPull());
-		sol.add(_sol.getElements().get(1));
-		BarNumber tempBarNumber = _barNumber;
-		tempBarNumber.increment();
-		return new Object[]{tempBarNumber};
-		*/
 		System.out.println("On est dans le compute result");
 		Solution sol = _sol.getSolution();
 		MozartSolutionFactory factory = new MozartSolutionFactoryImpl();

@@ -182,7 +182,6 @@ class BuilderSubIndexProviderSolutionImpl implements BuilderSubIndexProviderSolu
 				sipSolBuilder.build();
 
 				SubIndexProviderSolution sipSol = sipSolBuilder.getProduct();
-				//System.out.println("sipSol construit = "+sipSol+" pour subSolFieldTypes = "+_rrSubSolField.getName()+" et pour la subSol "+subSubSol);
 				
 				if(sipSol != null) {
 					if(sipSolAccumulation == null)
@@ -307,8 +306,6 @@ class BuilderSubIndexProviderSolutionImpl implements BuilderSubIndexProviderSolu
 						sipSolBuilder.build();
 
 						SubIndexProviderSolution sipSol = sipSolBuilder.getProduct();
-						//System.out.println("ROOT sipSol construit = "+sipSol+" pour subSolFieldTypes = "+f.getName()+" et pour la subSol "+s);
-						
 						if(sipSol != null) {
 							if(sipSolAccumulation == null)
 								sipSolAccumulation = sipSol;
@@ -386,12 +383,7 @@ class BuilderSubIndexProviderSolutionImpl implements BuilderSubIndexProviderSolu
 			} 
 		}
 		
-		/*//System.out.print("Pour rrField [");
-		for(Field f : rrFields) {
-			//System.out.print(f.getName()+", ");
-		}
-		//System.out.println("], DepIndexMap : "+dependantIndexesMap);*/
-		
+	
 		//We have to provide the IndexProvider a list of a list of int, so
 		//we need to transform the map of list in a list of list
 		List<List<Integer>> dependantIndexesList = new ArrayList<List<Integer>>();
@@ -438,7 +430,6 @@ class BuilderSubIndexProviderSolutionImpl implements BuilderSubIndexProviderSolu
 			}
 		}
 		
-		////System.out.println("Pour "+typeList+", DepIndexMap : "+dependantIndexesMap);
 		
 		//We have to provide the IndexProvider a list of a list of int, so
 		//we need to transform the map of list in a list of list
