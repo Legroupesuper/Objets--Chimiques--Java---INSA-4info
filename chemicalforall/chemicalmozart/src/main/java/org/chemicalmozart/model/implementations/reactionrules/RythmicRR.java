@@ -200,7 +200,7 @@ public class RythmicRR implements ReactionRule{
 	 * It must also check that the selected subsolution rhythm has the same duration than _chordImpl.
 	 */
 	public boolean computeSelect() {
-		System.err.println("On est là : "+_num);
+		System.out.println("####On est là : "+_num);
 		boolean validPosition = _chordImpl.get_position() == _chordNumber;
 		boolean sameDuration = ((RythmPattern)_rythmeSolution.getElements().get(1)).getDuration() == _chordImpl.getDuration();
 

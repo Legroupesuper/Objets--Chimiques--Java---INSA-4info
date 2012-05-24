@@ -129,7 +129,7 @@ public class MelodicRR implements ReactionRule{
 			}
 			_note.set_pitch(new Pitch(octave, new DegreeImpl(notePitch)));
 		}
-		_melodicNumber++; 
+		_melodicNumber++;
 		return new Object[]{_note, _note.get_pitch()};
 	}
 	/**

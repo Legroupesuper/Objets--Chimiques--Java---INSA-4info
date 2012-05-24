@@ -18,6 +18,11 @@
 */
 package org.chemicalmozart.model.implementations.reactionrules;
 
+import org.chemicalmozart.model.implementations.Pitch;
+import org.chemicalmozart.model.implementations.solutionindentification.BarInCreation;
+
+import fr.insa.rennes.info.chemical.backend.SubSolution;
+import fr.insa.rennes.info.chemical.backend.SubSolutionElements;
 import fr.insa.rennes.info.chemical.user.ReactionRule;
 
 
@@ -29,17 +34,34 @@ import fr.insa.rennes.info.chemical.user.ReactionRule;
  *
  */
 public class GetPitchRR implements ReactionRule{
+	SubSolution<SubSolutionElements> _subSol;
+	
+	public SubSolution<SubSolutionElements> get_subSol() {
+		return _subSol;
+	}
 
+	public void set_subSol(SubSolution<SubSolutionElements> _subSol) {
+		this._subSol = _subSol;
+	}
+
+	public GetPitchRR(){
+		System.out.println("On appelle le constructeur");
+		_subSol = new SubSolution<SubSolutionElements>();
+		_subSol.addType(BarInCreation.class);
+		_subSol.addType(Pitch.class);
+	}
+	
 	public Object[] computeResult() {
-		return null;
+		return new Object[]{_subSol.getElements().get(1)};
 	}
 
 	public boolean computeSelect() {
-		return false;
+		System.out.println("Inerte ? "+_subSol.getSolution().is_inert());
+		return true;
 	}
 
 	public Multiplicity getMultiplicity() {
-		return null;
+		return Multiplicity.INFINITY_SHOT;
 	}
 
 

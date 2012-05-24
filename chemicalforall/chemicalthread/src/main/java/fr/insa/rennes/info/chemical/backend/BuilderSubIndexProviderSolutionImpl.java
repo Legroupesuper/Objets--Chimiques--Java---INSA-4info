@@ -270,7 +270,7 @@ class BuilderSubIndexProviderSolutionImpl implements BuilderSubIndexProviderSolu
 		if(_rrFields == null || _solution == null || _rr == null)
 			throw new ChemicalException("The reaction rule's fields parameters need to be given to build the IndexProvider.");
 
-		//The two level of list of the index provider being built right now
+		//The two levels of list of the index provider being built right now
 		//In this case, the first level list only contains sub-list 
 		//(particular case of the root SubIndexProviderSolution in an IndexProvider object)
 		List<List<SubIndexProvider>> firstLevelList = new ArrayList<List<SubIndexProvider>>();

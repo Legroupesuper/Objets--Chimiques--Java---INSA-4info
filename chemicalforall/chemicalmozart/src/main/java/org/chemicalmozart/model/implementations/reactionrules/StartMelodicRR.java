@@ -118,11 +118,20 @@ public class StartMelodicRR implements ReactionRule{
 		*/
 		System.out.println("On est dans le compute result");
 		Solution sol = _sol.getSolution();
+		MozartSolutionFactory factory = new MozartSolutionFactoryImpl();
+		sol.add(factory.createRythmicPull());
 		sol.add(_pitch);
 		sol.add(new BarInCreation());
 		sol.add(_barNumber);
-		//sol.add(new RythmicRR());
-		BarNumber tempBarNumber = _barNumber;
+		MelodicRR m = new MelodicRR();
+		m.set_activated(false);
+		sol.add(m);
+		sol.add(new RythmicRR());
+		/**
+		 * TODO A enlever quand ça fonctionnera
+		 */
+		sol.react();
+		BarNumber tempBarNumber = new BarNumber(_barNumber.getValue());
 		tempBarNumber.increment();
 		return new Object[]{tempBarNumber};
 	}
@@ -132,8 +141,8 @@ public class StartMelodicRR implements ReactionRule{
 	 * BarNumber object in the subsolution. If this is the case, the function returns true.
 	 */
 	public boolean computeSelect() {
-		System.out.println("Compute select");
 		BarNumber bn = (BarNumber) _sol.getElements().get(1);
+		System.out.println("Compute select ->");
 		System.out.println("On est dans le compute select "+_barNumber.getValue()+" == "+bn.getValue());
 		return _barNumber.getValue() == bn.getValue();
 	}

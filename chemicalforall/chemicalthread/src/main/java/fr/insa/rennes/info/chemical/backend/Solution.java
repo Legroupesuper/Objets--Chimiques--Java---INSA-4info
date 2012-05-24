@@ -111,6 +111,7 @@ public final class Solution implements Collection<Object>{
 	 */
 	private InertEventListener _listener = null;
 
+	private boolean _reactAlreadyHappened = false;
 
 	/**
 	 * Default constructor for a Chemical Programming-powered Solution.<br />
@@ -155,7 +156,7 @@ public final class Solution implements Collection<Object>{
 		for(Field f : rrClass.getDeclaredFields()){
 			setterOK = false;
 			getterOk = false;
-			
+
 			if(f.getAnnotation(Dontreact.class) != null) 
 				continue;
 
@@ -244,15 +245,18 @@ public final class Solution implements Collection<Object>{
 			Utils.logger.severe("#}#}#}#}#}#}#}Ajout de la reaction rule "+newReagent);
 			addElement = checkReactionRuleReagent(newReagent);
 		} else if(className.equals(Solution.class.getName())){
-			Utils.logger.severe("#}#}#}#}#}#}#}Ajout d'un reactif normal "+newReagent);
+			Utils.logger.severe("#}#}#}#}#}#}#}Ajout d'une solution "+newReagent);
 			processAddSubSolution(newReagent);
+		}else{
+			Utils.logger.severe("#}#}#}#}#}#}#}Ajout d'un reactif normal "+newReagent);
 		}
-
+		if(_reactAlreadyHappened)
+			_reactionInProgress = true;
+		
 		if(!className.equals(SubSolutionReagentsAccessor.class.getName()) && addElement){
 			boolean result;
 			//When you add an element in the solution, the solution is no more inert
 			_inert = false;
-
 			//There is already an entry in the map for this reagent, so we just add the element
 			if(_mapElements.get(rawClassName) != null){
 				result = _mapElements.get(rawClassName).add(newReagent);
@@ -366,7 +370,7 @@ public final class Solution implements Collection<Object>{
 	 * rule threads. 
 	 */
 	private synchronized void tryTrivialEndOfReaction() {
-		if(_threadTable.size() == 0 && !containsNonInertSubSol())
+		if(_threadTable.size() == 0 && !containsNonInertSubSol() && _reactionInProgress)
 			endOfReaction();
 		else {
 			wakeAll();
@@ -385,7 +389,7 @@ public final class Solution implements Collection<Object>{
 	private synchronized void endOfReaction(){
 		_reactionInProgress = false;
 		_inert = true;
-
+		Utils.logger.info("End of reaction is called");
 		notifyAll();
 		fireInertEvent(new InertEvent(this));
 	}
@@ -530,8 +534,8 @@ public final class Solution implements Collection<Object>{
 	 * @see ChemicalThread
 	 * @see Solution#_inert
 	 */
-	synchronized void makeSleep(){
-		Utils.logger.info("Début de make sleep");
+	synchronized void makeSleep(ReactionRule r){
+		Utils.logger.info("Début de make sleep : "+r);
 		int nbThreadAwaken = getNumberOfActiveThreads();
 		Utils.logger.info("nbThreadsAwaken : "+nbThreadAwaken);
 		boolean containsNonInertSubSolutions = containsNonInertSubSol();
@@ -557,7 +561,8 @@ public final class Solution implements Collection<Object>{
 		} else {
 			//If the current thread is the last one standing, kill all the threads by switching the
 			//boolean _keepOnReacting to false (all thread are in a loop on this boolean).
-			endOfReaction();
+			if(_reactionInProgress)
+				endOfReaction();
 		}
 	}
 
@@ -571,7 +576,7 @@ public final class Solution implements Collection<Object>{
 	 * In case this solution does not contain any inner solution nor reaction rule, nothing happens.
 	 */
 	public synchronized void react() {
-
+		_reactAlreadyHappened = true;
 		_reactionInProgress = true;
 		_inert = false;
 		//We try to launch all the inner solutions
@@ -590,7 +595,7 @@ public final class Solution implements Collection<Object>{
 				});
 				s.react();
 			}
-		}else if(_threadTable.size() == 0){
+		}else if(_threadTable.size() == 0 && _reactionInProgress){
 			//If there is no ReactionRule (thus no thread) in the solution, 
 			//the solution can not react.
 			endOfReaction();
@@ -699,7 +704,7 @@ public final class Solution implements Collection<Object>{
 				return false;
 			}
 		}
-		
+
 		synchronized (this) {
 
 			//Once the index provider is created, we have to search for reagents matching,
@@ -759,7 +764,7 @@ public final class Solution implements Collection<Object>{
 		//Loop until the reagents has been found OR all combination have been tested
 		while(!indexProvider.is_overflowReached()) {
 			SubIndexProviderSolution sipSol = indexProvider.getSubIndexProvider();
-			
+
 			i = 0;
 			tryComputeSelect = true;
 			for(Field f : rrFields) {
@@ -783,7 +788,8 @@ public final class Solution implements Collection<Object>{
 					i++;
 				}
 			}
-			
+
+			System.out.println("Pre-avant : "+indexProvider.getSubIndexProvider());
 			//When we get here, the right types have been found, now test the selection rule
 			if(tryComputeSelect && rr.computeSelect()) {
 				//If the computeSelect says OK, return the found set of reagents
@@ -819,8 +825,8 @@ public final class Solution implements Collection<Object>{
 				SubSolution<SubSolutionReagentsAccessor> s = (SubSolution<SubSolutionReagentsAccessor>) react.get_second();
 
 				//Delete each object in the sub-solution
-				for(Object o : s.getElements()){;
-				react.get_first()._mapElements.get(o.getClass().getName()).remove(o);
+				for(Object o : s.getElements()){
+					react.get_first()._mapElements.get(o.getClass().getName()).remove(o);
 				}
 			} else if(getReagentType(react.get_second()).equals(ReactionRule.class.getName())) {
 				//For a reaction rule, use the dedicated function
@@ -860,6 +866,7 @@ public final class Solution implements Collection<Object>{
 		}
 		//If the field is a set of elements in a subsolution, it will be more complex
 		else{
+			System.out.println("On passe ici pour récupérer un "+f.getType());
 			Method getter = Utils.getMethodFromReactionRule(r, "get", f);
 			SubSolution<SubSolutionReagentsAccessor> subSolObject = (SubSolution<SubSolutionReagentsAccessor>) getter.invoke(r, new Object[0]);
 
@@ -886,7 +893,7 @@ public final class Solution implements Collection<Object>{
 				if(sipSol.get_listSubIP().get(i).getNumberOfElements().compareTo(BigInteger.ZERO) == 0) {
 					return null;
 				}
-				
+
 				l.add(nextSol._mapElements.get(c.getName()).get(sipSol.get_listSubIP().get(i).getValue()));
 				i++;
 			}
