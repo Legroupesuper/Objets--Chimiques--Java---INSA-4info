@@ -56,6 +56,8 @@ public class ChemicalThreadTest extends TestCase {
 			public ReactionRule.Multiplicity getMultiplicity(){
 				return ReactionRule.Multiplicity.ONE_SHOT;
 			}
+			@SuppressWarnings("unused")
+			public void setThis$0(Object t){}
 		};
 		this.testSolution.add(this.testReactionRule);
 
@@ -80,16 +82,37 @@ public class ChemicalThreadTest extends TestCase {
 	/**
 	 * Test method for {@link ChemicalThread#run()}.
 	 */
+	@SuppressWarnings("deprecation")
 	public void testRun() {
-		testChemicalThread.run();
-		System.err.println("BLA");
+		testChemicalThread.start();
 		assertTrue("A ChemicalThread must be runnable", testChemicalThread.isAlive());
-		testChemicalThread.interrupt();
+		testChemicalThread.stop();
 		try {
-			Thread.sleep(1000);
+			Thread.sleep(100);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		assertTrue("A ChemicalThread must be interruptable", testChemicalThread.isInterrupted());
+		assertFalse("A ChemicalThread must be stoppable (with JVM behavior)", testChemicalThread.isAlive());
+	}
+
+	/**
+	 * Test method for {@link ChemicalThread#stopTheThread()}.
+	 */
+	public void testStopTheThread() {
+		testChemicalThread.start();
+		testChemicalThread.stopTheThread();
+		try {
+			Thread.sleep(100);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		assertFalse("A ChemicalThread must be stoppable (with custom behavior)", testChemicalThread.isAlive());
+	}
+
+	/**
+	 * Test method for {@link ChemicalThread#toString()}.
+	 */
+	public void testToString() {
+		assertTrue("A ChemicalThread should be printed with the ReactionRule it is associated with", testChemicalThread.toString().toLowerCase().contains(this.testReactionRule.toString().toLowerCase()));
 	}
 }

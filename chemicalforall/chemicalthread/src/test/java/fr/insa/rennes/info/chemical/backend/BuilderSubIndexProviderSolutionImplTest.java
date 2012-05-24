@@ -46,8 +46,19 @@ public class BuilderSubIndexProviderSolutionImplTest extends TestCase {
 	public BuilderSubIndexProviderSolutionImplTest(String name) {
 		super(name);
 		fooRR = new ReactionRule(){
+			
+			int a;
+			
+			@SuppressWarnings("unused")
+			public void setA(int aa){
+				this.a = aa;
+			}
+			@SuppressWarnings("unused")
+			public int getA(){
+				return a;
+			}
 			public Object[] computeResult() {
-				return new Object[]{};
+				return new Object[]{a+1};
 			}
 			public boolean computeSelect() {
 				return true;
