@@ -76,5 +76,13 @@ class Pair<A, B> {
 	 */
 	public void set_second(B _second) {
 		this._second = _second;
-	}	
+	}
+	
+	/**
+	 * Returns a string description of this pair
+	 * @return a string description of this pair
+	 */
+	public String toString() {
+		return "("+_first+", "+_second+")";
+	}
 }

@@ -35,14 +35,14 @@ class RandomIncrementStrategy implements IncrementStrategy {
 	/**
 	 * The current number of increments already done.
 	 */
-	private BigInteger _currentIndex;
+	private BigInteger _nbIncrements;
 	/**
 	 * The maximum increments that the sub index provider can do.
 	 */
-	private BigInteger _maxIndex;
+	private BigInteger _maxIncrements;
 	/**
 	 * The list that transforms the "normal" (ordered) index in a random index.
-	 * It will be used with {@link #_currentIndex} to translate it to a "random" index:
+	 * It will be used with {@link #_nbIncrements} to translate it to a "random" index:
 	 * randomIndex = _shuffleList.get(_currentIndex)
 	 */
 	private List<BigInteger> _shuffleList;
@@ -53,11 +53,11 @@ class RandomIncrementStrategy implements IncrementStrategy {
 	 * @param maxI The maximum index
 	 */
 	public RandomIncrementStrategy(BigInteger maxI){
-		_currentIndex = BigInteger.valueOf(0);
-		_maxIndex = maxI;
+		_nbIncrements = BigInteger.valueOf(0);
+		_maxIncrements = maxI;
 		_shuffleList = new ArrayList<BigInteger>();
 		
-		for(BigInteger i= BigInteger.valueOf(0); _maxIndex.add(i.negate()).signum()>0; i=i.add(BigInteger.valueOf(1))){
+		for(BigInteger i= BigInteger.valueOf(0); _maxIncrements.add(i.negate()).signum()>0; i=i.add(BigInteger.valueOf(1))){
 			_shuffleList.add(new BigInteger(i.toByteArray()));
 		}
 		
@@ -81,13 +81,13 @@ class RandomIncrementStrategy implements IncrementStrategy {
 		BigInteger position = BigInteger.valueOf(0);
 		BigInteger i = BigInteger.valueOf(0);
 		
-		if(_currentIndex.equals(_maxIndex))
+		if(_nbIncrements.equals(_maxIncrements))
 			throw new ChemicalException("Overflow reached first");
 		
 		//We can't use the simple _shuffleList.get(_currentIndex) because we need to use BigInteger
 		while(it.hasNext()){
-			if(i.equals(_currentIndex)){
-				_currentIndex = _currentIndex.add(BigInteger.valueOf(1));
+			if(i.equals(_nbIncrements)){
+				_nbIncrements = _nbIncrements.add(BigInteger.valueOf(1));
 				position = it.next();
 				break;
 			}

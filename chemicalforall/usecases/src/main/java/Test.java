@@ -70,12 +70,12 @@ public class Test {
 //		s2.add(5);
 //		s2.add(5);
 //		s2.add(6);
-		s3.add("toto");
+		/*s3.add("toto");
 		s3.add("est");
 		s3.add("toto");
 		s3.add("naze");
 		s3.add("gros");
-		s3.add("un");
+		s3.add("un");*/
 //		s3.add(new ConcatRR());
 //		s3.add(new MaxIntRR(0));
 		s5.add(56);

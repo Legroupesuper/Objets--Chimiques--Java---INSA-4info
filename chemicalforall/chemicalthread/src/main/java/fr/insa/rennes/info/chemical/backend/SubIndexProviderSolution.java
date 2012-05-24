@@ -160,13 +160,16 @@ public class SubIndexProviderSolution implements SubIndexProvider{
 		 *  This algorithm work like the +1 algorithm. You always start to increment the least significant number.
 		 */
 		if(overflow && _currentSubSol<_listSubIP.size()-1){//Increment the first level list
+			System.out.println("=== coucou1");
 			_currentSubSol++;
 			_currentSubIP=0;
 			return false;
 		}else if(overflow){//Real overflow
+			System.out.println("=== coucou2");
 			this.init();
 			return true;
 		}else{//It's not an overflow at any level
+			System.out.println("=== coucou3");
 			_currentSubIP = 0;
 			return false;
 		}
