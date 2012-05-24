@@ -216,6 +216,7 @@ public final class Solution implements Collection<Object>{
 	 * @see InertEventListener
 	 */
 	private void processAddSubSolution(Object solutionObject) {
+		Utils.logger.info("On passe dans processAddSubSolution");
 		Solution sol = (Solution) solutionObject;
 		sol.addInertEventListener(new InertEventListener() {
 			public void isInert(InertEvent e) {
