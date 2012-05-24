@@ -9,6 +9,7 @@ public class DummyReaction implements ReactionRule {
 	
 	private Integer a;
 	private Integer b;
+	private Integer c;
 	
 	public DummyReaction() {
 		nbCombination = 0;
@@ -20,7 +21,7 @@ public class DummyReaction implements ReactionRule {
 
 	public boolean computeSelect() {
 		nbCombination++;
-		System.out.println("Dummy 1 : Test a = "+a+", b = "+b+", combination #"+nbCombination);
+		System.out.println("Dummy 1 : Test a = "+a+", b = "+b+", c = "+c+", combination #"+nbCombination);
 		
 		try {
 			Thread.sleep(250);
@@ -42,4 +43,10 @@ public class DummyReaction implements ReactionRule {
 	public void setB(Integer b) {
 		this.b = b;
 	}
+
+	public void setC(Integer c) {
+		this.c = c;
+	}
+	
+	
 }
