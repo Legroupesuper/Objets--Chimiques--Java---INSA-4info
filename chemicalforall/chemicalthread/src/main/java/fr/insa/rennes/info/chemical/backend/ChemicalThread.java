@@ -12,10 +12,10 @@
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU Lesser General Public License for more details.
-	
+
     You should have received a copy of the GNU Lesser General Public License
     along with ChemicalLibSuper.  If not, see <http://www.gnu.org/licenses/>
-*/
+ */
 package fr.insa.rennes.info.chemical.backend;
 
 
@@ -77,42 +77,46 @@ public class ChemicalThread extends Thread {
 		//Run as long as the solution is not inert AND as long
 		//as we didn't stop the thread "manually"
 		while(!_solutionContainer.is_inert() && _continue){
+			synchronized (_solutionContainer) {
 			Utils.logger.info("Un tour de boucle "+_reactionRule);
 			//If we find enough valid parameters...
-			if(_solutionContainer.requestForParameters(_reactionRule)){
-				Utils.logger.info("On a passé le computeSelect");
-				//...we compute reaction result
-				Object obj[] = _reactionRule.computeResult();
-				boolean b = false;
-				//add the results to the solution
-				if(obj != null)
-					b = _solutionContainer.addAll(Arrays.asList(obj));
-				//Then wake all ReactionRules (as the solution has been modified)
-				//_solutionContainer.wakeAll();
-				//If the reaction rule is ONE SHOT, we must delete it and stop this thread
-				if(_reactionRule.getMultiplicity().equals(Multiplicity.ONE_SHOT) && obj!=null &&  !Arrays.asList(obj).contains(_reactionRule)){
-					_solutionContainer.deleteReaction(_reactionRule);
-					_solutionContainer.wakeAll();
-					Utils.logger.info("C'était une One-shot");
-					break;
+				boolean rfp = _solutionContainer.requestForParameters(_reactionRule);
+				Utils.logger.info("le request for parameter retourne "+rfp);
+				if(rfp){
+					Utils.logger.info("On a passé le computeSelect de "+_reactionRule);
+					//...we compute reaction result
+					Object obj[] = _reactionRule.computeResult();
+					boolean b = false;
+					//add the results to the solution
+					if(obj != null)
+						b = _solutionContainer.addAll(Arrays.asList(obj));
+					//Then wake all ReactionRules (as the solution has been modified)
+					//_solutionContainer.wakeAll();
+					//If the reaction rule is ONE SHOT, we must delete it and stop this thread
+					if(_reactionRule.getMultiplicity().equals(Multiplicity.ONE_SHOT) && obj!=null &&  !Arrays.asList(obj).contains(_reactionRule)){
+						_solutionContainer.deleteReaction(_reactionRule);
+						_solutionContainer.wakeAll();
+						Utils.logger.info("C'était une One-shot");
+						break;
+					}
+				}else{
+					//If we do not find valid parameters, the reaction goes to sleep
+					//A sleeping reaction waits for the solution to go inert or to see its inner elements modified
+					Utils.logger.info("On fait faire dodo à "+_reactionRule);
+					_solutionContainer.makeSleep(_reactionRule);
 				}
-			}else{
-				//If we do not find valid parameters, the reaction goes to sleep
-				//A sleeping reaction waits for the solution to go inert or to see its inner elements modified
-				Utils.logger.info("On fait faire dodo à "+_reactionRule);
-				_solutionContainer.makeSleep();
 			}
 		}
 		Utils.logger.info("On sort");
 	}
-	
+
 	/**
 	 * Stops the infinite loop in the run() function.
 	 */
 	public void stopTheThread(){
 		_continue  = false;
 	}
-	
+
 	@Override
 	public String toString() {
 		return "Je suis le thread "+_reactionRule;
