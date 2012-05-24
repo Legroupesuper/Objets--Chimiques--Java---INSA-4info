@@ -1,13 +1,11 @@
 package org.chemicalmozart.viewV2;
 
 import javax.sound.midi.MidiSystem;
+import javax.sound.midi.MidiUnavailableException;
 import javax.sound.midi.Sequence;
 import javax.sound.midi.Sequencer;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JLabel;
@@ -21,15 +19,9 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 
-import java.awt.Component;
 import javax.swing.ImageIcon;
-import javax.swing.border.SoftBevelBorder;
-import javax.swing.border.BevelBorder;
 import javax.swing.border.TitledBorder;
-import javax.swing.plaf.IconUIResource;
-
 import java.awt.Color;
-import java.awt.SystemColor;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import java.awt.event.ActionListener;
@@ -39,26 +31,35 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 public class MainView extends JFrame {
+	private static final long serialVersionUID = 1L;
 	private JTextField tfTempo;
 	private JTextField tfBarNumber;
-	private JComboBox<String> tfScale;
-	private JTextField textField;
+	private JComboBox tfScale;
+	private JTextField tfMidiOutput;
 	private File saveFile;
 	private File loadFile;
-	private JLabel lblLog;
+	private JLabel lblLogInfos;
 	private JLabel lblPlay;
 	private JLabel lblOpenFile;
 	JLabel lblStop;
 	private Sequencer sequencer;
 	JLabel lblPlayingfilename;
+	JLabel lblLogParameters;
 	
 	public MainView() {
+		try {
+			sequencer = MidiSystem.getSequencer();
+			sequencer.open();
+		} catch (MidiUnavailableException e) {
+			e.printStackTrace();
+		}
 		saveFile = null;
 		loadFile = null;
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		buildComponents();
 		pack();	
+		setLocationRelativeTo(null);
 	}
 	
 	public void buildComponents(){
@@ -117,8 +118,8 @@ public class MainView extends JFrame {
 		JLabel lblImageEqualizer = new JLabel("");
 		lblImageEqualizer.setIcon(new ImageIcon(MainView.class.getResource("/img/equalizer.png")));
 		
-		lblLog = new JLabel("");
-		lblLog.setForeground(new Color(139, 0, 0));
+		lblLogInfos = new JLabel("");
+		lblLogInfos.setForeground(new Color(139, 0, 0));
 		GroupLayout gl_panelInfos = new GroupLayout(panelInfos);
 		gl_panelInfos.setHorizontalGroup(
 			gl_panelInfos.createParallelGroup(Alignment.LEADING)
@@ -136,22 +137,20 @@ public class MainView extends JFrame {
 								.addGroup(gl_panelInfos.createSequentialGroup()
 									.addComponent(lblImageEqualizer)
 									.addGap(30)
-									.addComponent(lblNowPlaying))))
+									.addComponent(lblNowPlaying))
+								.addComponent(lblLogInfos, GroupLayout.PREFERRED_SIZE, 213, GroupLayout.PREFERRED_SIZE)))
 						.addGroup(gl_panelInfos.createSequentialGroup()
 							.addGap(77)
 							.addComponent(lblPlay)
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(lblStop))
-						.addGroup(gl_panelInfos.createSequentialGroup()
-							.addGap(25)
-							.addComponent(lblLog)))
+							.addComponent(lblStop)))
 					.addContainerGap())
 		);
 		gl_panelInfos.setVerticalGroup(
 			gl_panelInfos.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panelInfos.createSequentialGroup()
-					.addGroup(gl_panelInfos.createParallelGroup(Alignment.LEADING, false)
-						.addGroup(gl_panelInfos.createSequentialGroup()
+					.addGroup(gl_panelInfos.createParallelGroup(Alignment.LEADING)
+						.addGroup(Alignment.TRAILING, gl_panelInfos.createSequentialGroup()
 							.addGroup(gl_panelInfos.createParallelGroup(Alignment.LEADING)
 								.addComponent(lblImageEqualizer)
 								.addGroup(gl_panelInfos.createSequentialGroup()
@@ -165,13 +164,13 @@ public class MainView extends JFrame {
 							.addGroup(gl_panelInfos.createParallelGroup(Alignment.LEADING)
 								.addComponent(lblStop)
 								.addComponent(lblPlay))
-							.addGap(24))
+							.addGap(18))
 						.addGroup(Alignment.TRAILING, gl_panelInfos.createSequentialGroup()
-							.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 							.addComponent(lblOpenFile)
-							.addGap(74)))
-					.addComponent(lblLog)
-					.addContainerGap(124, Short.MAX_VALUE))
+							.addGap(68)))
+					.addPreferredGap(ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
+					.addComponent(lblLogInfos, GroupLayout.PREFERRED_SIZE, 12, GroupLayout.PREFERRED_SIZE)
+					.addGap(30))
 		);
 		panelInfos.setLayout(gl_panelInfos);
 		JPanel panelParameters = new JPanel();
@@ -188,6 +187,11 @@ public class MainView extends JFrame {
 		JLabel lblMidiOutput = new JLabel("Midi Output :");
 		lblMidiOutput.setFont(new Font("Verdana", Font.PLAIN, 11));
 		JButton btnStartReaction = new JButton("  Start Reaction");
+		btnStartReaction.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				btnStartReactionAction();
+			}
+		});
 		btnStartReaction.setFont(new Font("Verdana", Font.PLAIN, 11));
 		btnStartReaction.setHorizontalAlignment(SwingConstants.LEFT);
 		btnStartReaction.setIcon(new ImageIcon(MainView.class.getResource("/img/rec_button.png")));
@@ -196,12 +200,12 @@ public class MainView extends JFrame {
 		tfBarNumber = new JTextField();
 		tfBarNumber.setText("");
 		tfBarNumber.setColumns(10);
-		tfScale = new JComboBox<String>();
+		tfScale = new JComboBox();
 		tfScale.setMaximumRowCount(12);
-		tfScale.setModel(new DefaultComboBoxModel<String>(new String[] {"Do", "Do #", "Ré", "Ré #", "Mi", "Fa", "Fa #", "Sol", "Sol #", "La", "La #", "Si"}));
+		tfScale.setModel(new DefaultComboBoxModel(new String[] {"Do", "Do #", "Ré", "Ré #", "Mi", "Fa", "Fa #", "Sol", "Sol #", "La", "La #", "Si"}));
 		tfScale.setSelectedIndex(0);
-		textField = new JTextField();
-		textField.setColumns(10);
+		tfMidiOutput = new JTextField();
+		tfMidiOutput.setColumns(10);
 		JButton btnBrowse = new JButton("Browse");
 		btnBrowse.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -218,47 +222,53 @@ public class MainView extends JFrame {
 		
 		JLabel lblImageFolder = new JLabel("");
 		lblImageFolder.setIcon(new ImageIcon(MainView.class.getResource("/img/folder_full.png")));
+		
+		lblLogParameters = new JLabel("");
+		lblLogParameters.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		lblLogParameters.setForeground(new Color(128, 0, 0));
 		GroupLayout gl_panelParameters = new GroupLayout(panelParameters);
 		gl_panelParameters.setHorizontalGroup(
-			gl_panelParameters.createParallelGroup(Alignment.LEADING)
+			gl_panelParameters.createParallelGroup(Alignment.TRAILING)
 				.addGroup(gl_panelParameters.createSequentialGroup()
+					.addContainerGap(19, Short.MAX_VALUE)
+					.addComponent(lblImageFolder)
+					.addGroup(gl_panelParameters.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_panelParameters.createSequentialGroup()
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(lblMidiOutput))
+						.addGroup(gl_panelParameters.createSequentialGroup()
+							.addGap(4)
+							.addComponent(tfMidiOutput, GroupLayout.PREFERRED_SIZE, 178, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(btnBrowse)))
+					.addContainerGap())
+				.addGroup(gl_panelParameters.createSequentialGroup()
+					.addContainerGap(88, Short.MAX_VALUE)
+					.addComponent(btnStartReaction)
+					.addGap(77))
+				.addGroup(Alignment.LEADING, gl_panelParameters.createSequentialGroup()
 					.addGap(36)
 					.addGroup(gl_panelParameters.createParallelGroup(Alignment.LEADING)
-						.addComponent(lblImageMusic)
+						.addGroup(gl_panelParameters.createSequentialGroup()
+							.addComponent(lblImageMusic)
+							.addGap(27)
+							.addGroup(gl_panelParameters.createParallelGroup(Alignment.LEADING)
+								.addComponent(lblBarNumber)
+								.addComponent(lblScale)
+								.addComponent(lblTempo))
+							.addGap(28)
+							.addGroup(gl_panelParameters.createParallelGroup(Alignment.LEADING, false)
+								.addComponent(tfScale, 0, 0, Short.MAX_VALUE)
+								.addComponent(tfBarNumber, 0, 0, Short.MAX_VALUE)
+								.addComponent(tfTempo, GroupLayout.PREFERRED_SIZE, 60, GroupLayout.PREFERRED_SIZE)))
 						.addGroup(gl_panelParameters.createSequentialGroup()
 							.addComponent(lblImageParameters)
 							.addGap(35)
 							.addComponent(lblParameters)))
-					.addContainerGap(93, Short.MAX_VALUE))
+					.addContainerGap(30, Short.MAX_VALUE))
 				.addGroup(gl_panelParameters.createSequentialGroup()
-					.addGap(129)
-					.addGroup(gl_panelParameters.createParallelGroup(Alignment.LEADING)
-						.addComponent(lblBarNumber)
-						.addComponent(lblScale)
-						.addComponent(lblTempo))
-					.addGap(28)
-					.addGroup(gl_panelParameters.createParallelGroup(Alignment.LEADING, false)
-						.addComponent(tfScale, 0, 0, Short.MAX_VALUE)
-						.addComponent(tfBarNumber, 0, 0, Short.MAX_VALUE)
-						.addComponent(tfTempo, GroupLayout.PREFERRED_SIZE, 60, GroupLayout.PREFERRED_SIZE))
-					.addContainerGap(28, Short.MAX_VALUE))
-				.addGroup(gl_panelParameters.createSequentialGroup()
-					.addContainerGap(12, Short.MAX_VALUE)
-					.addComponent(lblImageFolder)
-					.addGroup(gl_panelParameters.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_panelParameters.createSequentialGroup()
-							.addGap(4)
-							.addComponent(textField, GroupLayout.PREFERRED_SIZE, 178, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(btnBrowse))
-						.addGroup(gl_panelParameters.createSequentialGroup()
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(lblMidiOutput)))
-					.addContainerGap())
-				.addGroup(Alignment.TRAILING, gl_panelParameters.createSequentialGroup()
-					.addContainerGap(84, Short.MAX_VALUE)
-					.addComponent(btnStartReaction)
-					.addGap(81))
+					.addGap(63)
+					.addComponent(lblLogParameters, GroupLayout.DEFAULT_SIZE, 259, Short.MAX_VALUE))
 		);
 		gl_panelParameters.setVerticalGroup(
 			gl_panelParameters.createParallelGroup(Alignment.LEADING)
@@ -272,10 +282,10 @@ public class MainView extends JFrame {
 							.addComponent(lblParameters)))
 					.addGroup(gl_panelParameters.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_panelParameters.createSequentialGroup()
-							.addGap(79)
+							.addGap(49)
 							.addComponent(lblImageMusic))
 						.addGroup(gl_panelParameters.createSequentialGroup()
-							.addGap(65)
+							.addGap(34)
 							.addGroup(gl_panelParameters.createParallelGroup(Alignment.BASELINE)
 								.addComponent(lblTempo)
 								.addComponent(tfTempo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
@@ -287,18 +297,20 @@ public class MainView extends JFrame {
 							.addGroup(gl_panelParameters.createParallelGroup(Alignment.BASELINE)
 								.addComponent(lblScale)
 								.addComponent(tfScale, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))))
-					.addGap(42)
+					.addGap(28)
 					.addGroup(gl_panelParameters.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_panelParameters.createSequentialGroup()
 							.addComponent(lblMidiOutput)
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addGroup(gl_panelParameters.createParallelGroup(Alignment.BASELINE)
-								.addComponent(textField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+								.addComponent(tfMidiOutput, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 								.addComponent(btnBrowse)))
 						.addComponent(lblImageFolder))
-					.addGap(27)
+					.addGap(18)
+					.addComponent(lblLogParameters, GroupLayout.PREFERRED_SIZE, 12, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
 					.addComponent(btnStartReaction, GroupLayout.PREFERRED_SIZE, 59, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(36, Short.MAX_VALUE))
+					.addGap(23))
 		);
 		panelParameters.setLayout(gl_panelParameters);
 		JPanel panelTitle = new JPanel();
@@ -308,6 +320,15 @@ public class MainView extends JFrame {
 		
 		JLabel lblImageChemistry = new JLabel("");
 		lblImageChemistry.setIcon(new ImageIcon(MainView.class.getResource("/img/chemistry.png")));
+		
+		JButton btnAbout = new JButton("About");
+		btnAbout.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				btnAboutAction();
+			}
+		});
+		btnAbout.setHorizontalAlignment(SwingConstants.LEFT);
+		btnAbout.setIcon(new ImageIcon(MainView.class.getResource("/img/male_user_info.png")));
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
@@ -322,8 +343,11 @@ public class MainView extends JFrame {
 									.addComponent(lblImageChemistry)
 									.addGap(18)
 									.addComponent(lblChemicalMusicGenerator))
-								.addComponent(panelInfos, GroupLayout.PREFERRED_SIZE, 293, GroupLayout.PREFERRED_SIZE))
-							.addPreferredGap(ComponentPlacement.UNRELATED)
+								.addComponent(panelInfos, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+								.addGroup(groupLayout.createSequentialGroup()
+									.addGap(10)
+									.addComponent(btnAbout)))
+							.addGap(10)
 							.addComponent(panelParameters, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))))
 		);
 		groupLayout.setVerticalGroup(
@@ -340,9 +364,10 @@ public class MainView extends JFrame {
 									.addGap(11)
 									.addComponent(lblChemicalMusicGenerator)))
 							.addGap(26)
-							.addComponent(panelInfos, GroupLayout.PREFERRED_SIZE, 351, GroupLayout.PREFERRED_SIZE))
-						.addComponent(panelParameters, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addContainerGap())
+							.addComponent(panelInfos, GroupLayout.PREFERRED_SIZE, 282, GroupLayout.PREFERRED_SIZE)
+							.addGap(6)
+							.addComponent(btnAbout))
+						.addComponent(panelParameters, GroupLayout.PREFERRED_SIZE, 427, GroupLayout.PREFERRED_SIZE)))
 		);
 		getContentPane().setLayout(groupLayout);
 	}
@@ -365,28 +390,32 @@ public class MainView extends JFrame {
 		fc.setSelectedFile(new File("chemicalSong.mid"));
 		if (fc.showSaveDialog(this)==JFileChooser.APPROVE_OPTION){
 			saveFile = fc.getSelectedFile();
+			tfMidiOutput.setText(saveFile.getAbsolutePath());
 		}
-		else
+		else{
 			saveFile = null;
+			tfMidiOutput.setText("");
+		}
 	 }
 	 
-	 public void lblOpenFileAction(){
-		 JFileChooser fc = new JFileChooser();
+	 public void lblOpenFileAction(){		 
+		sequencer.stop();
+		//sequencer.close();
+		JFileChooser fc = new JFileChooser();
 		fc.setSelectedFile(new File("chemicalSong.mid"));
 		if (fc.showOpenDialog(this)==JFileChooser.APPROVE_OPTION){
 			loadFile = fc.getSelectedFile();
 			// Create a sequencer for the sequence
 	        try{
-				sequencer = MidiSystem.getSequencer();
-		        sequencer.open();
 		        Sequence sequence = MidiSystem.getSequence(loadFile);
 		        sequencer.setSequence(sequence);
 		        lblPlayingfilename.setText(loadFile.getName());	
-		        lblLog.setText("");
+		        lblLogInfos.setText("");
 		        lblPlayAction();
+		        
 	        }
 	        catch(Exception e){
-	        	lblLog.setText("Unable to load selected file");
+	        	lblLogInfos.setText("Unable to load selected file");
 	        	lblPlayingfilename.setText("");
 	        }
 		}
@@ -401,9 +430,9 @@ public class MainView extends JFrame {
 		 try {
 	        // Start playing
 	        sequencer.start();
-	        lblLog.setText("");
+	        lblLogInfos.setText("");
 	    } catch (Exception e){
-	    	lblLog.setText("Unable to play selected file");
+	    	lblLogInfos.setText("Unable to play selected file");
 	    }			
 		 lblPlay.setIcon(new ImageIcon(MainView.class.getResource("/img/play.png")));
 	 }
@@ -414,11 +443,49 @@ public class MainView extends JFrame {
 	 
 	 public void lblStopAction(){
 		 sequencer.stop();
+		 
 		 lblStop.setIcon(new ImageIcon(MainView.class.getResource("/img/stop.png")));
 	 }
 	 
 	 public void lblStopPressed(){
 		 lblStop.setIcon(new ImageIcon(MainView.class.getResource("/img/stop_pressed.png")));
+	 }
+	 
+	 public void btnStartReactionAction(){
+		 if (checkParameters()){
+			 
+		 }
+	 }
+	 
+	 public boolean checkParameters(){
+		 //tempo
+		 try{
+			 Integer.parseInt(tfTempo.getText());
+		 }
+		 catch(NumberFormatException e){
+			 lblLogParameters.setText("Tempo field should be an integer");
+			 return false;
+		 }
+		 //barNumber
+		 try{
+			 Integer.parseInt(tfBarNumber.getText());
+		 }
+		 catch(NumberFormatException e){
+			 lblLogParameters.setText("Bar number field should be an integer");
+			 return false;
+		 }
+		 if (tfMidiOutput.getText().isEmpty()){
+			 lblLogParameters.setText("You should select a midi output file");
+			 return false;
+		 }
+		 lblLogParameters.setText("");
+		 return true;
+	 }
+	 
+	 public void btnAboutAction(){
+		  JDialog about = new About();
+		  about.setLocationRelativeTo(null);
+		  about.setVisible(true);
 	 }
 	
 	public static void main(String[] args){
