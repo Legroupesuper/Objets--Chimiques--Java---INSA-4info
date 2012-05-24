@@ -8,15 +8,5 @@
   </parent>
   <artifactId>chemicalthread</artifactId>
   <name>Chemical Thread</name>
-  
-  <dependencies>
-      <dependency>
-          <groupId>junit</groupId>
-          <artifactId>junit</artifactId>
-          <version>4.10</version>
-          <type>jar</type>
-          <scope>compile</scope>
-      </dependency>
-  </dependencies>
 
 </project>
