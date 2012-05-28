@@ -29,16 +29,19 @@
 				<archive>
 					<manifest>
 						<mainClass>org.chemicalmozart.Main</mainClass>
+	<!--
 						<addClasspath>true</addClasspath>
-              					<classpathPrefix>../../../..</classpathPrefix>
+	-->
+      <!--        					
+						<classpathPrefix>../../../..</classpathPrefix>
+	-->
+	<!--					
 						<classpathLayoutType>repository</classpathLayoutType>
-
+	-->
 					</manifest>
 				</archive>
 			</configuration>
 		</plugin>
-
 	</plugins>
-	
   </build>
 </project>
