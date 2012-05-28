@@ -22,6 +22,7 @@ import org.chemicalmozart.model.implementations.BarNumber;
 import org.chemicalmozart.model.implementations.QuaterLeft;
 import org.chemicalmozart.model.implementations.QuaterPerBar;
 import org.chemicalmozart.model.implementations.solutionindentification.BarInCreation;
+import org.chemicalmozart.model.implementations.solutionindentification.BarInCreation.BarInCreationState;
 
 import fr.insa.rennes.info.chemical.backend.Solution;
 import fr.insa.rennes.info.chemical.user.Dontuse;
@@ -66,6 +67,7 @@ public class CreateBarRR implements ReactionRule{
 		Solution barCreationSolution = new Solution();
 
 		BarInCreation solutionID = new BarInCreation();
+		solutionID.set_state(BarInCreationState.HARMONICRR);
 		barCreationSolution.add(solutionID);
 
 		QuaterLeft quaterLeft = new QuaterLeft(this._quater.getValue());
@@ -83,7 +85,7 @@ public class CreateBarRR implements ReactionRule{
 
 		MoveToResultRR RR = new MoveToResultRR();
 
-		Object[] res = {barCreationSolution, RR, this._quater, this._number};
+		Object[] res = {barCreationSolution, this._quater, this._number};
 
 		return res;
 	}
@@ -93,6 +95,7 @@ public class CreateBarRR implements ReactionRule{
 	 */
 	@Dontuse
 	public boolean computeSelect() {
+		System.out.println("On est dans le compute select de createBar");
 		return true;
 	}
 

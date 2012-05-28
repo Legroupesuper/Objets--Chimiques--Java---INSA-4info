@@ -19,6 +19,7 @@ import org.chemicalmozart.utils.MusicWriter.NoteValues;
 
 import fr.insa.rennes.info.chemical.backend.ChemicalException;
 import fr.insa.rennes.info.chemical.backend.Solution;
+import fr.insa.rennes.info.chemical.backend.Utils;
 import fr.insa.rennes.info.chemical.user.InertEvent;
 import fr.insa.rennes.info.chemical.user.InertEventListener;
 
@@ -67,8 +68,8 @@ public class StartMelodicRRTest {
 			
 			public void isInert(InertEvent e) {
 				Solution s = (Solution) e.getSource();
-				System.out.println("Apres : ");
-				System.out.println(s);
+				Utils.logger.info("Apres : ");
+				Utils.logger.info(""+s);
 				try {
 					final MusicWriter writer = new MusicWriter(60, NoteValues.DO, "outputMidi.mid");
 					s.add(writer);
@@ -77,8 +78,8 @@ public class StartMelodicRRTest {
 					s.addInertEventListener(new InertEventListener() {
 						
 						public void isInert(InertEvent e) {
-							System.out.println("On a fait ce truc de merde");
-							System.out.println(e.getSource());
+							Utils.logger.info("On a fait ce truc de merde");
+							Utils.logger.info(""+e.getSource());
 							try {
 								writer.writeFile();
 							} catch (IOException e1) {
@@ -97,8 +98,8 @@ public class StartMelodicRRTest {
 				
 			}
 		});
-		System.out.println("Avant : ");
-		System.out.println(mainSol);
+		Utils.logger.info("Avant : ");
+		Utils.logger.info(""+mainSol);
 		mainSol.react();
 	}
 }

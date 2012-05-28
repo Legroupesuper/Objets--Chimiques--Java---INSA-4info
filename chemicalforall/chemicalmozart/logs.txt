@@ -1,0 +1,91 @@
+On appelle le constructeur
+Avant : 
+Solution 2094048729 (isInert ? false)
+{
+	Solution 2127478981 (isInert ? false)
+	{
+		org.chemicalmozart.model.implementations.reactionrules.StartMelodicRR -> [StartMelodicRR [_barNumber=null, _sol=, _pitch=null]]
+		org.chemicalmozart.model.implementations.BarNumber -> [[BarNumber value:0]]
+		org.chemicalmozart.model.implementations.reactionrules.GetPitchRR -> [org.chemicalmozart.model.implementations.reactionrules.GetPitchRR@2e8f4fb3]
+		org.chemicalmozart.model.implementations.Pitch -> [[_octave=1, _degree=DegreeImpl [_value=1]]]
+		org.chemicalmozart.model.implementations.solutionindentification.Result -> [org.chemicalmozart.model.implementations.solutionindentification.Result@5fe04cbf]
+	}
+	Solution 1789308653 (isInert ? true)
+	{
+		org.chemicalmozart.model.implementations.ChordImpl -> [ChordImpl [_degrees=DegreeImpl [_value=1], _position=0, duration=half], ChordImpl [_degrees=DegreeImpl [_value=4], _position=1, duration=half]]
+		java.lang.Integer -> [2]
+		org.chemicalmozart.model.implementations.solutionindentification.BarInCreation -> [org.chemicalmozart.model.implementations.solutionindentification.BarInCreation@2d8aaa1e]
+		org.chemicalmozart.model.implementations.BarNumber -> [[BarNumber value:0]]
+		org.chemicalmozart.model.implementations.QuaterLeft -> [org.chemicalmozart.model.implementations.QuaterLeft@60072ffb]
+	}
+	org.chemicalmozart.model.implementations.reactionrules.MoveToResultRR -> [org.chemicalmozart.model.implementations.reactionrules.MoveToResultRR@6016a786]
+}
+
+On est dans le compute select
+On est dans le compute result
+state : TERMINATED
+On passe dans STATE_TERMINATED
+java.lang.IllegalThreadStateException
+	at java.lang.Thread.start(Thread.java:656)
+	at fr.insa.rennes.info.chemical.backend.Solution.react(Solution.java:670)
+	at org.chemicalmozart.model.implementations.reactionrules.MoveToResultRR.computeResult(MoveToResultRR.java:87)
+	at fr.insa.rennes.info.chemical.backend.ChemicalThread.run(ChemicalThread.java:89)
+java.lang.IllegalThreadStateException
+	at java.lang.Thread.start(Thread.java:656)
+	at fr.insa.rennes.info.chemical.backend.Solution.react(Solution.java:670)
+	at org.chemicalmozart.model.implementations.reactionrules.MoveToResultRR.computeResult(MoveToResultRR.java:87)
+	at fr.insa.rennes.info.chemical.backend.ChemicalThread.run(ChemicalThread.java:89)
+state : TERMINATED
+On passe dans STATE_TERMINATED
+On est dans le compute result
+state : RUNNABLE
+state : BLOCKED
+java.lang.IllegalThreadStateException
+	at java.lang.Thread.start(Thread.java:656)
+	at fr.insa.rennes.info.chemical.backend.Solution.react(Solution.java:670)
+	at org.chemicalmozart.model.implementations.reactionrules.StartMelodicRR.computeResult(StartMelodicRR.java:120)
+	at fr.insa.rennes.info.chemical.backend.ChemicalThread.run(ChemicalThread.java:89)
+java.lang.IllegalThreadStateException
+	at java.lang.Thread.start(Thread.java:656)
+	at fr.insa.rennes.info.chemical.backend.Solution.react(Solution.java:670)
+	at org.chemicalmozart.model.implementations.reactionrules.StartMelodicRR.computeResult(StartMelodicRR.java:120)
+	at fr.insa.rennes.info.chemical.backend.ChemicalThread.run(ChemicalThread.java:89)
+####On est là : 2
+####On est là : 2
+####On est là : 2
+####On est là : 2
+####On est là : 2
+####On est là : 2
+####On est là : 2
+####On est là : 2
+####On est là : 2
+####On est là : 2
+Rand : 0
+Rand : 2
+Inerte ? true
+Apres : 
+Solution 2094048729 (isInert ? true)
+{
+	Solution 2127478981 (isInert ? true)
+	{
+		org.chemicalmozart.model.implementations.reactionrules.StartMelodicRR -> [StartMelodicRR [_barNumber=[BarNumber value:1], _sol=, _pitch=[_octave=1, _degree=DegreeImpl [_value=1]]]]
+		org.chemicalmozart.model.implementations.BarNumber -> [[BarNumber value:1]]
+		Solution 1789308653 (isInert ? true)
+		{
+			org.chemicalmozart.model.implementations.reactionrules.RemovePullRR -> [org.chemicalmozart.model.implementations.reactionrules.RemovePullRR@6b4da8f4]
+			org.chemicalmozart.model.implementations.ChordImpl -> [ChordImpl [_degrees=DegreeImpl [_value=1], _position=0, duration=half], ChordImpl [_degrees=DegreeImpl [_value=4], _position=1, duration=half]]
+			java.lang.Integer -> [2]
+			org.chemicalmozart.model.implementations.solutionindentification.BarInCreation -> []
+			org.chemicalmozart.model.implementations.BarNumber -> [[BarNumber value:0]]
+			org.chemicalmozart.model.implementations.Note -> [{Note : [_octave=1, _degree=DegreeImpl [_value=1]] position:0 rythme:quater}, {Note : [_octave=1, _degree=DegreeImpl [_value=2]] position:1 rythme:quater}, {Note : [_octave=1, _degree=DegreeImpl [_value=1]] position:2 rythme:eighth}, {Note : [_octave=1, _degree=DegreeImpl [_value=1]] position:3 rythme:eighth}, {Note : [_octave=1, _degree=DegreeImpl [_value=2]] position:4 rythme:quater}]
+			org.chemicalmozart.model.implementations.QuaterLeft -> [org.chemicalmozart.model.implementations.QuaterLeft@60072ffb]
+			org.chemicalmozart.model.implementations.Pitch -> []
+			org.chemicalmozart.model.implementations.reactionrules.MelodicRR -> [org.chemicalmozart.model.implementations.reactionrules.MelodicRR@632d3205]
+		}
+		org.chemicalmozart.model.implementations.reactionrules.GetPitchRR -> [org.chemicalmozart.model.implementations.reactionrules.GetPitchRR@2e8f4fb3]
+		org.chemicalmozart.model.implementations.Pitch -> [[_octave=1, _degree=DegreeImpl [_value=2]]]
+		org.chemicalmozart.model.implementations.solutionindentification.Result -> [org.chemicalmozart.model.implementations.solutionindentification.Result@1b52513a]
+	}
+	org.chemicalmozart.model.implementations.reactionrules.MoveToResultRR -> [org.chemicalmozart.model.implementations.reactionrules.MoveToResultRR@6016a786]
+}
+

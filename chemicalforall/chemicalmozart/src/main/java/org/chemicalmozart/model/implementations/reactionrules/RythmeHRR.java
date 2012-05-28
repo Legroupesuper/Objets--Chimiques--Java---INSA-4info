@@ -26,7 +26,9 @@ import org.chemicalmozart.model.implementations.DegreeImpl;
 import org.chemicalmozart.model.implementations.QuaterLeft;
 import org.chemicalmozart.model.implementations.Rythme;
 import org.chemicalmozart.model.implementations.solutionindentification.BarInCreation;
+import org.chemicalmozart.model.implementations.solutionindentification.BarInCreation.BarInCreationState;
 
+import fr.insa.rennes.info.chemical.backend.Solution;
 import fr.insa.rennes.info.chemical.backend.SubSolution;
 import fr.insa.rennes.info.chemical.backend.SubSolutionElements;
 import fr.insa.rennes.info.chemical.user.ReactionRule;
@@ -61,6 +63,20 @@ public class RythmeHRR implements ReactionRule{
 	private SubSolution<SubSolutionElements> _sol;
 
 	/**
+	 * @return the _sol
+	 */
+	public SubSolution<SubSolutionElements> get_sol() {
+		return _sol;
+	}
+
+	/**
+	 * @param _sol the _sol to set
+	 */
+	public void set_sol(SubSolution<SubSolutionElements> _sol) {
+		this._sol = _sol;
+	}
+
+	/**
 	 * The constructor is used to fill the types we want to match in the subsolution
 	 */
 	public RythmeHRR() {
@@ -70,12 +86,6 @@ public class RythmeHRR implements ReactionRule{
 		_sol.addType(Integer.class);
 		_sol.addType(DegreeImpl.class);
 		_sol.addType(QuaterLeft.class);
-		/*List<Class<? extends Object>> l = new ArrayList<Class<? extends Object>>();
-		l.add(BarInCreation.class);
-		l.add(Integer.class);
-		l.add(DegreeImpl.class);
-		l.add(QuaterLeft.class);
-		_sol.setTypeList(l);*/
 	}
 
 	/**
@@ -86,7 +96,7 @@ public class RythmeHRR implements ReactionRule{
 	 * @return The new ChordImpl well initialized @see {@link ChordImpl}, the int increased by one, the QuaterLeft decreased by the duration.
 	 */
 	public Object[] computeResult() {
-		QuaterLeft qLeft = (QuaterLeft)_sol.getElements().get(3);
+	/*	QuaterLeft qLeft = (QuaterLeft)_sol.getElements().get(3);
 		Rythme chosenDuration;
 		QuaterLeft newQLeft;
 		int position;
@@ -97,7 +107,7 @@ public class RythmeHRR implements ReactionRule{
 		}
 		else{
 			position = 0;
-			int choice = (int)Math.random()*2;
+			int choice = (int)(Math.random()*2);
 			if (choice == 0){
 				chosenDuration = Rythme.half;
 				newQLeft = new QuaterLeft(2);
@@ -110,51 +120,33 @@ public class RythmeHRR implements ReactionRule{
 		chordImpl.setDuration(chosenDuration);
 		chordImpl.set_degrees((DegreeImpl)_sol.getElements().get(2));
 		chordImpl.set_position(position);
-		return new Object[]{chordImpl, position+1, newQLeft, (BarInCreation)_sol.getElements().get(0)};
+		
+		Solution sol = _sol.getSolution();
+		sol.add(chordImpl);
+		sol.add(position+1);
+		sol.add(newQLeft);
+		BarInCreation bic = (BarInCreation)_sol.getElements().get(0);
+		bic.set_state(BarInCreationState.HARMONICRR);
+		*/
+		return null;
 	}
 
 	/**
 	 * Must check that the BarInCreation object is in the good state and that all objects are present.
 	 */
 	public boolean computeSelect() {
-		List<Object> solElements = _sol.getElements();
-		boolean barInCreationPresent = false;
+		System.out.println("Compute select de RythmeRR");
+		/*List<Object> barInCreationElements = _sol.getElements();
 		boolean barInCreationInGoodState = false;
-		boolean intPresent = false;
-		boolean QuaterLeftPresent = false;
-		boolean DegreeImplPresent = false;
-		if (solElements != null){
-			if (solElements.size()>=4){
-				barInCreationPresent = solElements.get(0) instanceof BarInCreation;
-				if(barInCreationPresent){
-					barInCreationInGoodState = 
-							((BarInCreation)solElements.get(0)).get_state().equals(BarInCreation.BarInCreationState.RYTHMEHRR);
-				}
-				intPresent = solElements.get(1) instanceof Integer;
-				DegreeImplPresent = solElements.get(2) instanceof DegreeImpl;
-				QuaterLeftPresent = solElements.get(3) instanceof QuaterLeft;
-			}
-		}
-			return (barInCreationInGoodState && intPresent && DegreeImplPresent && QuaterLeftPresent);
+		barInCreationInGoodState = 
+				((BarInCreation)barInCreationElements.get(0)).get_state().equals(BarInCreation.BarInCreationState.RYTHMEHRR);
+	//	return barInCreationInGoodState;
+	 * */
+	 
+		return false;
 	}
 
 	public Multiplicity getMultiplicity() {
-		return null;
+		return Multiplicity.ONE_SHOT;
 	}
-
-	/**
-	 * @return the sol
-	 */
-	public SubSolution<SubSolutionElements> getSol() {
-		return this._sol;
-	}
-	/**
-	 * @param sol the sol to set
-	 */
-	public void setSol(SubSolution<SubSolutionElements> sol) {
-		this._sol = sol;
-	}
-
-
-
 }

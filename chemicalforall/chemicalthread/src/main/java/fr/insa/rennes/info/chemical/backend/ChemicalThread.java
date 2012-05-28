@@ -76,9 +76,9 @@ public class ChemicalThread extends Thread {
 	public void run() {
 		//Run as long as the solution is not inert AND as long
 		//as we didn't stop the thread "manually"
-		while(!_solutionContainer.is_inert() && _continue){
+		while(/*!_solutionContainer.is_inert() && */_continue){
 
-			synchronized (_solutionContainer) {
+			synchronized (_solutionContainer.getLock()) {
 			Utils.logger.info("Un tour de boucle "+_reactionRule);
 			//If we find enough valid parameters...
 				boolean rfp = _solutionContainer.requestForParameters(_reactionRule);
@@ -97,7 +97,7 @@ public class ChemicalThread extends Thread {
 					if(_reactionRule.getMultiplicity().equals(Multiplicity.ONE_SHOT) && obj!=null &&  !Arrays.asList(obj).contains(_reactionRule)){
 						_solutionContainer.deleteReaction(_reactionRule);
 						_solutionContainer.wakeAll();
-						Utils.logger.info("C'était une One-shot");
+						Utils.logger.info("C'était une One-shot "+_reactionRule);
 						break;
 					}
 				}else{
@@ -108,13 +108,14 @@ public class ChemicalThread extends Thread {
 				}
 			}
 		}
-		Utils.logger.info("On sort");
+		Utils.logger.info("On sort de "+_reactionRule);
 	}
 
 	/**
 	 * Stops the infinite loop in the run() function.
 	 */
 	public void stopTheThread(){
+		Utils.logger.info("On éteint le thread "+_reactionRule);
 		_continue  = false;
 	}
 

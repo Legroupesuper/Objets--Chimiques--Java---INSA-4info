@@ -74,8 +74,6 @@ public class PickOneRRTest extends TestCase{
 		SubSolution<SubSolutionElements> barInCreation = new SubSolution<SubSolutionElements>(e2);
 
 		PickOneRR rr = new PickOneRR();
-		rr.set_barInCreation(barInCreation);
-		rr.get_barInCreation().setSolution(new Solution());
 		rr.get_temporaryBar().setSolution(new Solution());
 		rr.set_temporaryBar(temporaryBar);
 
