@@ -78,7 +78,7 @@ public final class Solution implements Collection<Object>{
 	 * Indicates whether or not the solution is inert. An inert solution is a solution that finished 
 	 * all its possible reaction and reached a stable state.
 	 */
-	private boolean _inert = false;
+	private boolean _inert;
 
 	/**
 	 * Indicates that the reaction is still in progress. Useful for the reaction rules threads. If it is set at false,
