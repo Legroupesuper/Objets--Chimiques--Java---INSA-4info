@@ -69,7 +69,7 @@ public class PickOneRR implements ReactionRule{
 		tempSol.add(new Temporary());
 		
 		DegreeImpl deg = (DegreeImpl) _temporaryBar.getElements().get(1);
-		
+		System.out.println("On va réinjecter le degré "+deg);
 		return new Object[]{deg, new GarbageRR()};
 	}
 
@@ -78,6 +78,7 @@ public class PickOneRR implements ReactionRule{
 	 * @TODO check that the trick is working
 	 */
 	public boolean computeSelect() {
+		System.out.println("On est dans le compute select de pickone : true");
 		return true;
 	}
 

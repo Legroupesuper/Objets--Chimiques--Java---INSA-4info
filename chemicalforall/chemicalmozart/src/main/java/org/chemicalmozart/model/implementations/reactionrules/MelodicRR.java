@@ -108,6 +108,8 @@ public class MelodicRR implements ReactionRule{
 			}else{
 				octave = _pitch.getOctave();
 			}
+			if(octave<0)octave=1;
+			if(octave>3)octave=1;
 			_note.set_pitch(new Pitch(octave, new DegreeImpl(notePitch)));
 		}
 		else{//Not strong

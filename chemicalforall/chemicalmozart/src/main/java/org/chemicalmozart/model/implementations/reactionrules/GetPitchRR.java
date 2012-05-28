@@ -57,6 +57,7 @@ public class GetPitchRR implements ReactionRule{
 
 	public boolean computeSelect() {
 		System.out.println("Inerte ? "+_subSol.getSolution().is_inert());
+		System.out.println("On est dans le compute select de getPitch : "+true);
 		return true;
 	}
 

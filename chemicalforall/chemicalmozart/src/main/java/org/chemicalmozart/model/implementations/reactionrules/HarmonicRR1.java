@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.chemicalmozart.model.implementations.DegreeImpl;
+import org.chemicalmozart.model.implementations.QuaterLeft;
 import org.chemicalmozart.model.implementations.solutionindentification.BarInCreation.BarInCreationState;
 import org.chemicalmozart.model.implementations.solutionindentification.BarInCreation;
 import org.chemicalmozart.model.implementations.solutionindentification.Temporary;
@@ -94,6 +95,7 @@ public class HarmonicRR1 implements ReactionRule{
 		super();
 		_barInCreationSolution = new SubSolution<SubSolutionElements>();
 		_barInCreationSolution.addType(BarInCreation.class);
+		_barInCreationSolution.addType(QuaterLeft.class);
 	}
 
 	/**
@@ -131,19 +133,20 @@ public class HarmonicRR1 implements ReactionRule{
 		//Percentages
 		int chancesOfGoingOnADegree1 = 10;
 		int chancesOfGoingOnADegree2 = 10;
-		int chancesOfGoingOnADegree3 = 10;
+		int chancesOfGoingOnADegree3 = 20;
 		int chancesOfGoingOnADegree4 = 25;
-		int chancesOfGoingOnADegree5 = 30;
+		int chancesOfGoingOnADegree5 = 20;
 		int chancesOfGoingOnADegree6 = 15;
 
 		//Modification of _barInCreationSolution
 		Solution barInCreationSolution = _barInCreationSolution.getSolution();
+		barInCreationSolution.add(_barInCreationSolution.getElements().get(1));
 		barInCreationSolution.add(_degree);
 		BarInCreation babar = new BarInCreation();
 		babar.set_state(BarInCreationState.RYTHMEHRR);
 		barInCreationSolution.add(babar);
 		barInCreationSolution.add(_degree);
-
+		barInCreationSolution.add(new RythmeHRR());
 		//Creation of the harmonicSolution which will be in the return statement
 		for(int i = 0; i<chancesOfGoingOnADegree1;i++){
 			temporarySolution.add(new DegreeImpl(1));	
@@ -165,7 +168,7 @@ public class HarmonicRR1 implements ReactionRule{
 		}
 
 		//Return statement
-		return new Object[]{temporarySolution,new PickOneRR()/*,new RythmeHRR()*/};
+		return new Object[]{temporarySolution,new PickOneRR()};
 
 	}
 
@@ -177,9 +180,11 @@ public class HarmonicRR1 implements ReactionRule{
 	public boolean computeSelect() {
 		List<Object> barInCreationElements = _barInCreationSolution.getElements();
 		boolean barInCreationInGoodState = false;
+		boolean quaterLeftInGoodState = false;
+		quaterLeftInGoodState = ((QuaterLeft)barInCreationElements.get(1)).getValue()>0;
 		barInCreationInGoodState = 
 				((BarInCreation)barInCreationElements.get(0)).get_state().equals(BarInCreation.BarInCreationState.HARMONICRR);
-		return barInCreationInGoodState && (_degree.get_value()==1);
+		return barInCreationInGoodState && (_degree.get_value()==1) && quaterLeftInGoodState;
 	}
 
 

@@ -85,7 +85,7 @@ public class MoveToResultRR implements ReactionRule{
 		resultSolution.add(resultID);
 		resultSolution.add(_subSolInCreation);
 		resultSolution.react();
-		return new Object[]{};
+		return new Object[]{new CreateBarRR()};
 	}
 
 	/**
