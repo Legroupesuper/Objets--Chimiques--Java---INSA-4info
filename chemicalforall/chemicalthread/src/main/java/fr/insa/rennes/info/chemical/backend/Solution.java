@@ -832,7 +832,6 @@ public final class Solution implements Collection<Object>{
 		Pair<Solution, Object> reagentObject = null;
 		int i;
 		boolean tryComputeSelect;
-		System.out.println("On va instancier les paramètres de "+rr);
 		//Loop until the reagents has been found OR all combination have been tested
 		while(!indexProvider.is_overflowReached()) {
 			SubIndexProviderSolution sipSol = indexProvider.getSubIndexProvider();
@@ -872,11 +871,9 @@ public final class Solution implements Collection<Object>{
 			//wrong with the set of reagents
 			reagents.clear();
 
-			System.out.println(indexProvider);
 			//Increment the index provider and loop
 			indexProvider.increment();
 		}
-		System.out.println("Overflow reached : "+rr);
 		//If we reach this line, it means we tried every combination and all failed
 		return null;
 	}

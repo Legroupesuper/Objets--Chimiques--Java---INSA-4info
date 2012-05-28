@@ -18,10 +18,8 @@ import org.chemicalmozart.model.implementations.reactionrules.HarmonicRR5;
 import org.chemicalmozart.model.implementations.reactionrules.HarmonicRR6;
 import org.chemicalmozart.model.implementations.reactionrules.StartMelodicRR;
 import org.chemicalmozart.model.implementations.solutionindentification.Result;
-import org.chemicalmozart.utils.GetWriterRR;
 import org.chemicalmozart.utils.MusicWriter;
 import org.chemicalmozart.utils.SolutionWriterRR;
-import org.chemicalmozart.utils.StartToWriteRR;
 import org.chemicalmozart.utils.MusicWriter.NoteValues;
 
 import fr.insa.rennes.info.chemical.backend.ChemicalException;
@@ -39,7 +37,7 @@ public class FromTheStartTest {
 		Solution mainSol = new Solution();
 		mainSol.add(new CreateBarRR());
 		mainSol.add(new QuaterPerBar(4));
-		mainSol.add(5);
+		mainSol.add(35);
 		mainSol.add(new BarNumber(0));
 		mainSol.add(new DegreeImpl(1));
 		mainSol.add(new HarmonicRR1());
