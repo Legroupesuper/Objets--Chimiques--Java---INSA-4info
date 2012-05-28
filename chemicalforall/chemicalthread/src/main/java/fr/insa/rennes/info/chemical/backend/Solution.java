@@ -199,7 +199,7 @@ public final class Solution implements Collection<Object>{
 
 			ChemicalThread t = new ChemicalThread(r, this, _threadGroup);
 			_threadTable.put(r, t);
-
+			Utils.logger.info("Reaction already happened ? : "+_reactAlreadyHappened);
 			//Only if the reaction is in progress, we start the thread
 			if(_reactAlreadyHappened){
 				t.start();
@@ -608,7 +608,7 @@ public final class Solution implements Collection<Object>{
 				interrupted = false;
 				Utils.logger.info("On va tenter le wait "+this.hashCode());
 				try {
-					_lock.notifyAll();
+					//_lock.notifyAll();
 					_lock.wait();
 				} catch (InterruptedException e) {
 					Utils.logger.info("On a une exception au moment de faire wait "+this.hashCode());
@@ -832,7 +832,7 @@ public final class Solution implements Collection<Object>{
 		Pair<Solution, Object> reagentObject = null;
 		int i;
 		boolean tryComputeSelect;
-
+		System.out.println("On va instancier les paramètres de "+rr);
 		//Loop until the reagents has been found OR all combination have been tested
 		while(!indexProvider.is_overflowReached()) {
 			SubIndexProviderSolution sipSol = indexProvider.getSubIndexProvider();
@@ -872,10 +872,11 @@ public final class Solution implements Collection<Object>{
 			//wrong with the set of reagents
 			reagents.clear();
 
+			System.out.println(indexProvider);
 			//Increment the index provider and loop
 			indexProvider.increment();
 		}
-
+		System.out.println("Overflow reached : "+rr);
 		//If we reach this line, it means we tried every combination and all failed
 		return null;
 	}

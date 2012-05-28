@@ -37,7 +37,7 @@ public class GarbageRR implements ReactionRule{
 	 *  @return It returns null
 	 */
 	public Object[] computeResult() {
-		return null;
+		return new Object[]{};
 	}
 
 	/**
@@ -46,9 +46,11 @@ public class GarbageRR implements ReactionRule{
 	public boolean computeSelect() {
 		for(Object o : this._temporarySolution){
 			if(o instanceof Temporary){
+				System.out.println("Compute select de GarbageRR : "+true);
 				return true;
 			}
 		}
+		System.out.println("Compute select de GarbageRR : "+false);
 		return false;
 	}
 
@@ -58,6 +60,7 @@ public class GarbageRR implements ReactionRule{
 	public Solution get_temporarySolution() {
 		return this._temporarySolution;
 	}
+	
 	public Multiplicity getMultiplicity() {
 		return ReactionRule.Multiplicity.ONE_SHOT;
 	}

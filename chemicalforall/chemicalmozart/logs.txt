@@ -1,30 +1,117 @@
 On appelle le constructeur
 Avant : 
-Solution 2094048729 (isInert ? false)
+Solution 1608535231 (isInert ? false)
 {
-	Solution 2127478981 (isInert ? false)
+	org.chemicalmozart.model.implementations.reactionrules.HarmonicRR4 -> [org.chemicalmozart.model.implementations.reactionrules.HarmonicRR4@66388993]
+	org.chemicalmozart.model.implementations.reactionrules.HarmonicRR5 -> [org.chemicalmozart.model.implementations.reactionrules.HarmonicRR5@6aa6aeed]
+	org.chemicalmozart.model.implementations.reactionrules.CreateBarRR -> [org.chemicalmozart.model.implementations.reactionrules.CreateBarRR@457471e0]
+	org.chemicalmozart.model.implementations.reactionrules.HarmonicRR2 -> [org.chemicalmozart.model.implementations.reactionrules.HarmonicRR2@2e8f4fb3]
+	org.chemicalmozart.model.implementations.reactionrules.HarmonicRR3 -> [org.chemicalmozart.model.implementations.reactionrules.HarmonicRR3@7d2a1e44]
+	org.chemicalmozart.model.implementations.reactionrules.HarmonicRR1 -> [org.chemicalmozart.model.implementations.reactionrules.HarmonicRR1@5e228a02]
+	org.chemicalmozart.model.implementations.QuaterPerBar -> [4]
+	org.chemicalmozart.model.implementations.DegreeImpl -> [DegreeImpl [_value=1]]
+	java.lang.Integer -> [5]
+	org.chemicalmozart.model.implementations.BarNumber -> [[BarNumber value:0]]
+	Solution 1867546546 (isInert ? false)
 	{
 		org.chemicalmozart.model.implementations.reactionrules.StartMelodicRR -> [StartMelodicRR [_barNumber=null, _sol=, _pitch=null]]
 		org.chemicalmozart.model.implementations.BarNumber -> [[BarNumber value:0]]
-		org.chemicalmozart.model.implementations.reactionrules.GetPitchRR -> [org.chemicalmozart.model.implementations.reactionrules.GetPitchRR@2e8f4fb3]
+		org.chemicalmozart.model.implementations.reactionrules.GetPitchRR -> [org.chemicalmozart.model.implementations.reactionrules.GetPitchRR@6f7a29a1]
 		org.chemicalmozart.model.implementations.Pitch -> [[_octave=1, _degree=DegreeImpl [_value=1]]]
-		org.chemicalmozart.model.implementations.solutionindentification.Result -> [org.chemicalmozart.model.implementations.solutionindentification.Result@5fe04cbf]
+		org.chemicalmozart.model.implementations.solutionindentification.Result -> [org.chemicalmozart.model.implementations.solutionindentification.Result@6016a786]
 	}
-	Solution 1789308653 (isInert ? true)
-	{
-		org.chemicalmozart.model.implementations.ChordImpl -> [ChordImpl [_degrees=DegreeImpl [_value=1], _position=0, duration=half], ChordImpl [_degrees=DegreeImpl [_value=4], _position=1, duration=half]]
-		java.lang.Integer -> [2]
-		org.chemicalmozart.model.implementations.solutionindentification.BarInCreation -> [org.chemicalmozart.model.implementations.solutionindentification.BarInCreation@2d8aaa1e]
-		org.chemicalmozart.model.implementations.BarNumber -> [[BarNumber value:0]]
-		org.chemicalmozart.model.implementations.QuaterLeft -> [org.chemicalmozart.model.implementations.QuaterLeft@60072ffb]
-	}
-	org.chemicalmozart.model.implementations.reactionrules.MoveToResultRR -> [org.chemicalmozart.model.implementations.reactionrules.MoveToResultRR@6016a786]
+	org.chemicalmozart.model.implementations.reactionrules.HarmonicRR6 -> [org.chemicalmozart.model.implementations.reactionrules.HarmonicRR6@20d2906a]
 }
 
-On est dans le compute select
-On est dans le compute result
-state : TERMINATED
-On passe dans STATE_TERMINATED
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.HarmonicRR1@5e228a02
+{ 0 : |0/1{ 0 : |0/0|0/0}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.HarmonicRR1@5e228a02
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.HarmonicRR2@2e8f4fb3
+{ 0 : |0/1{ 0 : |0/0|0/0}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.HarmonicRR2@2e8f4fb3
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.HarmonicRR5@6aa6aeed
+{ 0 : |0/1{ 0 : |0/0|0/0}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.HarmonicRR5@6aa6aeed
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.CreateBarRR@457471e0
+On est dans le compute select de createBar
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.HarmonicRR4@66388993
+Compute select de HarmonicRR1 : false
+{ 0 : |0/1{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}}
+{ 0 : |0/1{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.HarmonicRR4@66388993
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.HarmonicRR6@20d2906a
+Compute select de HarmonicRR1 : false
+{ 0 : |0/1{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}}
+{ 0 : |0/1{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.HarmonicRR6@20d2906a
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.HarmonicRR3@7d2a1e44
+Compute select de HarmonicRR1 : false
+{ 0 : |0/1{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}}
+{ 0 : |0/1{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.HarmonicRR3@7d2a1e44
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.HarmonicRR3@7d2a1e44
+{ 0 : |0/1{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}}
+Compute select de HarmonicRR1 : false
+{ 0 : |0/1{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.HarmonicRR3@7d2a1e44
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.HarmonicRR6@20d2906a
+Compute select de HarmonicRR1 : false
+{ 0 : |0/1{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}}
+{ 0 : |0/1{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.HarmonicRR6@20d2906a
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.HarmonicRR4@66388993
+Compute select de HarmonicRR1 : false
+{ 0 : |0/1{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}}
+{ 0 : |0/1{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.HarmonicRR4@66388993
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.MoveToResultRR@61b383e9
+On est dans le compute select de moveToResult
+Solution 1867546546 (isInert ? true)
+{
+	org.chemicalmozart.model.implementations.reactionrules.StartMelodicRR -> [StartMelodicRR [_barNumber=null, _sol=, _pitch=null]]
+	org.chemicalmozart.model.implementations.BarNumber -> [[BarNumber value:0]]
+	org.chemicalmozart.model.implementations.reactionrules.GetPitchRR -> [org.chemicalmozart.model.implementations.reactionrules.GetPitchRR@6f7a29a1]
+	org.chemicalmozart.model.implementations.Pitch -> [[_octave=1, _degree=DegreeImpl [_value=1]]]
+	org.chemicalmozart.model.implementations.solutionindentification.Result -> [org.chemicalmozart.model.implementations.solutionindentification.Result@6016a786]
+}
+
+false
+{ 0 : |1/2{ 0 : |0/1}{ 1 : |0/0}}
+{ 0 : |0/2{ 0 : |0/1}{ 1 : |0/0}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.MoveToResultRR@61b383e9
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.HarmonicRR5@6aa6aeed
+Compute select de HarmonicRR1 : false
+{ 0 : |0/1{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}}
+{ 0 : |0/1{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.HarmonicRR5@6aa6aeed
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.HarmonicRR2@2e8f4fb3
+Compute select de HarmonicRR1 : false
+{ 0 : |0/1{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}}
+{ 0 : |0/1{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.HarmonicRR2@2e8f4fb3
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.HarmonicRR1@5e228a02
+{ 0 : |0/1{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}}
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.HarmonicRR1@5e228a02
+{ 0 : |0/0{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}{ 2 : |0/0|0/0}}
+{ 0 : |0/0{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}{ 2 : |0/0|0/0}}
+{ 0 : |0/0{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}{ 2 : |0/0|0/0}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.HarmonicRR1@5e228a02
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.RythmeHRR@45bc887b
+Compute select de RythmeRR : true
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.HarmonicRR2@2e8f4fb3
+{ 0 : |0/0{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}{ 2 : |0/0|0/0}}
+{ 0 : |0/0{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}{ 2 : |0/0|0/0}}
+{ 0 : |0/0{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}{ 2 : |0/0|0/0}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.HarmonicRR2@2e8f4fb3
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.HarmonicRR5@6aa6aeed
+{ 0 : |0/0{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}{ 2 : |0/0|0/0}}
+{ 0 : |0/0{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}{ 2 : |0/0|0/0}}
+{ 0 : |0/0{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}{ 2 : |0/0|0/0}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.HarmonicRR5@6aa6aeed
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.MoveToResultRR@61b383e9
+{ 0 : |0/3{ 0 : |0/1}{ 1 : |0/0}{ 2 : |0/0}}
+{ 0 : |2/3{ 0 : |0/1}{ 1 : |0/0}{ 2 : |0/0}}
+{ 0 : |0/3{ 0 : |0/1}{ 1 : |0/0}{ 2 : |0/0}}
 java.lang.IllegalThreadStateException
 	at java.lang.Thread.start(Thread.java:656)
 	at fr.insa.rennes.info.chemical.backend.Solution.react(Solution.java:670)
@@ -35,57 +122,2409 @@ java.lang.IllegalThreadStateException
 	at fr.insa.rennes.info.chemical.backend.Solution.react(Solution.java:670)
 	at org.chemicalmozart.model.implementations.reactionrules.MoveToResultRR.computeResult(MoveToResultRR.java:87)
 	at fr.insa.rennes.info.chemical.backend.ChemicalThread.run(ChemicalThread.java:89)
+{ 0 : |1/3{ 0 : |0/1}{ 1 : |0/0}{ 2 : |0/0}}
+On est dans le compute select de moveToResult
+Solution 1867546546 (isInert ? true)
+{
+	org.chemicalmozart.model.implementations.reactionrules.StartMelodicRR -> [StartMelodicRR [_barNumber=null, _sol=, _pitch=null]]
+	org.chemicalmozart.model.implementations.BarNumber -> [[BarNumber value:0]]
+	org.chemicalmozart.model.implementations.reactionrules.GetPitchRR -> [org.chemicalmozart.model.implementations.reactionrules.GetPitchRR@6f7a29a1]
+	org.chemicalmozart.model.implementations.Pitch -> [[_octave=1, _degree=DegreeImpl [_value=1]]]
+	org.chemicalmozart.model.implementations.solutionindentification.Result -> [org.chemicalmozart.model.implementations.solutionindentification.Result@6016a786]
+}
+
+false
+{ 0 : |2/3{ 0 : |0/1}{ 1 : |0/0}{ 2 : |0/0}}
+On est dans le compute select de moveToResult
+Solution 1867546546 (isInert ? true)
+{
+	org.chemicalmozart.model.implementations.reactionrules.StartMelodicRR -> [StartMelodicRR [_barNumber=null, _sol=, _pitch=null]]
+	org.chemicalmozart.model.implementations.BarNumber -> [[BarNumber value:0]]
+	org.chemicalmozart.model.implementations.reactionrules.GetPitchRR -> [org.chemicalmozart.model.implementations.reactionrules.GetPitchRR@6f7a29a1]
+	org.chemicalmozart.model.implementations.Pitch -> [[_octave=1, _degree=DegreeImpl [_value=1]]]
+	org.chemicalmozart.model.implementations.solutionindentification.Result -> [org.chemicalmozart.model.implementations.solutionindentification.Result@6016a786]
+}
+
+true
+On est dans le compute result
 state : TERMINATED
 On passe dans STATE_TERMINATED
+state : TERMINATED
+On passe dans STATE_TERMINATED
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.HarmonicRR4@66388993
+{ 0 : |0/0{ 0 : |0/0|0/0}{ 1 : |0/0|0/0}}
+{ 0 : |0/0{ 0 : |0/0|0/0}{ 1 : |0/0|0/0}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.HarmonicRR4@66388993
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.HarmonicRR6@20d2906a
+{ 0 : |0/0{ 0 : |0/0|0/0}{ 1 : |0/0|0/0}}
+{ 0 : |0/0{ 0 : |0/0|0/0}{ 1 : |0/0|0/0}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.HarmonicRR6@20d2906a
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.HarmonicRR3@7d2a1e44
+{ 0 : |0/0{ 0 : |0/0|0/0}{ 1 : |0/0|0/0}}
+{ 0 : |0/0{ 0 : |0/0|0/0}{ 1 : |0/0|0/0}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.HarmonicRR3@7d2a1e44
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.CreateBarRR@68e0b6f5
+On est dans le compute select de createBar
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.MoveToResultRR@35ab28fe
+{ 0 : |2/3{ 0 : |0/1}{ 1 : |0/0}{ 2 : |0/0}}
+{ 0 : |1/3{ 0 : |0/1}{ 1 : |0/0}{ 2 : |0/0}}
+{ 0 : |1/3{ 0 : |0/1}{ 1 : |0/0}{ 2 : |0/0}}
+{ 0 : |0/3{ 0 : |0/1}{ 1 : |0/0}{ 2 : |0/0}}
+{ 0 : |2/3{ 0 : |0/1}{ 1 : |0/0}{ 2 : |0/0}}
+{ 0 : |0/3{ 0 : |0/1}{ 1 : |0/0}{ 2 : |0/0}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.MoveToResultRR@35ab28fe
+On va instancier les paramètres de StartMelodicRR [_barNumber=null, _sol=, _pitch=null]
+On est dans le compute select de StartMelodicRR : true
 On est dans le compute result
-state : RUNNABLE
 state : BLOCKED
 java.lang.IllegalThreadStateException
 	at java.lang.Thread.start(Thread.java:656)
 	at fr.insa.rennes.info.chemical.backend.Solution.react(Solution.java:670)
 	at org.chemicalmozart.model.implementations.reactionrules.StartMelodicRR.computeResult(StartMelodicRR.java:120)
 	at fr.insa.rennes.info.chemical.backend.ChemicalThread.run(ChemicalThread.java:89)
+state : BLOCKED
 java.lang.IllegalThreadStateException
 	at java.lang.Thread.start(Thread.java:656)
 	at fr.insa.rennes.info.chemical.backend.Solution.react(Solution.java:670)
 	at org.chemicalmozart.model.implementations.reactionrules.StartMelodicRR.computeResult(StartMelodicRR.java:120)
 	at fr.insa.rennes.info.chemical.backend.ChemicalThread.run(ChemicalThread.java:89)
-####On est là : 2
-####On est là : 2
-####On est là : 2
-####On est là : 2
-####On est là : 2
-####On est là : 2
-####On est là : 2
-####On est là : 2
-####On est là : 2
-####On est là : 2
-Rand : 0
-Rand : 2
+On va instancier les paramètres de StartMelodicRR [_barNumber=[BarNumber value:0], _sol=, _pitch=[_octave=1, _degree=DegreeImpl [_value=1]]]
+{ 0 : |0/1{ 0 : |0/1|0/1}|0/0}
+Overflow reached : StartMelodicRR [_barNumber=[BarNumber value:1], _sol=, _pitch=[_octave=1, _degree=DegreeImpl [_value=1]]]
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.GetPitchRR@6f7a29a1
+{ 0 : { 0 : |0/1|0/1}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.GetPitchRR@6f7a29a1
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.HarmonicRR5@6aa6aeed
+{ 0 : |0/0{ 0 : |0/0|0/0}{ 1 : |0/0|0/0}{ 2 : |0/1|0/1}}
+{ 0 : |0/0{ 0 : |0/0|0/0}{ 1 : |0/0|0/0}{ 2 : |0/1|0/1}}
+{ 0 : |0/0{ 0 : |0/0|0/0}{ 1 : |0/0|0/0}{ 2 : |0/1|0/1}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.HarmonicRR5@6aa6aeed
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.HarmonicRR2@2e8f4fb3
+{ 0 : |0/0{ 0 : |0/0|0/0}{ 1 : |0/0|0/0}{ 2 : |0/1|0/1}}
+{ 0 : |0/0{ 0 : |0/0|0/0}{ 1 : |0/0|0/0}{ 2 : |0/1|0/1}}
+{ 0 : |0/0{ 0 : |0/0|0/0}{ 1 : |0/0|0/0}{ 2 : |0/1|0/1}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.HarmonicRR2@2e8f4fb3
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.HarmonicRR1@5e228a02
+{ 0 : |0/0{ 0 : |0/0|0/0}{ 1 : |0/0|0/0}{ 2 : |0/1|0/1}}
+{ 0 : |0/0{ 0 : |0/0|0/0}{ 1 : |0/0|0/0}{ 2 : |0/1|0/1}}
+{ 0 : |0/0{ 0 : |0/0|0/0}{ 1 : |0/0|0/0}{ 2 : |0/1|0/1}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.HarmonicRR1@5e228a02
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.PickOneRR@1fff7a1e
+On est dans le compute select de pickone : true
+On va réinjecter le degré DegreeImpl [_value=5]
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.GarbageRR@7f081d2e
+Compute select de GarbageRR : false
+{ 0 : |2/3}
+Compute select de GarbageRR : true
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.HarmonicRR1@5e228a02
+{ 0 : |0/1{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}}
+{ 0 : |0/1{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.HarmonicRR1@5e228a02
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.HarmonicRR2@2e8f4fb3
+Compute select de HarmonicRR1 : false
+{ 0 : |0/1{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}}
+{ 0 : |0/1{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.HarmonicRR2@2e8f4fb3
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.HarmonicRR5@6aa6aeed
+{ 0 : |0/1{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}}
+Compute select de HarmonicRR1 : true
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.HarmonicRR5@6aa6aeed
+{ 0 : |0/0{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}{ 2 : |0/0|0/0}}
+{ 0 : |0/0{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}{ 2 : |0/0|0/0}}
+{ 0 : |0/0{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}{ 2 : |0/0|0/0}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.HarmonicRR5@6aa6aeed
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.GetPitchRR@6f7a29a1
+{ 0 : { 0 : |0/1|0/1}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.GetPitchRR@6f7a29a1
+On va instancier les paramètres de StartMelodicRR [_barNumber=[BarNumber value:1], _sol=, _pitch=[_octave=1, _degree=DegreeImpl [_value=1]]]
+{ 0 : |0/1{ 0 : |0/1|0/1}|0/0}
+Overflow reached : StartMelodicRR [_barNumber=[BarNumber value:1], _sol=, _pitch=[_octave=1, _degree=DegreeImpl [_value=1]]]
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.RythmicRR@acfec48
+####On est là : 1
+{ 0 : { 0 : |0/1|7/11}|0/1|0/1|0/1}
+####On est là : 1
+{ 0 : { 0 : |0/1|4/11}|0/1|0/1|0/1}
+####On est là : 1
+{ 0 : { 0 : |0/1|6/11}|0/1|0/1|0/1}
+####On est là : 1
+{ 0 : { 0 : |0/1|2/11}|0/1|0/1|0/1}
+####On est là : 1
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.MelodicRR@45b9ce4b
+{ 0 : |4/5|0/1}
+{ 0 : |3/5|0/1}
+{ 0 : |2/5|0/1}
+Rand : 1
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.MelodicRR@45b9ce4b
+{ 0 : |2/5|0/1}
+{ 0 : |3/5|0/1}
+{ 0 : |1/5|0/1}
+{ 0 : |4/5|0/1}
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.MelodicRR@45b9ce4b
+{ 0 : |3/5|0/1}
+{ 0 : |4/5|0/1}
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.MelodicRR@45b9ce4b
+Rand : 1
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.MelodicRR@45b9ce4b
+{ 0 : |3/5|0/1}
+{ 0 : |1/5|0/1}
+{ 0 : |2/5|0/1}
+{ 0 : |4/5|0/1}
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.MelodicRR@45b9ce4b
+{ 0 : |0/5|0/1}
+{ 0 : |3/5|0/1}
+{ 0 : |1/5|0/1}
+{ 0 : |4/5|0/1}
+{ 0 : |2/5|0/1}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.MelodicRR@45b9ce4b
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.MoveToResultRR@35ab28fe
+{ 0 : |2/3{ 0 : |0/1}{ 1 : |0/0}{ 2 : |0/0}}
+{ 0 : |0/3{ 0 : |0/1}{ 1 : |0/0}{ 2 : |0/0}}
+{ 0 : |0/3{ 0 : |0/1}{ 1 : |0/0}{ 2 : |0/0}}
+{ 0 : |1/3{ 0 : |0/1}{ 1 : |0/0}{ 2 : |0/0}}
+{ 0 : |1/3{ 0 : |0/1}{ 1 : |0/0}{ 2 : |0/0}}
+{ 0 : |2/3{ 0 : |0/1}{ 1 : |0/0}{ 2 : |0/0}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.MoveToResultRR@35ab28fe
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.HarmonicRR3@7d2a1e44
+{ 0 : |0/0{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}{ 2 : |0/0|0/0}}
+{ 0 : |0/0{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}{ 2 : |0/0|0/0}}
+{ 0 : |0/0{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}{ 2 : |0/0|0/0}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.HarmonicRR3@7d2a1e44
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.HarmonicRR6@20d2906a
+{ 0 : |0/0{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}{ 2 : |0/0|0/0}}
+{ 0 : |0/0{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}{ 2 : |0/0|0/0}}
+{ 0 : |0/0{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}{ 2 : |0/0|0/0}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.HarmonicRR6@20d2906a
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.HarmonicRR4@66388993
+{ 0 : |0/0{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}{ 2 : |0/0|0/0}}
+{ 0 : |0/0{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}{ 2 : |0/0|0/0}}
+{ 0 : |0/0{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}{ 2 : |0/0|0/0}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.HarmonicRR4@66388993
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.RemovePullRR@46e45076
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.RemovePullRR@46e45076
+{ 0 : |0/0}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.RemovePullRR@46e45076
+On va instancier les paramètres de StartMelodicRR [_barNumber=[BarNumber value:1], _sol=, _pitch=[_octave=1, _degree=DegreeImpl [_value=1]]]
+{ 0 : |0/1{ 0 : |0/1|0/1}|0/0}
+Overflow reached : StartMelodicRR [_barNumber=[BarNumber value:1], _sol=, _pitch=[_octave=1, _degree=DegreeImpl [_value=1]]]
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.GetPitchRR@6f7a29a1
+{ 0 : { 0 : |0/1|0/1}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.GetPitchRR@6f7a29a1
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.HarmonicRR5@6aa6aeed
+{ 0 : |0/0{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}{ 2 : |0/0|0/0}}
+{ 0 : |0/0{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}{ 2 : |0/0|0/0}}
+{ 0 : |0/0{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}{ 2 : |0/0|0/0}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.HarmonicRR5@6aa6aeed
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.PickOneRR@24a4e2e3
+On est dans le compute select de pickone : true
+On va réinjecter le degré DegreeImpl [_value=5]
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.GarbageRR@2aca0115
+Compute select de GarbageRR : false
+{ 0 : |0/3}
+Compute select de GarbageRR : true
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.RythmeHRR@19c247a0
+Compute select de RythmeRR : true
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.HarmonicRR2@2e8f4fb3
+Compute select de HarmonicRR1 : false
+{ 0 : |0/1{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}}
+{ 0 : |0/1{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.HarmonicRR2@2e8f4fb3
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.HarmonicRR1@5e228a02
+{ 0 : |0/1{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}}
+{ 0 : |0/1{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.HarmonicRR1@5e228a02
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.HarmonicRR5@6aa6aeed
+Compute select de HarmonicRR1 : true
+{ 0 : |0/1{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}}
+{ 0 : |0/1{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.HarmonicRR5@6aa6aeed
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.GetPitchRR@6f7a29a1
+{ 0 : { 0 : |0/1|0/1}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.GetPitchRR@6f7a29a1
+On va instancier les paramètres de StartMelodicRR [_barNumber=[BarNumber value:1], _sol=, _pitch=[_octave=1, _degree=DegreeImpl [_value=1]]]
+{ 0 : |0/1{ 0 : |0/1|0/1}|0/0}
+Overflow reached : StartMelodicRR [_barNumber=[BarNumber value:1], _sol=, _pitch=[_octave=1, _degree=DegreeImpl [_value=1]]]
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.RemovePullRR@46e45076
+{ 0 : |0/0}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.RemovePullRR@46e45076
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.HarmonicRR4@66388993
+{ 0 : |0/1{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}}
+Compute select de HarmonicRR1 : false
+{ 0 : |0/1{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.HarmonicRR4@66388993
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.HarmonicRR6@20d2906a
+{ 0 : |0/1{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}}
+Compute select de HarmonicRR1 : false
+{ 0 : |0/1{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.HarmonicRR6@20d2906a
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.HarmonicRR3@7d2a1e44
+Compute select de HarmonicRR1 : false
+{ 0 : |0/1{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}}
+{ 0 : |0/1{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.HarmonicRR3@7d2a1e44
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.MoveToResultRR@35ab28fe
+{ 0 : |0/2{ 0 : |0/1}{ 1 : |0/0}}
+{ 0 : |1/2{ 0 : |0/1}{ 1 : |0/0}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.MoveToResultRR@35ab28fe
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.MelodicRR@45b9ce4b
+{ 0 : |4/5|0/1}
+{ 0 : |3/5|0/1}
+{ 0 : |0/5|0/1}
+{ 0 : |2/5|0/1}
+{ 0 : |1/5|0/1}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.MelodicRR@45b9ce4b
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.MoveToResultRR@35ab28fe
+{ 0 : |0/2{ 0 : |0/1}{ 1 : |0/0}}
+{ 0 : |1/2{ 0 : |0/1}{ 1 : |0/0}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.MoveToResultRR@35ab28fe
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.HarmonicRR3@7d2a1e44
+{ 0 : |0/1{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}}
+Compute select de HarmonicRR1 : false
+{ 0 : |0/1{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.HarmonicRR3@7d2a1e44
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.HarmonicRR6@20d2906a
+{ 0 : |0/1{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}}
+Compute select de HarmonicRR1 : false
+{ 0 : |0/1{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.HarmonicRR6@20d2906a
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.HarmonicRR4@66388993
+Compute select de HarmonicRR1 : false
+{ 0 : |0/1{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}}
+{ 0 : |0/1{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.HarmonicRR4@66388993
+On va instancier les paramètres de StartMelodicRR [_barNumber=[BarNumber value:1], _sol=, _pitch=[_octave=1, _degree=DegreeImpl [_value=1]]]
+{ 0 : |0/1{ 0 : |0/1|0/1}|0/0}
+Overflow reached : StartMelodicRR [_barNumber=[BarNumber value:1], _sol=, _pitch=[_octave=1, _degree=DegreeImpl [_value=1]]]
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.GetPitchRR@6f7a29a1
 Inerte ? true
-Apres : 
-Solution 2094048729 (isInert ? true)
+On est dans le compute select de getPitch : true
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.GetPitchRR@6f7a29a1
+{ 0 : { 0 : |0/0|0/0}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.GetPitchRR@6f7a29a1
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.HarmonicRR5@6aa6aeed
+{ 0 : |0/1{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}}
+Compute select de HarmonicRR1 : true
+{ 0 : |0/1{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.HarmonicRR5@6aa6aeed
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.HarmonicRR1@5e228a02
+{ 0 : |0/1{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}}
+{ 0 : |0/1{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.HarmonicRR1@5e228a02
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.HarmonicRR2@2e8f4fb3
+Compute select de HarmonicRR1 : false
+{ 0 : |0/1{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}}
+{ 0 : |0/1{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.HarmonicRR2@2e8f4fb3
+On va instancier les paramètres de StartMelodicRR [_barNumber=[BarNumber value:1], _sol=, _pitch=[_octave=1, _degree=DegreeImpl [_value=1]]]
+{ 0 : |0/1{ 0 : |0/0|0/1}|0/1}
+Overflow reached : StartMelodicRR [_barNumber=[BarNumber value:1], _sol=, _pitch=[_octave=1, _degree=DegreeImpl [_value=1]]]
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.HarmonicRR4@66388993
+{ 0 : |0/1{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}}
+Compute select de HarmonicRR1 : false
+{ 0 : |0/1{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.HarmonicRR4@66388993
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.HarmonicRR6@20d2906a
+{ 0 : |0/1{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}}
+Compute select de HarmonicRR1 : false
+{ 0 : |0/1{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.HarmonicRR6@20d2906a
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.HarmonicRR3@7d2a1e44
+Compute select de HarmonicRR1 : false
+{ 0 : |0/1{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}}
+{ 0 : |0/1{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.HarmonicRR3@7d2a1e44
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.MoveToResultRR@35ab28fe
+On est dans le compute select de moveToResult
+Solution 1867546546 (isInert ? true)
 {
-	Solution 2127478981 (isInert ? true)
+	org.chemicalmozart.model.implementations.reactionrules.StartMelodicRR -> [StartMelodicRR [_barNumber=[BarNumber value:1], _sol=, _pitch=[_octave=1, _degree=DegreeImpl [_value=1]]]]
+	org.chemicalmozart.model.implementations.BarNumber -> [[BarNumber value:1]]
+	Solution 1673077774 (isInert ? true)
 	{
-		org.chemicalmozart.model.implementations.reactionrules.StartMelodicRR -> [StartMelodicRR [_barNumber=[BarNumber value:1], _sol=, _pitch=[_octave=1, _degree=DegreeImpl [_value=1]]]]
-		org.chemicalmozart.model.implementations.BarNumber -> [[BarNumber value:1]]
-		Solution 1789308653 (isInert ? true)
-		{
-			org.chemicalmozart.model.implementations.reactionrules.RemovePullRR -> [org.chemicalmozart.model.implementations.reactionrules.RemovePullRR@6b4da8f4]
-			org.chemicalmozart.model.implementations.ChordImpl -> [ChordImpl [_degrees=DegreeImpl [_value=1], _position=0, duration=half], ChordImpl [_degrees=DegreeImpl [_value=4], _position=1, duration=half]]
-			java.lang.Integer -> [2]
-			org.chemicalmozart.model.implementations.solutionindentification.BarInCreation -> []
-			org.chemicalmozart.model.implementations.BarNumber -> [[BarNumber value:0]]
-			org.chemicalmozart.model.implementations.Note -> [{Note : [_octave=1, _degree=DegreeImpl [_value=1]] position:0 rythme:quater}, {Note : [_octave=1, _degree=DegreeImpl [_value=2]] position:1 rythme:quater}, {Note : [_octave=1, _degree=DegreeImpl [_value=1]] position:2 rythme:eighth}, {Note : [_octave=1, _degree=DegreeImpl [_value=1]] position:3 rythme:eighth}, {Note : [_octave=1, _degree=DegreeImpl [_value=2]] position:4 rythme:quater}]
-			org.chemicalmozart.model.implementations.QuaterLeft -> [org.chemicalmozart.model.implementations.QuaterLeft@60072ffb]
-			org.chemicalmozart.model.implementations.Pitch -> []
-			org.chemicalmozart.model.implementations.reactionrules.MelodicRR -> [org.chemicalmozart.model.implementations.reactionrules.MelodicRR@632d3205]
-		}
-		org.chemicalmozart.model.implementations.reactionrules.GetPitchRR -> [org.chemicalmozart.model.implementations.reactionrules.GetPitchRR@2e8f4fb3]
-		org.chemicalmozart.model.implementations.Pitch -> [[_octave=1, _degree=DegreeImpl [_value=2]]]
-		org.chemicalmozart.model.implementations.solutionindentification.Result -> [org.chemicalmozart.model.implementations.solutionindentification.Result@1b52513a]
+		org.chemicalmozart.model.implementations.reactionrules.RemovePullRR -> [org.chemicalmozart.model.implementations.reactionrules.RemovePullRR@46e45076]
+		org.chemicalmozart.model.implementations.ChordImpl -> [ChordImpl [_degrees=DegreeImpl [_value=1], _position=0, duration=whole]]
+		org.chemicalmozart.model.implementations.solutionindentification.BarInCreation -> []
+		java.lang.Integer -> [1]
+		org.chemicalmozart.model.implementations.DegreeImpl -> [DegreeImpl [_value=1]]
+		org.chemicalmozart.model.implementations.Pitch -> []
+		org.chemicalmozart.model.implementations.QuaterPerBar -> [4]
+		org.chemicalmozart.model.implementations.BarNumber -> [[BarNumber value:0]]
+		org.chemicalmozart.model.implementations.Note -> [{Note : [_octave=1, _degree=DegreeImpl [_value=3]] position:0 rythme:quater}, {Note : [_octave=1, _degree=DegreeImpl [_value=4]] position:1 rythme:eighth}, {Note : [_octave=1, _degree=DegreeImpl [_value=4]] position:2 rythme:eighth}, {Note : [_octave=1, _degree=DegreeImpl [_value=3]] position:3 rythme:quater}, {Note : [_octave=1, _degree=DegreeImpl [_value=3]] position:4 rythme:quater}]
+		org.chemicalmozart.model.implementations.QuaterLeft -> [0]
+		org.chemicalmozart.model.implementations.reactionrules.MelodicRR -> [org.chemicalmozart.model.implementations.reactionrules.MelodicRR@45b9ce4b]
 	}
-	org.chemicalmozart.model.implementations.reactionrules.MoveToResultRR -> [org.chemicalmozart.model.implementations.reactionrules.MoveToResultRR@6016a786]
+	org.chemicalmozart.model.implementations.reactionrules.GetPitchRR -> [org.chemicalmozart.model.implementations.reactionrules.GetPitchRR@6f7a29a1]
+	org.chemicalmozart.model.implementations.Pitch -> [[_octave=1, _degree=DegreeImpl [_value=3]]]
+	org.chemicalmozart.model.implementations.solutionindentification.Result -> [org.chemicalmozart.model.implementations.solutionindentification.Result@48d19bc8]
 }
 
+true
+On est dans le compute result
+state : TERMINATED
+On passe dans STATE_TERMINATED
+java.lang.IllegalThreadStateException
+	at java.lang.Thread.start(Thread.java:656)
+	at fr.insa.rennes.info.chemical.backend.Solution.react(Solution.java:670)
+	at fr.insa.rennes.info.chemical.backend.Solution.react(Solution.java:656)
+	at org.chemicalmozart.model.implementations.reactionrules.MoveToResultRR.computeResult(MoveToResultRR.java:87)
+	at fr.insa.rennes.info.chemical.backend.ChemicalThread.run(ChemicalThread.java:89)
+state : TERMINATED
+On passe dans STATE_TERMINATED
+java.lang.IllegalThreadStateException
+	at java.lang.Thread.start(Thread.java:656)
+	at fr.insa.rennes.info.chemical.backend.Solution.react(Solution.java:670)
+	at fr.insa.rennes.info.chemical.backend.Solution.react(Solution.java:656)
+	at org.chemicalmozart.model.implementations.reactionrules.MoveToResultRR.computeResult(MoveToResultRR.java:87)
+	at fr.insa.rennes.info.chemical.backend.ChemicalThread.run(ChemicalThread.java:89)
+state : BLOCKED
+java.lang.IllegalThreadStateException
+	at java.lang.Thread.start(Thread.java:656)
+	at fr.insa.rennes.info.chemical.backend.Solution.react(Solution.java:670)
+	at org.chemicalmozart.model.implementations.reactionrules.MoveToResultRR.computeResult(MoveToResultRR.java:87)
+	at fr.insa.rennes.info.chemical.backend.ChemicalThread.run(ChemicalThread.java:89)
+state : TERMINATED
+On passe dans STATE_TERMINATED
+java.lang.IllegalThreadStateException
+	at java.lang.Thread.start(Thread.java:656)
+	at fr.insa.rennes.info.chemical.backend.Solution.react(Solution.java:670)
+	at org.chemicalmozart.model.implementations.reactionrules.MoveToResultRR.computeResult(MoveToResultRR.java:87)
+	at fr.insa.rennes.info.chemical.backend.ChemicalThread.run(ChemicalThread.java:89)
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.HarmonicRR2@2e8f4fb3
+{ 0 : |0/1{ 0 : |0/0|0/0}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.HarmonicRR2@2e8f4fb3
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.HarmonicRR1@5e228a02
+{ 0 : |0/1{ 0 : |0/0|0/0}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.HarmonicRR1@5e228a02
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.HarmonicRR5@6aa6aeed
+{ 0 : |0/1{ 0 : |0/0|0/0}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.HarmonicRR5@6aa6aeed
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.CreateBarRR@32b0bad7
+On est dans le compute select de createBar
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.MoveToResultRR@50c931fc
+{ 0 : |0/2{ 0 : |0/1}{ 1 : |0/0}}
+{ 0 : |1/2{ 0 : |0/1}{ 1 : |0/0}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.MoveToResultRR@50c931fc
+On va instancier les paramètres de StartMelodicRR [_barNumber=[BarNumber value:1], _sol=, _pitch=[_octave=1, _degree=DegreeImpl [_value=1]]]
+{ 0 : |0/1{ 0 : |0/0|0/1}{ 1 : |0/1|0/1}|0/1}
+On est dans le compute select de StartMelodicRR : true
+On est dans le compute result
+state : BLOCKED
+java.lang.IllegalThreadStateException
+	at java.lang.Thread.start(Thread.java:656)
+	at fr.insa.rennes.info.chemical.backend.Solution.react(Solution.java:670)
+	at org.chemicalmozart.model.implementations.reactionrules.StartMelodicRR.computeResult(StartMelodicRR.java:120)
+	at fr.insa.rennes.info.chemical.backend.ChemicalThread.run(ChemicalThread.java:89)
+state : BLOCKED
+java.lang.IllegalThreadStateException
+	at java.lang.Thread.start(Thread.java:656)
+	at fr.insa.rennes.info.chemical.backend.Solution.react(Solution.java:670)
+	at org.chemicalmozart.model.implementations.reactionrules.StartMelodicRR.computeResult(StartMelodicRR.java:120)
+	at fr.insa.rennes.info.chemical.backend.ChemicalThread.run(ChemicalThread.java:89)
+On va instancier les paramètres de StartMelodicRR [_barNumber=[BarNumber value:1], _sol=, _pitch=[_octave=1, _degree=DegreeImpl [_value=3]]]
+{ 0 : |0/1{ 0 : |0/0|0/1}{ 1 : |0/1|0/1}|0/0}
+{ 0 : |0/1{ 0 : |0/0|0/1}{ 1 : |0/1|0/1}|0/0}
+Overflow reached : StartMelodicRR [_barNumber=[BarNumber value:2], _sol=, _pitch=[_octave=1, _degree=DegreeImpl [_value=3]]]
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.RemovePullRR@46e45076
+{ 0 : |0/0}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.RemovePullRR@46e45076
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.MelodicRR@45b9ce4b
+{ 0 : |4/5|0/0}
+{ 0 : |1/5|0/0}
+{ 0 : |2/5|0/0}
+{ 0 : |3/5|0/0}
+{ 0 : |0/5|0/0}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.MelodicRR@45b9ce4b
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.HarmonicRR3@7d2a1e44
+Compute select de HarmonicRR1 : false
+{ 0 : |0/1{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}}
+{ 0 : |0/1{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.HarmonicRR3@7d2a1e44
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.HarmonicRR6@20d2906a
+Compute select de HarmonicRR1 : false
+{ 0 : |0/1{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}}
+{ 0 : |0/1{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.HarmonicRR6@20d2906a
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.HarmonicRR4@66388993
+Compute select de HarmonicRR1 : false
+{ 0 : |0/1{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}}
+{ 0 : |0/1{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.HarmonicRR4@66388993
+On va instancier les paramètres de StartMelodicRR [_barNumber=[BarNumber value:2], _sol=, _pitch=[_octave=1, _degree=DegreeImpl [_value=3]]]
+{ 0 : |0/1{ 0 : |0/0|0/1}{ 1 : |0/1|0/1}|0/0}
+{ 0 : |0/1{ 0 : |0/0|0/1}{ 1 : |0/1|0/1}|0/0}
+Overflow reached : StartMelodicRR [_barNumber=[BarNumber value:2], _sol=, _pitch=[_octave=1, _degree=DegreeImpl [_value=3]]]
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.RythmicRR@6eb02efa
+####On est là : 1
+{ 0 : { 0 : |0/1|4/11}|0/1|0/1|0/1}
+####On est là : 1
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.RemovePullRR@5b40c281
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.RemovePullRR@5b40c281
+{ 0 : |0/0}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.RemovePullRR@5b40c281
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.MelodicRR@27e59128
+{ 0 : |3/5|0/1}
+{ 0 : |1/5|0/1}
+{ 0 : |4/5|0/1}
+{ 0 : |2/5|0/1}
+Rand : 1
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.MelodicRR@27e59128
+{ 0 : |3/5|0/1}
+{ 0 : |4/5|0/1}
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.MelodicRR@27e59128
+{ 0 : |4/5|0/1}
+{ 0 : |1/5|0/1}
+{ 0 : |2/5|0/1}
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.MelodicRR@27e59128
+{ 0 : |2/5|0/1}
+{ 0 : |3/5|0/1}
+{ 0 : |4/5|0/1}
+{ 0 : |1/5|0/1}
+Rand : 0
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.MelodicRR@27e59128
+{ 0 : |3/5|0/1}
+{ 0 : |1/5|0/1}
+{ 0 : |2/5|0/1}
+{ 0 : |4/5|0/1}
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.MelodicRR@27e59128
+{ 0 : |1/5|0/1}
+{ 0 : |0/5|0/1}
+{ 0 : |4/5|0/1}
+{ 0 : |3/5|0/1}
+{ 0 : |2/5|0/1}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.MelodicRR@27e59128
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.MoveToResultRR@50c931fc
+{ 0 : |1/2{ 0 : |0/1}{ 1 : |0/0}}
+{ 0 : |0/2{ 0 : |0/1}{ 1 : |0/0}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.MoveToResultRR@50c931fc
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.HarmonicRR5@6aa6aeed
+{ 0 : |0/1{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}}
+Compute select de HarmonicRR1 : true
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.HarmonicRR5@6aa6aeed
+{ 0 : |0/0{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}{ 2 : |0/0|0/0}}
+{ 0 : |0/0{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}{ 2 : |0/0|0/0}}
+{ 0 : |0/0{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}{ 2 : |0/0|0/0}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.HarmonicRR5@6aa6aeed
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.HarmonicRR1@5e228a02
+{ 0 : |0/0{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}{ 2 : |0/0|0/0}}
+{ 0 : |0/0{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}{ 2 : |0/0|0/0}}
+{ 0 : |0/0{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}{ 2 : |0/0|0/0}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.HarmonicRR1@5e228a02
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.HarmonicRR2@2e8f4fb3
+{ 0 : |0/0{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}{ 2 : |0/0|0/0}}
+{ 0 : |0/0{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}{ 2 : |0/0|0/0}}
+{ 0 : |0/0{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}{ 2 : |0/0|0/0}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.HarmonicRR2@2e8f4fb3
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.PickOneRR@626f50a8
+On est dans le compute select de pickone : true
+On va réinjecter le degré DegreeImpl [_value=1]
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.RythmeHRR@513bd574
+Compute select de RythmeRR : true
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.MoveToResultRR@50c931fc
+{ 0 : |0/3{ 0 : |0/1}{ 1 : |0/0}{ 2 : |0/0}}
+{ 0 : |2/3{ 0 : |0/1}{ 1 : |0/0}{ 2 : |0/0}}
+{ 0 : |2/3{ 0 : |0/1}{ 1 : |0/0}{ 2 : |0/0}}
+{ 0 : |1/3{ 0 : |0/1}{ 1 : |0/0}{ 2 : |0/0}}
+{ 0 : |1/3{ 0 : |0/1}{ 1 : |0/0}{ 2 : |0/0}}
+{ 0 : |0/3{ 0 : |0/1}{ 1 : |0/0}{ 2 : |0/0}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.MoveToResultRR@50c931fc
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.MelodicRR@27e59128
+{ 0 : |3/5|0/1}
+{ 0 : |1/5|0/1}
+{ 0 : |0/5|0/1}
+{ 0 : |4/5|0/1}
+{ 0 : |2/5|0/1}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.MelodicRR@27e59128
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.RemovePullRR@5b40c281
+{ 0 : |0/0}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.RemovePullRR@5b40c281
+On va instancier les paramètres de StartMelodicRR [_barNumber=[BarNumber value:2], _sol=, _pitch=[_octave=1, _degree=DegreeImpl [_value=3]]]
+{ 0 : |0/1{ 0 : |0/0|0/1}{ 1 : |0/1|0/1}|0/0}
+{ 0 : |0/1{ 0 : |0/0|0/1}{ 1 : |0/1|0/1}|0/0}
+Overflow reached : StartMelodicRR [_barNumber=[BarNumber value:2], _sol=, _pitch=[_octave=1, _degree=DegreeImpl [_value=3]]]
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.HarmonicRR4@66388993
+Compute select de HarmonicRR1 : false
+{ 0 : |0/1{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}{ 2 : |0/0|0/0}}
+{ 0 : |0/1{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}{ 2 : |0/0|0/0}}
+{ 0 : |0/1{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}{ 2 : |0/0|0/0}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.HarmonicRR4@66388993
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.HarmonicRR6@20d2906a
+{ 0 : |0/1{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}{ 2 : |0/0|0/0}}
+{ 0 : |0/1{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}{ 2 : |0/0|0/0}}
+Compute select de HarmonicRR1 : false
+{ 0 : |0/1{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}{ 2 : |0/0|0/0}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.HarmonicRR6@20d2906a
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.HarmonicRR3@7d2a1e44
+{ 0 : |0/1{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}{ 2 : |0/0|0/0}}
+Compute select de HarmonicRR1 : false
+{ 0 : |0/1{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}{ 2 : |0/0|0/0}}
+{ 0 : |0/1{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}{ 2 : |0/0|0/0}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.HarmonicRR3@7d2a1e44
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.MoveToResultRR@50c931fc
+On est dans le compute select de moveToResult
+Solution 1867546546 (isInert ? true)
+{
+	org.chemicalmozart.model.implementations.reactionrules.StartMelodicRR -> [StartMelodicRR [_barNumber=[BarNumber value:2], _sol=, _pitch=[_octave=1, _degree=DegreeImpl [_value=3]]]]
+	org.chemicalmozart.model.implementations.BarNumber -> [[BarNumber value:2]]
+	Solution 1673077774 (isInert ? true)
+	{
+		org.chemicalmozart.model.implementations.reactionrules.RemovePullRR -> [org.chemicalmozart.model.implementations.reactionrules.RemovePullRR@46e45076]
+		org.chemicalmozart.model.implementations.ChordImpl -> [ChordImpl [_degrees=DegreeImpl [_value=1], _position=0, duration=whole]]
+		org.chemicalmozart.model.implementations.solutionindentification.BarInCreation -> []
+		java.lang.Integer -> [1]
+		org.chemicalmozart.model.implementations.DegreeImpl -> [DegreeImpl [_value=1]]
+		org.chemicalmozart.model.implementations.Pitch -> []
+		org.chemicalmozart.model.implementations.QuaterPerBar -> [4]
+		org.chemicalmozart.model.implementations.BarNumber -> [[BarNumber value:0]]
+		org.chemicalmozart.model.implementations.Note -> [{Note : [_octave=1, _degree=DegreeImpl [_value=3]] position:0 rythme:quater}, {Note : [_octave=1, _degree=DegreeImpl [_value=4]] position:1 rythme:eighth}, {Note : [_octave=1, _degree=DegreeImpl [_value=4]] position:2 rythme:eighth}, {Note : [_octave=1, _degree=DegreeImpl [_value=3]] position:3 rythme:quater}, {Note : [_octave=1, _degree=DegreeImpl [_value=3]] position:4 rythme:quater}]
+		org.chemicalmozart.model.implementations.QuaterLeft -> [0]
+		org.chemicalmozart.model.implementations.reactionrules.MelodicRR -> [org.chemicalmozart.model.implementations.reactionrules.MelodicRR@45b9ce4b]
+	}
+	Solution 1506392522 (isInert ? true)
+	{
+		org.chemicalmozart.model.implementations.reactionrules.RemovePullRR -> [org.chemicalmozart.model.implementations.reactionrules.RemovePullRR@5b40c281]
+		org.chemicalmozart.model.implementations.ChordImpl -> [ChordImpl [_degrees=DegreeImpl [_value=5], _position=0, duration=whole]]
+		org.chemicalmozart.model.implementations.solutionindentification.BarInCreation -> [org.chemicalmozart.model.implementations.solutionindentification.BarInCreation@73a34b]
+		java.lang.Integer -> [1]
+		org.chemicalmozart.model.implementations.DegreeImpl -> [DegreeImpl [_value=5]]
+		org.chemicalmozart.model.implementations.Pitch -> [[_octave=1, _degree=DegreeImpl [_value=6]]]
+		org.chemicalmozart.model.implementations.QuaterPerBar -> [4]
+		org.chemicalmozart.model.implementations.BarNumber -> [[BarNumber value:1]]
+		org.chemicalmozart.model.implementations.Note -> [{Note : [_octave=2, _degree=DegreeImpl [_value=7]] position:0 rythme:eighth}, {Note : [_octave=1, _degree=DegreeImpl [_value=1]] position:1 rythme:eighth}, {Note : [_octave=1, _degree=DegreeImpl [_value=2]] position:2 rythme:quater}, {Note : [_octave=1, _degree=DegreeImpl [_value=5]] position:3 rythme:quater}, {Note : [_octave=1, _degree=DegreeImpl [_value=6]] position:4 rythme:quater}]
+		org.chemicalmozart.model.implementations.QuaterLeft -> [0]
+		org.chemicalmozart.model.implementations.reactionrules.MelodicRR -> [org.chemicalmozart.model.implementations.reactionrules.MelodicRR@27e59128]
+	}
+	org.chemicalmozart.model.implementations.reactionrules.GetPitchRR -> [org.chemicalmozart.model.implementations.reactionrules.GetPitchRR@6f7a29a1]
+	org.chemicalmozart.model.implementations.Pitch -> []
+	org.chemicalmozart.model.implementations.solutionindentification.Result -> [org.chemicalmozart.model.implementations.solutionindentification.Result@54bb7759]
+}
+
+false
+{ 0 : |1/3{ 0 : |0/1}{ 1 : |0/0}{ 2 : |0/0}}
+{ 0 : |2/3{ 0 : |0/1}{ 1 : |0/0}{ 2 : |0/0}}
+{ 0 : |0/3{ 0 : |0/1}{ 1 : |0/0}{ 2 : |0/0}}
+On est dans le compute select de moveToResult
+Solution 1867546546 (isInert ? true)
+{
+	org.chemicalmozart.model.implementations.reactionrules.StartMelodicRR -> [StartMelodicRR [_barNumber=[BarNumber value:2], _sol=, _pitch=[_octave=1, _degree=DegreeImpl [_value=3]]]]
+	org.chemicalmozart.model.implementations.BarNumber -> [[BarNumber value:2]]
+	Solution 1673077774 (isInert ? true)
+	{
+		org.chemicalmozart.model.implementations.reactionrules.RemovePullRR -> [org.chemicalmozart.model.implementations.reactionrules.RemovePullRR@46e45076]
+		org.chemicalmozart.model.implementations.ChordImpl -> [ChordImpl [_degrees=DegreeImpl [_value=1], _position=0, duration=whole]]
+		org.chemicalmozart.model.implementations.solutionindentification.BarInCreation -> []
+		java.lang.Integer -> [1]
+		org.chemicalmozart.model.implementations.DegreeImpl -> [DegreeImpl [_value=1]]
+		org.chemicalmozart.model.implementations.Pitch -> []
+		org.chemicalmozart.model.implementations.QuaterPerBar -> [4]
+		org.chemicalmozart.model.implementations.BarNumber -> [[BarNumber value:0]]
+		org.chemicalmozart.model.implementations.Note -> [{Note : [_octave=1, _degree=DegreeImpl [_value=3]] position:0 rythme:quater}, {Note : [_octave=1, _degree=DegreeImpl [_value=4]] position:1 rythme:eighth}, {Note : [_octave=1, _degree=DegreeImpl [_value=4]] position:2 rythme:eighth}, {Note : [_octave=1, _degree=DegreeImpl [_value=3]] position:3 rythme:quater}, {Note : [_octave=1, _degree=DegreeImpl [_value=3]] position:4 rythme:quater}]
+		org.chemicalmozart.model.implementations.QuaterLeft -> [0]
+		org.chemicalmozart.model.implementations.reactionrules.MelodicRR -> [org.chemicalmozart.model.implementations.reactionrules.MelodicRR@45b9ce4b]
+	}
+	Solution 1506392522 (isInert ? true)
+	{
+		org.chemicalmozart.model.implementations.reactionrules.RemovePullRR -> [org.chemicalmozart.model.implementations.reactionrules.RemovePullRR@5b40c281]
+		org.chemicalmozart.model.implementations.ChordImpl -> [ChordImpl [_degrees=DegreeImpl [_value=5], _position=0, duration=whole]]
+		org.chemicalmozart.model.implementations.solutionindentification.BarInCreation -> [org.chemicalmozart.model.implementations.solutionindentification.BarInCreation@73a34b]
+		java.lang.Integer -> [1]
+		org.chemicalmozart.model.implementations.DegreeImpl -> [DegreeImpl [_value=5]]
+		org.chemicalmozart.model.implementations.Pitch -> [[_octave=1, _degree=DegreeImpl [_value=6]]]
+		org.chemicalmozart.model.implementations.QuaterPerBar -> [4]
+		org.chemicalmozart.model.implementations.BarNumber -> [[BarNumber value:1]]
+		org.chemicalmozart.model.implementations.Note -> [{Note : [_octave=2, _degree=DegreeImpl [_value=7]] position:0 rythme:eighth}, {Note : [_octave=1, _degree=DegreeImpl [_value=1]] position:1 rythme:eighth}, {Note : [_octave=1, _degree=DegreeImpl [_value=2]] position:2 rythme:quater}, {Note : [_octave=1, _degree=DegreeImpl [_value=5]] position:3 rythme:quater}, {Note : [_octave=1, _degree=DegreeImpl [_value=6]] position:4 rythme:quater}]
+		org.chemicalmozart.model.implementations.QuaterLeft -> [0]
+		org.chemicalmozart.model.implementations.reactionrules.MelodicRR -> [org.chemicalmozart.model.implementations.reactionrules.MelodicRR@27e59128]
+	}
+	org.chemicalmozart.model.implementations.reactionrules.GetPitchRR -> [org.chemicalmozart.model.implementations.reactionrules.GetPitchRR@6f7a29a1]
+	org.chemicalmozart.model.implementations.Pitch -> []
+	org.chemicalmozart.model.implementations.solutionindentification.Result -> [org.chemicalmozart.model.implementations.solutionindentification.Result@54bb7759]
+}
+
+false
+{ 0 : |2/3{ 0 : |0/1}{ 1 : |0/0}{ 2 : |0/0}}
+{ 0 : |0/3{ 0 : |0/1}{ 1 : |0/0}{ 2 : |0/0}}
+{ 0 : |1/3{ 0 : |0/1}{ 1 : |0/0}{ 2 : |0/0}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.MoveToResultRR@50c931fc
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.GarbageRR@2d04faf8
+Compute select de GarbageRR : true
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.HarmonicRR2@2e8f4fb3
+{ 0 : |0/1{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}}
+Compute select de HarmonicRR1 : false
+{ 0 : |0/1{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.HarmonicRR2@2e8f4fb3
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.HarmonicRR1@5e228a02
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.HarmonicRR1@5e228a02
+{ 0 : |0/0{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}{ 2 : |0/0|0/0}}
+{ 0 : |0/0{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}{ 2 : |0/0|0/0}}
+{ 0 : |0/0{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}{ 2 : |0/0|0/0}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.HarmonicRR1@5e228a02
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.HarmonicRR5@6aa6aeed
+{ 0 : |0/0{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}{ 2 : |0/0|0/0}}
+{ 0 : |0/0{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}{ 2 : |0/0|0/0}}
+{ 0 : |0/0{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}{ 2 : |0/0|0/0}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.HarmonicRR5@6aa6aeed
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.PickOneRR@462ba11b
+On est dans le compute select de pickone : true
+On va réinjecter le degré DegreeImpl [_value=2]
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.RythmeHRR@6d62dbb6
+Compute select de RythmeRR : true
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.HarmonicRR2@2e8f4fb3
+{ 0 : |0/1{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}{ 2 : |0/0|0/0}}
+Compute select de HarmonicRR1 : true
+{ 0 : |0/1{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}{ 2 : |0/0|0/0}}
+{ 0 : |0/1{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}{ 2 : |0/0|0/0}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.HarmonicRR2@2e8f4fb3
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.MoveToResultRR@50c931fc
+{ 0 : |2/3{ 0 : |0/1}{ 1 : |0/0}{ 2 : |0/0}}
+{ 0 : |0/3{ 0 : |0/1}{ 1 : |0/0}{ 2 : |0/0}}
+On est dans le compute select de moveToResult
+Solution 1867546546 (isInert ? true)
+{
+	org.chemicalmozart.model.implementations.reactionrules.StartMelodicRR -> [StartMelodicRR [_barNumber=[BarNumber value:2], _sol=, _pitch=[_octave=1, _degree=DegreeImpl [_value=3]]]]
+	org.chemicalmozart.model.implementations.BarNumber -> [[BarNumber value:2]]
+	Solution 1673077774 (isInert ? true)
+	{
+		org.chemicalmozart.model.implementations.reactionrules.RemovePullRR -> [org.chemicalmozart.model.implementations.reactionrules.RemovePullRR@46e45076]
+		org.chemicalmozart.model.implementations.ChordImpl -> [ChordImpl [_degrees=DegreeImpl [_value=1], _position=0, duration=whole]]
+		org.chemicalmozart.model.implementations.solutionindentification.BarInCreation -> []
+		java.lang.Integer -> [1]
+		org.chemicalmozart.model.implementations.DegreeImpl -> [DegreeImpl [_value=1]]
+		org.chemicalmozart.model.implementations.Pitch -> []
+		org.chemicalmozart.model.implementations.QuaterPerBar -> [4]
+		org.chemicalmozart.model.implementations.BarNumber -> [[BarNumber value:0]]
+		org.chemicalmozart.model.implementations.Note -> [{Note : [_octave=1, _degree=DegreeImpl [_value=3]] position:0 rythme:quater}, {Note : [_octave=1, _degree=DegreeImpl [_value=4]] position:1 rythme:eighth}, {Note : [_octave=1, _degree=DegreeImpl [_value=4]] position:2 rythme:eighth}, {Note : [_octave=1, _degree=DegreeImpl [_value=3]] position:3 rythme:quater}, {Note : [_octave=1, _degree=DegreeImpl [_value=3]] position:4 rythme:quater}]
+		org.chemicalmozart.model.implementations.QuaterLeft -> [0]
+		org.chemicalmozart.model.implementations.reactionrules.MelodicRR -> [org.chemicalmozart.model.implementations.reactionrules.MelodicRR@45b9ce4b]
+	}
+	Solution 1506392522 (isInert ? true)
+	{
+		org.chemicalmozart.model.implementations.reactionrules.RemovePullRR -> [org.chemicalmozart.model.implementations.reactionrules.RemovePullRR@5b40c281]
+		org.chemicalmozart.model.implementations.ChordImpl -> [ChordImpl [_degrees=DegreeImpl [_value=5], _position=0, duration=whole]]
+		org.chemicalmozart.model.implementations.solutionindentification.BarInCreation -> [org.chemicalmozart.model.implementations.solutionindentification.BarInCreation@73a34b]
+		java.lang.Integer -> [1]
+		org.chemicalmozart.model.implementations.DegreeImpl -> [DegreeImpl [_value=5]]
+		org.chemicalmozart.model.implementations.Pitch -> [[_octave=1, _degree=DegreeImpl [_value=6]]]
+		org.chemicalmozart.model.implementations.QuaterPerBar -> [4]
+		org.chemicalmozart.model.implementations.BarNumber -> [[BarNumber value:1]]
+		org.chemicalmozart.model.implementations.Note -> [{Note : [_octave=2, _degree=DegreeImpl [_value=7]] position:0 rythme:eighth}, {Note : [_octave=1, _degree=DegreeImpl [_value=1]] position:1 rythme:eighth}, {Note : [_octave=1, _degree=DegreeImpl [_value=2]] position:2 rythme:quater}, {Note : [_octave=1, _degree=DegreeImpl [_value=5]] position:3 rythme:quater}, {Note : [_octave=1, _degree=DegreeImpl [_value=6]] position:4 rythme:quater}]
+		org.chemicalmozart.model.implementations.QuaterLeft -> [0]
+		org.chemicalmozart.model.implementations.reactionrules.MelodicRR -> [org.chemicalmozart.model.implementations.reactionrules.MelodicRR@27e59128]
+	}
+	org.chemicalmozart.model.implementations.reactionrules.GetPitchRR -> [org.chemicalmozart.model.implementations.reactionrules.GetPitchRR@6f7a29a1]
+	org.chemicalmozart.model.implementations.Pitch -> []
+	org.chemicalmozart.model.implementations.solutionindentification.Result -> [org.chemicalmozart.model.implementations.solutionindentification.Result@54bb7759]
+}
+
+true
+On est dans le compute result
+state : TERMINATED
+On passe dans STATE_TERMINATED
+java.lang.IllegalThreadStateException
+	at java.lang.Thread.start(Thread.java:656)
+	at fr.insa.rennes.info.chemical.backend.Solution.react(Solution.java:670)
+	at fr.insa.rennes.info.chemical.backend.Solution.react(Solution.java:656)
+	at org.chemicalmozart.model.implementations.reactionrules.MoveToResultRR.computeResult(MoveToResultRR.java:87)
+	at fr.insa.rennes.info.chemical.backend.ChemicalThread.run(ChemicalThread.java:89)
+state : TERMINATED
+On passe dans STATE_TERMINATED
+java.lang.IllegalThreadStateException
+	at java.lang.Thread.start(Thread.java:656)
+	at fr.insa.rennes.info.chemical.backend.Solution.react(Solution.java:670)
+	at fr.insa.rennes.info.chemical.backend.Solution.react(Solution.java:656)
+	at org.chemicalmozart.model.implementations.reactionrules.MoveToResultRR.computeResult(MoveToResultRR.java:87)
+	at fr.insa.rennes.info.chemical.backend.ChemicalThread.run(ChemicalThread.java:89)
+state : TERMINATED
+On passe dans STATE_TERMINATED
+java.lang.IllegalThreadStateException
+	at java.lang.Thread.start(Thread.java:656)
+	at fr.insa.rennes.info.chemical.backend.Solution.react(Solution.java:670)
+	at fr.insa.rennes.info.chemical.backend.Solution.react(Solution.java:656)
+	at org.chemicalmozart.model.implementations.reactionrules.MoveToResultRR.computeResult(MoveToResultRR.java:87)
+	at fr.insa.rennes.info.chemical.backend.ChemicalThread.run(ChemicalThread.java:89)
+state : TERMINATED
+On passe dans STATE_TERMINATED
+java.lang.IllegalThreadStateException
+	at java.lang.Thread.start(Thread.java:656)
+	at fr.insa.rennes.info.chemical.backend.Solution.react(Solution.java:670)
+	at fr.insa.rennes.info.chemical.backend.Solution.react(Solution.java:656)
+	at org.chemicalmozart.model.implementations.reactionrules.MoveToResultRR.computeResult(MoveToResultRR.java:87)
+	at fr.insa.rennes.info.chemical.backend.ChemicalThread.run(ChemicalThread.java:89)
+state : TERMINATED
+On passe dans STATE_TERMINATED
+java.lang.IllegalThreadStateException
+	at java.lang.Thread.start(Thread.java:656)
+	at fr.insa.rennes.info.chemical.backend.Solution.react(Solution.java:670)
+	at org.chemicalmozart.model.implementations.reactionrules.MoveToResultRR.computeResult(MoveToResultRR.java:87)
+	at fr.insa.rennes.info.chemical.backend.ChemicalThread.run(ChemicalThread.java:89)
+state : TERMINATED
+On passe dans STATE_TERMINATED
+java.lang.IllegalThreadStateException
+	at java.lang.Thread.start(Thread.java:656)
+	at fr.insa.rennes.info.chemical.backend.Solution.react(Solution.java:670)
+	at org.chemicalmozart.model.implementations.reactionrules.MoveToResultRR.computeResult(MoveToResultRR.java:87)
+	at fr.insa.rennes.info.chemical.backend.ChemicalThread.run(ChemicalThread.java:89)
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.CreateBarRR@25595f51
+On est dans le compute select de createBar
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.MoveToResultRR@30ec4a87
+{ 0 : |2/3{ 0 : |0/1}{ 1 : |0/0}{ 2 : |0/0}}
+{ 0 : |1/3{ 0 : |0/1}{ 1 : |0/0}{ 2 : |0/0}}
+{ 0 : |1/3{ 0 : |0/1}{ 1 : |0/0}{ 2 : |0/0}}
+{ 0 : |0/3{ 0 : |0/1}{ 1 : |0/0}{ 2 : |0/0}}
+{ 0 : |0/3{ 0 : |0/1}{ 1 : |0/0}{ 2 : |0/0}}
+{ 0 : |2/3{ 0 : |0/1}{ 1 : |0/0}{ 2 : |0/0}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.MoveToResultRR@30ec4a87
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.HarmonicRR3@7d2a1e44
+Compute select de HarmonicRR1 : false
+{ 0 : |0/1{ 0 : |0/0|0/0}{ 1 : |0/0|0/0}{ 2 : |0/1|0/1}}
+{ 0 : |0/1{ 0 : |0/0|0/0}{ 1 : |0/0|0/0}{ 2 : |0/1|0/1}}
+{ 0 : |0/1{ 0 : |0/0|0/0}{ 1 : |0/0|0/0}{ 2 : |0/1|0/1}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.HarmonicRR3@7d2a1e44
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.HarmonicRR6@20d2906a
+Compute select de HarmonicRR1 : false
+{ 0 : |0/1{ 0 : |0/0|0/0}{ 1 : |0/0|0/0}{ 2 : |0/1|0/1}}
+{ 0 : |0/1{ 0 : |0/0|0/0}{ 1 : |0/0|0/0}{ 2 : |0/1|0/1}}
+{ 0 : |0/1{ 0 : |0/0|0/0}{ 1 : |0/0|0/0}{ 2 : |0/1|0/1}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.HarmonicRR6@20d2906a
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.HarmonicRR4@66388993
+{ 0 : |0/1{ 0 : |0/0|0/0}{ 1 : |0/0|0/0}{ 2 : |0/1|0/1}}
+Compute select de HarmonicRR1 : false
+{ 0 : |0/1{ 0 : |0/0|0/0}{ 1 : |0/0|0/0}{ 2 : |0/1|0/1}}
+{ 0 : |0/1{ 0 : |0/0|0/0}{ 1 : |0/0|0/0}{ 2 : |0/1|0/1}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.HarmonicRR4@66388993
+On va instancier les paramètres de StartMelodicRR [_barNumber=[BarNumber value:2], _sol=, _pitch=[_octave=1, _degree=DegreeImpl [_value=3]]]
+{ 0 : |0/1{ 0 : |0/0|0/1}{ 1 : |0/1|0/1}{ 2 : |0/1|0/1}|0/0}
+{ 0 : |0/1{ 0 : |0/0|0/1}{ 1 : |0/1|0/1}{ 2 : |0/1|0/1}|0/0}
+{ 0 : |0/1{ 0 : |0/0|0/1}{ 1 : |0/1|0/1}{ 2 : |0/1|0/1}|0/0}
+Overflow reached : StartMelodicRR [_barNumber=[BarNumber value:2], _sol=, _pitch=[_octave=1, _degree=DegreeImpl [_value=3]]]
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.GetPitchRR@6f7a29a1
+Inerte ? true
+On est dans le compute select de getPitch : true
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.GetPitchRR@6f7a29a1
+{ 0 : { 0 : |0/0|0/0}{ 1 : |0/0|0/0}{ 2 : |0/1|0/0}}
+{ 0 : { 0 : |0/0|0/0}{ 1 : |0/0|0/0}{ 2 : |0/1|0/0}}
+{ 0 : { 0 : |0/0|0/0}{ 1 : |0/0|0/0}{ 2 : |0/1|0/0}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.GetPitchRR@6f7a29a1
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.RemovePullRR@5b40c281
+{ 0 : |0/0}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.RemovePullRR@5b40c281
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.MelodicRR@27e59128
+{ 0 : |0/5|0/0}
+{ 0 : |4/5|0/0}
+{ 0 : |2/5|0/0}
+{ 0 : |3/5|0/0}
+{ 0 : |1/5|0/0}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.MelodicRR@27e59128
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.RemovePullRR@46e45076
+{ 0 : |0/0}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.RemovePullRR@46e45076
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.MelodicRR@45b9ce4b
+{ 0 : |1/5|0/0}
+{ 0 : |0/5|0/0}
+{ 0 : |3/5|0/0}
+{ 0 : |4/5|0/0}
+{ 0 : |2/5|0/0}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.MelodicRR@45b9ce4b
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.HarmonicRR2@2e8f4fb3
+{ 0 : |0/1{ 0 : |0/0|0/0}{ 1 : |0/0|0/0}{ 2 : |0/1|0/1}}
+Compute select de HarmonicRR1 : true
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.HarmonicRR2@2e8f4fb3
+{ 0 : |0/0{ 0 : |0/0|0/0}{ 1 : |0/0|0/0}{ 2 : |0/1|0/1}{ 3 : |0/0|0/0}}
+{ 0 : |0/0{ 0 : |0/0|0/0}{ 1 : |0/0|0/0}{ 2 : |0/1|0/1}{ 3 : |0/0|0/0}}
+{ 0 : |0/0{ 0 : |0/0|0/0}{ 1 : |0/0|0/0}{ 2 : |0/1|0/1}{ 3 : |0/0|0/0}}
+{ 0 : |0/0{ 0 : |0/0|0/0}{ 1 : |0/0|0/0}{ 2 : |0/1|0/1}{ 3 : |0/0|0/0}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.HarmonicRR2@2e8f4fb3
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.GarbageRR@79df8b99
+Compute select de GarbageRR : false
+{ 0 : |2/4}
+Compute select de GarbageRR : true
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.HarmonicRR5@6aa6aeed
+{ 0 : |0/0{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}{ 2 : |0/0|0/0}}
+{ 0 : |0/0{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}{ 2 : |0/0|0/0}}
+{ 0 : |0/0{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}{ 2 : |0/0|0/0}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.HarmonicRR5@6aa6aeed
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.HarmonicRR2@2e8f4fb3
+{ 0 : |0/0{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}{ 2 : |0/0|0/0}}
+{ 0 : |0/0{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}{ 2 : |0/0|0/0}}
+{ 0 : |0/0{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}{ 2 : |0/0|0/0}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.HarmonicRR2@2e8f4fb3
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.PickOneRR@20c1f10e
+On est dans le compute select de pickone : true
+On va réinjecter le degré DegreeImpl [_value=3]
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.GarbageRR@3c1d332b
+Compute select de GarbageRR : false
+{ 0 : |1/3}
+Compute select de GarbageRR : false
+{ 0 : |0/3}
+Compute select de GarbageRR : true
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.RythmeHRR@78dc6a77
+Compute select de RythmeRR : true
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.GetPitchRR@6f7a29a1
+{ 0 : { 0 : |0/0|0/0}{ 1 : |0/0|0/0}{ 2 : |0/1|0/0}}
+{ 0 : { 0 : |0/0|0/0}{ 1 : |0/0|0/0}{ 2 : |0/1|0/0}}
+{ 0 : { 0 : |0/0|0/0}{ 1 : |0/0|0/0}{ 2 : |0/1|0/0}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.GetPitchRR@6f7a29a1
+On va instancier les paramètres de StartMelodicRR [_barNumber=[BarNumber value:2], _sol=, _pitch=[_octave=1, _degree=DegreeImpl [_value=3]]]
+{ 0 : |0/1{ 0 : |0/0|0/1}{ 1 : |0/0|0/1}{ 2 : |0/1|0/1}|0/1}
+On est dans le compute select de StartMelodicRR : true
+On est dans le compute result
+state : BLOCKED
+java.lang.IllegalThreadStateException
+	at java.lang.Thread.start(Thread.java:656)
+	at fr.insa.rennes.info.chemical.backend.Solution.react(Solution.java:670)
+	at org.chemicalmozart.model.implementations.reactionrules.StartMelodicRR.computeResult(StartMelodicRR.java:120)
+	at fr.insa.rennes.info.chemical.backend.ChemicalThread.run(ChemicalThread.java:89)
+state : BLOCKEDjava.lang.IllegalThreadStateException
+	at java.lang.Thread.start(Thread.java:656)
+	at fr.insa.rennes.info.chemical.backend.Solution.react(Solution.java:670)
+	at org.chemicalmozart.model.implementations.reactionrules.StartMelodicRR.computeResult(StartMelodicRR.java:120)
+
+	at fr.insa.rennes.info.chemical.backend.ChemicalThread.run(ChemicalThread.java:89)
+On va instancier les paramètres de StartMelodicRR [_barNumber=[BarNumber value:2], _sol=, _pitch=[_octave=1, _degree=DegreeImpl [_value=6]]]
+{ 0 : |0/1{ 0 : |0/0|0/1}{ 1 : |0/0|0/1}{ 2 : |0/1|0/1}|0/0}
+{ 0 : |0/1{ 0 : |0/0|0/1}{ 1 : |0/0|0/1}{ 2 : |0/1|0/1}|0/0}
+{ 0 : |0/1{ 0 : |0/0|0/1}{ 1 : |0/0|0/1}{ 2 : |0/1|0/1}|0/0}
+Overflow reached : StartMelodicRR [_barNumber=[BarNumber value:3], _sol=, _pitch=[_octave=1, _degree=DegreeImpl [_value=6]]]
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.HarmonicRR4@66388993
+Compute select de HarmonicRR1 : false
+{ 0 : |0/1{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}}
+{ 0 : |0/1{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.HarmonicRR4@66388993
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.HarmonicRR6@20d2906a
+{ 0 : |0/1{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}}
+Compute select de HarmonicRR1 : false
+{ 0 : |0/1{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.HarmonicRR6@20d2906a
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.HarmonicRR3@7d2a1e44
+{ 0 : |0/1{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}}
+Compute select de HarmonicRR1 : true
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.HarmonicRR3@7d2a1e44
+{ 0 : |0/0{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}{ 2 : |0/0|0/0}}
+{ 0 : |0/0{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}{ 2 : |0/0|0/0}}
+{ 0 : |0/0{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}{ 2 : |0/0|0/0}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.HarmonicRR3@7d2a1e44
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.MoveToResultRR@30ec4a87
+{ 0 : |1/3{ 0 : |0/1}{ 1 : |0/0}{ 2 : |0/0}}
+{ 0 : |0/3{ 0 : |0/1}{ 1 : |0/0}{ 2 : |0/0}}
+{ 0 : |1/3{ 0 : |0/1}{ 1 : |0/0}{ 2 : |0/0}}
+{ 0 : |2/3{ 0 : |0/1}{ 1 : |0/0}{ 2 : |0/0}}
+{ 0 : |2/3{ 0 : |0/1}{ 1 : |0/0}{ 2 : |0/0}}
+{ 0 : |0/3{ 0 : |0/1}{ 1 : |0/0}{ 2 : |0/0}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.MoveToResultRR@30ec4a87
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.PickOneRR@82a6f16
+On est dans le compute select de pickone : true
+On va réinjecter le degré DegreeImpl [_value=6]
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.GarbageRR@1d807ca8
+Compute select de GarbageRR : false
+{ 0 : |0/3}
+Compute select de GarbageRR : true
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.RythmeHRR@7f2ad19e
+Compute select de RythmeRR : true
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.HarmonicRR6@20d2906a
+Compute select de HarmonicRR1 : true
+{ 0 : |0/1{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}}
+{ 0 : |0/1{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.HarmonicRR6@20d2906a
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.HarmonicRR4@66388993
+{ 0 : |0/1{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}}
+Compute select de HarmonicRR1 : false
+{ 0 : |0/1{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.HarmonicRR4@66388993
+On va instancier les paramètres de StartMelodicRR [_barNumber=[BarNumber value:3], _sol=, _pitch=[_octave=1, _degree=DegreeImpl [_value=6]]]
+{ 0 : |0/1{ 0 : |0/0|0/1}{ 1 : |0/0|0/1}{ 2 : |0/1|0/1}|0/0}
+{ 0 : |0/1{ 0 : |0/0|0/1}{ 1 : |0/0|0/1}{ 2 : |0/1|0/1}|0/0}
+{ 0 : |0/1{ 0 : |0/0|0/1}{ 1 : |0/0|0/1}{ 2 : |0/1|0/1}|0/0}
+Overflow reached : StartMelodicRR [_barNumber=[BarNumber value:3], _sol=, _pitch=[_octave=1, _degree=DegreeImpl [_value=6]]]
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.RythmicRR@4b0ab323
+####On est là : 2
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.RythmicRR@4b0ab323
+####On est là : 2
+{ 0 : { 0 : |0/1|8/10}|1/2|0/1|0/1}
+####On est là : 2
+{ 0 : { 0 : |0/1|3/10}|1/2|0/1|0/1}
+####On est là : 2
+{ 0 : { 0 : |0/1|0/10}|1/2|0/1|0/1}
+####On est là : 2
+{ 0 : { 0 : |0/1|1/10}|0/2|0/1|0/1}
+####On est là : 2
+{ 0 : { 0 : |0/1|5/10}|1/2|0/1|0/1}
+####On est là : 2
+{ 0 : { 0 : |0/1|1/10}|1/2|0/1|0/1}
+####On est là : 2
+{ 0 : { 0 : |0/1|7/10}|0/2|0/1|0/1}
+####On est là : 2
+{ 0 : { 0 : |0/1|8/10}|0/2|0/1|0/1}
+####On est là : 2
+{ 0 : { 0 : |0/1|2/10}|1/2|0/1|0/1}
+####On est là : 2
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.MelodicRR@46b8c8e6
+{ 0 : |1/6|0/1}
+{ 0 : |5/6|0/1}
+Rand : 2
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.MelodicRR@46b8c8e6
+{ 0 : |4/6|0/1}
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.MelodicRR@46b8c8e6
+{ 0 : |5/6|0/1}
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.MelodicRR@46b8c8e6
+{ 0 : |2/6|0/1}
+{ 0 : |1/6|0/1}
+{ 0 : |5/6|0/1}
+{ 0 : |4/6|0/1}
+Rand : 2
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.MelodicRR@46b8c8e6
+{ 0 : |3/6|0/1}
+{ 0 : |4/6|0/1}
+{ 0 : |2/6|0/1}
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.MelodicRR@46b8c8e6
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.MelodicRR@46b8c8e6
+{ 0 : |5/6|0/1}
+{ 0 : |4/6|0/1}
+{ 0 : |1/6|0/1}
+{ 0 : |2/6|0/1}
+{ 0 : |3/6|0/1}
+{ 0 : |0/6|0/1}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.MelodicRR@46b8c8e6
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.GetPitchRR@6f7a29a1
+{ 0 : { 0 : |0/0|0/0}{ 1 : |0/0|0/0}{ 2 : |0/1|0/1}}
+{ 0 : { 0 : |0/0|0/0}{ 1 : |0/0|0/0}{ 2 : |0/1|0/1}}
+{ 0 : { 0 : |0/0|0/0}{ 1 : |0/0|0/0}{ 2 : |0/1|0/1}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.GetPitchRR@6f7a29a1
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.HarmonicRR2@2e8f4fb3
+{ 0 : |0/1{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}}
+Compute select de HarmonicRR1 : false
+{ 0 : |0/1{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.HarmonicRR2@2e8f4fb3
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.HarmonicRR5@6aa6aeed
+Compute select de HarmonicRR1 : false
+{ 0 : |0/1{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}}
+{ 0 : |0/1{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.HarmonicRR5@6aa6aeed
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.HarmonicRR1@5e228a02
+{ 0 : |0/1{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}}
+{ 0 : |0/1{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.HarmonicRR1@5e228a02
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.RemovePullRR@2df6df4c
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.RemovePullRR@2df6df4c
+{ 0 : |0/0}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.RemovePullRR@2df6df4c
+On va instancier les paramètres de StartMelodicRR [_barNumber=[BarNumber value:3], _sol=, _pitch=[_octave=1, _degree=DegreeImpl [_value=6]]]
+{ 0 : |0/1{ 0 : |0/0|0/1}{ 1 : |0/0|0/1}{ 2 : |0/1|0/1}|0/0}
+{ 0 : |0/1{ 0 : |0/0|0/1}{ 1 : |0/0|0/1}{ 2 : |0/1|0/1}|0/0}
+{ 0 : |0/1{ 0 : |0/0|0/1}{ 1 : |0/0|0/1}{ 2 : |0/1|0/1}|0/0}
+Overflow reached : StartMelodicRR [_barNumber=[BarNumber value:3], _sol=, _pitch=[_octave=1, _degree=DegreeImpl [_value=6]]]
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.HarmonicRR4@66388993
+Compute select de HarmonicRR1 : false
+{ 0 : |0/1{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}}
+{ 0 : |0/1{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.HarmonicRR4@66388993
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.HarmonicRR6@20d2906a
+Compute select de HarmonicRR1 : true
+{ 0 : |0/1{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}}
+{ 0 : |0/1{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.HarmonicRR6@20d2906a
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.MoveToResultRR@30ec4a87
+{ 0 : |1/2{ 0 : |0/1}{ 1 : |0/0}}
+{ 0 : |0/2{ 0 : |0/1}{ 1 : |0/0}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.MoveToResultRR@30ec4a87
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.HarmonicRR3@7d2a1e44
+Compute select de HarmonicRR1 : false
+{ 0 : |0/1{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}}
+{ 0 : |0/1{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.HarmonicRR3@7d2a1e44
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.HarmonicRR1@5e228a02
+{ 0 : |0/1{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}}
+{ 0 : |0/1{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.HarmonicRR1@5e228a02
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.HarmonicRR5@6aa6aeed
+{ 0 : |0/1{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}}
+Compute select de HarmonicRR1 : false
+{ 0 : |0/1{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.HarmonicRR5@6aa6aeed
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.HarmonicRR2@2e8f4fb3
+{ 0 : |0/1{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}}
+Compute select de HarmonicRR1 : false
+{ 0 : |0/1{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.HarmonicRR2@2e8f4fb3
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.GetPitchRR@6f7a29a1
+{ 0 : { 0 : |0/0|0/0}{ 1 : |0/0|0/0}{ 2 : |0/1|0/1}}
+{ 0 : { 0 : |0/0|0/0}{ 1 : |0/0|0/0}{ 2 : |0/1|0/1}}
+{ 0 : { 0 : |0/0|0/0}{ 1 : |0/0|0/0}{ 2 : |0/1|0/1}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.GetPitchRR@6f7a29a1
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.MelodicRR@46b8c8e6
+{ 0 : |2/6|0/1}
+{ 0 : |4/6|0/1}
+{ 0 : |5/6|0/1}
+{ 0 : |0/6|0/1}
+{ 0 : |3/6|0/1}
+{ 0 : |1/6|0/1}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.MelodicRR@46b8c8e6
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.GetPitchRR@6f7a29a1
+Inerte ? true
+On est dans le compute select de getPitch : true
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.GetPitchRR@6f7a29a1
+{ 0 : { 0 : |0/0|0/0}{ 1 : |0/0|0/0}{ 2 : |0/0|0/0}}
+{ 0 : { 0 : |0/0|0/0}{ 1 : |0/0|0/0}{ 2 : |0/0|0/0}}
+{ 0 : { 0 : |0/0|0/0}{ 1 : |0/0|0/0}{ 2 : |0/0|0/0}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.GetPitchRR@6f7a29a1
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.HarmonicRR2@2e8f4fb3
+Compute select de HarmonicRR1 : false
+{ 0 : |0/1{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}}
+{ 0 : |0/1{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.HarmonicRR2@2e8f4fb3
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.HarmonicRR5@6aa6aeed
+{ 0 : |0/1{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}}
+Compute select de HarmonicRR1 : false
+{ 0 : |0/1{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.HarmonicRR5@6aa6aeed
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.HarmonicRR1@5e228a02
+{ 0 : |0/1{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}}
+{ 0 : |0/1{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.HarmonicRR1@5e228a02
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.MoveToResultRR@30ec4a87
+{ 0 : |1/2{ 0 : |0/1}{ 1 : |0/0}}
+{ 0 : |0/2{ 0 : |0/1}{ 1 : |0/0}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.MoveToResultRR@30ec4a87
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.HarmonicRR6@20d2906a
+{ 0 : |0/1{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}}
+Compute select de HarmonicRR1 : true
+{ 0 : |0/1{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.HarmonicRR6@20d2906a
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.HarmonicRR4@66388993
+Compute select de HarmonicRR1 : false
+{ 0 : |0/1{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}}
+{ 0 : |0/1{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.HarmonicRR4@66388993
+On va instancier les paramètres de StartMelodicRR [_barNumber=[BarNumber value:3], _sol=, _pitch=[_octave=1, _degree=DegreeImpl [_value=6]]]
+{ 0 : |0/1{ 0 : |0/0|0/1}{ 1 : |0/0|0/1}{ 2 : |0/0|0/1}|0/1}
+{ 0 : |0/1{ 0 : |0/0|0/1}{ 1 : |0/0|0/1}{ 2 : |0/0|0/1}|0/1}
+{ 0 : |0/1{ 0 : |0/0|0/1}{ 1 : |0/0|0/1}{ 2 : |0/0|0/1}|0/1}
+Overflow reached : StartMelodicRR [_barNumber=[BarNumber value:3], _sol=, _pitch=[_octave=1, _degree=DegreeImpl [_value=6]]]
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.HarmonicRR3@7d2a1e44
+Compute select de HarmonicRR1 : false
+{ 0 : |0/1{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}}
+{ 0 : |0/1{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.HarmonicRR3@7d2a1e44
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.HarmonicRR4@66388993
+Compute select de HarmonicRR1 : false
+{ 0 : |0/1{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}}
+{ 0 : |0/1{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.HarmonicRR4@66388993
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.HarmonicRR6@20d2906a
+{ 0 : |0/1{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}}
+Compute select de HarmonicRR1 : true
+{ 0 : |0/1{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.HarmonicRR6@20d2906a
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.MoveToResultRR@30ec4a87
+{ 0 : |0/2{ 0 : |0/1}{ 1 : |0/0}}
+On est dans le compute select de moveToResult
+Solution 1867546546 (isInert ? true)
+{
+	org.chemicalmozart.model.implementations.reactionrules.StartMelodicRR -> [StartMelodicRR [_barNumber=[BarNumber value:3], _sol=, _pitch=[_octave=1, _degree=DegreeImpl [_value=6]]]]
+	org.chemicalmozart.model.implementations.BarNumber -> [[BarNumber value:3]]
+	Solution 1673077774 (isInert ? true)
+	{
+		org.chemicalmozart.model.implementations.reactionrules.RemovePullRR -> [org.chemicalmozart.model.implementations.reactionrules.RemovePullRR@46e45076]
+		org.chemicalmozart.model.implementations.ChordImpl -> [ChordImpl [_degrees=DegreeImpl [_value=1], _position=0, duration=whole]]
+		org.chemicalmozart.model.implementations.solutionindentification.BarInCreation -> []
+		java.lang.Integer -> [1]
+		org.chemicalmozart.model.implementations.DegreeImpl -> [DegreeImpl [_value=1]]
+		org.chemicalmozart.model.implementations.Pitch -> []
+		org.chemicalmozart.model.implementations.QuaterPerBar -> [4]
+		org.chemicalmozart.model.implementations.BarNumber -> [[BarNumber value:0]]
+		org.chemicalmozart.model.implementations.Note -> [{Note : [_octave=1, _degree=DegreeImpl [_value=3]] position:0 rythme:quater}, {Note : [_octave=1, _degree=DegreeImpl [_value=4]] position:1 rythme:eighth}, {Note : [_octave=1, _degree=DegreeImpl [_value=4]] position:2 rythme:eighth}, {Note : [_octave=1, _degree=DegreeImpl [_value=3]] position:3 rythme:quater}, {Note : [_octave=1, _degree=DegreeImpl [_value=3]] position:4 rythme:quater}]
+		org.chemicalmozart.model.implementations.QuaterLeft -> [0]
+		org.chemicalmozart.model.implementations.reactionrules.MelodicRR -> [org.chemicalmozart.model.implementations.reactionrules.MelodicRR@45b9ce4b]
+	}
+	Solution 1506392522 (isInert ? true)
+	{
+		org.chemicalmozart.model.implementations.reactionrules.RemovePullRR -> [org.chemicalmozart.model.implementations.reactionrules.RemovePullRR@5b40c281]
+		org.chemicalmozart.model.implementations.ChordImpl -> [ChordImpl [_degrees=DegreeImpl [_value=5], _position=0, duration=whole]]
+		org.chemicalmozart.model.implementations.solutionindentification.BarInCreation -> []
+		java.lang.Integer -> [1]
+		org.chemicalmozart.model.implementations.DegreeImpl -> [DegreeImpl [_value=5]]
+		org.chemicalmozart.model.implementations.Pitch -> []
+		org.chemicalmozart.model.implementations.QuaterPerBar -> [4]
+		org.chemicalmozart.model.implementations.BarNumber -> [[BarNumber value:1]]
+		org.chemicalmozart.model.implementations.Note -> [{Note : [_octave=2, _degree=DegreeImpl [_value=7]] position:0 rythme:eighth}, {Note : [_octave=1, _degree=DegreeImpl [_value=1]] position:1 rythme:eighth}, {Note : [_octave=1, _degree=DegreeImpl [_value=2]] position:2 rythme:quater}, {Note : [_octave=1, _degree=DegreeImpl [_value=5]] position:3 rythme:quater}, {Note : [_octave=1, _degree=DegreeImpl [_value=6]] position:4 rythme:quater}]
+		org.chemicalmozart.model.implementations.QuaterLeft -> [0]
+		org.chemicalmozart.model.implementations.reactionrules.MelodicRR -> [org.chemicalmozart.model.implementations.reactionrules.MelodicRR@27e59128]
+	}
+	Solution 1829923591 (isInert ? true)
+	{
+		org.chemicalmozart.model.implementations.reactionrules.RemovePullRR -> [org.chemicalmozart.model.implementations.reactionrules.RemovePullRR@2df6df4c]
+		org.chemicalmozart.model.implementations.ChordImpl -> [ChordImpl [_degrees=DegreeImpl [_value=5], _position=0, duration=half], ChordImpl [_degrees=DegreeImpl [_value=1], _position=1, duration=half]]
+		org.chemicalmozart.model.implementations.solutionindentification.BarInCreation -> []
+		java.lang.Integer -> [2]
+		org.chemicalmozart.model.implementations.DegreeImpl -> [DegreeImpl [_value=5], DegreeImpl [_value=1]]
+		org.chemicalmozart.model.implementations.Pitch -> []
+		org.chemicalmozart.model.implementations.QuaterPerBar -> [4]
+		org.chemicalmozart.model.implementations.BarNumber -> [[BarNumber value:2]]
+		org.chemicalmozart.model.implementations.Note -> [{Note : [_octave=0, _degree=DegreeImpl [_value=2]] position:0 rythme:quater}, {Note : [_octave=0, _degree=DegreeImpl [_value=3]] position:1 rythme:eighth}, {Note : [_octave=0, _degree=DegreeImpl [_value=4]] position:2 rythme:eighth}, {Note : [_octave=0, _degree=DegreeImpl [_value=5]] position:3 rythme:eighth}, {Note : [_octave=0, _degree=DegreeImpl [_value=6]] position:4 rythme:quater}, {Note : [_octave=0, _degree=DegreeImpl [_value=7]] position:5 rythme:eighth}]
+		org.chemicalmozart.model.implementations.QuaterLeft -> [0]
+		org.chemicalmozart.model.implementations.reactionrules.MelodicRR -> [org.chemicalmozart.model.implementations.reactionrules.MelodicRR@46b8c8e6]
+	}
+	org.chemicalmozart.model.implementations.reactionrules.GetPitchRR -> [org.chemicalmozart.model.implementations.reactionrules.GetPitchRR@6f7a29a1]
+	org.chemicalmozart.model.implementations.Pitch -> [[_octave=0, _degree=DegreeImpl [_value=7]]]
+	org.chemicalmozart.model.implementations.solutionindentification.Result -> [org.chemicalmozart.model.implementations.solutionindentification.Result@33010058]
+}
+
+true
+On est dans le compute result
+state : TERMINATED
+On passe dans STATE_TERMINATED
+java.lang.IllegalThreadStateException
+	at java.lang.Thread.start(Thread.java:656)
+	at fr.insa.rennes.info.chemical.backend.Solution.react(Solution.java:670)
+	at fr.insa.rennes.info.chemical.backend.Solution.react(Solution.java:656)
+	at org.chemicalmozart.model.implementations.reactionrules.MoveToResultRR.computeResult(MoveToResultRR.java:87)
+	at fr.insa.rennes.info.chemical.backend.ChemicalThread.run(ChemicalThread.java:89)
+state : TERMINATED
+On passe dans STATE_TERMINATED
+java.lang.IllegalThreadStateException
+	at java.lang.Thread.start(Thread.java:656)
+	at fr.insa.rennes.info.chemical.backend.Solution.react(Solution.java:670)
+	at fr.insa.rennes.info.chemical.backend.Solution.react(Solution.java:656)
+	at org.chemicalmozart.model.implementations.reactionrules.MoveToResultRR.computeResult(MoveToResultRR.java:87)
+	at fr.insa.rennes.info.chemical.backend.ChemicalThread.run(ChemicalThread.java:89)
+state : TERMINATED
+On passe dans STATE_TERMINATED
+java.lang.IllegalThreadStateException
+	at java.lang.Thread.start(Thread.java:656)
+	at fr.insa.rennes.info.chemical.backend.Solution.react(Solution.java:670)
+	at fr.insa.rennes.info.chemical.backend.Solution.react(Solution.java:656)
+	at org.chemicalmozart.model.implementations.reactionrules.MoveToResultRR.computeResult(MoveToResultRR.java:87)
+	at fr.insa.rennes.info.chemical.backend.ChemicalThread.run(ChemicalThread.java:89)
+state : TERMINATED
+On passe dans STATE_TERMINATED
+java.lang.IllegalThreadStateException
+	at java.lang.Thread.start(Thread.java:656)
+	at fr.insa.rennes.info.chemical.backend.Solution.react(Solution.java:670)
+	at fr.insa.rennes.info.chemical.backend.Solution.react(Solution.java:656)
+	at org.chemicalmozart.model.implementations.reactionrules.MoveToResultRR.computeResult(MoveToResultRR.java:87)
+	at fr.insa.rennes.info.chemical.backend.ChemicalThread.run(ChemicalThread.java:89)
+state : TERMINATED
+On passe dans STATE_TERMINATED
+java.lang.IllegalThreadStateException
+	at java.lang.Thread.start(Thread.java:656)
+	at fr.insa.rennes.info.chemical.backend.Solution.react(Solution.java:670)
+	at fr.insa.rennes.info.chemical.backend.Solution.react(Solution.java:656)
+	at org.chemicalmozart.model.implementations.reactionrules.MoveToResultRR.computeResult(MoveToResultRR.java:87)
+	at fr.insa.rennes.info.chemical.backend.ChemicalThread.run(ChemicalThread.java:89)
+state : TERMINATED
+On passe dans STATE_TERMINATED
+java.lang.IllegalThreadStateException
+	at java.lang.Thread.start(Thread.java:656)
+	at fr.insa.rennes.info.chemical.backend.Solution.react(Solution.java:670)
+	at fr.insa.rennes.info.chemical.backend.Solution.react(Solution.java:656)
+	at org.chemicalmozart.model.implementations.reactionrules.MoveToResultRR.computeResult(MoveToResultRR.java:87)
+	at fr.insa.rennes.info.chemical.backend.ChemicalThread.run(ChemicalThread.java:89)
+state : BLOCKED
+java.lang.IllegalThreadStateException
+	at java.lang.Thread.start(Thread.java:656)
+	at fr.insa.rennes.info.chemical.backend.Solution.react(Solution.java:670)
+	at org.chemicalmozart.model.implementations.reactionrules.MoveToResultRR.computeResult(MoveToResultRR.java:87)
+	at fr.insa.rennes.info.chemical.backend.ChemicalThread.run(ChemicalThread.java:89)
+state : TERMINATED
+On passe dans STATE_TERMINATED
+java.lang.IllegalThreadStateException
+	at java.lang.Thread.start(Thread.java:656)
+	at fr.insa.rennes.info.chemical.backend.Solution.react(Solution.java:670)
+	at org.chemicalmozart.model.implementations.reactionrules.MoveToResultRR.computeResult(MoveToResultRR.java:87)
+	at fr.insa.rennes.info.chemical.backend.ChemicalThread.run(ChemicalThread.java:89)
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.HarmonicRR1@5e228a02
+{ 0 : |0/1{ 0 : |0/0|0/0}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.HarmonicRR1@5e228a02
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.HarmonicRR5@6aa6aeed
+{ 0 : |0/1{ 0 : |0/0|0/0}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.HarmonicRR5@6aa6aeed
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.HarmonicRR2@2e8f4fb3
+{ 0 : |0/1{ 0 : |0/0|0/0}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.HarmonicRR2@2e8f4fb3
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.CreateBarRR@74b23210
+On est dans le compute select de createBar
+On va instancier les paramètres de StartMelodicRR [_barNumber=[BarNumber value:3], _sol=, _pitch=[_octave=1, _degree=DegreeImpl [_value=6]]]
+{ 0 : |0/1{ 0 : |0/0|0/1}{ 1 : |0/0|0/1}{ 2 : |0/0|0/1}{ 3 : |0/1|0/1}|0/1}
+{ 0 : |0/1{ 0 : |0/0|0/1}{ 1 : |0/0|0/1}{ 2 : |0/0|0/1}{ 3 : |0/1|0/1}|0/1}
+On est dans le compute select de StartMelodicRR : true
+On est dans le compute result
+state : RUNNABLE
+java.lang.IllegalThreadStateException
+	at java.lang.Thread.start(Thread.java:656)
+	at fr.insa.rennes.info.chemical.backend.Solution.react(Solution.java:670)
+	at org.chemicalmozart.model.implementations.reactionrules.StartMelodicRR.computeResult(StartMelodicRR.java:120)
+	at fr.insa.rennes.info.chemical.backend.ChemicalThread.run(ChemicalThread.java:89)
+state : BLOCKED
+java.lang.IllegalThreadStateException
+	at java.lang.Thread.start(Thread.java:656)
+	at fr.insa.rennes.info.chemical.backend.Solution.react(Solution.java:670)
+	at org.chemicalmozart.model.implementations.reactionrules.StartMelodicRR.computeResult(StartMelodicRR.java:120)
+	at fr.insa.rennes.info.chemical.backend.ChemicalThread.run(ChemicalThread.java:89)
+On va instancier les paramètres de StartMelodicRR [_barNumber=[BarNumber value:3], _sol=, _pitch=[_octave=0, _degree=DegreeImpl [_value=7]]]
+{ 0 : |0/1{ 0 : |0/0|0/1}{ 1 : |0/0|0/1}{ 2 : |0/0|0/1}{ 3 : |0/1|0/1}|0/0}
+{ 0 : |0/1{ 0 : |0/0|0/1}{ 1 : |0/0|0/1}{ 2 : |0/0|0/1}{ 3 : |0/1|0/1}|0/0}
+{ 0 : |0/1{ 0 : |0/0|0/1}{ 1 : |0/0|0/1}{ 2 : |0/0|0/1}{ 3 : |0/1|0/1}|0/0}
+{ 0 : |0/1{ 0 : |0/0|0/1}{ 1 : |0/0|0/1}{ 2 : |0/0|0/1}{ 3 : |0/1|0/1}|0/0}
+Overflow reached : StartMelodicRR [_barNumber=[BarNumber value:4], _sol=, _pitch=[_octave=0, _degree=DegreeImpl [_value=7]]]
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.MelodicRR@46b8c8e6
+{ 0 : |4/6|0/0}
+{ 0 : |5/6|0/0}
+{ 0 : |1/6|0/0}
+{ 0 : |0/6|0/0}
+{ 0 : |2/6|0/0}
+{ 0 : |3/6|0/0}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.MelodicRR@46b8c8e6
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.RemovePullRR@2df6df4c
+{ 0 : |0/0}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.RemovePullRR@2df6df4c
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.RemovePullRR@5b40c281
+{ 0 : |0/0}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.RemovePullRR@5b40c281
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.MelodicRR@27e59128
+{ 0 : |2/5|0/0}
+{ 0 : |1/5|0/0}
+{ 0 : |0/5|0/0}
+{ 0 : |3/5|0/0}
+{ 0 : |4/5|0/0}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.MelodicRR@27e59128
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.RemovePullRR@46e45076
+{ 0 : |0/0}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.RemovePullRR@46e45076
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.MelodicRR@45b9ce4b
+{ 0 : |3/5|0/0}
+{ 0 : |2/5|0/0}
+{ 0 : |4/5|0/0}
+{ 0 : |0/5|0/0}
+{ 0 : |1/5|0/0}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.MelodicRR@45b9ce4b
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.HarmonicRR6@20d2906a
+Compute select de HarmonicRR1 : true
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.HarmonicRR6@20d2906a
+{ 0 : |0/0{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}{ 2 : |0/0|0/0}}
+{ 0 : |0/0{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}{ 2 : |0/0|0/0}}
+{ 0 : |0/0{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}{ 2 : |0/0|0/0}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.HarmonicRR6@20d2906a
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.HarmonicRR4@66388993
+{ 0 : |0/0{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}{ 2 : |0/0|0/0}}
+{ 0 : |0/0{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}{ 2 : |0/0|0/0}}
+{ 0 : |0/0{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}{ 2 : |0/0|0/0}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.HarmonicRR4@66388993
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.HarmonicRR3@7d2a1e44
+{ 0 : |0/0{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}{ 2 : |0/0|0/0}}
+{ 0 : |0/0{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}{ 2 : |0/0|0/0}}
+{ 0 : |0/0{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}{ 2 : |0/0|0/0}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.HarmonicRR3@7d2a1e44
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.PickOneRR@2b2d96f2
+On est dans le compute select de pickone : true
+On va réinjecter le degré DegreeImpl [_value=2]
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.RythmeHRR@266bade9
+Compute select de RythmeRR : true
+On va instancier les paramètres de StartMelodicRR [_barNumber=[BarNumber value:4], _sol=, _pitch=[_octave=0, _degree=DegreeImpl [_value=7]]]
+{ 0 : |0/1{ 0 : |0/0|0/1}{ 1 : |0/0|0/1}{ 2 : |0/0|0/1}{ 3 : |0/1|0/1}|0/0}
+{ 0 : |0/1{ 0 : |0/0|0/1}{ 1 : |0/0|0/1}{ 2 : |0/0|0/1}{ 3 : |0/1|0/1}|0/0}
+{ 0 : |0/1{ 0 : |0/0|0/1}{ 1 : |0/0|0/1}{ 2 : |0/0|0/1}{ 3 : |0/1|0/1}|0/0}
+{ 0 : |0/1{ 0 : |0/0|0/1}{ 1 : |0/0|0/1}{ 2 : |0/0|0/1}{ 3 : |0/1|0/1}|0/0}
+Overflow reached : StartMelodicRR [_barNumber=[BarNumber value:4], _sol=, _pitch=[_octave=0, _degree=DegreeImpl [_value=7]]]
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.RythmicRR@16bdb503
+####On est là : 2
+{ 0 : { 0 : |0/1|6/11}|1/2|0/1|0/1}
+####On est là : 2
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.RythmicRR@16bdb503
+####On est là : 2
+{ 0 : { 0 : |0/1|8/10}|0/2|0/1|0/1}
+####On est là : 2
+{ 0 : { 0 : |0/1|2/10}|1/2|0/1|0/1}
+####On est là : 2
+{ 0 : { 0 : |0/1|0/10}|1/2|0/1|0/1}
+####On est là : 2
+{ 0 : { 0 : |0/1|6/10}|1/2|0/1|0/1}
+####On est là : 2
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.MelodicRR@4ce2cb55
+{ 0 : |2/4|0/1}
+{ 0 : |3/4|0/1}
+Rand : 1
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.MelodicRR@4ce2cb55
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.MelodicRR@4ce2cb55
+Rand : 0
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.MelodicRR@4ce2cb55
+{ 0 : |2/4|0/1}
+{ 0 : |3/4|0/1}
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.MelodicRR@4ce2cb55
+{ 0 : |3/4|0/1}
+{ 0 : |0/4|0/1}
+{ 0 : |1/4|0/1}
+{ 0 : |2/4|0/1}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.MelodicRR@4ce2cb55
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.MoveToResultRR@3782da3d
+{ 0 : |2/3{ 0 : |0/1}{ 1 : |0/0}{ 2 : |0/0}}
+{ 0 : |1/3{ 0 : |0/1}{ 1 : |0/0}{ 2 : |0/0}}
+{ 0 : |0/3{ 0 : |0/1}{ 1 : |0/0}{ 2 : |0/0}}
+{ 0 : |1/3{ 0 : |0/1}{ 1 : |0/0}{ 2 : |0/0}}
+{ 0 : |2/3{ 0 : |0/1}{ 1 : |0/0}{ 2 : |0/0}}
+{ 0 : |0/3{ 0 : |0/1}{ 1 : |0/0}{ 2 : |0/0}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.MoveToResultRR@3782da3d
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.HarmonicRR2@2e8f4fb3
+Compute select de HarmonicRR1 : true
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.HarmonicRR2@2e8f4fb3
+{ 0 : |0/0{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}{ 2 : |0/0|0/0}{ 3 : |0/0|0/0}}
+{ 0 : |0/0{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}{ 2 : |0/0|0/0}{ 3 : |0/0|0/0}}
+{ 0 : |0/0{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}{ 2 : |0/0|0/0}{ 3 : |0/0|0/0}}
+{ 0 : |0/0{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}{ 2 : |0/0|0/0}{ 3 : |0/0|0/0}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.HarmonicRR2@2e8f4fb3
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.HarmonicRR5@6aa6aeed
+{ 0 : |0/0{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}{ 2 : |0/0|0/0}{ 3 : |0/0|0/0}}
+{ 0 : |0/0{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}{ 2 : |0/0|0/0}{ 3 : |0/0|0/0}}
+{ 0 : |0/0{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}{ 2 : |0/0|0/0}{ 3 : |0/0|0/0}}
+{ 0 : |0/0{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}{ 2 : |0/0|0/0}{ 3 : |0/0|0/0}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.HarmonicRR5@6aa6aeed
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.HarmonicRR1@5e228a02
+{ 0 : |0/0{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}{ 2 : |0/0|0/0}{ 3 : |0/0|0/0}}
+{ 0 : |0/0{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}{ 2 : |0/0|0/0}{ 3 : |0/0|0/0}}
+{ 0 : |0/0{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}{ 2 : |0/0|0/0}{ 3 : |0/0|0/0}}
+{ 0 : |0/0{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}{ 2 : |0/0|0/0}{ 3 : |0/0|0/0}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.HarmonicRR1@5e228a02
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.PickOneRR@656de49c
+On est dans le compute select de pickone : true
+On va réinjecter le degré DegreeImpl [_value=3]
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.RythmeHRR@1d2940b3
+Compute select de RythmeRR : true
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.MoveToResultRR@3782da3d
+{ 0 : |2/4{ 0 : |0/1}{ 1 : |0/0}{ 2 : |0/0}{ 3 : |0/0}}
+{ 0 : |2/4{ 0 : |0/1}{ 1 : |0/0}{ 2 : |0/0}{ 3 : |0/0}}
+{ 0 : |0/4{ 0 : |0/1}{ 1 : |0/0}{ 2 : |0/0}{ 3 : |0/0}}
+{ 0 : |0/4{ 0 : |0/1}{ 1 : |0/0}{ 2 : |0/0}{ 3 : |0/0}}
+{ 0 : |1/4{ 0 : |0/1}{ 1 : |0/0}{ 2 : |0/0}{ 3 : |0/0}}
+{ 0 : |3/4{ 0 : |0/1}{ 1 : |0/0}{ 2 : |0/0}{ 3 : |0/0}}
+{ 0 : |1/4{ 0 : |0/1}{ 1 : |0/0}{ 2 : |0/0}{ 3 : |0/0}}
+{ 0 : |1/4{ 0 : |0/1}{ 1 : |0/0}{ 2 : |0/0}{ 3 : |0/0}}
+{ 0 : |3/4{ 0 : |0/1}{ 1 : |0/0}{ 2 : |0/0}{ 3 : |0/0}}
+{ 0 : |0/4{ 0 : |0/1}{ 1 : |0/0}{ 2 : |0/0}{ 3 : |0/0}}
+{ 0 : |2/4{ 0 : |0/1}{ 1 : |0/0}{ 2 : |0/0}{ 3 : |0/0}}
+{ 0 : |3/4{ 0 : |0/1}{ 1 : |0/0}{ 2 : |0/0}{ 3 : |0/0}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.MoveToResultRR@3782da3d
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.MelodicRR@4ce2cb55
+{ 0 : |0/4|0/1}
+{ 0 : |3/4|0/1}
+{ 0 : |2/4|0/1}
+{ 0 : |1/4|0/1}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.MelodicRR@4ce2cb55
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.RemovePullRR@58f39b3a
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.RemovePullRR@58f39b3a
+{ 0 : |0/0}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.RemovePullRR@58f39b3a
+On va instancier les paramètres de StartMelodicRR [_barNumber=[BarNumber value:4], _sol=, _pitch=[_octave=0, _degree=DegreeImpl [_value=7]]]
+{ 0 : |0/1{ 0 : |0/0|0/1}{ 1 : |0/0|0/1}{ 2 : |0/0|0/1}{ 3 : |0/1|0/1}|0/0}
+{ 0 : |0/1{ 0 : |0/0|0/1}{ 1 : |0/0|0/1}{ 2 : |0/0|0/1}{ 3 : |0/1|0/1}|0/0}
+{ 0 : |0/1{ 0 : |0/0|0/1}{ 1 : |0/0|0/1}{ 2 : |0/0|0/1}{ 3 : |0/1|0/1}|0/0}
+{ 0 : |0/1{ 0 : |0/0|0/1}{ 1 : |0/0|0/1}{ 2 : |0/0|0/1}{ 3 : |0/1|0/1}|0/0}
+Overflow reached : StartMelodicRR [_barNumber=[BarNumber value:4], _sol=, _pitch=[_octave=0, _degree=DegreeImpl [_value=7]]]
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.GarbageRR@2adb1d4
+Compute select de GarbageRR : true
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.HarmonicRR3@7d2a1e44
+{ 0 : |0/1{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}{ 2 : |0/0|0/0}}
+Compute select de HarmonicRR1 : true
+{ 0 : |0/1{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}{ 2 : |0/0|0/0}}
+{ 0 : |0/1{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}{ 2 : |0/0|0/0}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.HarmonicRR3@7d2a1e44
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.HarmonicRR4@66388993
+{ 0 : |0/1{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}{ 2 : |0/0|0/0}}
+{ 0 : |0/1{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}{ 2 : |0/0|0/0}}
+Compute select de HarmonicRR1 : false
+{ 0 : |0/1{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}{ 2 : |0/0|0/0}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.HarmonicRR4@66388993
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.HarmonicRR6@20d2906a
+{ 0 : |0/1{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}{ 2 : |0/0|0/0}}
+Compute select de HarmonicRR1 : false
+{ 0 : |0/1{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}{ 2 : |0/0|0/0}}
+{ 0 : |0/1{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}{ 2 : |0/0|0/0}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.HarmonicRR6@20d2906a
+On va instancier les paramètres de StartMelodicRR [_barNumber=[BarNumber value:4], _sol=, _pitch=[_octave=0, _degree=DegreeImpl [_value=7]]]
+{ 0 : |0/1{ 0 : |0/0|0/1}{ 1 : |0/0|0/1}{ 2 : |0/0|0/1}{ 3 : |0/1|0/1}|0/0}
+{ 0 : |0/1{ 0 : |0/0|0/1}{ 1 : |0/0|0/1}{ 2 : |0/0|0/1}{ 3 : |0/1|0/1}|0/0}
+{ 0 : |0/1{ 0 : |0/0|0/1}{ 1 : |0/0|0/1}{ 2 : |0/0|0/1}{ 3 : |0/1|0/1}|0/0}
+{ 0 : |0/1{ 0 : |0/0|0/1}{ 1 : |0/0|0/1}{ 2 : |0/0|0/1}{ 3 : |0/1|0/1}|0/0}
+Overflow reached : StartMelodicRR [_barNumber=[BarNumber value:4], _sol=, _pitch=[_octave=0, _degree=DegreeImpl [_value=7]]]
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.RemovePullRR@58f39b3a
+{ 0 : |0/0}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.RemovePullRR@58f39b3a
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.MelodicRR@4ce2cb55
+{ 0 : |0/4|0/1}
+{ 0 : |1/4|0/1}
+{ 0 : |3/4|0/1}
+{ 0 : |2/4|0/1}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.MelodicRR@4ce2cb55
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.MoveToResultRR@3782da3d
+{ 0 : |1/3{ 0 : |0/1}{ 1 : |0/0}{ 2 : |0/0}}
+{ 0 : |0/3{ 0 : |0/1}{ 1 : |0/0}{ 2 : |0/0}}
+{ 0 : |2/3{ 0 : |0/1}{ 1 : |0/0}{ 2 : |0/0}}
+{ 0 : |0/3{ 0 : |0/1}{ 1 : |0/0}{ 2 : |0/0}}
+{ 0 : |2/3{ 0 : |0/1}{ 1 : |0/0}{ 2 : |0/0}}
+{ 0 : |1/3{ 0 : |0/1}{ 1 : |0/0}{ 2 : |0/0}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.MoveToResultRR@3782da3d
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.GarbageRR@2b20bf2c
+Compute select de GarbageRR : false
+{ 0 : |1/3}
+Compute select de GarbageRR : true
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.HarmonicRR1@5e228a02
+{ 0 : |0/1{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}}
+{ 0 : |0/1{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.HarmonicRR1@5e228a02
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.HarmonicRR5@6aa6aeed
+Compute select de HarmonicRR1 : false
+{ 0 : |0/1{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}}
+{ 0 : |0/1{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.HarmonicRR5@6aa6aeed
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.HarmonicRR2@2e8f4fb3
+{ 0 : |0/1{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}}
+Compute select de HarmonicRR1 : false
+{ 0 : |0/1{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.HarmonicRR2@2e8f4fb3
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.MoveToResultRR@3782da3d
+{ 0 : |0/2{ 0 : |0/1}{ 1 : |0/0}}
+{ 0 : |1/2{ 0 : |0/1}{ 1 : |0/0}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.MoveToResultRR@3782da3d
+On va instancier les paramètres de StartMelodicRR [_barNumber=[BarNumber value:4], _sol=, _pitch=[_octave=0, _degree=DegreeImpl [_value=7]]]
+{ 0 : |0/1{ 0 : |0/0|0/1}{ 1 : |0/0|0/1}{ 2 : |0/0|0/1}{ 3 : |0/1|0/1}|0/0}
+{ 0 : |0/1{ 0 : |0/0|0/1}{ 1 : |0/0|0/1}{ 2 : |0/0|0/1}{ 3 : |0/1|0/1}|0/0}
+{ 0 : |0/1{ 0 : |0/0|0/1}{ 1 : |0/0|0/1}{ 2 : |0/0|0/1}{ 3 : |0/1|0/1}|0/0}
+{ 0 : |0/1{ 0 : |0/0|0/1}{ 1 : |0/0|0/1}{ 2 : |0/0|0/1}{ 3 : |0/1|0/1}|0/0}
+Overflow reached : StartMelodicRR [_barNumber=[BarNumber value:4], _sol=, _pitch=[_octave=0, _degree=DegreeImpl [_value=7]]]
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.HarmonicRR6@20d2906a
+{ 0 : |0/1{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}}
+Compute select de HarmonicRR1 : false
+{ 0 : |0/1{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.HarmonicRR6@20d2906a
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.HarmonicRR4@66388993
+{ 0 : |0/1{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}}
+Compute select de HarmonicRR1 : false
+{ 0 : |0/1{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.HarmonicRR4@66388993
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.HarmonicRR3@7d2a1e44
+Compute select de HarmonicRR1 : true
+{ 0 : |0/1{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}}
+{ 0 : |0/1{ 0 : |0/0|0/0}{ 1 : |0/1|0/1}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.HarmonicRR3@7d2a1e44
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.MoveToResultRR@3782da3d
+{ 0 : |0/2{ 0 : |0/1}{ 1 : |0/0}}
+On est dans le compute select de moveToResult
+Solution 1867546546 (isInert ? true)
+{
+	org.chemicalmozart.model.implementations.reactionrules.StartMelodicRR -> [StartMelodicRR [_barNumber=[BarNumber value:4], _sol=, _pitch=[_octave=0, _degree=DegreeImpl [_value=7]]]]
+	org.chemicalmozart.model.implementations.BarNumber -> [[BarNumber value:4]]
+	Solution 1673077774 (isInert ? true)
+	{
+		org.chemicalmozart.model.implementations.reactionrules.RemovePullRR -> [org.chemicalmozart.model.implementations.reactionrules.RemovePullRR@46e45076]
+		org.chemicalmozart.model.implementations.ChordImpl -> [ChordImpl [_degrees=DegreeImpl [_value=1], _position=0, duration=whole]]
+		org.chemicalmozart.model.implementations.solutionindentification.BarInCreation -> []
+		java.lang.Integer -> [1]
+		org.chemicalmozart.model.implementations.DegreeImpl -> [DegreeImpl [_value=1]]
+		org.chemicalmozart.model.implementations.Pitch -> []
+		org.chemicalmozart.model.implementations.QuaterPerBar -> [4]
+		org.chemicalmozart.model.implementations.BarNumber -> [[BarNumber value:0]]
+		org.chemicalmozart.model.implementations.Note -> [{Note : [_octave=1, _degree=DegreeImpl [_value=3]] position:0 rythme:quater}, {Note : [_octave=1, _degree=DegreeImpl [_value=4]] position:1 rythme:eighth}, {Note : [_octave=1, _degree=DegreeImpl [_value=4]] position:2 rythme:eighth}, {Note : [_octave=1, _degree=DegreeImpl [_value=3]] position:3 rythme:quater}, {Note : [_octave=1, _degree=DegreeImpl [_value=3]] position:4 rythme:quater}]
+		org.chemicalmozart.model.implementations.QuaterLeft -> [0]
+		org.chemicalmozart.model.implementations.reactionrules.MelodicRR -> [org.chemicalmozart.model.implementations.reactionrules.MelodicRR@45b9ce4b]
+	}
+	Solution 1506392522 (isInert ? true)
+	{
+		org.chemicalmozart.model.implementations.reactionrules.RemovePullRR -> [org.chemicalmozart.model.implementations.reactionrules.RemovePullRR@5b40c281]
+		org.chemicalmozart.model.implementations.ChordImpl -> [ChordImpl [_degrees=DegreeImpl [_value=5], _position=0, duration=whole]]
+		org.chemicalmozart.model.implementations.solutionindentification.BarInCreation -> []
+		java.lang.Integer -> [1]
+		org.chemicalmozart.model.implementations.DegreeImpl -> [DegreeImpl [_value=5]]
+		org.chemicalmozart.model.implementations.Pitch -> []
+		org.chemicalmozart.model.implementations.QuaterPerBar -> [4]
+		org.chemicalmozart.model.implementations.BarNumber -> [[BarNumber value:1]]
+		org.chemicalmozart.model.implementations.Note -> [{Note : [_octave=2, _degree=DegreeImpl [_value=7]] position:0 rythme:eighth}, {Note : [_octave=1, _degree=DegreeImpl [_value=1]] position:1 rythme:eighth}, {Note : [_octave=1, _degree=DegreeImpl [_value=2]] position:2 rythme:quater}, {Note : [_octave=1, _degree=DegreeImpl [_value=5]] position:3 rythme:quater}, {Note : [_octave=1, _degree=DegreeImpl [_value=6]] position:4 rythme:quater}]
+		org.chemicalmozart.model.implementations.QuaterLeft -> [0]
+		org.chemicalmozart.model.implementations.reactionrules.MelodicRR -> [org.chemicalmozart.model.implementations.reactionrules.MelodicRR@27e59128]
+	}
+	Solution 1829923591 (isInert ? true)
+	{
+		org.chemicalmozart.model.implementations.reactionrules.RemovePullRR -> [org.chemicalmozart.model.implementations.reactionrules.RemovePullRR@2df6df4c]
+		org.chemicalmozart.model.implementations.ChordImpl -> [ChordImpl [_degrees=DegreeImpl [_value=5], _position=0, duration=half], ChordImpl [_degrees=DegreeImpl [_value=1], _position=1, duration=half]]
+		org.chemicalmozart.model.implementations.solutionindentification.BarInCreation -> []
+		java.lang.Integer -> [2]
+		org.chemicalmozart.model.implementations.DegreeImpl -> [DegreeImpl [_value=5], DegreeImpl [_value=1]]
+		org.chemicalmozart.model.implementations.Pitch -> []
+		org.chemicalmozart.model.implementations.QuaterPerBar -> [4]
+		org.chemicalmozart.model.implementations.BarNumber -> [[BarNumber value:2]]
+		org.chemicalmozart.model.implementations.Note -> [{Note : [_octave=0, _degree=DegreeImpl [_value=2]] position:0 rythme:quater}, {Note : [_octave=0, _degree=DegreeImpl [_value=3]] position:1 rythme:eighth}, {Note : [_octave=0, _degree=DegreeImpl [_value=4]] position:2 rythme:eighth}, {Note : [_octave=0, _degree=DegreeImpl [_value=5]] position:3 rythme:eighth}, {Note : [_octave=0, _degree=DegreeImpl [_value=6]] position:4 rythme:quater}, {Note : [_octave=0, _degree=DegreeImpl [_value=7]] position:5 rythme:eighth}]
+		org.chemicalmozart.model.implementations.QuaterLeft -> [0]
+		org.chemicalmozart.model.implementations.reactionrules.MelodicRR -> [org.chemicalmozart.model.implementations.reactionrules.MelodicRR@46b8c8e6]
+	}
+	Solution 1407965019 (isInert ? true)
+	{
+		org.chemicalmozart.model.implementations.reactionrules.RemovePullRR -> [org.chemicalmozart.model.implementations.reactionrules.RemovePullRR@58f39b3a]
+		org.chemicalmozart.model.implementations.ChordImpl -> [ChordImpl [_degrees=DegreeImpl [_value=2], _position=0, duration=half], ChordImpl [_degrees=DegreeImpl [_value=2], _position=1, duration=half]]
+		org.chemicalmozart.model.implementations.solutionindentification.BarInCreation -> [org.chemicalmozart.model.implementations.solutionindentification.BarInCreation@596e1fb1]
+		java.lang.Integer -> [2]
+		org.chemicalmozart.model.implementations.DegreeImpl -> [DegreeImpl [_value=3], DegreeImpl [_value=3]]
+		org.chemicalmozart.model.implementations.Pitch -> [[_octave=0, _degree=DegreeImpl [_value=2]]]
+		org.chemicalmozart.model.implementations.QuaterPerBar -> [4]
+		org.chemicalmozart.model.implementations.BarNumber -> [[BarNumber value:3]]
+		org.chemicalmozart.model.implementations.Note -> [{Note : [_octave=0, _degree=DegreeImpl [_value=4]] position:0 rythme:eighth}, {Note : [_octave=0, _degree=DegreeImpl [_value=4]] position:1 rythme:quaterdotted}, {Note : [_octave=0, _degree=DegreeImpl [_value=2]] position:2 rythme:quater}, {Note : [_octave=0, _degree=DegreeImpl [_value=2]] position:3 rythme:quater}]
+		org.chemicalmozart.model.implementations.QuaterLeft -> [0]
+		org.chemicalmozart.model.implementations.reactionrules.MelodicRR -> [org.chemicalmozart.model.implementations.reactionrules.MelodicRR@4ce2cb55]
+	}
+	org.chemicalmozart.model.implementations.reactionrules.GetPitchRR -> [org.chemicalmozart.model.implementations.reactionrules.GetPitchRR@6f7a29a1]
+	org.chemicalmozart.model.implementations.Pitch -> []
+	org.chemicalmozart.model.implementations.solutionindentification.Result -> [org.chemicalmozart.model.implementations.solutionindentification.Result@2a9df354]
+}
+
+true
+On est dans le compute result
+state : TERMINATED
+On passe dans STATE_TERMINATED
+java.lang.IllegalThreadStateException
+	at java.lang.Thread.start(Thread.java:656)
+	at fr.insa.rennes.info.chemical.backend.Solution.react(Solution.java:670)
+	at fr.insa.rennes.info.chemical.backend.Solution.react(Solution.java:656)
+	at org.chemicalmozart.model.implementations.reactionrules.MoveToResultRR.computeResult(MoveToResultRR.java:87)
+	at fr.insa.rennes.info.chemical.backend.ChemicalThread.run(ChemicalThread.java:89)
+state : TERMINATED
+On passe dans STATE_TERMINATED
+java.lang.IllegalThreadStateException
+	at java.lang.Thread.start(Thread.java:656)
+	at fr.insa.rennes.info.chemical.backend.Solution.react(Solution.java:670)
+	at fr.insa.rennes.info.chemical.backend.Solution.react(Solution.java:656)
+	at org.chemicalmozart.model.implementations.reactionrules.MoveToResultRR.computeResult(MoveToResultRR.java:87)
+	at fr.insa.rennes.info.chemical.backend.ChemicalThread.run(ChemicalThread.java:89)
+state : TERMINATED
+On passe dans STATE_TERMINATED
+java.lang.IllegalThreadStateException
+	at java.lang.Thread.start(Thread.java:656)
+	at fr.insa.rennes.info.chemical.backend.Solution.react(Solution.java:670)
+	at fr.insa.rennes.info.chemical.backend.Solution.react(Solution.java:656)
+	at org.chemicalmozart.model.implementations.reactionrules.MoveToResultRR.computeResult(MoveToResultRR.java:87)
+	at fr.insa.rennes.info.chemical.backend.ChemicalThread.run(ChemicalThread.java:89)
+state : TERMINATED
+On passe dans STATE_TERMINATED
+java.lang.IllegalThreadStateException
+	at java.lang.Thread.start(Thread.java:656)
+	at fr.insa.rennes.info.chemical.backend.Solution.react(Solution.java:670)
+	at fr.insa.rennes.info.chemical.backend.Solution.react(Solution.java:656)
+	at org.chemicalmozart.model.implementations.reactionrules.MoveToResultRR.computeResult(MoveToResultRR.java:87)
+	at fr.insa.rennes.info.chemical.backend.ChemicalThread.run(ChemicalThread.java:89)
+state : TERMINATED
+On passe dans STATE_TERMINATED
+java.lang.IllegalThreadStateException
+	at java.lang.Thread.start(Thread.java:656)
+	at fr.insa.rennes.info.chemical.backend.Solution.react(Solution.java:670)
+	at fr.insa.rennes.info.chemical.backend.Solution.react(Solution.java:656)
+	at org.chemicalmozart.model.implementations.reactionrules.MoveToResultRR.computeResult(MoveToResultRR.java:87)
+	at fr.insa.rennes.info.chemical.backend.ChemicalThread.run(ChemicalThread.java:89)
+state : TERMINATED
+On passe dans STATE_TERMINATED
+java.lang.IllegalThreadStateException
+	at java.lang.Thread.start(Thread.java:656)
+	at fr.insa.rennes.info.chemical.backend.Solution.react(Solution.java:670)
+	at fr.insa.rennes.info.chemical.backend.Solution.react(Solution.java:656)
+	at org.chemicalmozart.model.implementations.reactionrules.MoveToResultRR.computeResult(MoveToResultRR.java:87)
+	at fr.insa.rennes.info.chemical.backend.ChemicalThread.run(ChemicalThread.java:89)
+state : TERMINATED
+On passe dans STATE_TERMINATED
+java.lang.IllegalThreadStateException
+	at java.lang.Thread.start(Thread.java:656)
+	at fr.insa.rennes.info.chemical.backend.Solution.react(Solution.java:670)
+	at fr.insa.rennes.info.chemical.backend.Solution.react(Solution.java:656)
+	at org.chemicalmozart.model.implementations.reactionrules.MoveToResultRR.computeResult(MoveToResultRR.java:87)
+	at fr.insa.rennes.info.chemical.backend.ChemicalThread.run(ChemicalThread.java:89)
+state : TERMINATED
+On passe dans STATE_TERMINATED
+java.lang.IllegalThreadStateException
+	at java.lang.Thread.start(Thread.java:656)
+	at fr.insa.rennes.info.chemical.backend.Solution.react(Solution.java:670)
+	at fr.insa.rennes.info.chemical.backend.Solution.react(Solution.java:656)
+	at org.chemicalmozart.model.implementations.reactionrules.MoveToResultRR.computeResult(MoveToResultRR.java:87)
+	at fr.insa.rennes.info.chemical.backend.ChemicalThread.run(ChemicalThread.java:89)
+state : TERMINATED
+On passe dans STATE_TERMINATED
+java.lang.IllegalThreadStateException
+	at java.lang.Thread.start(Thread.java:656)
+	at fr.insa.rennes.info.chemical.backend.Solution.react(Solution.java:670)
+	at org.chemicalmozart.model.implementations.reactionrules.MoveToResultRR.computeResult(MoveToResultRR.java:87)
+	at fr.insa.rennes.info.chemical.backend.ChemicalThread.run(ChemicalThread.java:89)
+state : TERMINATED
+On passe dans STATE_TERMINATED
+java.lang.IllegalThreadStateException
+	at java.lang.Thread.start(Thread.java:656)
+	at fr.insa.rennes.info.chemical.backend.Solution.react(Solution.java:670)
+	at org.chemicalmozart.model.implementations.reactionrules.MoveToResultRR.computeResult(MoveToResultRR.java:87)
+	at fr.insa.rennes.info.chemical.backend.ChemicalThread.run(ChemicalThread.java:89)
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.HarmonicRR2@2e8f4fb3
+{ 0 : |0/1{ 0 : |0/0|0/0}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.HarmonicRR2@2e8f4fb3
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.HarmonicRR5@6aa6aeed
+{ 0 : |0/1{ 0 : |0/0|0/0}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.HarmonicRR5@6aa6aeed
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.HarmonicRR1@5e228a02
+{ 0 : |0/1{ 0 : |0/0|0/0}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.HarmonicRR1@5e228a02
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.CreateBarRR@303bc257
+On est dans le compute select de createBar
+{ 0 : |0/1|0/1|0/1}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.CreateBarRR@303bc257
+On va instancier les paramètres de StartMelodicRR [_barNumber=[BarNumber value:4], _sol=, _pitch=[_octave=0, _degree=DegreeImpl [_value=7]]]
+{ 0 : |0/1{ 0 : |0/0|0/1}{ 1 : |0/0|0/1}{ 2 : |0/0|0/1}{ 3 : |0/1|0/1}{ 4 : |0/1|0/1}|0/0}
+{ 0 : |0/1{ 0 : |0/0|0/1}{ 1 : |0/0|0/1}{ 2 : |0/0|0/1}{ 3 : |0/1|0/1}{ 4 : |0/1|0/1}|0/0}
+{ 0 : |0/1{ 0 : |0/0|0/1}{ 1 : |0/0|0/1}{ 2 : |0/0|0/1}{ 3 : |0/1|0/1}{ 4 : |0/1|0/1}|0/0}
+{ 0 : |0/1{ 0 : |0/0|0/1}{ 1 : |0/0|0/1}{ 2 : |0/0|0/1}{ 3 : |0/1|0/1}{ 4 : |0/1|0/1}|0/0}
+{ 0 : |0/1{ 0 : |0/0|0/1}{ 1 : |0/0|0/1}{ 2 : |0/0|0/1}{ 3 : |0/1|0/1}{ 4 : |0/1|0/1}|0/0}
+Overflow reached : StartMelodicRR [_barNumber=[BarNumber value:4], _sol=, _pitch=[_octave=0, _degree=DegreeImpl [_value=7]]]
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.GetPitchRR@6f7a29a1
+{ 0 : { 0 : |0/0|0/0}{ 1 : |0/0|0/0}{ 2 : |0/0|0/0}{ 3 : |0/1|0/1}{ 4 : |0/1|0/0}}
+{ 0 : { 0 : |0/0|0/0}{ 1 : |0/0|0/0}{ 2 : |0/0|0/0}{ 3 : |0/1|0/1}{ 4 : |0/1|0/0}}
+{ 0 : { 0 : |0/0|0/0}{ 1 : |0/0|0/0}{ 2 : |0/0|0/0}{ 3 : |0/1|0/1}{ 4 : |0/1|0/0}}
+Inerte ? true
+On est dans le compute select de getPitch : true
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.GetPitchRR@6f7a29a1
+{ 0 : { 0 : |0/0|0/0}{ 1 : |0/0|0/0}{ 2 : |0/0|0/0}{ 3 : |0/0|0/0}{ 4 : |0/1|0/0}}
+{ 0 : { 0 : |0/0|0/0}{ 1 : |0/0|0/0}{ 2 : |0/0|0/0}{ 3 : |0/0|0/0}{ 4 : |0/1|0/0}}
+{ 0 : { 0 : |0/0|0/0}{ 1 : |0/0|0/0}{ 2 : |0/0|0/0}{ 3 : |0/0|0/0}{ 4 : |0/1|0/0}}
+{ 0 : { 0 : |0/0|0/0}{ 1 : |0/0|0/0}{ 2 : |0/0|0/0}{ 3 : |0/0|0/0}{ 4 : |0/1|0/0}}
+{ 0 : { 0 : |0/0|0/0}{ 1 : |0/0|0/0}{ 2 : |0/0|0/0}{ 3 : |0/0|0/0}{ 4 : |0/1|0/0}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.GetPitchRR@6f7a29a1
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.MelodicRR@4ce2cb55
+{ 0 : |2/4|0/0}
+{ 0 : |1/4|0/0}
+{ 0 : |0/4|0/0}
+{ 0 : |3/4|0/0}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.MelodicRR@4ce2cb55
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.RemovePullRR@58f39b3a
+{ 0 : |0/0}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.RemovePullRR@58f39b3a
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.MelodicRR@46b8c8e6
+{ 0 : |4/6|0/0}
+{ 0 : |3/6|0/0}
+{ 0 : |2/6|0/0}
+{ 0 : |1/6|0/0}
+{ 0 : |0/6|0/0}
+{ 0 : |5/6|0/0}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.MelodicRR@46b8c8e6
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.RemovePullRR@2df6df4c
+{ 0 : |0/0}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.RemovePullRR@2df6df4c
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.RemovePullRR@5b40c281
+{ 0 : |0/0}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.RemovePullRR@5b40c281
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.MelodicRR@27e59128
+{ 0 : |4/5|0/0}
+{ 0 : |2/5|0/0}
+{ 0 : |0/5|0/0}
+{ 0 : |1/5|0/0}
+{ 0 : |3/5|0/0}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.MelodicRR@27e59128
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.RemovePullRR@46e45076
+{ 0 : |0/0}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.RemovePullRR@46e45076
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.MelodicRR@45b9ce4b
+{ 0 : |1/5|0/0}
+{ 0 : |0/5|0/0}
+{ 0 : |2/5|0/0}
+{ 0 : |4/5|0/0}
+{ 0 : |3/5|0/0}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.MelodicRR@45b9ce4b
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.HarmonicRR3@7d2a1e44
+{ 0 : |0/1{ 0 : |0/0|0/0}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.HarmonicRR3@7d2a1e44
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.HarmonicRR4@66388993
+{ 0 : |0/1{ 0 : |0/0|0/0}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.HarmonicRR4@66388993
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.HarmonicRR6@20d2906a
+{ 0 : |0/1{ 0 : |0/0|0/0}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.HarmonicRR6@20d2906a
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.GetPitchRR@6f7a29a1
+{ 0 : { 0 : |0/0|0/0}{ 1 : |0/0|0/0}{ 2 : |0/0|0/0}{ 3 : |0/0|0/0}{ 4 : |0/1|0/0}}
+{ 0 : { 0 : |0/0|0/0}{ 1 : |0/0|0/0}{ 2 : |0/0|0/0}{ 3 : |0/0|0/0}{ 4 : |0/1|0/0}}
+{ 0 : { 0 : |0/0|0/0}{ 1 : |0/0|0/0}{ 2 : |0/0|0/0}{ 3 : |0/0|0/0}{ 4 : |0/1|0/0}}
+{ 0 : { 0 : |0/0|0/0}{ 1 : |0/0|0/0}{ 2 : |0/0|0/0}{ 3 : |0/0|0/0}{ 4 : |0/1|0/0}}
+{ 0 : { 0 : |0/0|0/0}{ 1 : |0/0|0/0}{ 2 : |0/0|0/0}{ 3 : |0/0|0/0}{ 4 : |0/1|0/0}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.GetPitchRR@6f7a29a1
+On va instancier les paramètres de StartMelodicRR [_barNumber=[BarNumber value:4], _sol=, _pitch=[_octave=0, _degree=DegreeImpl [_value=7]]]
+{ 0 : |0/1{ 0 : |0/0|0/1}{ 1 : |0/0|0/1}{ 2 : |0/0|0/1}{ 3 : |0/0|0/1}{ 4 : |0/1|0/1}|0/1}
+On est dans le compute select de StartMelodicRR : true
+On est dans le compute result
+state : BLOCKED
+java.lang.IllegalThreadStateException
+	at java.lang.Thread.start(Thread.java:656)
+	at fr.insa.rennes.info.chemical.backend.Solution.react(Solution.java:670)
+	at org.chemicalmozart.model.implementations.reactionrules.StartMelodicRR.computeResult(StartMelodicRR.java:120)
+	at fr.insa.rennes.info.chemical.backend.ChemicalThread.run(ChemicalThread.java:89)
+state : BLOCKED
+java.lang.IllegalThreadStateException
+	at java.lang.Thread.start(Thread.java:656)
+	at fr.insa.rennes.info.chemical.backend.Solution.react(Solution.java:670)
+	at org.chemicalmozart.model.implementations.reactionrules.StartMelodicRR.computeResult(StartMelodicRR.java:120)
+	at fr.insa.rennes.info.chemical.backend.ChemicalThread.run(ChemicalThread.java:89)
+On va instancier les paramètres de StartMelodicRR [_barNumber=[BarNumber value:4], _sol=, _pitch=[_octave=0, _degree=DegreeImpl [_value=2]]]
+{ 0 : |0/1{ 0 : |0/0|0/1}{ 1 : |0/0|0/1}{ 2 : |0/0|0/1}{ 3 : |0/0|0/1}{ 4 : |0/1|0/1}|0/0}
+{ 0 : |0/1{ 0 : |0/0|0/1}{ 1 : |0/0|0/1}{ 2 : |0/0|0/1}{ 3 : |0/0|0/1}{ 4 : |0/1|0/1}|0/0}
+{ 0 : |0/1{ 0 : |0/0|0/1}{ 1 : |0/0|0/1}{ 2 : |0/0|0/1}{ 3 : |0/0|0/1}{ 4 : |0/1|0/1}|0/0}
+{ 0 : |0/1{ 0 : |0/0|0/1}{ 1 : |0/0|0/1}{ 2 : |0/0|0/1}{ 3 : |0/0|0/1}{ 4 : |0/1|0/1}|0/0}
+{ 0 : |0/1{ 0 : |0/0|0/1}{ 1 : |0/0|0/1}{ 2 : |0/0|0/1}{ 3 : |0/0|0/1}{ 4 : |0/1|0/1}|0/0}
+Overflow reached : StartMelodicRR [_barNumber=[BarNumber value:5], _sol=, _pitch=[_octave=0, _degree=DegreeImpl [_value=2]]]
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.CreateBarRR@303bc257
+On est dans le compute select de createBar
+{ 0 : |0/1|0/1|0/1}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.CreateBarRR@303bc257
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.HarmonicRR1@5e228a02
+{ 0 : |0/1{ 0 : |0/0|0/0}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.HarmonicRR1@5e228a02
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.HarmonicRR5@6aa6aeed
+{ 0 : |0/1{ 0 : |0/0|0/0}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.HarmonicRR5@6aa6aeed
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.HarmonicRR2@2e8f4fb3
+{ 0 : |0/1{ 0 : |0/0|0/0}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.HarmonicRR2@2e8f4fb3
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.RythmicRR@5d3ad33d
+####On est là : 2
+{ 0 : { 0 : |0/1|8/11}|0/2|0/1|0/1}
+####On est là : 2
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.RythmicRR@5d3ad33d
+####On est là : 2
+{ 0 : { 0 : |0/1|7/10}|1/2|0/1|0/1}
+####On est là : 2
+{ 0 : { 0 : |0/1|0/10}|1/2|0/1|0/1}
+####On est là : 2
+{ 0 : { 0 : |0/1|6/10}|1/2|0/1|0/1}
+####On est là : 2
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.RemovePullRR@647109c4
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.RemovePullRR@647109c4
+{ 0 : |0/0}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.RemovePullRR@647109c4
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.MelodicRR@379e8f17
+Rand : 0
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.MelodicRR@379e8f17
+{ 0 : |2/4|0/1}
+{ 0 : |3/4|0/1}
+{ 0 : |1/4|0/1}
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.MelodicRR@379e8f17
+{ 0 : |3/4|0/1}
+{ 0 : |1/4|0/1}
+{ 0 : |2/4|0/1}
+Rand : 0
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.MelodicRR@379e8f17
+{ 0 : |3/4|0/1}
+{ 0 : |1/4|0/1}
+{ 0 : |2/4|0/1}
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.MelodicRR@379e8f17
+{ 0 : |0/4|0/1}
+{ 0 : |2/4|0/1}
+{ 0 : |3/4|0/1}
+{ 0 : |1/4|0/1}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.MelodicRR@379e8f17
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.GetPitchRR@6f7a29a1
+{ 0 : { 0 : |0/0|0/0}{ 1 : |0/0|0/0}{ 2 : |0/0|0/0}{ 3 : |0/0|0/0}{ 4 : |0/1|0/1}}
+{ 0 : { 0 : |0/0|0/0}{ 1 : |0/0|0/0}{ 2 : |0/0|0/0}{ 3 : |0/0|0/0}{ 4 : |0/1|0/1}}
+{ 0 : { 0 : |0/0|0/0}{ 1 : |0/0|0/0}{ 2 : |0/0|0/0}{ 3 : |0/0|0/0}{ 4 : |0/1|0/1}}
+{ 0 : { 0 : |0/0|0/0}{ 1 : |0/0|0/0}{ 2 : |0/0|0/0}{ 3 : |0/0|0/0}{ 4 : |0/1|0/1}}
+{ 0 : { 0 : |0/0|0/0}{ 1 : |0/0|0/0}{ 2 : |0/0|0/0}{ 3 : |0/0|0/0}{ 4 : |0/1|0/1}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.GetPitchRR@6f7a29a1
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.HarmonicRR6@20d2906a
+{ 0 : |0/1{ 0 : |0/0|0/0}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.HarmonicRR6@20d2906a
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.HarmonicRR4@66388993
+{ 0 : |0/1{ 0 : |0/0|0/0}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.HarmonicRR4@66388993
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.HarmonicRR3@7d2a1e44
+{ 0 : |0/1{ 0 : |0/0|0/0}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.HarmonicRR3@7d2a1e44
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.RemovePullRR@647109c4
+{ 0 : |0/0}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.RemovePullRR@647109c4
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.HarmonicRR2@2e8f4fb3
+{ 0 : |0/1{ 0 : |0/0|0/0}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.HarmonicRR2@2e8f4fb3
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.HarmonicRR5@6aa6aeed
+{ 0 : |0/1{ 0 : |0/0|0/0}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.HarmonicRR5@6aa6aeed
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.HarmonicRR1@5e228a02
+{ 0 : |0/1{ 0 : |0/0|0/0}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.HarmonicRR1@5e228a02
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.CreateBarRR@303bc257
+On est dans le compute select de createBar
+{ 0 : |0/1|0/1|0/1}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.CreateBarRR@303bc257
+On va instancier les paramètres de StartMelodicRR [_barNumber=[BarNumber value:5], _sol=, _pitch=[_octave=0, _degree=DegreeImpl [_value=2]]]
+{ 0 : |0/1{ 0 : |0/0|0/1}{ 1 : |0/0|0/1}{ 2 : |0/0|0/1}{ 3 : |0/0|0/1}{ 4 : |0/1|0/1}|0/0}
+{ 0 : |0/1{ 0 : |0/0|0/1}{ 1 : |0/0|0/1}{ 2 : |0/0|0/1}{ 3 : |0/0|0/1}{ 4 : |0/1|0/1}|0/0}
+{ 0 : |0/1{ 0 : |0/0|0/1}{ 1 : |0/0|0/1}{ 2 : |0/0|0/1}{ 3 : |0/0|0/1}{ 4 : |0/1|0/1}|0/0}
+{ 0 : |0/1{ 0 : |0/0|0/1}{ 1 : |0/0|0/1}{ 2 : |0/0|0/1}{ 3 : |0/0|0/1}{ 4 : |0/1|0/1}|0/0}
+{ 0 : |0/1{ 0 : |0/0|0/1}{ 1 : |0/0|0/1}{ 2 : |0/0|0/1}{ 3 : |0/0|0/1}{ 4 : |0/1|0/1}|0/0}
+Overflow reached : StartMelodicRR [_barNumber=[BarNumber value:5], _sol=, _pitch=[_octave=0, _degree=DegreeImpl [_value=2]]]
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.HarmonicRR3@7d2a1e44
+{ 0 : |0/1{ 0 : |0/0|0/0}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.HarmonicRR3@7d2a1e44
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.HarmonicRR4@66388993
+{ 0 : |0/1{ 0 : |0/0|0/0}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.HarmonicRR4@66388993
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.HarmonicRR6@20d2906a
+{ 0 : |0/1{ 0 : |0/0|0/0}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.HarmonicRR6@20d2906a
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.GetPitchRR@6f7a29a1
+{ 0 : { 0 : |0/0|0/0}{ 1 : |0/0|0/0}{ 2 : |0/0|0/0}{ 3 : |0/0|0/0}{ 4 : |0/1|0/1}}
+{ 0 : { 0 : |0/0|0/0}{ 1 : |0/0|0/0}{ 2 : |0/0|0/0}{ 3 : |0/0|0/0}{ 4 : |0/1|0/1}}
+Inerte ? true
+On est dans le compute select de getPitch : true
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.GetPitchRR@6f7a29a1
+{ 0 : { 0 : |0/0|0/0}{ 1 : |0/0|0/0}{ 2 : |0/0|0/0}{ 3 : |0/0|0/0}{ 4 : |0/0|0/0}}
+{ 0 : { 0 : |0/0|0/0}{ 1 : |0/0|0/0}{ 2 : |0/0|0/0}{ 3 : |0/0|0/0}{ 4 : |0/0|0/0}}
+{ 0 : { 0 : |0/0|0/0}{ 1 : |0/0|0/0}{ 2 : |0/0|0/0}{ 3 : |0/0|0/0}{ 4 : |0/0|0/0}}
+{ 0 : { 0 : |0/0|0/0}{ 1 : |0/0|0/0}{ 2 : |0/0|0/0}{ 3 : |0/0|0/0}{ 4 : |0/0|0/0}}
+{ 0 : { 0 : |0/0|0/0}{ 1 : |0/0|0/0}{ 2 : |0/0|0/0}{ 3 : |0/0|0/0}{ 4 : |0/0|0/0}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.GetPitchRR@6f7a29a1
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.HarmonicRR6@20d2906a
+{ 0 : |0/1{ 0 : |0/0|0/0}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.HarmonicRR6@20d2906a
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.HarmonicRR4@66388993
+{ 0 : |0/1{ 0 : |0/0|0/0}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.HarmonicRR4@66388993
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.HarmonicRR3@7d2a1e44
+{ 0 : |0/1{ 0 : |0/0|0/0}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.HarmonicRR3@7d2a1e44
+On va instancier les paramètres de StartMelodicRR [_barNumber=[BarNumber value:5], _sol=, _pitch=[_octave=0, _degree=DegreeImpl [_value=2]]]
+{ 0 : |0/1{ 0 : |0/0|0/1}{ 1 : |0/0|0/1}{ 2 : |0/0|0/1}{ 3 : |0/0|0/1}{ 4 : |0/0|0/1}|0/1}
+{ 0 : |0/1{ 0 : |0/0|0/1}{ 1 : |0/0|0/1}{ 2 : |0/0|0/1}{ 3 : |0/0|0/1}{ 4 : |0/0|0/1}|0/1}
+{ 0 : |0/1{ 0 : |0/0|0/1}{ 1 : |0/0|0/1}{ 2 : |0/0|0/1}{ 3 : |0/0|0/1}{ 4 : |0/0|0/1}|0/1}
+{ 0 : |0/1{ 0 : |0/0|0/1}{ 1 : |0/0|0/1}{ 2 : |0/0|0/1}{ 3 : |0/0|0/1}{ 4 : |0/0|0/1}|0/1}
+{ 0 : |0/1{ 0 : |0/0|0/1}{ 1 : |0/0|0/1}{ 2 : |0/0|0/1}{ 3 : |0/0|0/1}{ 4 : |0/0|0/1}|0/1}
+Overflow reached : StartMelodicRR [_barNumber=[BarNumber value:5], _sol=, _pitch=[_octave=0, _degree=DegreeImpl [_value=2]]]
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.CreateBarRR@303bc257
+On est dans le compute select de createBar
+{ 0 : |0/1|0/1|0/1}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.CreateBarRR@303bc257
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.HarmonicRR1@5e228a02
+{ 0 : |0/1{ 0 : |0/0|0/0}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.HarmonicRR1@5e228a02
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.HarmonicRR5@6aa6aeed
+{ 0 : |0/1{ 0 : |0/0|0/0}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.HarmonicRR5@6aa6aeed
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.HarmonicRR2@2e8f4fb3
+{ 0 : |0/1{ 0 : |0/0|0/0}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.HarmonicRR2@2e8f4fb3
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.HarmonicRR3@7d2a1e44
+{ 0 : |0/1{ 0 : |0/0|0/0}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.HarmonicRR3@7d2a1e44
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.HarmonicRR4@66388993
+{ 0 : |0/1{ 0 : |0/0|0/0}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.HarmonicRR4@66388993
+On va instancier les paramètres de org.chemicalmozart.model.implementations.reactionrules.HarmonicRR6@20d2906a
+{ 0 : |0/1{ 0 : |0/0|0/0}}
+Overflow reached : org.chemicalmozart.model.implementations.reactionrules.HarmonicRR6@20d2906a
+Après : 
+Solution 1608535231 (isInert ? true)
+{
+	org.chemicalmozart.model.implementations.reactionrules.HarmonicRR4 -> [org.chemicalmozart.model.implementations.reactionrules.HarmonicRR4@66388993]
+	org.chemicalmozart.model.implementations.reactionrules.CreateBarRR -> [org.chemicalmozart.model.implementations.reactionrules.CreateBarRR@303bc257]
+	org.chemicalmozart.model.implementations.reactionrules.HarmonicRR5 -> [org.chemicalmozart.model.implementations.reactionrules.HarmonicRR5@6aa6aeed]
+	org.chemicalmozart.model.implementations.reactionrules.HarmonicRR2 -> [org.chemicalmozart.model.implementations.reactionrules.HarmonicRR2@2e8f4fb3]
+	org.chemicalmozart.model.implementations.reactionrules.HarmonicRR3 -> [org.chemicalmozart.model.implementations.reactionrules.HarmonicRR3@7d2a1e44]
+	org.chemicalmozart.model.implementations.reactionrules.HarmonicRR1 -> [org.chemicalmozart.model.implementations.reactionrules.HarmonicRR1@5e228a02]
+	java.lang.Integer -> [0]
+	org.chemicalmozart.model.implementations.DegreeImpl -> [DegreeImpl [_value=3]]
+	Solution 1867546546 (isInert ? true)
+	{
+		org.chemicalmozart.model.implementations.reactionrules.StartMelodicRR -> [StartMelodicRR [_barNumber=[BarNumber value:5], _sol=, _pitch=[_octave=0, _degree=DegreeImpl [_value=2]]]]
+		org.chemicalmozart.model.implementations.BarNumber -> [[BarNumber value:5]]
+		Solution 1673077774 (isInert ? true)
+		{
+			org.chemicalmozart.model.implementations.reactionrules.RemovePullRR -> [org.chemicalmozart.model.implementations.reactionrules.RemovePullRR@46e45076]
+			org.chemicalmozart.model.implementations.ChordImpl -> [ChordImpl [_degrees=DegreeImpl [_value=1], _position=0, duration=whole]]
+			org.chemicalmozart.model.implementations.solutionindentification.BarInCreation -> []
+			java.lang.Integer -> [1]
+			org.chemicalmozart.model.implementations.DegreeImpl -> [DegreeImpl [_value=1]]
+			org.chemicalmozart.model.implementations.Pitch -> []
+			org.chemicalmozart.model.implementations.QuaterPerBar -> [4]
+			org.chemicalmozart.model.implementations.BarNumber -> [[BarNumber value:0]]
+			org.chemicalmozart.model.implementations.Note -> [{Note : [_octave=1, _degree=DegreeImpl [_value=3]] position:0 rythme:quater}, {Note : [_octave=1, _degree=DegreeImpl [_value=4]] position:1 rythme:eighth}, {Note : [_octave=1, _degree=DegreeImpl [_value=4]] position:2 rythme:eighth}, {Note : [_octave=1, _degree=DegreeImpl [_value=3]] position:3 rythme:quater}, {Note : [_octave=1, _degree=DegreeImpl [_value=3]] position:4 rythme:quater}]
+			org.chemicalmozart.model.implementations.QuaterLeft -> [0]
+			org.chemicalmozart.model.implementations.reactionrules.MelodicRR -> [org.chemicalmozart.model.implementations.reactionrules.MelodicRR@45b9ce4b]
+		}
+		Solution 1506392522 (isInert ? true)
+		{
+			org.chemicalmozart.model.implementations.reactionrules.RemovePullRR -> [org.chemicalmozart.model.implementations.reactionrules.RemovePullRR@5b40c281]
+			org.chemicalmozart.model.implementations.ChordImpl -> [ChordImpl [_degrees=DegreeImpl [_value=5], _position=0, duration=whole]]
+			org.chemicalmozart.model.implementations.solutionindentification.BarInCreation -> []
+			java.lang.Integer -> [1]
+			org.chemicalmozart.model.implementations.DegreeImpl -> [DegreeImpl [_value=5]]
+			org.chemicalmozart.model.implementations.Pitch -> []
+			org.chemicalmozart.model.implementations.QuaterPerBar -> [4]
+			org.chemicalmozart.model.implementations.BarNumber -> [[BarNumber value:1]]
+			org.chemicalmozart.model.implementations.Note -> [{Note : [_octave=2, _degree=DegreeImpl [_value=7]] position:0 rythme:eighth}, {Note : [_octave=1, _degree=DegreeImpl [_value=1]] position:1 rythme:eighth}, {Note : [_octave=1, _degree=DegreeImpl [_value=2]] position:2 rythme:quater}, {Note : [_octave=1, _degree=DegreeImpl [_value=5]] position:3 rythme:quater}, {Note : [_octave=1, _degree=DegreeImpl [_value=6]] position:4 rythme:quater}]
+			org.chemicalmozart.model.implementations.QuaterLeft -> [0]
+			org.chemicalmozart.model.implementations.reactionrules.MelodicRR -> [org.chemicalmozart.model.implementations.reactionrules.MelodicRR@27e59128]
+		}
+		Solution 1829923591 (isInert ? true)
+		{
+			org.chemicalmozart.model.implementations.reactionrules.RemovePullRR -> [org.chemicalmozart.model.implementations.reactionrules.RemovePullRR@2df6df4c]
+			org.chemicalmozart.model.implementations.ChordImpl -> [ChordImpl [_degrees=DegreeImpl [_value=5], _position=0, duration=half], ChordImpl [_degrees=DegreeImpl [_value=1], _position=1, duration=half]]
+			org.chemicalmozart.model.implementations.solutionindentification.BarInCreation -> []
+			java.lang.Integer -> [2]
+			org.chemicalmozart.model.implementations.DegreeImpl -> [DegreeImpl [_value=5], DegreeImpl [_value=1]]
+			org.chemicalmozart.model.implementations.Pitch -> []
+			org.chemicalmozart.model.implementations.QuaterPerBar -> [4]
+			org.chemicalmozart.model.implementations.BarNumber -> [[BarNumber value:2]]
+			org.chemicalmozart.model.implementations.Note -> [{Note : [_octave=0, _degree=DegreeImpl [_value=2]] position:0 rythme:quater}, {Note : [_octave=0, _degree=DegreeImpl [_value=3]] position:1 rythme:eighth}, {Note : [_octave=0, _degree=DegreeImpl [_value=4]] position:2 rythme:eighth}, {Note : [_octave=0, _degree=DegreeImpl [_value=5]] position:3 rythme:eighth}, {Note : [_octave=0, _degree=DegreeImpl [_value=6]] position:4 rythme:quater}, {Note : [_octave=0, _degree=DegreeImpl [_value=7]] position:5 rythme:eighth}]
+			org.chemicalmozart.model.implementations.QuaterLeft -> [0]
+			org.chemicalmozart.model.implementations.reactionrules.MelodicRR -> [org.chemicalmozart.model.implementations.reactionrules.MelodicRR@46b8c8e6]
+		}
+		Solution 1407965019 (isInert ? true)
+		{
+			org.chemicalmozart.model.implementations.reactionrules.RemovePullRR -> [org.chemicalmozart.model.implementations.reactionrules.RemovePullRR@58f39b3a]
+			org.chemicalmozart.model.implementations.ChordImpl -> [ChordImpl [_degrees=DegreeImpl [_value=2], _position=0, duration=half], ChordImpl [_degrees=DegreeImpl [_value=2], _position=1, duration=half]]
+			org.chemicalmozart.model.implementations.solutionindentification.BarInCreation -> []
+			java.lang.Integer -> [2]
+			org.chemicalmozart.model.implementations.DegreeImpl -> [DegreeImpl [_value=3], DegreeImpl [_value=3]]
+			org.chemicalmozart.model.implementations.Pitch -> []
+			org.chemicalmozart.model.implementations.QuaterPerBar -> [4]
+			org.chemicalmozart.model.implementations.BarNumber -> [[BarNumber value:3]]
+			org.chemicalmozart.model.implementations.Note -> [{Note : [_octave=0, _degree=DegreeImpl [_value=4]] position:0 rythme:eighth}, {Note : [_octave=0, _degree=DegreeImpl [_value=4]] position:1 rythme:quaterdotted}, {Note : [_octave=0, _degree=DegreeImpl [_value=2]] position:2 rythme:quater}, {Note : [_octave=0, _degree=DegreeImpl [_value=2]] position:3 rythme:quater}]
+			org.chemicalmozart.model.implementations.QuaterLeft -> [0]
+			org.chemicalmozart.model.implementations.reactionrules.MelodicRR -> [org.chemicalmozart.model.implementations.reactionrules.MelodicRR@4ce2cb55]
+		}
+		Solution 1179404661 (isInert ? true)
+		{
+			org.chemicalmozart.model.implementations.reactionrules.RemovePullRR -> [org.chemicalmozart.model.implementations.reactionrules.RemovePullRR@647109c4]
+			org.chemicalmozart.model.implementations.ChordImpl -> [ChordImpl [_degrees=DegreeImpl [_value=6], _position=0, duration=half], ChordImpl [_degrees=DegreeImpl [_value=2], _position=1, duration=half]]
+			org.chemicalmozart.model.implementations.solutionindentification.BarInCreation -> []
+			java.lang.Integer -> [2]
+			org.chemicalmozart.model.implementations.DegreeImpl -> [DegreeImpl [_value=6], DegreeImpl [_value=2]]
+			org.chemicalmozart.model.implementations.Pitch -> []
+			org.chemicalmozart.model.implementations.QuaterPerBar -> [4]
+			org.chemicalmozart.model.implementations.BarNumber -> [[BarNumber value:4]]
+			org.chemicalmozart.model.implementations.Note -> [{Note : [_octave=1, _degree=DegreeImpl [_value=6]] position:0 rythme:quater}, {Note : [_octave=1, _degree=DegreeImpl [_value=6]] position:1 rythme:quater}, {Note : [_octave=0, _degree=DegreeImpl [_value=2]] position:2 rythme:eighth}, {Note : [_octave=0, _degree=DegreeImpl [_value=2]] position:3 rythme:quaterdotted}]
+			org.chemicalmozart.model.implementations.QuaterLeft -> [0]
+			org.chemicalmozart.model.implementations.reactionrules.MelodicRR -> [org.chemicalmozart.model.implementations.reactionrules.MelodicRR@379e8f17]
+		}
+		org.chemicalmozart.model.implementations.reactionrules.GetPitchRR -> [org.chemicalmozart.model.implementations.reactionrules.GetPitchRR@6f7a29a1]
+		org.chemicalmozart.model.implementations.Pitch -> [[_octave=0, _degree=DegreeImpl [_value=2]]]
+		org.chemicalmozart.model.implementations.solutionindentification.Result -> [org.chemicalmozart.model.implementations.solutionindentification.Result@5239443f]
+	}
+	org.chemicalmozart.model.implementations.QuaterPerBar -> [4]
+	org.chemicalmozart.model.implementations.BarNumber -> [[BarNumber value:5]]
+	org.chemicalmozart.model.implementations.reactionrules.HarmonicRR6 -> [org.chemicalmozart.model.implementations.reactionrules.HarmonicRR6@20d2906a]
+}
+
+On va instancier les paramètres de org.chemicalmozart.utils.SolutionWriterRR@6f25844f
+On passe dans le cmpute select
+On va instancier les paramètres de org.chemicalmozart.utils.GetWriterRR@48ff2413
+{ 0 : { 0 : |0/0}{ 1 : |0/0}{ 2 : |0/0}{ 3 : |0/0}{ 4 : |0/0}}
+{ 0 : { 0 : |0/0}{ 1 : |0/0}{ 2 : |0/0}{ 3 : |0/0}{ 4 : |0/0}}
+{ 0 : { 0 : |0/0}{ 1 : |0/0}{ 2 : |0/0}{ 3 : |0/0}{ 4 : |0/0}}
+{ 0 : { 0 : |0/0}{ 1 : |0/0}{ 2 : |0/0}{ 3 : |0/0}{ 4 : |0/0}}
+{ 0 : { 0 : |0/0}{ 1 : |0/0}{ 2 : |0/0}{ 3 : |0/0}{ 4 : |0/0}}
+Overflow reached : org.chemicalmozart.utils.GetWriterRR@48ff2413
+On va instancier les paramètres de org.chemicalmozart.utils.StartToWriteRR@23309e87
+{ 0 : |0/1{ 0 : |0/1}{ 1 : |0/1}{ 2 : |0/1}{ 3 : |0/1}{ 4 : |0/1}}
+{ 0 : |0/1{ 0 : |0/1}{ 1 : |0/1}{ 2 : |0/1}{ 3 : |0/1}{ 4 : |0/1}}
+{ 0 : |0/1{ 0 : |0/1}{ 1 : |0/1}{ 2 : |0/1}{ 3 : |0/1}{ 4 : |0/1}}
+{ 0 : |0/1{ 0 : |0/1}{ 1 : |0/1}{ 2 : |0/1}{ 3 : |0/1}{ 4 : |0/1}}
+On va instancier les paramètres de org.chemicalmozart.utils.StartToWriteRR@23309e87
+{ 0 : |0/0{ 0 : |0/1}{ 1 : |0/1}{ 2 : |0/1}{ 3 : |0/1}{ 4 : |0/1}}
+{ 0 : |0/0{ 0 : |0/1}{ 1 : |0/1}{ 2 : |0/1}{ 3 : |0/1}{ 4 : |0/1}}
+{ 0 : |0/0{ 0 : |0/1}{ 1 : |0/1}{ 2 : |0/1}{ 3 : |0/1}{ 4 : |0/1}}
+{ 0 : |0/0{ 0 : |0/1}{ 1 : |0/1}{ 2 : |0/1}{ 3 : |0/1}{ 4 : |0/1}}
+{ 0 : |0/0{ 0 : |0/1}{ 1 : |0/1}{ 2 : |0/1}{ 3 : |0/1}{ 4 : |0/1}}
+Overflow reached : org.chemicalmozart.utils.StartToWriteRR@23309e87
+On va instancier les paramètres de org.chemicalmozart.utils.WriteChordRR@3df78040
+On teste les accords avec ChordImpl [_degrees=DegreeImpl [_value=1], _position=0, duration=whole] - 0
+On écrit un accord
+fond : 48
+tierce : 52
+quinte : 55
+On va instancier les paramètres de org.chemicalmozart.utils.WriteChordRR@3df78040
+On teste les accords avec ChordImpl [_degrees=DegreeImpl [_value=1], _position=0, duration=whole] - 1
+{ 0 : |0/1|0/1}
+Overflow reached : org.chemicalmozart.utils.WriteChordRR@3df78040
+On va instancier les paramètres de org.chemicalmozart.utils.WriteMelodyRR@6076ab2f
+{ 0 : |0/1|4/5}
+{ 0 : |0/1|1/5}
+On va instancier les paramètres de org.chemicalmozart.utils.WriteMelodyRR@6076ab2f
+{ 0 : |0/1|4/5}
+On va instancier les paramètres de org.chemicalmozart.utils.WriteMelodyRR@6076ab2f
+{ 0 : |0/1|2/5}
+{ 0 : |0/1|1/5}
+On va instancier les paramètres de org.chemicalmozart.utils.WriteMelodyRR@6076ab2f
+On va instancier les paramètres de org.chemicalmozart.utils.WriteMelodyRR@6076ab2f
+{ 0 : |0/1|4/5}
+{ 0 : |0/1|2/5}
+On va instancier les paramètres de org.chemicalmozart.utils.WriteMelodyRR@6076ab2f
+{ 0 : |0/1|1/5}
+{ 0 : |0/1|3/5}
+{ 0 : |0/1|4/5}
+{ 0 : |0/1|0/5}
+{ 0 : |0/1|2/5}
+Overflow reached : org.chemicalmozart.utils.WriteMelodyRR@6076ab2f
+On va instancier les paramètres de org.chemicalmozart.utils.GetWriterRR@48ff2413
+{ 0 : { 0 : |0/1}{ 1 : |0/0}{ 2 : |0/0}{ 3 : |0/0}{ 4 : |0/0}}
+{ 0 : { 0 : |0/1}{ 1 : |0/0}{ 2 : |0/0}{ 3 : |0/0}{ 4 : |0/0}}
+{ 0 : { 0 : |0/1}{ 1 : |0/0}{ 2 : |0/0}{ 3 : |0/0}{ 4 : |0/0}}
+{ 0 : { 0 : |0/1}{ 1 : |0/0}{ 2 : |0/0}{ 3 : |0/0}{ 4 : |0/0}}
+{ 0 : { 0 : |0/1}{ 1 : |0/0}{ 2 : |0/0}{ 3 : |0/0}{ 4 : |0/0}}
+Overflow reached : org.chemicalmozart.utils.GetWriterRR@48ff2413
+On va instancier les paramètres de org.chemicalmozart.utils.WriteChordRR@3df78040
+On teste les accords avec ChordImpl [_degrees=DegreeImpl [_value=1], _position=0, duration=whole] - 1
+{ 0 : |0/1|0/1}
+Overflow reached : org.chemicalmozart.utils.WriteChordRR@3df78040
+On va instancier les paramètres de org.chemicalmozart.utils.StartToWriteRR@23309e87
+{ 0 : |0/0{ 0 : |0/1}{ 1 : |0/1}{ 2 : |0/1}{ 3 : |0/1}{ 4 : |0/1}}
+{ 0 : |0/0{ 0 : |0/1}{ 1 : |0/1}{ 2 : |0/1}{ 3 : |0/1}{ 4 : |0/1}}
+{ 0 : |0/0{ 0 : |0/1}{ 1 : |0/1}{ 2 : |0/1}{ 3 : |0/1}{ 4 : |0/1}}
+{ 0 : |0/0{ 0 : |0/1}{ 1 : |0/1}{ 2 : |0/1}{ 3 : |0/1}{ 4 : |0/1}}
+{ 0 : |0/0{ 0 : |0/1}{ 1 : |0/1}{ 2 : |0/1}{ 3 : |0/1}{ 4 : |0/1}}
+Overflow reached : org.chemicalmozart.utils.StartToWriteRR@23309e87
+On va instancier les paramètres de org.chemicalmozart.utils.GetWriterRR@48ff2413
+On va instancier les paramètres de org.chemicalmozart.utils.GetWriterRR@48ff2413
+{ 0 : { 0 : |0/0}{ 1 : |0/0}{ 2 : |0/0}{ 3 : |0/0}{ 4 : |0/0}}
+{ 0 : { 0 : |0/0}{ 1 : |0/0}{ 2 : |0/0}{ 3 : |0/0}{ 4 : |0/0}}
+{ 0 : { 0 : |0/0}{ 1 : |0/0}{ 2 : |0/0}{ 3 : |0/0}{ 4 : |0/0}}
+{ 0 : { 0 : |0/0}{ 1 : |0/0}{ 2 : |0/0}{ 3 : |0/0}{ 4 : |0/0}}
+{ 0 : { 0 : |0/0}{ 1 : |0/0}{ 2 : |0/0}{ 3 : |0/0}{ 4 : |0/0}}
+Overflow reached : org.chemicalmozart.utils.GetWriterRR@48ff2413
+On va instancier les paramètres de org.chemicalmozart.utils.StartToWriteRR@23309e87
+{ 0 : |0/1{ 0 : |0/1}{ 1 : |0/1}{ 2 : |0/1}{ 3 : |0/1}{ 4 : |0/1}}
+{ 0 : |0/1{ 0 : |0/1}{ 1 : |0/1}{ 2 : |0/1}{ 3 : |0/1}{ 4 : |0/1}}
+On va instancier les paramètres de org.chemicalmozart.utils.StartToWriteRR@23309e87
+{ 0 : |0/0{ 0 : |0/1}{ 1 : |0/1}{ 2 : |0/1}{ 3 : |0/1}{ 4 : |0/1}}
+{ 0 : |0/0{ 0 : |0/1}{ 1 : |0/1}{ 2 : |0/1}{ 3 : |0/1}{ 4 : |0/1}}
+{ 0 : |0/0{ 0 : |0/1}{ 1 : |0/1}{ 2 : |0/1}{ 3 : |0/1}{ 4 : |0/1}}
+{ 0 : |0/0{ 0 : |0/1}{ 1 : |0/1}{ 2 : |0/1}{ 3 : |0/1}{ 4 : |0/1}}
+{ 0 : |0/0{ 0 : |0/1}{ 1 : |0/1}{ 2 : |0/1}{ 3 : |0/1}{ 4 : |0/1}}
+Overflow reached : org.chemicalmozart.utils.StartToWriteRR@23309e87
+On va instancier les paramètres de org.chemicalmozart.utils.WriteMelodyRR@2bd1e730
+{ 0 : |0/1|1/5}
+{ 0 : |0/1|2/5}
+On va instancier les paramètres de org.chemicalmozart.utils.WriteMelodyRR@2bd1e730
+{ 0 : |0/1|4/5}
+{ 0 : |0/1|1/5}
+{ 0 : |0/1|2/5}
+{ 0 : |0/1|3/5}
+On va instancier les paramètres de org.chemicalmozart.utils.WriteMelodyRR@2bd1e730
+{ 0 : |0/1|1/5}
+{ 0 : |0/1|3/5}
+{ 0 : |0/1|2/5}
+{ 0 : |0/1|4/5}
+On va instancier les paramètres de org.chemicalmozart.utils.WriteMelodyRR@2bd1e730
+{ 0 : |0/1|4/5}
+{ 0 : |0/1|2/5}
+{ 0 : |0/1|1/5}
+On va instancier les paramètres de org.chemicalmozart.utils.WriteMelodyRR@2bd1e730
+{ 0 : |0/1|1/5}
+{ 0 : |0/1|4/5}
+On va instancier les paramètres de org.chemicalmozart.utils.WriteMelodyRR@2bd1e730
+{ 0 : |0/1|3/5}
+{ 0 : |0/1|4/5}
+{ 0 : |0/1|1/5}
+{ 0 : |0/1|0/5}
+{ 0 : |0/1|2/5}
+Overflow reached : org.chemicalmozart.utils.WriteMelodyRR@2bd1e730
+On va instancier les paramètres de org.chemicalmozart.utils.GetWriterRR@48ff2413
+{ 0 : { 0 : |0/0}{ 1 : |0/1}{ 2 : |0/0}{ 3 : |0/0}{ 4 : |0/0}}
+{ 0 : { 0 : |0/0}{ 1 : |0/1}{ 2 : |0/0}{ 3 : |0/0}{ 4 : |0/0}}
+{ 0 : { 0 : |0/0}{ 1 : |0/1}{ 2 : |0/0}{ 3 : |0/0}{ 4 : |0/0}}
+{ 0 : { 0 : |0/0}{ 1 : |0/1}{ 2 : |0/0}{ 3 : |0/0}{ 4 : |0/0}}
+{ 0 : { 0 : |0/0}{ 1 : |0/1}{ 2 : |0/0}{ 3 : |0/0}{ 4 : |0/0}}
+Overflow reached : org.chemicalmozart.utils.GetWriterRR@48ff2413
+On va instancier les paramètres de org.chemicalmozart.utils.StartToWriteRR@23309e87
+{ 0 : |0/0{ 0 : |0/1}{ 1 : |0/1}{ 2 : |0/1}{ 3 : |0/1}{ 4 : |0/1}}
+{ 0 : |0/0{ 0 : |0/1}{ 1 : |0/1}{ 2 : |0/1}{ 3 : |0/1}{ 4 : |0/1}}
+{ 0 : |0/0{ 0 : |0/1}{ 1 : |0/1}{ 2 : |0/1}{ 3 : |0/1}{ 4 : |0/1}}
+{ 0 : |0/0{ 0 : |0/1}{ 1 : |0/1}{ 2 : |0/1}{ 3 : |0/1}{ 4 : |0/1}}
+{ 0 : |0/0{ 0 : |0/1}{ 1 : |0/1}{ 2 : |0/1}{ 3 : |0/1}{ 4 : |0/1}}
+Overflow reached : org.chemicalmozart.utils.StartToWriteRR@23309e87
+On va instancier les paramètres de org.chemicalmozart.utils.WriteChordRR@16df1832
+On teste les accords avec ChordImpl [_degrees=DegreeImpl [_value=5], _position=0, duration=whole] - 0
+On écrit un accord
+fond : 55
+tierce : 59
+quinte : 62
+On va instancier les paramètres de org.chemicalmozart.utils.WriteChordRR@16df1832
+On teste les accords avec ChordImpl [_degrees=DegreeImpl [_value=5], _position=0, duration=whole] - 1
+{ 0 : |0/1|0/1}
+Overflow reached : org.chemicalmozart.utils.WriteChordRR@16df1832
+On va instancier les paramètres de org.chemicalmozart.utils.StartToWriteRR@23309e87
+{ 0 : |0/0{ 0 : |0/1}{ 1 : |0/1}{ 2 : |0/1}{ 3 : |0/1}{ 4 : |0/1}}
+{ 0 : |0/0{ 0 : |0/1}{ 1 : |0/1}{ 2 : |0/1}{ 3 : |0/1}{ 4 : |0/1}}
+{ 0 : |0/0{ 0 : |0/1}{ 1 : |0/1}{ 2 : |0/1}{ 3 : |0/1}{ 4 : |0/1}}
+{ 0 : |0/0{ 0 : |0/1}{ 1 : |0/1}{ 2 : |0/1}{ 3 : |0/1}{ 4 : |0/1}}
+{ 0 : |0/0{ 0 : |0/1}{ 1 : |0/1}{ 2 : |0/1}{ 3 : |0/1}{ 4 : |0/1}}
+Overflow reached : org.chemicalmozart.utils.StartToWriteRR@23309e87
+On va instancier les paramètres de org.chemicalmozart.utils.GetWriterRR@48ff2413
+{ 0 : { 0 : |0/0}{ 1 : |0/1}{ 2 : |0/0}{ 3 : |0/0}{ 4 : |0/0}}
+{ 0 : { 0 : |0/0}{ 1 : |0/1}{ 2 : |0/0}{ 3 : |0/0}{ 4 : |0/0}}
+{ 0 : { 0 : |0/0}{ 1 : |0/1}{ 2 : |0/0}{ 3 : |0/0}{ 4 : |0/0}}
+{ 0 : { 0 : |0/0}{ 1 : |0/1}{ 2 : |0/0}{ 3 : |0/0}{ 4 : |0/0}}
+{ 0 : { 0 : |0/0}{ 1 : |0/1}{ 2 : |0/0}{ 3 : |0/0}{ 4 : |0/0}}
+Overflow reached : org.chemicalmozart.utils.GetWriterRR@48ff2413
+On va instancier les paramètres de org.chemicalmozart.utils.WriteMelodyRR@2bd1e730
+{ 0 : |0/1|0/5}
+{ 0 : |0/1|1/5}
+{ 0 : |0/1|2/5}
+{ 0 : |0/1|4/5}
+{ 0 : |0/1|3/5}
+Overflow reached : org.chemicalmozart.utils.WriteMelodyRR@2bd1e730
+On va instancier les paramètres de org.chemicalmozart.utils.GetWriterRR@48ff2413
+{ 0 : { 0 : |0/0}{ 1 : |0/1}{ 2 : |0/0}{ 3 : |0/0}{ 4 : |0/0}}
+{ 0 : { 0 : |0/0}{ 1 : |0/1}{ 2 : |0/0}{ 3 : |0/0}{ 4 : |0/0}}
+{ 0 : { 0 : |0/0}{ 1 : |0/1}{ 2 : |0/0}{ 3 : |0/0}{ 4 : |0/0}}
+{ 0 : { 0 : |0/0}{ 1 : |0/1}{ 2 : |0/0}{ 3 : |0/0}{ 4 : |0/0}}
+On va instancier les paramètres de org.chemicalmozart.utils.GetWriterRR@48ff2413
+{ 0 : { 0 : |0/0}{ 1 : |0/0}{ 2 : |0/0}{ 3 : |0/0}{ 4 : |0/0}}
+{ 0 : { 0 : |0/0}{ 1 : |0/0}{ 2 : |0/0}{ 3 : |0/0}{ 4 : |0/0}}
+{ 0 : { 0 : |0/0}{ 1 : |0/0}{ 2 : |0/0}{ 3 : |0/0}{ 4 : |0/0}}
+{ 0 : { 0 : |0/0}{ 1 : |0/0}{ 2 : |0/0}{ 3 : |0/0}{ 4 : |0/0}}
+{ 0 : { 0 : |0/0}{ 1 : |0/0}{ 2 : |0/0}{ 3 : |0/0}{ 4 : |0/0}}
+Overflow reached : org.chemicalmozart.utils.GetWriterRR@48ff2413
+On va instancier les paramètres de org.chemicalmozart.utils.StartToWriteRR@23309e87
+On va instancier les paramètres de org.chemicalmozart.utils.StartToWriteRR@23309e87
+{ 0 : |0/0{ 0 : |0/1}{ 1 : |0/1}{ 2 : |0/1}{ 3 : |0/1}{ 4 : |0/1}}
+{ 0 : |0/0{ 0 : |0/1}{ 1 : |0/1}{ 2 : |0/1}{ 3 : |0/1}{ 4 : |0/1}}
+{ 0 : |0/0{ 0 : |0/1}{ 1 : |0/1}{ 2 : |0/1}{ 3 : |0/1}{ 4 : |0/1}}
+{ 0 : |0/0{ 0 : |0/1}{ 1 : |0/1}{ 2 : |0/1}{ 3 : |0/1}{ 4 : |0/1}}
+{ 0 : |0/0{ 0 : |0/1}{ 1 : |0/1}{ 2 : |0/1}{ 3 : |0/1}{ 4 : |0/1}}
+Overflow reached : org.chemicalmozart.utils.StartToWriteRR@23309e87
+On va instancier les paramètres de org.chemicalmozart.utils.WriteChordRR@1c5d9084
+On teste les accords avec ChordImpl [_degrees=DegreeImpl [_value=1], _position=1, duration=half] - 0
+{ 0 : |0/1|1/2}
+On teste les accords avec ChordImpl [_degrees=DegreeImpl [_value=5], _position=0, duration=half] - 0
+On écrit un accord
+fond : 55
+tierce : 59
+quinte : 62
+On va instancier les paramètres de org.chemicalmozart.utils.WriteChordRR@1c5d9084
+On teste les accords avec ChordImpl [_degrees=DegreeImpl [_value=1], _position=1, duration=half] - 1
+On écrit un accord
+fond : 48
+tierce : 52
+quinte : 55
+On va instancier les paramètres de org.chemicalmozart.utils.WriteChordRR@1c5d9084
+On teste les accords avec ChordImpl [_degrees=DegreeImpl [_value=5], _position=0, duration=half] - 2
+{ 0 : |0/1|0/2}
+On teste les accords avec ChordImpl [_degrees=DegreeImpl [_value=1], _position=1, duration=half] - 2
+{ 0 : |0/1|1/2}
+Overflow reached : org.chemicalmozart.utils.WriteChordRR@1c5d9084
+On va instancier les paramètres de org.chemicalmozart.utils.WriteMelodyRR@7b5a6029
+{ 0 : |0/1|1/6}
+{ 0 : |0/1|3/6}
+On va instancier les paramètres de org.chemicalmozart.utils.WriteMelodyRR@7b5a6029
+{ 0 : |0/1|2/6}
+On va instancier les paramètres de org.chemicalmozart.utils.WriteMelodyRR@7b5a6029
+{ 0 : |0/1|5/6}
+{ 0 : |0/1|1/6}
+{ 0 : |0/1|3/6}
+{ 0 : |0/1|4/6}
+{ 0 : |0/1|2/6}
+On va instancier les paramètres de org.chemicalmozart.utils.WriteMelodyRR@7b5a6029
+{ 0 : |0/1|5/6}
+{ 0 : |0/1|2/6}
+On va instancier les paramètres de org.chemicalmozart.utils.WriteMelodyRR@7b5a6029
+{ 0 : |0/1|4/6}
+On va instancier les paramètres de org.chemicalmozart.utils.WriteMelodyRR@7b5a6029
+{ 0 : |0/1|4/6}
+{ 0 : |0/1|1/6}
+{ 0 : |0/1|3/6}
+{ 0 : |0/1|5/6}
+On va instancier les paramètres de org.chemicalmozart.utils.WriteMelodyRR@7b5a6029
+{ 0 : |0/1|1/6}
+{ 0 : |0/1|3/6}
+{ 0 : |0/1|2/6}
+{ 0 : |0/1|5/6}
+{ 0 : |0/1|0/6}
+{ 0 : |0/1|4/6}
+Overflow reached : org.chemicalmozart.utils.WriteMelodyRR@7b5a6029
+On va instancier les paramètres de org.chemicalmozart.utils.GetWriterRR@48ff2413
+{ 0 : { 0 : |0/0}{ 1 : |0/0}{ 2 : |0/1}{ 3 : |0/0}{ 4 : |0/0}}
+{ 0 : { 0 : |0/0}{ 1 : |0/0}{ 2 : |0/1}{ 3 : |0/0}{ 4 : |0/0}}
+{ 0 : { 0 : |0/0}{ 1 : |0/0}{ 2 : |0/1}{ 3 : |0/0}{ 4 : |0/0}}
+{ 0 : { 0 : |0/0}{ 1 : |0/0}{ 2 : |0/1}{ 3 : |0/0}{ 4 : |0/0}}
+{ 0 : { 0 : |0/0}{ 1 : |0/0}{ 2 : |0/1}{ 3 : |0/0}{ 4 : |0/0}}
+Overflow reached : org.chemicalmozart.utils.GetWriterRR@48ff2413
+On va instancier les paramètres de org.chemicalmozart.utils.WriteChordRR@1c5d9084
+On teste les accords avec ChordImpl [_degrees=DegreeImpl [_value=1], _position=1, duration=half] - 2
+{ 0 : |0/1|1/2}
+On teste les accords avec ChordImpl [_degrees=DegreeImpl [_value=5], _position=0, duration=half] - 2
+{ 0 : |0/1|0/2}
+Overflow reached : org.chemicalmozart.utils.WriteChordRR@1c5d9084
+On va instancier les paramètres de org.chemicalmozart.utils.StartToWriteRR@23309e87
+{ 0 : |0/0{ 0 : |0/1}{ 1 : |0/1}{ 2 : |0/1}{ 3 : |0/1}{ 4 : |0/1}}
+{ 0 : |0/0{ 0 : |0/1}{ 1 : |0/1}{ 2 : |0/1}{ 3 : |0/1}{ 4 : |0/1}}
+{ 0 : |0/0{ 0 : |0/1}{ 1 : |0/1}{ 2 : |0/1}{ 3 : |0/1}{ 4 : |0/1}}
+{ 0 : |0/0{ 0 : |0/1}{ 1 : |0/1}{ 2 : |0/1}{ 3 : |0/1}{ 4 : |0/1}}
+{ 0 : |0/0{ 0 : |0/1}{ 1 : |0/1}{ 2 : |0/1}{ 3 : |0/1}{ 4 : |0/1}}
+Overflow reached : org.chemicalmozart.utils.StartToWriteRR@23309e87
+On va instancier les paramètres de org.chemicalmozart.utils.GetWriterRR@48ff2413
+{ 0 : { 0 : |0/0}{ 1 : |0/0}{ 2 : |0/1}{ 3 : |0/0}{ 4 : |0/0}}
+On va instancier les paramètres de org.chemicalmozart.utils.GetWriterRR@48ff2413
+{ 0 : { 0 : |0/0}{ 1 : |0/0}{ 2 : |0/0}{ 3 : |0/0}{ 4 : |0/0}}
+{ 0 : { 0 : |0/0}{ 1 : |0/0}{ 2 : |0/0}{ 3 : |0/0}{ 4 : |0/0}}
+{ 0 : { 0 : |0/0}{ 1 : |0/0}{ 2 : |0/0}{ 3 : |0/0}{ 4 : |0/0}}
+{ 0 : { 0 : |0/0}{ 1 : |0/0}{ 2 : |0/0}{ 3 : |0/0}{ 4 : |0/0}}
+{ 0 : { 0 : |0/0}{ 1 : |0/0}{ 2 : |0/0}{ 3 : |0/0}{ 4 : |0/0}}
+Overflow reached : org.chemicalmozart.utils.GetWriterRR@48ff2413
+On va instancier les paramètres de org.chemicalmozart.utils.StartToWriteRR@23309e87
+On va instancier les paramètres de org.chemicalmozart.utils.StartToWriteRR@23309e87
+{ 0 : |0/0{ 0 : |0/1}{ 1 : |0/1}{ 2 : |0/1}{ 3 : |0/1}{ 4 : |0/1}}
+{ 0 : |0/0{ 0 : |0/1}{ 1 : |0/1}{ 2 : |0/1}{ 3 : |0/1}{ 4 : |0/1}}
+{ 0 : |0/0{ 0 : |0/1}{ 1 : |0/1}{ 2 : |0/1}{ 3 : |0/1}{ 4 : |0/1}}
+{ 0 : |0/0{ 0 : |0/1}{ 1 : |0/1}{ 2 : |0/1}{ 3 : |0/1}{ 4 : |0/1}}
+{ 0 : |0/0{ 0 : |0/1}{ 1 : |0/1}{ 2 : |0/1}{ 3 : |0/1}{ 4 : |0/1}}
+Overflow reached : org.chemicalmozart.utils.StartToWriteRR@23309e87
+On va instancier les paramètres de org.chemicalmozart.utils.WriteMelodyRR@62da3a1e
+{ 0 : |0/1|3/4}
+On va instancier les paramètres de org.chemicalmozart.utils.WriteMelodyRR@62da3a1e
+On va instancier les paramètres de org.chemicalmozart.utils.WriteMelodyRR@62da3a1e
+{ 0 : |0/1|2/4}
+{ 0 : |0/1|3/4}
+On va instancier les paramètres de org.chemicalmozart.utils.WriteMelodyRR@62da3a1e
+{ 0 : |0/1|2/4}
+{ 0 : |0/1|3/4}
+On va instancier les paramètres de org.chemicalmozart.utils.WriteMelodyRR@62da3a1e
+{ 0 : |0/1|3/4}
+{ 0 : |0/1|1/4}
+{ 0 : |0/1|0/4}
+{ 0 : |0/1|2/4}
+Overflow reached : org.chemicalmozart.utils.WriteMelodyRR@62da3a1e
+On va instancier les paramètres de org.chemicalmozart.utils.GetWriterRR@48ff2413
+{ 0 : { 0 : |0/0}{ 1 : |0/0}{ 2 : |0/0}{ 3 : |0/1}{ 4 : |0/0}}
+{ 0 : { 0 : |0/0}{ 1 : |0/0}{ 2 : |0/0}{ 3 : |0/1}{ 4 : |0/0}}
+{ 0 : { 0 : |0/0}{ 1 : |0/0}{ 2 : |0/0}{ 3 : |0/1}{ 4 : |0/0}}
+{ 0 : { 0 : |0/0}{ 1 : |0/0}{ 2 : |0/0}{ 3 : |0/1}{ 4 : |0/0}}
+{ 0 : { 0 : |0/0}{ 1 : |0/0}{ 2 : |0/0}{ 3 : |0/1}{ 4 : |0/0}}
+Overflow reached : org.chemicalmozart.utils.GetWriterRR@48ff2413
+On va instancier les paramètres de org.chemicalmozart.utils.StartToWriteRR@23309e87
+{ 0 : |0/0{ 0 : |0/1}{ 1 : |0/1}{ 2 : |0/1}{ 3 : |0/1}{ 4 : |0/1}}
+{ 0 : |0/0{ 0 : |0/1}{ 1 : |0/1}{ 2 : |0/1}{ 3 : |0/1}{ 4 : |0/1}}
+{ 0 : |0/0{ 0 : |0/1}{ 1 : |0/1}{ 2 : |0/1}{ 3 : |0/1}{ 4 : |0/1}}
+{ 0 : |0/0{ 0 : |0/1}{ 1 : |0/1}{ 2 : |0/1}{ 3 : |0/1}{ 4 : |0/1}}
+{ 0 : |0/0{ 0 : |0/1}{ 1 : |0/1}{ 2 : |0/1}{ 3 : |0/1}{ 4 : |0/1}}
+Overflow reached : org.chemicalmozart.utils.StartToWriteRR@23309e87
+On va instancier les paramètres de org.chemicalmozart.utils.WriteChordRR@2b03be0
+On teste les accords avec ChordImpl [_degrees=DegreeImpl [_value=2], _position=0, duration=half] - 0
+On écrit un accord
+fond : 50
+tierce : 53
+quinte : 57
+On va instancier les paramètres de org.chemicalmozart.utils.WriteChordRR@2b03be0
+On teste les accords avec ChordImpl [_degrees=DegreeImpl [_value=2], _position=1, duration=half] - 1
+On écrit un accord
+fond : 50
+tierce : 53
+quinte : 57
+On va instancier les paramètres de org.chemicalmozart.utils.WriteChordRR@2b03be0
+On teste les accords avec ChordImpl [_degrees=DegreeImpl [_value=2], _position=0, duration=half] - 2
+{ 0 : |0/1|0/2}
+On teste les accords avec ChordImpl [_degrees=DegreeImpl [_value=2], _position=1, duration=half] - 2
+{ 0 : |0/1|1/2}
+Overflow reached : org.chemicalmozart.utils.WriteChordRR@2b03be0
+On va instancier les paramètres de org.chemicalmozart.utils.StartToWriteRR@23309e87
+{ 0 : |0/0{ 0 : |0/1}{ 1 : |0/1}{ 2 : |0/1}{ 3 : |0/1}{ 4 : |0/1}}
+{ 0 : |0/0{ 0 : |0/1}{ 1 : |0/1}{ 2 : |0/1}{ 3 : |0/1}{ 4 : |0/1}}
+{ 0 : |0/0{ 0 : |0/1}{ 1 : |0/1}{ 2 : |0/1}{ 3 : |0/1}{ 4 : |0/1}}
+{ 0 : |0/0{ 0 : |0/1}{ 1 : |0/1}{ 2 : |0/1}{ 3 : |0/1}{ 4 : |0/1}}
+{ 0 : |0/0{ 0 : |0/1}{ 1 : |0/1}{ 2 : |0/1}{ 3 : |0/1}{ 4 : |0/1}}
+Overflow reached : org.chemicalmozart.utils.StartToWriteRR@23309e87
+On va instancier les paramètres de org.chemicalmozart.utils.GetWriterRR@48ff2413
+{ 0 : { 0 : |0/0}{ 1 : |0/0}{ 2 : |0/0}{ 3 : |0/1}{ 4 : |0/0}}
+{ 0 : { 0 : |0/0}{ 1 : |0/0}{ 2 : |0/0}{ 3 : |0/1}{ 4 : |0/0}}
+{ 0 : { 0 : |0/0}{ 1 : |0/0}{ 2 : |0/0}{ 3 : |0/1}{ 4 : |0/0}}
+{ 0 : { 0 : |0/0}{ 1 : |0/0}{ 2 : |0/0}{ 3 : |0/1}{ 4 : |0/0}}
+{ 0 : { 0 : |0/0}{ 1 : |0/0}{ 2 : |0/0}{ 3 : |0/1}{ 4 : |0/0}}
+Overflow reached : org.chemicalmozart.utils.GetWriterRR@48ff2413
+On va instancier les paramètres de org.chemicalmozart.utils.WriteMelodyRR@62da3a1e
+{ 0 : |0/1|0/4}
+{ 0 : |0/1|2/4}
+{ 0 : |0/1|3/4}
+{ 0 : |0/1|1/4}
+Overflow reached : org.chemicalmozart.utils.WriteMelodyRR@62da3a1e
+On va instancier les paramètres de org.chemicalmozart.utils.GetWriterRR@48ff2413
+{ 0 : { 0 : |0/0}{ 1 : |0/0}{ 2 : |0/0}{ 3 : |0/1}{ 4 : |0/0}}
+On va instancier les paramètres de org.chemicalmozart.utils.GetWriterRR@48ff2413
+{ 0 : { 0 : |0/0}{ 1 : |0/0}{ 2 : |0/0}{ 3 : |0/0}{ 4 : |0/0}}
+{ 0 : { 0 : |0/0}{ 1 : |0/0}{ 2 : |0/0}{ 3 : |0/0}{ 4 : |0/0}}
+{ 0 : { 0 : |0/0}{ 1 : |0/0}{ 2 : |0/0}{ 3 : |0/0}{ 4 : |0/0}}
+{ 0 : { 0 : |0/0}{ 1 : |0/0}{ 2 : |0/0}{ 3 : |0/0}{ 4 : |0/0}}
+{ 0 : { 0 : |0/0}{ 1 : |0/0}{ 2 : |0/0}{ 3 : |0/0}{ 4 : |0/0}}
+Overflow reached : org.chemicalmozart.utils.GetWriterRR@48ff2413
+On va instancier les paramètres de org.chemicalmozart.utils.StartToWriteRR@23309e87
+{ 0 : |0/1{ 0 : |0/1}{ 1 : |0/1}{ 2 : |0/1}{ 3 : |0/1}{ 4 : |0/1}}
+{ 0 : |0/1{ 0 : |0/1}{ 1 : |0/1}{ 2 : |0/1}{ 3 : |0/1}{ 4 : |0/1}}
+{ 0 : |0/1{ 0 : |0/1}{ 1 : |0/1}{ 2 : |0/1}{ 3 : |0/1}{ 4 : |0/1}}
+{ 0 : |0/1{ 0 : |0/1}{ 1 : |0/1}{ 2 : |0/1}{ 3 : |0/1}{ 4 : |0/1}}
+On va instancier les paramètres de org.chemicalmozart.utils.StartToWriteRR@23309e87
+{ 0 : |0/0{ 0 : |0/1}{ 1 : |0/1}{ 2 : |0/1}{ 3 : |0/1}{ 4 : |0/1}}
+{ 0 : |0/0{ 0 : |0/1}{ 1 : |0/1}{ 2 : |0/1}{ 3 : |0/1}{ 4 : |0/1}}
+{ 0 : |0/0{ 0 : |0/1}{ 1 : |0/1}{ 2 : |0/1}{ 3 : |0/1}{ 4 : |0/1}}
+{ 0 : |0/0{ 0 : |0/1}{ 1 : |0/1}{ 2 : |0/1}{ 3 : |0/1}{ 4 : |0/1}}
+{ 0 : |0/0{ 0 : |0/1}{ 1 : |0/1}{ 2 : |0/1}{ 3 : |0/1}{ 4 : |0/1}}
+Overflow reached : org.chemicalmozart.utils.StartToWriteRR@23309e87
+On va instancier les paramètres de org.chemicalmozart.utils.WriteChordRR@536c79d7
+On teste les accords avec ChordImpl [_degrees=DegreeImpl [_value=6], _position=0, duration=half] - 0
+On écrit un accord
+fond : 57
+tierce : 60
+quinte : 64
+On va instancier les paramètres de org.chemicalmozart.utils.WriteChordRR@536c79d7
+On teste les accords avec ChordImpl [_degrees=DegreeImpl [_value=6], _position=0, duration=half] - 1
+{ 0 : |0/1|1/2}
+On teste les accords avec ChordImpl [_degrees=DegreeImpl [_value=2], _position=1, duration=half] - 1
+On écrit un accord
+fond : 50
+tierce : 53
+quinte : 57
+On va instancier les paramètres de org.chemicalmozart.utils.WriteChordRR@536c79d7
+On teste les accords avec ChordImpl [_degrees=DegreeImpl [_value=2], _position=1, duration=half] - 2
+{ 0 : |0/1|1/2}
+On teste les accords avec ChordImpl [_degrees=DegreeImpl [_value=6], _position=0, duration=half] - 2
+{ 0 : |0/1|0/2}
+Overflow reached : org.chemicalmozart.utils.WriteChordRR@536c79d7
+On va instancier les paramètres de org.chemicalmozart.utils.WriteMelodyRR@15af33d6
+On va instancier les paramètres de org.chemicalmozart.utils.WriteMelodyRR@15af33d6
+{ 0 : |0/1|1/4}
+On va instancier les paramètres de org.chemicalmozart.utils.WriteMelodyRR@15af33d6
+{ 0 : |0/1|2/4}
+{ 0 : |0/1|1/4}
+On va instancier les paramètres de org.chemicalmozart.utils.WriteMelodyRR@15af33d6
+{ 0 : |0/1|3/4}
+{ 0 : |0/1|2/4}
+On va instancier les paramètres de org.chemicalmozart.utils.WriteMelodyRR@15af33d6
+{ 0 : |0/1|1/4}
+{ 0 : |0/1|0/4}
+{ 0 : |0/1|3/4}
+{ 0 : |0/1|2/4}
+Overflow reached : org.chemicalmozart.utils.WriteMelodyRR@15af33d6
+On va instancier les paramètres de org.chemicalmozart.utils.GetWriterRR@48ff2413
+{ 0 : { 0 : |0/0}{ 1 : |0/0}{ 2 : |0/0}{ 3 : |0/0}{ 4 : |0/1}}
+{ 0 : { 0 : |0/0}{ 1 : |0/0}{ 2 : |0/0}{ 3 : |0/0}{ 4 : |0/1}}
+{ 0 : { 0 : |0/0}{ 1 : |0/0}{ 2 : |0/0}{ 3 : |0/0}{ 4 : |0/1}}
+{ 0 : { 0 : |0/0}{ 1 : |0/0}{ 2 : |0/0}{ 3 : |0/0}{ 4 : |0/1}}
+{ 0 : { 0 : |0/0}{ 1 : |0/0}{ 2 : |0/0}{ 3 : |0/0}{ 4 : |0/1}}
+Overflow reached : org.chemicalmozart.utils.GetWriterRR@48ff2413
+On va instancier les paramètres de org.chemicalmozart.utils.WriteChordRR@536c79d7
+On teste les accords avec ChordImpl [_degrees=DegreeImpl [_value=2], _position=1, duration=half] - 2
+{ 0 : |0/1|1/2}
+On teste les accords avec ChordImpl [_degrees=DegreeImpl [_value=6], _position=0, duration=half] - 2
+{ 0 : |0/1|0/2}
+Overflow reached : org.chemicalmozart.utils.WriteChordRR@536c79d7
+On va instancier les paramètres de org.chemicalmozart.utils.StartToWriteRR@23309e87
+{ 0 : |0/0{ 0 : |0/1}{ 1 : |0/1}{ 2 : |0/1}{ 3 : |0/1}{ 4 : |0/1}}
+{ 0 : |0/0{ 0 : |0/1}{ 1 : |0/1}{ 2 : |0/1}{ 3 : |0/1}{ 4 : |0/1}}
+{ 0 : |0/0{ 0 : |0/1}{ 1 : |0/1}{ 2 : |0/1}{ 3 : |0/1}{ 4 : |0/1}}
+{ 0 : |0/0{ 0 : |0/1}{ 1 : |0/1}{ 2 : |0/1}{ 3 : |0/1}{ 4 : |0/1}}
+{ 0 : |0/0{ 0 : |0/1}{ 1 : |0/1}{ 2 : |0/1}{ 3 : |0/1}{ 4 : |0/1}}
+Overflow reached : org.chemicalmozart.utils.StartToWriteRR@23309e87
+On va instancier les paramètres de org.chemicalmozart.utils.GetWriterRR@48ff2413
+{ 0 : { 0 : |0/0}{ 1 : |0/0}{ 2 : |0/0}{ 3 : |0/0}{ 4 : |0/1}}
+{ 0 : { 0 : |0/0}{ 1 : |0/0}{ 2 : |0/0}{ 3 : |0/0}{ 4 : |0/1}}
+{ 0 : { 0 : |0/0}{ 1 : |0/0}{ 2 : |0/0}{ 3 : |0/0}{ 4 : |0/1}}
+On va instancier les paramètres de org.chemicalmozart.utils.GetWriterRR@48ff2413
+{ 0 : { 0 : |0/0}{ 1 : |0/0}{ 2 : |0/0}{ 3 : |0/0}{ 4 : |0/0}}
+{ 0 : { 0 : |0/0}{ 1 : |0/0}{ 2 : |0/0}{ 3 : |0/0}{ 4 : |0/0}}
+{ 0 : { 0 : |0/0}{ 1 : |0/0}{ 2 : |0/0}{ 3 : |0/0}{ 4 : |0/0}}
+{ 0 : { 0 : |0/0}{ 1 : |0/0}{ 2 : |0/0}{ 3 : |0/0}{ 4 : |0/0}}
+{ 0 : { 0 : |0/0}{ 1 : |0/0}{ 2 : |0/0}{ 3 : |0/0}{ 4 : |0/0}}
+Overflow reached : org.chemicalmozart.utils.GetWriterRR@48ff2413
+On va instancier les paramètres de org.chemicalmozart.utils.StartToWriteRR@23309e87
+{ 0 : |0/1{ 0 : |0/1}{ 1 : |0/1}{ 2 : |0/1}{ 3 : |0/1}{ 4 : |0/1}}
+{ 0 : |0/1{ 0 : |0/1}{ 1 : |0/1}{ 2 : |0/1}{ 3 : |0/1}{ 4 : |0/1}}
+{ 0 : |0/1{ 0 : |0/1}{ 1 : |0/1}{ 2 : |0/1}{ 3 : |0/1}{ 4 : |0/1}}
+{ 0 : |0/1{ 0 : |0/1}{ 1 : |0/1}{ 2 : |0/1}{ 3 : |0/1}{ 4 : |0/1}}
+{ 0 : |0/1{ 0 : |0/1}{ 1 : |0/1}{ 2 : |0/1}{ 3 : |0/1}{ 4 : |0/1}}
+Overflow reached : org.chemicalmozart.utils.StartToWriteRR@23309e87

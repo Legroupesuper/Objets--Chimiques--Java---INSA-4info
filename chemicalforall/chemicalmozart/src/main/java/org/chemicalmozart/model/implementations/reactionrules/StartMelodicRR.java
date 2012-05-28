@@ -131,6 +131,7 @@ public class StartMelodicRR implements ReactionRule{
 		BarNumber bn = (BarNumber) _sol.getElements().get(1);
 		//System.out.println("Compute select ->");
 		//System.out.println("On est dans le compute select "+_barNumber.getValue()+" == "+bn.getValue());
+		System.out.println("On est dans le compute select de StartMelodicRR : "+(_barNumber.getValue()==bn.getValue()));
 		return _barNumber.getValue() == bn.getValue();
 	}
 
