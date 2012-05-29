@@ -43,12 +43,12 @@ def generate_javadoc(params, targets)
 end
 
 def push_javadoc(branch_name)
-	puts 'Saving css file'
-	`cp stylesheet.css #{Temp_folder}/stylesheet.css`
-	puts 'Cleaning current folder'
-	`rm -rf .`
-	puts 'Cleaning temporary folder...'
-	`mv -f #{Temp_folder}/* . && rmdir #{Temp_folder}`
+#	puts 'Saving css file'
+#	`cp stylesheet.css #{Temp_folder}/stylesheet.css`
+#	puts 'Cleaning current folder'
+#	`rm -rf .`
+#	puts 'Cleaning temporary folder...'
+#	`mv -f #{Temp_folder}/* . && rmdir #{Temp_folder}`
 	puts 'Committing changes...'
 	`git add -A && git commit -m "Javadoc export n°#{1 + Time.new.to_i % 1000}"`
 	`git push origin #{branch_name}`
@@ -81,7 +81,7 @@ Former_branch = former_branch
 
 Library_name = ARGV[0]
 
-Temp_folder = "../foo_#{Time.new.to_i}"
+#Temp_folder = "../foo_#{Time.new.to_i}"
 
 options = {
 	'public' => '',	# Only public classes/methods are exported into the doc
@@ -95,7 +95,7 @@ options = {
 	'version' => '',	# Version tags are exported
 	'windowtitle' => "#{Library_name}",	# Text displayed in the window title, surrounded by parentheses
 	'header' => "Official documentation for #{Library_name}",	# Text displayed at the top of the page
-	'd' => Temp_folder,	# Directory in which you generate the doc (should be left as is)
+	'd' => '.',	# Directory in which you generate the doc (should be left as is)
 	'bottom' => '2011-2012 - INSA of Rennes. Licensed under LGPL.',	# Text displayed at the bottom of the page
 	'charset' => 'ISO-8859-1',
 	'encoding' => 'ISO-8859-1',
