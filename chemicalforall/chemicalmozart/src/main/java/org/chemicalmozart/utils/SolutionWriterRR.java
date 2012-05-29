@@ -6,10 +6,13 @@ import java.io.Writer;
 import javax.naming.spi.DirStateFactory.Result;
 import javax.sound.midi.InvalidMidiDataException;
 
+import org.chemicalmozart.viewV2.MainView;
+
 import fr.insa.rennes.info.chemical.backend.Solution;
 import fr.insa.rennes.info.chemical.backend.SubSolution;
 import fr.insa.rennes.info.chemical.backend.SubSolutionElements;
 import fr.insa.rennes.info.chemical.backend.Utils;
+import fr.insa.rennes.info.chemical.user.Dontreact;
 import fr.insa.rennes.info.chemical.user.InertEvent;
 import fr.insa.rennes.info.chemical.user.InertEventListener;
 import fr.insa.rennes.info.chemical.user.ReactionRule;
@@ -24,9 +27,13 @@ public class SolutionWriterRR implements ReactionRule{
 	 */
 	private SubSolution<SubSolutionElements> _resultSolution;
 	
-	public SolutionWriterRR() {
+	
+	@Dontreact private MainView _view;
+	
+	public SolutionWriterRR(MainView view) {
 		_resultSolution = new SubSolution<SubSolutionElements>();
 		_resultSolution.addType(org.chemicalmozart.model.implementations.solutionindentification.Result.class);
+		_view = view;
 	}
 	
 	public Object[] computeResult() {
@@ -40,6 +47,7 @@ public class SolutionWriterRR implements ReactionRule{
 				System.out.println("C'est fini!!!");
 				try {
 					_writer.writeFile();
+					_view.endOfReaction();
 				} catch (IOException e1) {
 					e1.printStackTrace();
 				} catch (InvalidMidiDataException e1) {

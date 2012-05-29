@@ -29,8 +29,11 @@ import fr.insa.rennes.info.chemical.user.InertEvent;
 import fr.insa.rennes.info.chemical.user.InertEventListener;
 
 public class ModelBuilder {
-	public ModelBuilder(final int tempo, final NoteValues scale, final String outputFile, int mesureNumber, final int melodicInst, final int chordInstr){
-		Solution mainSol = new Solution();
+	
+	private Solution mainSol;
+	
+	public ModelBuilder(int mesureNumber){
+		mainSol = new Solution();
 		mainSol.add(new CreateBarRR());
 		mainSol.add(new QuaterPerBar(4));
 		mainSol.add(mesureNumber);
@@ -49,32 +52,17 @@ public class ModelBuilder {
 		solResult.add(new BarNumber(0));
 		solResult.add(new Pitch(1, new DegreeImpl(1)));
 		mainSol.add(solResult);
-		mainSol.addInertEventListener(new InertEventListener() {
-			
-			public void isInert(InertEvent e) {
-				Solution s = (Solution) e.getSource();
-				try {
-					final MusicWriter writer = new MusicWriter(tempo, scale, outputFile, melodicInst, chordInstr);
-					s.addInertEventListener(new InertEventListener() {
-						
-						public void isInert(InertEvent e) {
-							try {
-								writer.writeFile();
-							} catch (IOException e1) {
-								e1.printStackTrace();
-							} catch (InvalidMidiDataException e1) {
-								e1.printStackTrace();
-							}
-						}
-					});
-					s.add(writer);
-					s.add(new SolutionWriterRR());
-				} catch (ChemicalException e1) {
-					e1.printStackTrace();
-				} catch (InvalidMidiDataException e1) {
-					e1.printStackTrace();
-				}
-			}
-		});
+		
 	}
+	
+	public void launchReaction(){
+		mainSol.react();
+	}
+	
+	public Solution getMainSol(){
+		return mainSol;
+	}
+	
+	
+	
 }

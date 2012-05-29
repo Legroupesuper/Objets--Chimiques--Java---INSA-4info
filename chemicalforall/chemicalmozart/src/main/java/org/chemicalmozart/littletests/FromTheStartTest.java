@@ -81,7 +81,7 @@ public class FromTheStartTest {
 						}
 					});
 					s.add(writer);
-					s.add(new SolutionWriterRR());
+					//s.add(new SolutionWriterRR());
 				} catch (ChemicalException e1) {
 					e1.printStackTrace();
 				} catch (InvalidMidiDataException e1) {

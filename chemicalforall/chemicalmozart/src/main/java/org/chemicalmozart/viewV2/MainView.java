@@ -1,5 +1,6 @@
 package org.chemicalmozart.viewV2;
 
+import javax.sound.midi.InvalidMidiDataException;
 import javax.sound.midi.MidiSystem;
 import javax.sound.midi.MidiUnavailableException;
 import javax.sound.midi.Sequence;
@@ -24,6 +25,16 @@ import javax.swing.border.TitledBorder;
 import java.awt.Color;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
+
+import org.chemicalmozart.utils.MusicWriter;
+import org.chemicalmozart.utils.SolutionWriterRR;
+import org.chemicalmozart.utils.MusicWriter.NoteValues;
+
+import fr.insa.rennes.info.chemical.backend.ChemicalException;
+import fr.insa.rennes.info.chemical.backend.Solution;
+import fr.insa.rennes.info.chemical.user.InertEvent;
+import fr.insa.rennes.info.chemical.user.InertEventListener;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.io.File;
@@ -63,6 +74,7 @@ public class MainView extends JFrame {
 	private JLabel lblStop;
 	private JLabel lblPlayingfilename;
 	private JLabel lblLogParameters;
+	private JAnimatedIcon animatedIcon;
 	
 	/**
 	 * Constructs the view based on a JFrame
@@ -76,11 +88,11 @@ public class MainView extends JFrame {
 		} catch (MidiUnavailableException e) {
 			e.printStackTrace();
 		}
-		saveFile = null;
 		loadFile = null;
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		buildComponents();
+		saveFile = new File(tfMidiOutput.getText());
 		pack();	
 		setLocationRelativeTo(null);
 	}
@@ -147,9 +159,12 @@ public class MainView extends JFrame {
 		
 		lblLogInfos = new JLabel("");
 		lblLogInfos.setForeground(new Color(139, 0, 0));
+		
+		animatedIcon = new JAnimatedIcon("src/main/java/img/minimozart_anim.gif",20);
+		animatedIcon.setPause(true);
 		GroupLayout gl_panelInfos = new GroupLayout(panelInfos);
 		gl_panelInfos.setHorizontalGroup(
-			gl_panelInfos.createParallelGroup(Alignment.LEADING)
+			gl_panelInfos.createParallelGroup(Alignment.TRAILING)
 				.addGroup(gl_panelInfos.createSequentialGroup()
 					.addGroup(gl_panelInfos.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_panelInfos.createSequentialGroup()
@@ -164,20 +179,27 @@ public class MainView extends JFrame {
 								.addGroup(gl_panelInfos.createSequentialGroup()
 									.addComponent(lblImageEqualizer)
 									.addGap(30)
-									.addComponent(lblNowPlaying))
-								.addComponent(lblLogInfos, GroupLayout.PREFERRED_SIZE, 213, GroupLayout.PREFERRED_SIZE)))
+									.addComponent(lblNowPlaying))))
 						.addGroup(gl_panelInfos.createSequentialGroup()
 							.addGap(77)
 							.addComponent(lblPlay)
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addComponent(lblStop)))
 					.addContainerGap())
+				.addGroup(gl_panelInfos.createSequentialGroup()
+					.addContainerGap(94, Short.MAX_VALUE)
+					.addComponent(animatedIcon, GroupLayout.PREFERRED_SIZE, 102, GroupLayout.PREFERRED_SIZE)
+					.addGap(93))
+				.addGroup(gl_panelInfos.createSequentialGroup()
+					.addContainerGap(66, Short.MAX_VALUE)
+					.addComponent(lblLogInfos, GroupLayout.PREFERRED_SIZE, 213, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap())
 		);
 		gl_panelInfos.setVerticalGroup(
 			gl_panelInfos.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panelInfos.createSequentialGroup()
-					.addGroup(gl_panelInfos.createParallelGroup(Alignment.LEADING)
-						.addGroup(Alignment.TRAILING, gl_panelInfos.createSequentialGroup()
+					.addGroup(gl_panelInfos.createParallelGroup(Alignment.TRAILING)
+						.addGroup(gl_panelInfos.createSequentialGroup()
 							.addGroup(gl_panelInfos.createParallelGroup(Alignment.LEADING)
 								.addComponent(lblImageEqualizer)
 								.addGroup(gl_panelInfos.createSequentialGroup()
@@ -192,12 +214,14 @@ public class MainView extends JFrame {
 								.addComponent(lblStop)
 								.addComponent(lblPlay))
 							.addGap(18))
-						.addGroup(Alignment.TRAILING, gl_panelInfos.createSequentialGroup()
+						.addGroup(gl_panelInfos.createSequentialGroup()
 							.addComponent(lblOpenFile)
 							.addGap(68)))
-					.addPreferredGap(ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
+					.addGap(18)
 					.addComponent(lblLogInfos, GroupLayout.PREFERRED_SIZE, 12, GroupLayout.PREFERRED_SIZE)
-					.addGap(30))
+					.addPreferredGap(ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
+					.addComponent(animatedIcon, GroupLayout.PREFERRED_SIZE, 97, GroupLayout.PREFERRED_SIZE)
+					.addGap(18))
 		);
 		panelInfos.setLayout(gl_panelInfos);
 		JPanel panelParameters = new JPanel();
@@ -223,15 +247,17 @@ public class MainView extends JFrame {
 		btnStartReaction.setHorizontalAlignment(SwingConstants.LEFT);
 		btnStartReaction.setIcon(new ImageIcon(MainView.class.getResource("/img/rec_button.png")));
 		tfTempo = new JTextField();
+		tfTempo.setText("60");
 		tfTempo.setColumns(10);
 		tfBarNumber = new JTextField();
-		tfBarNumber.setText("");
+		tfBarNumber.setText("25");
 		tfBarNumber.setColumns(10);
 		tfScale = new JComboBox();
 		tfScale.setMaximumRowCount(12);
-		tfScale.setModel(new DefaultComboBoxModel(new String[] {"Do", "Do #", "Ré", "Ré #", "Mi", "Fa", "Fa #", "Sol", "Sol #", "La", "La #", "Si"}));
+		tfScale.setModel(new DefaultComboBoxModel(new String[] {"Do", "Do#", "Ré", "Ré#", "Mi", "Fa", "Fa#", "Sol", "Sol#", "La", "La#", "Si"}));
 		tfScale.setSelectedIndex(0);
 		tfMidiOutput = new JTextField();
+		tfMidiOutput.setText("chemicalSong.mid");
 		tfMidiOutput.setColumns(10);
 		JButton btnBrowse = new JButton("Browse");
 		btnBrowse.addActionListener(new ActionListener() {
@@ -320,55 +346,57 @@ public class MainView extends JFrame {
 							.addComponent(btnAbout))
 						.addGroup(groupLayout.createSequentialGroup()
 							.addGap(20)
-							.addComponent(panelParameters, GroupLayout.PREFERRED_SIZE, 427, GroupLayout.PREFERRED_SIZE)))
-					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+							.addComponent(panelParameters, GroupLayout.PREFERRED_SIZE, 507, Short.MAX_VALUE)))
+					.addContainerGap())
 		);
 		GroupLayout gl_panelParameters = new GroupLayout(panelParameters);
 		gl_panelParameters.setHorizontalGroup(
 			gl_panelParameters.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panelParameters.createSequentialGroup()
-					.addGap(19)
-					.addComponent(lblImageMusic)
-					.addGap(57)
-					.addGroup(gl_panelParameters.createParallelGroup(Alignment.LEADING)
-						.addComponent(lblTempo)
-						.addComponent(lblBarNumber)
-						.addComponent(lblScale))
-					.addGap(41)
-					.addGroup(gl_panelParameters.createParallelGroup(Alignment.LEADING)
-						.addComponent(tfTempo, GroupLayout.PREFERRED_SIZE, 47, GroupLayout.PREFERRED_SIZE)
-						.addComponent(tfBarNumber, GroupLayout.PREFERRED_SIZE, 47, GroupLayout.PREFERRED_SIZE)
-						.addComponent(tfScale, GroupLayout.PREFERRED_SIZE, 47, GroupLayout.PREFERRED_SIZE)))
-				.addGroup(gl_panelParameters.createSequentialGroup()
-					.addGap(19)
-					.addComponent(lblLead)
-					.addGap(85)
-					.addComponent(comboBoxLead, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-				.addGroup(gl_panelParameters.createSequentialGroup()
-					.addGap(19)
-					.addComponent(lblAccompaniment, GroupLayout.PREFERRED_SIZE, 115, GroupLayout.PREFERRED_SIZE)
-					.addGap(6)
-					.addComponent(comboBoxAccompaniment, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-				.addGroup(gl_panelParameters.createSequentialGroup()
-					.addGap(19)
-					.addComponent(lblImageFolder)
-					.addGap(10)
-					.addGroup(gl_panelParameters.createParallelGroup(Alignment.LEADING)
-						.addComponent(lblMidiOutput)
-						.addComponent(tfMidiOutput, GroupLayout.PREFERRED_SIZE, 178, GroupLayout.PREFERRED_SIZE))
-					.addGap(6)
-					.addComponent(btnBrowse))
-				.addGroup(gl_panelParameters.createSequentialGroup()
-					.addGap(100)
-					.addComponent(btnStartReaction))
-				.addGroup(gl_panelParameters.createSequentialGroup()
-					.addGap(63)
-					.addComponent(lblLogParameters, GroupLayout.PREFERRED_SIZE, 259, GroupLayout.PREFERRED_SIZE))
-				.addGroup(gl_panelParameters.createSequentialGroup()
 					.addGap(67)
 					.addComponent(lblImageParameters)
 					.addGap(18)
 					.addComponent(lblParameters))
+				.addGroup(Alignment.TRAILING, gl_panelParameters.createSequentialGroup()
+					.addContainerGap(95, Short.MAX_VALUE)
+					.addComponent(btnStartReaction)
+					.addGap(86))
+				.addGroup(Alignment.TRAILING, gl_panelParameters.createSequentialGroup()
+					.addContainerGap(48, Short.MAX_VALUE)
+					.addComponent(lblLogParameters, GroupLayout.PREFERRED_SIZE, 259, GroupLayout.PREFERRED_SIZE)
+					.addGap(31))
+				.addGroup(gl_panelParameters.createSequentialGroup()
+					.addGap(19)
+					.addGroup(gl_panelParameters.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_panelParameters.createSequentialGroup()
+							.addComponent(lblImageMusic)
+							.addGap(57)
+							.addGroup(gl_panelParameters.createParallelGroup(Alignment.LEADING)
+								.addComponent(lblTempo)
+								.addComponent(lblBarNumber)
+								.addComponent(lblScale))
+							.addGap(41)
+							.addGroup(gl_panelParameters.createParallelGroup(Alignment.LEADING)
+								.addComponent(tfTempo, GroupLayout.PREFERRED_SIZE, 47, GroupLayout.PREFERRED_SIZE)
+								.addComponent(tfBarNumber, GroupLayout.PREFERRED_SIZE, 47, GroupLayout.PREFERRED_SIZE)
+								.addComponent(tfScale, GroupLayout.PREFERRED_SIZE, 47, GroupLayout.PREFERRED_SIZE)))
+						.addGroup(gl_panelParameters.createSequentialGroup()
+							.addComponent(lblLead)
+							.addGap(85)
+							.addComponent(comboBoxLead, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_panelParameters.createSequentialGroup()
+							.addComponent(lblAccompaniment, GroupLayout.PREFERRED_SIZE, 115, GroupLayout.PREFERRED_SIZE)
+							.addGap(6)
+							.addComponent(comboBoxAccompaniment, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_panelParameters.createSequentialGroup()
+							.addComponent(lblImageFolder)
+							.addGap(10)
+							.addGroup(gl_panelParameters.createParallelGroup(Alignment.LEADING)
+								.addComponent(lblMidiOutput)
+								.addComponent(tfMidiOutput, GroupLayout.PREFERRED_SIZE, 178, GroupLayout.PREFERRED_SIZE))
+							.addGap(6)
+							.addComponent(btnBrowse)))
+					.addGap(20))
 		);
 		gl_panelParameters.setVerticalGroup(
 			gl_panelParameters.createParallelGroup(Alignment.LEADING)
@@ -378,7 +406,7 @@ public class MainView extends JFrame {
 						.addGroup(gl_panelParameters.createSequentialGroup()
 							.addGap(22)
 							.addComponent(lblParameters)))
-					.addGap(18)
+					.addGap(31)
 					.addGroup(gl_panelParameters.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_panelParameters.createSequentialGroup()
 							.addGap(14)
@@ -396,7 +424,7 @@ public class MainView extends JFrame {
 							.addComponent(tfBarNumber, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 							.addGap(18)
 							.addComponent(tfScale, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
-					.addGap(27)
+					.addGap(36)
 					.addGroup(gl_panelParameters.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_panelParameters.createSequentialGroup()
 							.addGap(3)
@@ -408,7 +436,7 @@ public class MainView extends JFrame {
 							.addGap(5)
 							.addComponent(lblAccompaniment))
 						.addComponent(comboBoxAccompaniment, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addGap(29)
+					.addGap(38)
 					.addGroup(gl_panelParameters.createParallelGroup(Alignment.LEADING)
 						.addComponent(lblImageFolder)
 						.addGroup(gl_panelParameters.createSequentialGroup()
@@ -418,10 +446,11 @@ public class MainView extends JFrame {
 						.addGroup(gl_panelParameters.createSequentialGroup()
 							.addGap(27)
 							.addComponent(btnBrowse)))
+					.addGap(30)
+					.addComponent(lblLogParameters, GroupLayout.PREFERRED_SIZE, 12, GroupLayout.PREFERRED_SIZE)
 					.addGap(18)
 					.addComponent(btnStartReaction, GroupLayout.PREFERRED_SIZE, 59, GroupLayout.PREFERRED_SIZE)
-					.addGap(84)
-					.addComponent(lblLogParameters, GroupLayout.PREFERRED_SIZE, 12, GroupLayout.PREFERRED_SIZE))
+					.addGap(23))
 		);
 		panelParameters.setLayout(gl_panelParameters);
 		getContentPane().setLayout(groupLayout);
@@ -477,7 +506,6 @@ public class MainView extends JFrame {
 		        lblPlayingfilename.setText(loadFile.getName());	
 		        lblLogInfos.setText("");
 		        lblPlayAction();
-		        
 	        }
 	        catch(Exception e){
 	        	lblLogInfos.setText("Unable to load selected file");
@@ -534,9 +562,35 @@ public class MainView extends JFrame {
 	  * Starts the reaction using specified parameters
 	  */
 	 public void btnStartReactionAction(){
+		 
+		 animatedIcon.setImages(animatedIcon.readGifImages("src/main/java/img/minimozart_anim.gif"));		 
+		 animatedIcon.setPause(false);
 		 if (checkParameters()){
+			 lblStopAction();
+			 final int tempo = Integer.parseInt(tfTempo.getText());
+			 int barNumber = Integer.parseInt(tfBarNumber.getText());
+			 final ModelBuilder builder = new ModelBuilder(barNumber);
+			
+			 builder.getMainSol().addInertEventListener(new InertEventListener() {
+					
+					public void isInert(InertEvent e) {
+						Solution s = (Solution) e.getSource();
+						try {
+							final MusicWriter writer = new MusicWriter(tempo, indexToNoteValues(tfScale.getSelectedIndex()), saveFile.getAbsolutePath(), comboBoxLead.getSelectedIndex(), comboBoxAccompaniment.getSelectedIndex());			
+							s.add(writer);
+							s.add(new SolutionWriterRR(MainView.this));
+						} catch (ChemicalException e1) {
+							e1.printStackTrace();
+						} catch (InvalidMidiDataException e1) {
+							e1.printStackTrace();
+						}	
+					}
+			 });
 			 
+			 
+			 builder.launchReaction();
 		 }
+		 
 	 }
 	 
 	 /**
@@ -576,6 +630,41 @@ public class MainView extends JFrame {
 		  about.setLocationRelativeTo(null);
 		  about.setVisible(true);
 	 }
+	 
+	 /**
+	  * Converts an index to the corresponding Note
+	  * @param n the integer index
+	  * @return the noteValue corresponding to n
+	  */
+	 private NoteValues indexToNoteValues(int n){
+		 switch(n){
+			 case 0: 
+				 return NoteValues.DO;
+			 case 1:
+				 return NoteValues.DOD;
+			 case 2: 
+				 return NoteValues.RE;
+			 case 3:
+				 return NoteValues.RED;
+			 case 4: 
+				 return NoteValues.MI;
+			 case 5:
+				 return NoteValues.FA;
+			 case 6: 
+				 return NoteValues.FAD;
+			 case 7:
+				 return NoteValues.SOL;
+			 case 8: 
+				 return NoteValues.SOLD;
+			 case 9:
+				 return NoteValues.LA;
+			 case 10: 
+				 return NoteValues.LAD;
+			 case 11:
+				 return NoteValues.SI;
+		 }
+		 return NoteValues.DO;
+	 }
 	
 	 /**
 	  * The main function, to launch this application
@@ -585,5 +674,27 @@ public class MainView extends JFrame {
 		setBestLookAndFeelAvailable();
 		MainView view = new MainView();	
 		view.setVisible(true);
+	}
+
+	/**
+	 * Performs actions at the end of the reaction
+	 * Plays the generated file and set animations
+	 */
+	public void endOfReaction() {
+		animatedIcon.setPause(true);
+		animatedIcon.setImages("src/main/java/img/minimozart_grill.gif");
+		loadFile = saveFile;
+		try{
+	        Sequence sequence = MidiSystem.getSequence(loadFile);
+	        sequencer.setSequence(sequence);
+	        lblPlayingfilename.setText(loadFile.getName());	
+	        lblLogInfos.setText("");
+	        lblPlayAction();
+        }
+        catch(Exception ex){
+        	lblLogInfos.setText("Unable to load selected file");
+        	lblPlayingfilename.setText("");
+        }
+		
 	}
 }
