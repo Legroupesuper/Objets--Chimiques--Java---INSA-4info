@@ -117,7 +117,7 @@ public class MusicWriter {
 		_melodicTrack.add(me);
 		/*set tempo (meta event)*/
 		MetaMessage mt = new MetaMessage();
-		byte[] bt = DegresAssociation.microsecondPerQuaterNote(60);
+		byte[] bt = DegresAssociation.microsecondPerQuaterNote(tempo);
 		mt.setMessage(0x51 ,bt, 3);
 		me = new MidiEvent(mt,(long)0);
 		_chordTrack.add(me);

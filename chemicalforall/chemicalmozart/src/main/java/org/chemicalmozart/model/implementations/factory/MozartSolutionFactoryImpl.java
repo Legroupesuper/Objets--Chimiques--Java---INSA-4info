@@ -50,6 +50,16 @@ import org.chemicalmozart.model.implementations.rythme.QQEEQ4;
 import org.chemicalmozart.model.implementations.rythme.QQQEE4;
 import org.chemicalmozart.model.implementations.rythme.EQD2;
 import org.chemicalmozart.model.implementations.rythme.QDE2;
+import org.chemicalmozart.model.implementations.rythme.EDSEE2;
+import org.chemicalmozart.model.implementations.rythme.SEDEDS2;
+import org.chemicalmozart.model.implementations.rythme.SSSSSSSSSSSSSSSS4;
+import org.chemicalmozart.model.implementations.rythme.QDEQDE4;
+import org.chemicalmozart.model.implementations.rythme.EQDEQD4;
+import org.chemicalmozart.model.implementations.rythme.SEDSSEEEQ4;
+import org.chemicalmozart.model.implementations.rythme.ESSESEDEQ4;
+import org.chemicalmozart.model.implementations.rythme.QEEQDE4;
+import org.chemicalmozart.model.implementations.rythme.HQDE4;
+import org.chemicalmozart.model.implementations.rythme.EQDH4;
 public class MozartSolutionFactoryImpl implements MozartSolutionFactory{
 
 	public Solution createRythmicPull() {
@@ -150,6 +160,36 @@ public class MozartSolutionFactoryImpl implements MozartSolutionFactory{
 
 		QDE2 qde2 = new QDE2();
 		result.add(new RythmPattern(qde2.getDuration(), qde2.getListNotes()));
+
+		EDSEE2 edsee2 = new EDSEE2();
+		result.add(new RythmPattern(edsee2.getDuration(), edsee2.getListNotes()));
+
+		SEDEDS2 sededs2 = new SEDEDS2();
+		result.add(new RythmPattern(sededs2.getDuration(), sededs2.getListNotes()));
+
+		SSSSSSSSSSSSSSSS4 ssssssssssssssss4 = new SSSSSSSSSSSSSSSS4();
+		result.add(new RythmPattern(ssssssssssssssss4.getDuration(), ssssssssssssssss4.getListNotes()));
+
+		QDEQDE4 qdeqde4 = new QDEQDE4();
+		result.add(new RythmPattern(qdeqde4.getDuration(), qdeqde4.getListNotes()));
+
+		EQDEQD4 eqdeqd4 = new EQDEQD4();
+		result.add(new RythmPattern(eqdeqd4.getDuration(), eqdeqd4.getListNotes()));
+
+		SEDSSEEEQ4 sedsseeeq4 = new SEDSSEEEQ4();
+		result.add(new RythmPattern(sedsseeeq4.getDuration(), sedsseeeq4.getListNotes()));
+
+		ESSESEDEQ4 essesedeq4 = new ESSESEDEQ4();
+		result.add(new RythmPattern(essesedeq4.getDuration(), essesedeq4.getListNotes()));
+
+		QEEQDE4 qeeqde4 = new QEEQDE4();
+		result.add(new RythmPattern(qeeqde4.getDuration(), qeeqde4.getListNotes()));
+
+		HQDE4 hqde4 = new HQDE4();
+		result.add(new RythmPattern(hqde4.getDuration(), hqde4.getListNotes()));
+
+		EQDH4 eqdh4 = new EQDH4();
+		result.add(new RythmPattern(eqdh4.getDuration(), eqdh4.getListNotes()));
 
 		return result;
 	}
