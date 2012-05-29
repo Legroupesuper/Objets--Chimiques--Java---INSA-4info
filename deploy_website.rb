@@ -44,7 +44,7 @@ end
 
 def push_javadoc(branch_name)
 	puts 'Cleaning temporary folder...'
-	`mv -f #{Temp_folder}/* . && rmdir #{Temp_folder}`
+	`mv #{Temp_folder}/* ./ && rmdir #{Temp_folder}`
 	puts 'Committing changes...'
 	`git add -A && git commit -m "Javadoc export n°#{1 + Time.new.to_i % 1000}"`
 	`git push origin #{branch_name}`
@@ -77,7 +77,7 @@ Former_branch = former_branch
 
 Library_name = ARGV[0]
 
-Temp_folder = "../foo_#{Time.new.to_i}"
+Temp_folder = "foo_#{Time.new.to_i}"
 
 options = {
 	'public' => '',	# Only public classes/methods are exported into the doc
