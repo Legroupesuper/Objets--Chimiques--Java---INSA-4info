@@ -45,3 +45,5 @@ bin
 
 # get rid of javadoc files
 doc
+
+*.mid
