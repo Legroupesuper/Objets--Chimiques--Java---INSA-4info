@@ -44,7 +44,7 @@ end
 
 def push_javadoc(branch_name)
 	puts 'Cleaning temporary folder...'
-	`mv -rf #{Temp_folder}/* . && rmdir #{Temp_folder}`
+	`mv -f #{Temp_folder}/* . && rmdir #{Temp_folder}`
 	puts 'Committing changes...'
 	`git add -A && git commit -m "Javadoc export n°#{1 + Time.new.to_i % 1000}"`
 	`git push origin #{branch_name}`
