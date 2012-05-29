@@ -4,8 +4,8 @@
     <artifactId>chemicalPOM</artifactId>
     <groupId>fr.insa-rennes</groupId>
     <version>0.0.1-SNAPSHOT</version>
-    <relativePath>..</relativePath>
   </parent>
+  <groupId>fr.insa-rennes</groupId>
   <artifactId>usecases</artifactId>
   <version>0.0.1</version>
   <name>Use cases</name>
@@ -20,9 +20,9 @@
 			<configuration>
 				<archive>
 					<manifest>
-						<mainClass>Test</mainClass>
-						<addClasspath>true</addClasspath>
-						<classpathLayoutType>repository</classpathLayoutType>
+						<mainClass>foxesnrabbits.Main</mainClass>
+						<!--<addClasspath>true</addClasspath>
+						<classpathLayoutType>repository</classpathLayoutType>-->
 
 					</manifest>
 				</archive>
@@ -37,7 +37,8 @@
   	<dependency>
   		<groupId>fr.insa-rennes</groupId>
   		<artifactId>chemicalthread</artifactId>
-  		<version>0.0.1-SNAPSHOT</version>
+		<version>0.0.1-SNAPSHOT</version>
+		<scope>compile</scope>
   	</dependency>
   </dependencies>
 </project>

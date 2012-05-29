@@ -34,24 +34,24 @@ public class GarbageRR implements ReactionRule{
 
 	/**
 	 *  Do nothing
-	 *  @return It returns an empty array
+	 *  @return It returns null
 	 */
 	public Object[] computeResult() {
-		return new Object[1];
+		return new Object[]{};
 	}
 
 	/**
 	 * It succeed only if the solution contains a Temporary object
 	 */
 	public boolean computeSelect() {
-		boolean found = false;
 		for(Object o : this._temporarySolution){
 			if(o instanceof Temporary){
-				found = true;
+				System.out.println("Compute select de GarbageRR : "+true);
+				return true;
 			}
 		}
-		//return _temporarySolution.containsType(Temporary.class);
-		return found;
+		System.out.println("Compute select de GarbageRR : "+false);
+		return false;
 	}
 
 	/**
@@ -60,8 +60,9 @@ public class GarbageRR implements ReactionRule{
 	public Solution get_temporarySolution() {
 		return this._temporarySolution;
 	}
+	
 	public Multiplicity getMultiplicity() {
-		return ReactionRule.Multiplicity.INFINITY_SHOT;
+		return ReactionRule.Multiplicity.ONE_SHOT;
 	}
 
 	/**

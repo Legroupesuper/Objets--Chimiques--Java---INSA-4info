@@ -4,24 +4,35 @@
     <artifactId>chemicalPOM</artifactId>
     <groupId>fr.insa-rennes</groupId>
     <version>0.0.1-SNAPSHOT</version>
-    <relativePath>..</relativePath>
   </parent>
+  <groupId>fr.insa-rennes</groupId>
   <artifactId>sentenceCreator</artifactId>
+  <version>0.0.1</version>
+  <description>Example for the user's manual. Simply creates basic sentences using subsolutions.</description>
+  <name>SentenceCreator</name>
   <dependencies>
   	<dependency>
   		<groupId>fr.insa-rennes</groupId>
-  		<artifactId>chemicalPOM</artifactId>
-  		<version>0.0.1-SNAPSHOT</version>
-  		<type>pom</type>
-  	</dependency>
-  	<dependency>
-  		<groupId>fr.insa-rennes</groupId>
   		<artifactId>chemicalthread</artifactId>
-  		<version>0.0.1-SNAPSHOT</version>
+		<version>0.0.1-SNAPSHOT</version>
+		<scope>compile</scope>
   	</dependency>
-  </dependencies>
-  <version>0.0.1</version>
-  <groupId>fr.insa-rennes</groupId>
-  <description>Example for the user's manual. Simply creats basic sentences using subsolutions.</description>
-  <name>SentenceCreator</name>
+</dependencies>
+
+       <build>
+	       <plugins>
+		       <plugin>
+			       <groupId>org.apache.maven.plugins</groupId>
+			       <artifactId>maven-jar-plugin</artifactId>
+			       <version>2.3.1</version>
+			       <configuration>
+				       <archive>
+						<manifest>
+						       <mainClass>sentence.ChemicalSentenceCreator</mainClass>
+						</manifest>
+					</archive>
+				</configuration>
+			 </plugin>
+		</plugins>
+	</build>
 </project>

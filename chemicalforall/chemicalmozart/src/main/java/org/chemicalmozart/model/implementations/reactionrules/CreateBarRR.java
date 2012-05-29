@@ -22,6 +22,7 @@ import org.chemicalmozart.model.implementations.BarNumber;
 import org.chemicalmozart.model.implementations.QuaterLeft;
 import org.chemicalmozart.model.implementations.QuaterPerBar;
 import org.chemicalmozart.model.implementations.solutionindentification.BarInCreation;
+import org.chemicalmozart.model.implementations.solutionindentification.BarInCreation.BarInCreationState;
 
 import fr.insa.rennes.info.chemical.backend.Solution;
 import fr.insa.rennes.info.chemical.user.Dontuse;
@@ -50,7 +51,10 @@ public class CreateBarRR implements ReactionRule{
 	 * _quater represents the number of quater per bar of the current music.
 	 */
 	private QuaterPerBar _quater;
-
+	/**
+	 * Represents the number of bars that the reaction must create
+	 */
+	private Integer _numberOfBars;
 	/**
 	 * Create a new solution which represents a new bar. This solution must contains a BarInCreation object to be easily identifiable.<br />
 	 * The computeResult must create a new Solution which contains a copy of _number and a copy of
@@ -66,6 +70,7 @@ public class CreateBarRR implements ReactionRule{
 		Solution barCreationSolution = new Solution();
 
 		BarInCreation solutionID = new BarInCreation();
+		solutionID.set_state(BarInCreationState.HARMONICRR);
 		barCreationSolution.add(solutionID);
 
 		QuaterLeft quaterLeft = new QuaterLeft(this._quater.getValue());
@@ -83,7 +88,7 @@ public class CreateBarRR implements ReactionRule{
 
 		MoveToResultRR RR = new MoveToResultRR();
 
-		Object[] res = {barCreationSolution, RR, this._quater, this._number};
+		Object[] res = {barCreationSolution, this._quater, this._number, _numberOfBars-1, new MoveToResultRR()};
 
 		return res;
 	}
@@ -93,7 +98,23 @@ public class CreateBarRR implements ReactionRule{
 	 */
 	@Dontuse
 	public boolean computeSelect() {
-		return true;
+		System.out.println("On est dans le compute select de createBar");
+		return _numberOfBars>0;
+		//return true;
+	}
+
+	/**
+	 * @return the _numberOfBars
+	 */
+	public Integer get_numberOfBars() {
+		return _numberOfBars;
+	}
+
+	/**
+	 * @param _numberOfBars the _numberOfBars to set
+	 */
+	public void set_numberOfBars(Integer _numberOfBars) {
+		this._numberOfBars = _numberOfBars;
 	}
 
 	/**

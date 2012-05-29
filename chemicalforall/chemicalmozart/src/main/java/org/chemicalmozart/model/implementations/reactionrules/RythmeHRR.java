@@ -26,7 +26,9 @@ import org.chemicalmozart.model.implementations.DegreeImpl;
 import org.chemicalmozart.model.implementations.QuaterLeft;
 import org.chemicalmozart.model.implementations.Rythme;
 import org.chemicalmozart.model.implementations.solutionindentification.BarInCreation;
+import org.chemicalmozart.model.implementations.solutionindentification.BarInCreation.BarInCreationState;
 
+import fr.insa.rennes.info.chemical.backend.Solution;
 import fr.insa.rennes.info.chemical.backend.SubSolution;
 import fr.insa.rennes.info.chemical.backend.SubSolutionElements;
 import fr.insa.rennes.info.chemical.user.ReactionRule;
@@ -58,26 +60,66 @@ import fr.insa.rennes.info.chemical.user.ReactionRule;
  */
 public class RythmeHRR implements ReactionRule{
 
-	private SubSolution<SubSolutionElements> _sol;
-
+	private Integer _position;
+	private DegreeImpl _degree;
 	/**
-	 * The constructor is used to fill the types we want to match in the subsolution
+	 * @return the _position
 	 */
-	public RythmeHRR() {
-		super();
-		_sol = new SubSolution<SubSolutionElements>();
-		_sol.addType(BarInCreation.class);
-		_sol.addType(Integer.class);
-		_sol.addType(DegreeImpl.class);
-		_sol.addType(QuaterLeft.class);
-		/*List<Class<? extends Object>> l = new ArrayList<Class<? extends Object>>();
-		l.add(BarInCreation.class);
-		l.add(Integer.class);
-		l.add(DegreeImpl.class);
-		l.add(QuaterLeft.class);
-		_sol.setTypeList(l);*/
+	public Integer get_position() {
+		return _position;
 	}
 
+	/**
+	 * @param _position the _position to set
+	 */
+	public void set_position(Integer _position) {
+		this._position = _position;
+	}
+
+	/**
+	 * @return the _degree
+	 */
+	public DegreeImpl get_degree() {
+		return _degree;
+	}
+
+	/**
+	 * @param _degree the _degree to set
+	 */
+	public void set_degree(DegreeImpl _degree) {
+		this._degree = _degree;
+	}
+
+	/**
+	 * @return the _quaterLeft
+	 */
+	public QuaterLeft get_quaterLeft() {
+		return _quaterLeft;
+	}
+
+	/**
+	 * @param _quaterLeft the _quaterLeft to set
+	 */
+	public void set_quaterLeft(QuaterLeft _quaterLeft) {
+		this._quaterLeft = _quaterLeft;
+	}
+
+	/**
+	 * @return the _bic
+	 */
+	public BarInCreation get_bic() {
+		return _bic;
+	}
+
+	/**
+	 * @param _bic the _bic to set
+	 */
+	public void set_bic(BarInCreation _bic) {
+		this._bic = _bic;
+	}
+
+	private QuaterLeft _quaterLeft;
+	private BarInCreation _bic;
 	/**
 	 * The computeResult must choose a duration for the ChordImpl that we are going to generate.
 	 * It must be a random choice between 2 or 4 quaters. It must take in consideration the elapsed time in QuaterLeft.
@@ -86,7 +128,7 @@ public class RythmeHRR implements ReactionRule{
 	 * @return The new ChordImpl well initialized @see {@link ChordImpl}, the int increased by one, the QuaterLeft decreased by the duration.
 	 */
 	public Object[] computeResult() {
-		QuaterLeft qLeft = (QuaterLeft)_sol.getElements().get(3);
+		QuaterLeft qLeft = _quaterLeft;
 		Rythme chosenDuration;
 		QuaterLeft newQLeft;
 		int position;
@@ -97,7 +139,7 @@ public class RythmeHRR implements ReactionRule{
 		}
 		else{
 			position = 0;
-			int choice = (int)Math.random()*2;
+			int choice = (int)(Math.random()*2);
 			if (choice == 0){
 				chosenDuration = Rythme.half;
 				newQLeft = new QuaterLeft(2);
@@ -108,53 +150,21 @@ public class RythmeHRR implements ReactionRule{
 		}
 		ChordImpl chordImpl = new ChordImpl();
 		chordImpl.setDuration(chosenDuration);
-		chordImpl.set_degrees((DegreeImpl)_sol.getElements().get(2));
+		chordImpl.set_degrees(_degree);
 		chordImpl.set_position(position);
-		return new Object[]{chordImpl, position+1, newQLeft, (BarInCreation)_sol.getElements().get(0)};
+		_bic.set_state(BarInCreationState.HARMONICRR);
+		return new Object[]{chordImpl, position+1, newQLeft, _bic};
 	}
 
 	/**
 	 * Must check that the BarInCreation object is in the good state and that all objects are present.
 	 */
 	public boolean computeSelect() {
-		List<Object> solElements = _sol.getElements();
-		boolean barInCreationPresent = false;
-		boolean barInCreationInGoodState = false;
-		boolean intPresent = false;
-		boolean QuaterLeftPresent = false;
-		boolean DegreeImplPresent = false;
-		if (solElements != null){
-			if (solElements.size()>=4){
-				barInCreationPresent = solElements.get(0) instanceof BarInCreation;
-				if(barInCreationPresent){
-					barInCreationInGoodState = 
-							((BarInCreation)solElements.get(0)).get_state().equals(BarInCreation.BarInCreationState.RYTHMEHRR);
-				}
-				intPresent = solElements.get(1) instanceof Integer;
-				DegreeImplPresent = solElements.get(2) instanceof DegreeImpl;
-				QuaterLeftPresent = solElements.get(3) instanceof QuaterLeft;
-			}
-		}
-			return (barInCreationInGoodState && intPresent && DegreeImplPresent && QuaterLeftPresent);
+		System.out.println("Compute select de RythmeRR : "+_bic.get_state().equals(BarInCreationState.RYTHMEHRR));
+		return _bic.get_state().equals(BarInCreationState.RYTHMEHRR);
 	}
 
 	public Multiplicity getMultiplicity() {
-		return null;
+		return Multiplicity.ONE_SHOT;
 	}
-
-	/**
-	 * @return the sol
-	 */
-	public SubSolution<SubSolutionElements> getSol() {
-		return this._sol;
-	}
-	/**
-	 * @param sol the sol to set
-	 */
-	public void setSol(SubSolution<SubSolutionElements> sol) {
-		this._sol = sol;
-	}
-
-
-
 }

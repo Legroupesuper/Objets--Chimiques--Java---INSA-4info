@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<editmodel:ClassDiagramEditModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:editmodel="editmodel.xmi" xmlns:options="options.xmi" name="diagSimplifie" size="1269,842" id="" metadata="uml2-1.0" initialized="true" scrolledX="112" scrolledY="3" tag="1000" key="32303037303533312D31303030206368656D6963616C7468726561642F736562">
+  <children xsi:type="editmodel:PackageEditModel" targetConnections="//@children.0/@children.3/@sourceConnections.3" name="fr.insa.rennes.info.chemical.backend" location="830,75" size="546,551" id="fr.insa.rennes.info.chemical.backend">
+    <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.0/@children.3/@sourceConnections.2" name="IndexProvider" location="241,397" size="280,139" id="fr.insa.rennes.info.chemical.backend/IndexProvider" runTimeClassModel="getSubIndexProvider(),IndexProvider(Lfr.insa.rennes.info.chemical.backend.SubIndexProviderSolution;Lfr.insa.rennes.info.chemical.backend.Solution.Strategy;),is_overflowReached(),getNumberOfElements(),increment(),IndexProvider(Lfr.insa.rennes.info.chemical.backend.SubIndexProviderSolution;),toString()">
+      <children xsi:type="editmodel:CompartmentEditModel" size="257,36">
+        <children xsi:type="editmodel:AttributeEditModel" name="_subIndexProviderSub" id="fr.insa.rennes.info.chemical.backend/IndexProvider#_subIndexProviderSub"/>
+        <children xsi:type="editmodel:AttributeEditModel" name="_overflowReached" id="fr.insa.rennes.info.chemical.backend/IndexProvider#_overflowReached"/>
+      </children>
+      <children xsi:type="editmodel:CompartmentEditModel" size="130,54">
+        <children xsi:type="editmodel:MethodEditModel" name="IndexProvider" id="fr.insa.rennes.info.chemical.backend/IndexProvider#IndexProvider(Lfr.insa.rennes.info.chemical.backend.SubIndexProviderSolution;Lfr.insa.rennes.info.chemical.backend.Solution.Strategy;)"/>
+        <children xsi:type="editmodel:MethodEditModel" name="getSubIndexProvider" id="fr.insa.rennes.info.chemical.backend/IndexProvider#getSubIndexProvider()"/>
+        <children xsi:type="editmodel:MethodEditModel" name="increment" id="fr.insa.rennes.info.chemical.backend/IndexProvider#increment()"/>
+      </children>
+      <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+      <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="fr.insa.rennes.info.chemical.backend/IndexProvider->fr.insa.rennes.info.chemical.backend/IncrementStrategy" source="//@children.0/@children.0" target="//@children.0/@children.4" targetEnd="//@children.0/@children.0/@sourceConnections.0/@children.2" label="//@children.0/@children.0/@sourceConnections.0/@children.0" sourceEnd="//@children.0/@children.0/@sourceConnections.0/@children.1" connectionRouterKind="Manual">
+        <children xsi:type="editmodel:WireLabelEditModel" size="0,14" anchorKind="MiddlePart"/>
+        <children xsi:type="editmodel:AssociationEndEditModel" location="0,66" attachSource="true"/>
+        <children xsi:type="editmodel:AssociationEndEditModel" location="159,40"/>
+      </sourceConnections>
+      <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
+    </children>
+    <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.0/@children.3/@sourceConnections.0" name="SubSolution" location="37,255" size="148,139" id="fr.insa.rennes.info.chemical.backend/SubSolution" runTimeClassModel="getSolution(),addType(Ljava.lang.Class;),getTypeList(),getElements(),setElements(Ljava.util.List;),setSolution(Lfr.insa.rennes.info.chemical.backend.Solution;),SubSolution(LT;),setTypeList(Ljava.util.List;),SubSolution()">
+      <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+      <children xsi:type="editmodel:CompartmentEditModel" size="88,162">
+        <children xsi:type="editmodel:MethodEditModel" name="addType" id="fr.insa.rennes.info.chemical.backend/SubSolution#addType(Ljava.lang.Class;)"/>
+        <children xsi:type="editmodel:MethodEditModel" name="getElements" id="fr.insa.rennes.info.chemical.backend/SubSolution#getElements()"/>
+        <children xsi:type="editmodel:MethodEditModel" name="getTypeList" id="fr.insa.rennes.info.chemical.backend/SubSolution#getTypeList()"/>
+        <children xsi:type="editmodel:MethodEditModel" name="setElements" id="fr.insa.rennes.info.chemical.backend/SubSolution#setElements(Ljava.util.List;)"/>
+        <children xsi:type="editmodel:MethodEditModel" name="setTypeList" id="fr.insa.rennes.info.chemical.backend/SubSolution#setTypeList(Ljava.util.List;)"/>
+      </children>
+      <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+      <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
+    </children>
+    <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.0/@children.3/@sourceConnections.3" name="ChemicalThread" location="37,116" size="147,121" id="fr.insa.rennes.info.chemical.backend/ChemicalThread" runTimeClassModel="stopTheThread(),run(),ChemicalThread(Lfr.insa.rennes.info.chemical.user.ReactionRule;Lfr.insa.rennes.info.chemical.backend.Solution;Ljava.lang.ThreadGroup;),toString()">
+      <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+      <children xsi:type="editmodel:CompartmentEditModel" size="107,72">
+        <children xsi:type="editmodel:MethodEditModel" name="ChemicalThread" id="fr.insa.rennes.info.chemical.backend/ChemicalThread#ChemicalThread(Lfr.insa.rennes.info.chemical.user.ReactionRule;Lfr.insa.rennes.info.chemical.backend.Solution;Ljava.lang.ThreadGroup;)"/>
+        <children xsi:type="editmodel:MethodEditModel" name="run" id="fr.insa.rennes.info.chemical.backend/ChemicalThread#run()"/>
+        <children xsi:type="editmodel:MethodEditModel" name="stopTheThread" id="fr.insa.rennes.info.chemical.backend/ChemicalThread#stopTheThread()"/>
+        <children xsi:type="editmodel:MethodEditModel" name="toString" id="fr.insa.rennes.info.chemical.backend/ChemicalThread#toString()"/>
+      </children>
+      <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+      <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="fr.insa.rennes.info.chemical.backend/ChemicalThread->fr.insa.rennes.info.chemical.user/ReactionRule" source="//@children.0/@children.2" target="//@children.1/@children.0" targetEnd="//@children.0/@children.2/@sourceConnections.0/@children.2" label="//@children.0/@children.2/@sourceConnections.0/@children.0" sourceEnd="//@children.0/@children.2/@sourceConnections.0/@children.1" connectionRouterKind="Manual">
+        <children xsi:type="editmodel:WireLabelEditModel" size="0,14" anchorKind="MiddlePart"/>
+        <children xsi:type="editmodel:AssociationEndEditModel" location="0,89" attachSource="true"/>
+        <children xsi:type="editmodel:AssociationEndEditModel" location="139,30"/>
+      </sourceConnections>
+      <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
+    </children>
+    <children xsi:type="editmodel:ClassEditModel" name="Solution" location="230,37" size="285,337" id="fr.insa.rennes.info.chemical.backend/Solution" runTimeClassModel="containsAll(Ljava.util.Collection;),Solution(Lfr.insa.rennes.info.chemical.backend.Solution.Strategy;),fireInertEvent(Lfr.insa.rennes.info.chemical.user.InertEvent;),getLock(),size(),getMapElements(),fr.insa.rennes.info.chemical.backend.Solution.Strategy,iterator(),toString(),is_inert(),clear(),removeAll(Ljava.util.Collection;),remove(Ljava.lang.Object;),addAll(Ljava.util.Collection;),getReactivesFromType(Ljava.lang.Class;),Solution(),toArray([LT;),get_reactionInProgress(),react(),contains(Ljava.lang.Object;),retainAll(Ljava.util.Collection;),add(Ljava.lang.Object;),getSubSolutions(),toArray(),requestForParameters(Lfr.insa.rennes.info.chemical.user.ReactionRule;),deleteReaction(Lfr.insa.rennes.info.chemical.user.ReactionRule;),wakeAll(),makeSleep(Lfr.insa.rennes.info.chemical.user.ReactionRule;),isEmpty(),addInertEventListener(Lfr.insa.rennes.info.chemical.user.InertEventListener;)">
+      <children xsi:type="editmodel:CompartmentEditModel" size="262,54">
+        <children xsi:type="editmodel:AttributeEditModel" name="_mapElements" id="fr.insa.rennes.info.chemical.backend/Solution#_mapElements"/>
+        <children xsi:type="editmodel:AttributeEditModel" name="_inert" id="fr.insa.rennes.info.chemical.backend/Solution#_inert"/>
+        <children xsi:type="editmodel:AttributeEditModel" name="_threadTable" id="fr.insa.rennes.info.chemical.backend/Solution#_threadTable"/>
+      </children>
+      <children xsi:type="editmodel:CompartmentEditModel" size="178,234">
+        <children xsi:type="editmodel:MethodEditModel" name="add" id="fr.insa.rennes.info.chemical.backend/Solution#add(Ljava.lang.Object;)"/>
+        <children xsi:type="editmodel:MethodEditModel" name="addInertEventListener" id="fr.insa.rennes.info.chemical.backend/Solution#addInertEventListener(Lfr.insa.rennes.info.chemical.user.InertEventListener;)"/>
+        <children xsi:type="editmodel:MethodEditModel" name="contains" id="fr.insa.rennes.info.chemical.backend/Solution#contains(Ljava.lang.Object;)"/>
+        <children xsi:type="editmodel:MethodEditModel" name="getReactivesFromType" id="fr.insa.rennes.info.chemical.backend/Solution#getReactivesFromType(Ljava.lang.Class;)"/>
+        <children xsi:type="editmodel:MethodEditModel" name="fireInertEvent" id="fr.insa.rennes.info.chemical.backend/Solution#fireInertEvent(Lfr.insa.rennes.info.chemical.user.InertEvent;)"/>
+        <children xsi:type="editmodel:MethodEditModel" name="iterator" id="fr.insa.rennes.info.chemical.backend/Solution#iterator()"/>
+        <children xsi:type="editmodel:MethodEditModel" name="extractReagentsFromSolutions" id="fr.insa.rennes.info.chemical.backend/Solution#extractReagentsFromSolutions(Ljava.util.List;)"/>
+        <children xsi:type="editmodel:MethodEditModel" name="makeSleep" id="fr.insa.rennes.info.chemical.backend/Solution#makeSleep(Lfr.insa.rennes.info.chemical.user.ReactionRule;)"/>
+        <children xsi:type="editmodel:MethodEditModel" name="react" id="fr.insa.rennes.info.chemical.backend/Solution#react()"/>
+        <children xsi:type="editmodel:MethodEditModel" name="requestForParameters" id="fr.insa.rennes.info.chemical.backend/Solution#requestForParameters(Lfr.insa.rennes.info.chemical.user.ReactionRule;)"/>
+        <children xsi:type="editmodel:MethodEditModel" name="wakeAll" id="fr.insa.rennes.info.chemical.backend/Solution#wakeAll()"/>
+        <children xsi:type="editmodel:MethodEditModel" name="getSubSolutions" id="fr.insa.rennes.info.chemical.backend/Solution#getSubSolutions()"/>
+        <children xsi:type="editmodel:MethodEditModel" name="getMapElements" id="fr.insa.rennes.info.chemical.backend/Solution#getMapElements()"/>
+      </children>
+      <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+      <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="fr.insa.rennes.info.chemical.backend/Solution->fr.insa.rennes.info.chemical.backend/SubSolution" source="//@children.0/@children.3" target="//@children.0/@children.1" targetEnd="//@children.0/@children.3/@sourceConnections.0/@children.2" label="//@children.0/@children.3/@sourceConnections.0/@children.0" sourceEnd="//@children.0/@children.3/@sourceConnections.0/@children.1" connectionRouterKind="Manual">
+        <children xsi:type="editmodel:WireLabelEditModel" size="0,14" anchorKind="MiddlePart"/>
+        <children xsi:type="editmodel:AssociationEndEditModel" location="0,277" attachSource="true"/>
+        <children xsi:type="editmodel:AssociationEndEditModel" location="148,59"/>
+      </sourceConnections>
+      <sourceConnections xsi:type="editmodel:DependencyEditModel" id="fr.insa.rennes.info.chemical.backend/Solution->fr.insa.rennes.info.chemical.user/InertEventListener" source="//@children.0/@children.3" target="//@children.1/@children.1" targetEnd="//@children.0/@children.3/@sourceConnections.1/@children.2" label="//@children.0/@children.3/@sourceConnections.1/@children.0" sourceEnd="//@children.0/@children.3/@sourceConnections.1/@children.1" connectionRouterKind="Manual">
+        <children xsi:type="editmodel:WireLabelEditModel" size="0,14" anchorKind="MiddlePart"/>
+        <children xsi:type="editmodel:AssociationEndEditModel" location="0,31" attachSource="true"/>
+        <children xsi:type="editmodel:AssociationEndEditModel" location="157,40"/>
+      </sourceConnections>
+      <sourceConnections xsi:type="editmodel:DependencyEditModel" id="fr.insa.rennes.info.chemical.backend/Solution->fr.insa.rennes.info.chemical.backend/IndexProvider" source="//@children.0/@children.3" target="//@children.0/@children.0" targetEnd="//@children.0/@children.3/@sourceConnections.2/@children.2" label="//@children.0/@children.3/@sourceConnections.2/@children.0" sourceEnd="//@children.0/@children.3/@sourceConnections.2/@children.1" connectionRouterKind="Manual">
+        <children xsi:type="editmodel:WireLabelEditModel" size="0,14" anchorKind="MiddlePart"/>
+        <children xsi:type="editmodel:AssociationEndEditModel" location="136,337" attachSource="true"/>
+        <children xsi:type="editmodel:AssociationEndEditModel" location="126,0"/>
+      </sourceConnections>
+      <sourceConnections xsi:type="editmodel:DependencyEditModel" id="fr.insa.rennes.info.chemical.backend/Solution->fr.insa.rennes.info.chemical.backend/ChemicalThread" source="//@children.0/@children.3" target="//@children.0/@children.2" targetEnd="//@children.0/@children.3/@sourceConnections.3/@children.2" label="//@children.0/@children.3/@sourceConnections.3/@children.0" sourceEnd="//@children.0/@children.3/@sourceConnections.3/@children.1" connectionRouterKind="Manual">
+        <children xsi:type="editmodel:WireLabelEditModel" size="0,14" anchorKind="MiddlePart"/>
+        <children xsi:type="editmodel:AssociationEndEditModel" location="0,128" attachSource="true"/>
+        <children xsi:type="editmodel:AssociationEndEditModel" location="127,48"/>
+      </sourceConnections>
+      <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
+    </children>
+    <children xsi:type="editmodel:InterfaceEditModel" targetConnections="//@children.0/@children.0/@sourceConnections.0" name="IncrementStrategy" location="13,423" size="159,81" id="fr.insa.rennes.info.chemical.backend/IncrementStrategy" runTimeClassModel="increment(Lfr.insa.rennes.info.chemical.backend.SubIndexProviderSolution;)">
+      <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+      <children xsi:type="editmodel:CompartmentEditModel" size="77,18">
+        <children xsi:type="editmodel:MethodEditModel" name="increment" id="fr.insa.rennes.info.chemical.backend/IncrementStrategy#increment(Lfr.insa.rennes.info.chemical.backend.SubIndexProviderSolution;)"/>
+      </children>
+      <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+      <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
+    </children>
+  </children>
+  <children xsi:type="editmodel:PackageEditModel" name="fr.insa.rennes.info.chemical.user" location="565,85" size="261,407" id="fr.insa.rennes.info.chemical.user">
+    <children xsi:type="editmodel:InterfaceEditModel" targetConnections="//@children.0/@children.2/@sourceConnections.0" name="ReactionRule" location="93,165" size="139,218" id="fr.insa.rennes.info.chemical.user/ReactionRule" runTimeClassModel="getMultiplicity(),fr.insa.rennes.info.chemical.user.ReactionRule.Multiplicity,computeResult(),computeSelect()">
+      <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+      <children xsi:type="editmodel:CompartmentEditModel" size="101,54">
+        <children xsi:type="editmodel:MethodEditModel" name="computeResult" id="fr.insa.rennes.info.chemical.user/ReactionRule#computeResult()"/>
+        <children xsi:type="editmodel:MethodEditModel" name="computeSelect" id="fr.insa.rennes.info.chemical.user/ReactionRule#computeSelect()"/>
+        <children xsi:type="editmodel:MethodEditModel" name="getMultiplicity" id="fr.insa.rennes.info.chemical.user/ReactionRule#getMultiplicity()"/>
+      </children>
+      <children xsi:type="editmodel:CompartmentEditModel" size="116,91">
+        <children xsi:type="editmodel:EnumerationEditModel" name="Multiplicity" size="116,89" id="fr.insa.rennes.info.chemical.user/ReactionRule$Multiplicity" runTimeClassModel="ONE_SHOT%,INFINITY_SHOT%">
+          <children xsi:type="editmodel:CompartmentEditModel" size="93,36">
+            <children xsi:type="editmodel:EnumerationLiteralEditModel" name="ONE_SHOT" id="fr.insa.rennes.info.chemical.user/ReactionRule$Multiplicity#ONE_SHOT%"/>
+            <children xsi:type="editmodel:EnumerationLiteralEditModel" name="INFINITY_SHOT" id="fr.insa.rennes.info.chemical.user/ReactionRule$Multiplicity#INFINITY_SHOT%"/>
+          </children>
+          <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
+        </children>
+      </children>
+      <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
+    </children>
+    <children xsi:type="editmodel:InterfaceEditModel" targetConnections="//@children.0/@children.3/@sourceConnections.1" name="InertEventListener" location="67,42" size="157,81" id="fr.insa.rennes.info.chemical.user/InertEventListener" runTimeClassModel="isInert(Lfr.insa.rennes.info.chemical.user.InertEvent;)">
+      <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+      <children xsi:type="editmodel:CompartmentEditModel" size="59,18">
+        <children xsi:type="editmodel:MethodEditModel" name="isInert" id="fr.insa.rennes.info.chemical.user/InertEventListener#isInert(Lfr.insa.rennes.info.chemical.user.InertEvent;)"/>
+      </children>
+      <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+      <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
+    </children>
+  </children>
+  <diagramOptions xsi:type="options:ClassDiagramOptions" properties="wireOptions=1;Product=eUML2" autoName="false"/>
+  <boardSetting snapToGeometry="true" gridEnabled="true" gridSpacing="15,15" gridOrigin="0,0" rulerUnit="pixel" gridVisibility="false">
+    <leftRuler/>
+    <topRuler/>
+  </boardSetting>
+  <classDiagramPreferences xsi:type="editmodel:UMLClassDiagramPreference" showPopupBars="true" showConnectionHandles="true" attributeSorter="Natural" methodSorter="Natural" showClassStereotype="true" showPackageStereotype="true" showDependencyStereotype="true" showInterfaceStereotype="true" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
+</editmodel:ClassDiagramEditModel>

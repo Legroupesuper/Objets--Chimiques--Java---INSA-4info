@@ -76,8 +76,17 @@ public class MusicWriter {
 	private int _chordDelta;
 	/**
 	 * The delta time of the next melody note
-	 */
+	 */	
 	private int _melodyDelta;
+	/*
+	 * The instrument used for the melody
+	 */
+	private int _melodicInstrument;
+	
+	/*
+	 * The instrument used for the chords
+	 */
+	private int _chordsInstrument;
 	/**
 	 * Default constructor
 	 * @param tempo The tempo of the track
@@ -86,11 +95,14 @@ public class MusicWriter {
 	 * @throws ChemicalException
 	 * @throws InvalidMidiDataException
 	 */
-	public MusicWriter(int tempo, NoteValues note, String fileName) throws ChemicalException, InvalidMidiDataException{
+	public MusicWriter(int tempo, NoteValues note, String fileName, int melodicInstr, int chordInstr) throws ChemicalException, InvalidMidiDataException{
 		_file = new File(fileName);
+		_melodicInstrument = melodicInstr;
+		_chordsInstrument = chordInstr;
 		_degreeValue = DegresAssociation.getMidiNote(note);
 		/*Create a new MIDI sequence with 1 ticks per beat  */
 		_sequence = new Sequence(javax.sound.midi.Sequence.PPQ,DIVISION);
+		
 		/*Obtain a MIDI track from the sequence  */
 		_chordTrack = _sequence.createTrack();
 		_melodicTrack = _sequence.createTrack();
@@ -105,7 +117,7 @@ public class MusicWriter {
 		_melodicTrack.add(me);
 		/*set tempo (meta event)*/
 		MetaMessage mt = new MetaMessage();
-		byte[] bt = DegresAssociation.microsecondPerQuaterNote(60);
+		byte[] bt = DegresAssociation.microsecondPerQuaterNote(tempo);
 		mt.setMessage(0x51 ,bt, 3);
 		me = new MidiEvent(mt,(long)0);
 		_chordTrack.add(me);
@@ -129,15 +141,18 @@ public class MusicWriter {
 		me = new MidiEvent(mm,(long)0);
 		_chordTrack.add(me);
 		_melodicTrack.add(me);
-		/*set instrument to Piano*/
+		
+		/*set instruments*/
 		mm = new ShortMessage();
-		mm.setMessage(ShortMessage.PROGRAM_CHANGE, 0, 0x00);
-		me = new MidiEvent(mm,(long)0);
+		mm.setMessage(ShortMessage.PROGRAM_CHANGE, 1, _chordsInstrument, 0);
+		me = new MidiEvent(mm,(long)_chordDelta);
 		_chordTrack.add(me);
+		
 		mm = new ShortMessage();
-		mm.setMessage(0xC0, 0x01, 0x00);
-		me = new MidiEvent(mm,(long)0);
+		mm.setMessage(ShortMessage.PROGRAM_CHANGE, 2, _melodicInstrument, 0);
+		me = new MidiEvent(mm,(long)_chordDelta);
 		_melodicTrack.add(me);
+		
 	}
 
 	/**
@@ -162,36 +177,37 @@ public class MusicWriter {
 		System.out.println("fond : "+fond);
 		System.out.println("tierce : "+tier);
 		System.out.println("quinte : "+qte);
+		 
 		/*Set the notes on*/
 		ShortMessage mm = new ShortMessage();
-		mm.setMessage(ShortMessage.NOTE_ON,fond,0x60);
+		mm.setMessage(ShortMessage.NOTE_ON, 1, fond, 0x60);
 		MidiEvent me = new MidiEvent(mm,(long)_chordDelta+DIVISION);
 		_chordTrack.add(me);
 		
 		mm = new ShortMessage();
-		mm.setMessage(ShortMessage.NOTE_ON,tier,0x60);
+		mm.setMessage(ShortMessage.NOTE_ON, 1, tier, 0x60);
 		me = new MidiEvent(mm,(long)_chordDelta+DIVISION);
 		_chordTrack.add(me);
 		
 		mm = new ShortMessage();
-		mm.setMessage(ShortMessage.NOTE_ON,qte,0x60);
+		mm.setMessage(ShortMessage.NOTE_ON, 1, qte, 0x60);
 		me = new MidiEvent(mm,(long)_chordDelta+DIVISION);
 		_chordTrack.add(me);
 		
 		_chordDelta+=duration;
 		/*Set the notes off*/
 		mm = new ShortMessage();
-		mm.setMessage(ShortMessage.NOTE_OFF,fond,0x40);
+		mm.setMessage(ShortMessage.NOTE_OFF, 1, fond, 0x40);
 		me = new MidiEvent(mm,(long)_chordDelta+DIVISION);
 		_chordTrack.add(me);
 		
 		mm = new ShortMessage();
-		mm.setMessage(ShortMessage.NOTE_OFF,tier,0x40);
+		mm.setMessage(ShortMessage.NOTE_OFF, 1, tier, 0x40);
 		me = new MidiEvent(mm,(long)_chordDelta+DIVISION);
 		_chordTrack.add(me);
 		
 		mm = new ShortMessage();
-		mm.setMessage(ShortMessage.NOTE_OFF,qte,0x40);
+		mm.setMessage(ShortMessage.NOTE_OFF, 1, qte, 0x40);
 		me = new MidiEvent(mm,(long)_chordDelta+DIVISION);
 		_chordTrack.add(me);
 	}
@@ -209,12 +225,12 @@ public class MusicWriter {
 		long note = DegresAssociation.getNoteValue(_degreeValue, n);
 		
 		ShortMessage mm = new ShortMessage();
-		mm.setMessage(ShortMessage.NOTE_ON,(int) note,0x60);
+		mm.setMessage(ShortMessage.NOTE_ON, 2, (int) note,0x60);
 		MidiEvent me = new MidiEvent(mm,(long)_melodyDelta+DIVISION);
 		_melodicTrack.add(me);
 		_melodyDelta+=duration;
 		mm = new ShortMessage();
-		mm.setMessage(ShortMessage.NOTE_OFF,(int) note,0x40);
+		mm.setMessage(ShortMessage.NOTE_OFF, 2, (int) note,0x40);
 		me = new MidiEvent(mm,(long)_melodyDelta+DIVISION);
 		_melodicTrack.add(me);
 	}
