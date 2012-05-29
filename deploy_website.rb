@@ -77,7 +77,7 @@ Former_branch = former_branch
 
 Library_name = ARGV[0]
 
-Temp_folder = "../foo_#{Time.new.to_i}"
+Temp_folder = "foo_#{Time.new.to_i}"
 
 options = {
 	'public' => '',	# Only public classes/methods are exported into the doc
