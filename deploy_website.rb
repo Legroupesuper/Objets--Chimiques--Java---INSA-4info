@@ -44,7 +44,7 @@ end
 
 def push_javadoc(branch_name)
 	puts 'Cleaning temporary folder...'
-	`mv #{Temp_folder}/* . && rmdir #{Temp_folder}`
+	`mv -rf #{Temp_folder}/* . && rmdir #{Temp_folder}`
 	puts 'Committing changes...'
 	`git add -A && git commit -m "Javadoc export n°#{1 + Time.new.to_i % 1000}"`
 	`git push origin #{branch_name}`
@@ -92,7 +92,10 @@ options = {
 	'windowtitle' => "#{Library_name}",	# Text displayed in the window title, surrounded by parentheses
 	'header' => "Official documentation for #{Library_name}",	# Text displayed at the top of the page
 	'd' => Temp_folder,	# Directory in which you generate the doc (should be left as is)
-	'bottom' => '2011-2012 - INSA of Rennes. Licensed under LGPL.'	# Text displayed at the bottom of the page
+	'bottom' => '2011-2012 - INSA of Rennes. Licensed under LGPL.',	# Text displayed at the bottom of the page
+	'charset' => 'ISO-8859-1',
+	'encoding' => 'ISO-8859-1',
+	'docencoding' => 'ISO-8859-1'
 }
 
 targets = ['fr.insa.rennes.info.chemical.user',
