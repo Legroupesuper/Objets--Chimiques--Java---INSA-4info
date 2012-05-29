@@ -30,7 +30,7 @@ public class RythmicRRMain {
 	 */
 	public static void main(String[] args) throws ChemicalException, InvalidMidiDataException {
 		MozartSolutionFactoryImpl factory = new MozartSolutionFactoryImpl();
-		final MusicWriter writer = new MusicWriter(60, NoteValues.DO, "FichierOut.mid");
+		final MusicWriter writer = new MusicWriter(60, NoteValues.DO, "FichierOut.mid", 72, 1);
 		Solution pull = factory.createRythmicPull();
 		Solution sol = new Solution();
 		sol.add(pull);

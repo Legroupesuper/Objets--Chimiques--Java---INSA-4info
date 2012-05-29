@@ -71,7 +71,7 @@ public class StartMelodicRRTest {
 				Utils.logger.info("Apres : ");
 				Utils.logger.info(""+s);
 				try {
-					final MusicWriter writer = new MusicWriter(60, NoteValues.DO, "outputMidi.mid");
+					final MusicWriter writer = new MusicWriter(60, NoteValues.DO, "outputMidi.mid", 72, 1);
 					s.add(writer);
 					s.add(new GetWriterRR());
 					s.add(new StartToWriteRR());

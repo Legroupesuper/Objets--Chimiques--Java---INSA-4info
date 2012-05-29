@@ -113,5 +113,10 @@ public class Utils {
 		}
 		return m;
 	}
+
+	public static String getSeparator() {
+		if(System.getProperty("os.name").toLowerCase().contains("windows")) return "\\";
+		return "/";
+	}
 	
 }

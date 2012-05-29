@@ -17,7 +17,7 @@ import fr.insa.rennes.info.chemical.backend.ChemicalException;
 public class MainMidi {
 	public static void main(String[] args) {
 		try {
-			MusicWriter writer = new MusicWriter(60, NoteValues.DO, "monFichier.mid");
+			MusicWriter writer = new MusicWriter(60, NoteValues.DO, "monFichier.mid", 72, 1);
 			ChordImpl cim = new ChordImpl();
 			cim.setDuration(Rythme.half);
 			cim.set_position(0);
