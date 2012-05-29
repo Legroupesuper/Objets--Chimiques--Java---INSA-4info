@@ -108,31 +108,77 @@ public class MelodicRR implements ReactionRule{
 			}else{
 				octave = _pitch.getOctave();
 			}
-			if(octave<0)octave=1;
-			if(octave>3)octave=1;
+			if(octave<1)octave=1;
+			if(octave>3)octave=2;
 			_note.set_pitch(new Pitch(octave, new DegreeImpl(notePitch)));
 		}
 		else{//Not strong
+			int octave = _pitch.getOctave();
+			int degreeValue = _note.get_chord().get_degrees().get_value();
 			int notePitch = _pitch.getDegree().get_value();
-			int randNumber = (int)(Math.random()*2 %2);
-			if(randNumber==0){
-				notePitch = (notePitch + 1 >7)?(notePitch + 1)%8 + 1 : notePitch + 1;
+			if(isOnTheChord(notePitch, degreeValue)){
+				int randNumber = (int)(Math.random()*4 %4);
+				if(randNumber==0){
+					if(notePitch + 1 <8){
+						notePitch = notePitch+1;
+					}else{
+						notePitch = 1;
+						octave = octave +1;
+					}
+				}else if(randNumber == 1){
+					if(notePitch -1 >0){
+						notePitch = notePitch-1;
+					}else{
+						notePitch = notePitch + 6;
+						octave = octave -1;
+					}
+				}else if(randNumber == 2){
+					
+					if(notePitch + 2 < 8){
+						notePitch = notePitch + 2;
+					}else{
+						notePitch = notePitch -5;
+						octave = octave+1;
+					}
+				}else if(randNumber == 3){
+					if(notePitch + 4 < 8){
+						notePitch = notePitch + 4;
+					}else{
+						notePitch = notePitch -3;
+						octave = octave+1;
+					}
+				}
 			}else{
-				notePitch = (notePitch + 7 >7)?(notePitch + 7)%8 + 1 : notePitch + 7;
+				int randNumber = (int)(Math.random()*2 %2);
+				if(randNumber==0){
+					if(notePitch + 1 <8){
+						notePitch = notePitch+1;
+					}else{
+						notePitch = 1;
+						octave = octave +1;
+					}
+				}else if(randNumber == 1){
+					if(notePitch -1 >0){
+						notePitch = notePitch-1;
+					}else{
+						notePitch = notePitch + 6;
+						octave = octave -1;
+					}
+				}
 			}
-			int octave = 0;
-			if(Math.abs(notePitch - _pitch.getDegree().get_value())>3){
-				if(notePitch>4)
-					octave = _pitch.getOctave()+1;
-				else
-					octave = _pitch.getOctave() - 1;
-			}else{
-				octave = _pitch.getOctave();
-			}
+			
 			_note.set_pitch(new Pitch(octave, new DegreeImpl(notePitch)));
 		}
 		_melodicNumber++;
 		return new Object[]{_note, _note.get_pitch()};
+	}
+	private boolean isOnTheChord(int notePitch, int degreeValue) {
+		if(notePitch > degreeValue){
+			return notePitch == degreeValue+2 || notePitch == degreeValue+4; 
+		}else if (notePitch < degreeValue){
+			return notePitch == degreeValue-3 || notePitch == degreeValue-5; 
+		}
+		return true;
 	}
 	/**
 	 * Succeeds if the position of _note is equal to the melodic number and the MelodicRR is activated

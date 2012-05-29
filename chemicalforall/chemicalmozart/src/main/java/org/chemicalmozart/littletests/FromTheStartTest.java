@@ -64,7 +64,7 @@ public class FromTheStartTest {
 				System.out.println(e.getSource());
 				Solution s = (Solution) e.getSource();
 				try {
-					final MusicWriter writer = new MusicWriter(60, NoteValues.DO, "outputMidi.mid");
+					final MusicWriter writer = new MusicWriter(60, NoteValues.DO, "outputMidi.mid", 79, 49);
 					s.addInertEventListener(new InertEventListener() {
 						
 						public void isInert(InertEvent e) {
