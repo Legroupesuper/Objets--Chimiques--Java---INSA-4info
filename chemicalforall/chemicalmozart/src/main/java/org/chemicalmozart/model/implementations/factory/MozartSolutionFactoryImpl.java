@@ -1,20 +1,20 @@
 /* 
 	Copyright (C) 2012 Andreolli Cédric, Boulanger Chloé, Cléro Olivier, Guellier Antoine, Guilloux Sébastien, Templé Arthur
 
-    This file is part of libchloe.
+    This file is part of ChLoe.
 
-    libchloe is free software: you can redistribute it and/or modify
+    ChLoe is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
 
-    libchloe is distributed in the hope that it will be useful,
+    ChLoe is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU Lesser General Public License for more details.
 	
     You should have received a copy of the GNU Lesser General Public License
-    along with libchloe.  If not, see <http://www.gnu.org/licenses/>
+    along with ChLoe.  If not, see <http://www.gnu.org/licenses/>
 */
 /*Copyright (C) 2012 Andréolli Cédric, Boulanger Chloé, Cléro Olivier, Guellier Antoine, Guilloux Sébastien, Templé Arthur
 
@@ -31,43 +31,43 @@
 	along with ChemicalLibSuper.  If not, see <http://www.gnu.org/licenses/>
 */
 	package org.chemicalmozart.model.implementations.factory;
-import fr.insa.rennes.info.chemical.backend.Solution;import org.chemicalmozart.model.implementations.rythme.RythmPattern;
-import org.chemicalmozart.model.implementations.solutionindentification.RythmePull;
-import org.chemicalmozart.model.interfaces.factory.MozartSolutionFactory;
-import fr.insa.rennes.info.chemical.backend.Solution;
-
-import org.chemicalmozart.model.implementations.rythme.QQQQ4;
-import org.chemicalmozart.model.implementations.rythme.EEQEEQ4;
-import org.chemicalmozart.model.implementations.rythme.HH4;
-import org.chemicalmozart.model.implementations.rythme.W4;
-import org.chemicalmozart.model.implementations.rythme.SSSSEESSSSEE4;
-import org.chemicalmozart.model.implementations.rythme.SSESSESSESSE4;
-import org.chemicalmozart.model.implementations.rythme.SSEQQEE4;
-import org.chemicalmozart.model.implementations.rythme.QSSEQQ4;
-import org.chemicalmozart.model.implementations.rythme.QQSSEQ4;
-import org.chemicalmozart.model.implementations.rythme.QEEESSQ4;
-import org.chemicalmozart.model.implementations.rythme.ESSESSQESS4;
-import org.chemicalmozart.model.implementations.rythme.EESSEQSSE4;
-import org.chemicalmozart.model.implementations.rythme.SSSSEE2;
 import org.chemicalmozart.model.implementations.rythme.EEESS2;
-import org.chemicalmozart.model.implementations.rythme.QSSSS2;
-import org.chemicalmozart.model.implementations.rythme.QSSE2;
-import org.chemicalmozart.model.implementations.rythme.QESS2;
-import org.chemicalmozart.model.implementations.rythme.SSEQ2;
-import org.chemicalmozart.model.implementations.rythme.SSQE2;
-import org.chemicalmozart.model.implementations.rythme.ESSQ2;
-import org.chemicalmozart.model.implementations.rythme.ESSESS2;
-import org.chemicalmozart.model.implementations.rythme.ESSSSE2;
 import org.chemicalmozart.model.implementations.rythme.EEQ2;
+import org.chemicalmozart.model.implementations.rythme.EEQEEQ4;
 import org.chemicalmozart.model.implementations.rythme.EEQQQ4;
+import org.chemicalmozart.model.implementations.rythme.EESSEQSSE4;
+import org.chemicalmozart.model.implementations.rythme.EQD2;
 import org.chemicalmozart.model.implementations.rythme.EQE2;
+import org.chemicalmozart.model.implementations.rythme.ESSESS2;
+import org.chemicalmozart.model.implementations.rythme.ESSESSQESS4;
+import org.chemicalmozart.model.implementations.rythme.ESSQ2;
+import org.chemicalmozart.model.implementations.rythme.ESSSSE2;
+import org.chemicalmozart.model.implementations.rythme.HH4;
+import org.chemicalmozart.model.implementations.rythme.QDE2;
 import org.chemicalmozart.model.implementations.rythme.QEE2;
+import org.chemicalmozart.model.implementations.rythme.QEEESSQ4;
 import org.chemicalmozart.model.implementations.rythme.QEEQQ4;
+import org.chemicalmozart.model.implementations.rythme.QESS2;
 import org.chemicalmozart.model.implementations.rythme.QQ2;
 import org.chemicalmozart.model.implementations.rythme.QQEEQ4;
 import org.chemicalmozart.model.implementations.rythme.QQQEE4;
-import org.chemicalmozart.model.implementations.rythme.EQD2;
-import org.chemicalmozart.model.implementations.rythme.QDE2;
+import org.chemicalmozart.model.implementations.rythme.QQQQ4;
+import org.chemicalmozart.model.implementations.rythme.QQSSEQ4;
+import org.chemicalmozart.model.implementations.rythme.QSSE2;
+import org.chemicalmozart.model.implementations.rythme.QSSEQQ4;
+import org.chemicalmozart.model.implementations.rythme.QSSSS2;
+import org.chemicalmozart.model.implementations.rythme.RythmPattern;
+import org.chemicalmozart.model.implementations.rythme.SSEQ2;
+import org.chemicalmozart.model.implementations.rythme.SSEQQEE4;
+import org.chemicalmozart.model.implementations.rythme.SSESSESSESSE4;
+import org.chemicalmozart.model.implementations.rythme.SSQE2;
+import org.chemicalmozart.model.implementations.rythme.SSSSEE2;
+import org.chemicalmozart.model.implementations.rythme.SSSSEESSSSEE4;
+import org.chemicalmozart.model.implementations.rythme.W4;
+import org.chemicalmozart.model.implementations.solutionindentification.RythmePull;
+import org.chemicalmozart.model.interfaces.factory.MozartSolutionFactory;
+
+import fr.insa.rennes.info.chemical.backend.Solution;
 
 public class MozartSolutionFactoryImpl implements MozartSolutionFactory{
 
