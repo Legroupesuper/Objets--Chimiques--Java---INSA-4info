@@ -1,38 +1,24 @@
 /* 
 	Copyright (C) 2012 Andreolli Cédric, Boulanger Chloé, Cléro Olivier, Guellier Antoine, Guilloux Sébastien, Templé Arthur
 
-    This file is part of libchloe.
+    This file is part of ChLoe.
 
-    libchloe is free software: you can redistribute it and/or modify
+    ChLoe is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
 
-    libchloe is distributed in the hope that it will be useful,
+    ChLoe is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU Lesser General Public License for more details.
 	
     You should have received a copy of the GNU Lesser General Public License
-    along with libchloe.  If not, see <http://www.gnu.org/licenses/>
+    along with ChLoe.  If not, see <http://www.gnu.org/licenses/>
 */
 package org.chemicalmozart.model.implementations.reactionrules;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 import junit.framework.TestCase;
-
-import org.chemicalmozart.model.implementations.QuaterLeft;
-import org.chemicalmozart.model.implementations.solutionindentification.BarInCreation;
-import org.chemicalmozart.model.implementations.solutionindentification.BarInCreation.BarInCreationState;
-import org.chemicalmozart.model.implementations.solutionindentification.Result;
-import org.junit.Test;
-
-import fr.insa.rennes.info.chemical.backend.Solution;
-import fr.insa.rennes.info.chemical.backend.SubSolution;
-import fr.insa.rennes.info.chemical.backend.SubSolutionElements;
 
 public class MoveToResultRRTest extends TestCase{
 	/*Object[] _tabResult;
