@@ -51,8 +51,8 @@ public class Main {
 		
 		//Add the foxes and rabbits
 		Random rand = new Random();
-		double RABBIT_PROBA = 0.15;
-		double FOX_PROBA = 0.45;
+		double RABBIT_PROBA = 0.10;
+		double FOX_PROBA = 0.15;
 		for(int i = 0; i < N; i++) {
 			for(int j = 0; j < M; j++) {
 				if(rand.nextDouble() <= RABBIT_PROBA) {
