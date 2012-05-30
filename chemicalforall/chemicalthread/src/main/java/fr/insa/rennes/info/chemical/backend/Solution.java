@@ -1057,7 +1057,7 @@ public final class Solution implements Collection<Object>{
 	 */
 	@Override
 	public String toString(){
-		String solutionBeginning = "Solution "+hashCode()+" (isInert ? "+_inert+")\n{\n";
+		String solutionBeginning = "Solution (isInert ? "+_inert+")\n{\n";
 		String solutionEnd ="}\n";
 		String res = solutionBeginning+this.prettyPrint(0)+solutionEnd;
 		return res;
@@ -1082,7 +1082,7 @@ public final class Solution implements Collection<Object>{
 			String type = entry.getKey();
 			if(type.equals(Solution.class.getName())){
 				for(Object sol : entry.getValue()) {
-					res += alinea+"Solution "+sol.hashCode()+" (isInert ? "+((Solution)sol)._inert+")\n"+ alinea + solutionStart;
+					res += alinea+"Solution (isInert ? "+((Solution)sol)._inert+")\n"+ alinea + solutionStart;
 					res += ((Solution)sol).prettyPrint(level+1);
 					res += alinea+solutionEnd;
 				}

@@ -37,7 +37,7 @@ public class Main {
 
 	public static void main(String[] args) {
 		Solution solution = new Solution();
-		testDummy3(solution);
+		testDummy1(solution);
 		launchReaction(solution);
 	}
 
