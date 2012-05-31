@@ -1,57 +1,42 @@
 /* 
 	Copyright (C) 2012 Andreolli Cédric, Boulanger Chloé, Cléro Olivier, Guellier Antoine, Guilloux Sébastien, Templé Arthur
 
-    This file is part of ChemicalLibSuper.
+    This file is part of ChLoe.
 
-    ChemicalLibSuper is free software: you can redistribute it and/or modify
+    ChLoe is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
 
-    ChemicalLibSuper is distributed in the hope that it will be useful,
+    ChLoe is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU Lesser General Public License for more details.
 	
     You should have received a copy of the GNU Lesser General Public License
-    along with ChemicalLibSuper.  If not, see <http://www.gnu.org/licenses/>
+    along with ChLoe.  If not, see <http://www.gnu.org/licenses/>
 */
 package org.chemicalmozart.view.implementations;
 
-import java.awt.BorderLayout;
-import java.awt.FlowLayout;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.GridLayout;
+import java.awt.Image;
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.JSplitPane;
-import javax.swing.JToolBar;
-import java.awt.GridLayout;
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
-import javax.swing.border.SoftBevelBorder;
-import javax.swing.border.BevelBorder;
-import javax.swing.BoxLayout;
-import java.awt.CardLayout;
-import java.awt.Graphics;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
-import java.awt.Image;
-
-
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import java.awt.Color;
-import java.awt.Toolkit;
-import javax.swing.ImageIcon;
-import java.awt.Font;
-import java.awt.SystemColor;
+import javax.swing.border.EmptyBorder;
 
 public class MainView extends JDialog {
+	private static final long serialVersionUID = 1L;
 	private JTextField speed;
 	private JTextField scale;
 	private JTextField number;
@@ -62,6 +47,7 @@ public class MainView extends JDialog {
 	 */
 	public MainView() {
 		setContentPane(new JPanel(){
+			private static final long serialVersionUID = 1L;
 			Image bck = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("/img/bck.png"));
 			Image img1 = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("/img/becher.png"));
 			Image img2 = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("/img/becher2.png"));

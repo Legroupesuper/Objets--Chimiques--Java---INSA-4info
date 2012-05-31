@@ -1,4 +1,22 @@
 /* 
+	Copyright (C) 2012 Andreolli Cédric, Boulanger Chloé, Cléro Olivier, Guellier Antoine, Guilloux Sébastien, Templé Arthur
+
+    This file is part of ChLoe.
+
+    ChLoe is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Lesser General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    ChLoe is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Lesser General Public License for more details.
+	
+    You should have received a copy of the GNU Lesser General Public License
+    along with ChLoe.  If not, see <http://www.gnu.org/licenses/>
+*/
+/*
 	Copyright (C) 2012 Andréolli Cédric, Boulanger Chloé, Cléro Olivier, Guellier Antoine, Guilloux Sébastien, Templé Arthur
 
     This file is part of ChemicalLibSuper.
@@ -12,24 +30,16 @@
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU Lesser General Public License for more details.
-	
+
     You should have received a copy of the GNU Lesser General Public License
     along with ChemicalLibSuper.  If not, see <http://www.gnu.org/licenses/>
-*/
+ */
 package org.chemicalmozart.model.implementations.reactionrules;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-
-import javax.print.attribute.standard.MediaSize.Other;
-
-import org.chemicalmozart.model.implementations.ChordImpl;
 import org.chemicalmozart.model.implementations.DegreeImpl;
 import org.chemicalmozart.model.implementations.Note;
 import org.chemicalmozart.model.implementations.Note.Type;
 import org.chemicalmozart.model.implementations.Pitch;
-import org.chemicalmozart.model.interfaces.Degree;
 
 import fr.insa.rennes.info.chemical.user.Dontreact;
 import fr.insa.rennes.info.chemical.user.ReactionRule;
@@ -48,9 +58,17 @@ import fr.insa.rennes.info.chemical.user.ReactionRule;
  */
 public class MelodicRR implements ReactionRule{
 	/**
+	 * The current state of the reaction rule. The reaction rule must not succeed the compute select if this parameter is set to false
+	 */
+	@Dontreact	private boolean _activated;
+	/**
 	 * The number of music notes in the current solution. This attribute must not react. It is set by the RythmicRR.
 	 */
 	@Dontreact private int _max;
+	/**
+	 * Represent the position of the current note that must be set. Every time the MelodiccRR reacts, this attribute must be increased.
+	 */
+	@Dontreact private int _melodicNumber;
 	/**
 	 * The current note to set. This note must have the position equal to _melodicNumber.
 	 */
@@ -60,17 +78,9 @@ public class MelodicRR implements ReactionRule{
 	 * patterns.
 	 */
 	private Pitch _pitch;
-	/**
-	 * Represent the position of the current note that must be set. Every time the MelodiccRR reacts, this attribute must be increased.
-	 */
-	@Dontreact private int _melodicNumber;
-	/**
-	 * The current state of the reaction rule. The reaction rule must not succeed the compute select if this parameter is set to false
-	 */
-	@Dontreact	private boolean _activated;
 
 	/**
-	 * The compute result must assign the pitch of the Note. Let's say that the degree of ChordImpl is named deg. 
+	 * The compute result must assign the pitch of the Note. Let's say that the degree of ChordImpl is named deg.
 	 * There is for the moment 2 different cases :<br />
 	 * - _note.get_type()==STRONG : The pitch must be chosen between the following degrees :
 	 * 		<ul>
@@ -84,39 +94,38 @@ public class MelodicRR implements ReactionRule{
 	 * 		-> Choose an octave close to the old one
 	 */
 	public Object[] computeResult() {
-		if(_note.get_type()==Type.STRONG){
-			int degreeValue = _note.get_chord().get_degrees().get_value();
+		if(this._note.get_type()==Type.STRONG){
+			int degreeValue = this._note.get_chord().get_degrees().get_value();
 			int notePitch;
 			int randNumber = (int) ((Math.random())*3 %3);
-			System.out.println("Rand : "+randNumber);
 			switch(randNumber){
 			case 0:
 				notePitch = degreeValue;
 				break;
-			case 1: 
+			case 1:
 				notePitch = (degreeValue + 2 >7)?(degreeValue + 2)%8 + 1 : degreeValue + 2;
 				break;
 			default:
 				notePitch = (degreeValue + 4 >7)?(degreeValue + 4)%8 + 1 : degreeValue + 4;
 			}
 			int octave = 0;
-			if(Math.abs(notePitch - _pitch.getDegree().get_value())>3){
+			if(Math.abs(notePitch - this._pitch.getDegree().get_value())>3){
 				if(notePitch>4)
-					octave = _pitch.getOctave()+1;
+					octave = this._pitch.getOctave()+1;
 				else
-					octave = _pitch.getOctave() - 1;
+					octave = this._pitch.getOctave() - 1;
 			}else{
-				octave = _pitch.getOctave();
+				octave = this._pitch.getOctave();
 			}
 			if(octave<1)octave=1;
 			if(octave>3)octave=2;
-			_note.set_pitch(new Pitch(octave, new DegreeImpl(notePitch)));
+			this._note.set_pitch(new Pitch(octave, new DegreeImpl(notePitch)));
 		}
 		else{//Not strong
-			int octave = _pitch.getOctave();
-			int degreeValue = _note.get_chord().get_degrees().get_value();
-			int notePitch = _pitch.getDegree().get_value();
-			if(isOnTheChord(notePitch, degreeValue)){
+			int octave = this._pitch.getOctave();
+			int degreeValue = this._note.get_chord().get_degrees().get_value();
+			int notePitch = this._pitch.getDegree().get_value();
+			if(this.isOnTheChord(notePitch, degreeValue)){
 				int randNumber = (int)(Math.random()*4 %4);
 				if(randNumber==0){
 					if(notePitch + 1 <8){
@@ -133,7 +142,7 @@ public class MelodicRR implements ReactionRule{
 						octave = octave -1;
 					}
 				}else if(randNumber == 2){
-					
+
 					if(notePitch + 2 < 8){
 						notePitch = notePitch + 2;
 					}else{
@@ -166,36 +175,26 @@ public class MelodicRR implements ReactionRule{
 					}
 				}
 			}
-			
-			_note.set_pitch(new Pitch(octave, new DegreeImpl(notePitch)));
+			if(octave<1)octave=1;
+			if(octave>3)octave=2;
+			this._note.set_pitch(new Pitch(octave, new DegreeImpl(notePitch)));
 		}
-		_melodicNumber++;
-		return new Object[]{_note, _note.get_pitch()};
-	}
-	private boolean isOnTheChord(int notePitch, int degreeValue) {
-		if(notePitch > degreeValue){
-			return notePitch == degreeValue+2 || notePitch == degreeValue+4; 
-		}else if (notePitch < degreeValue){
-			return notePitch == degreeValue-3 || notePitch == degreeValue-5; 
-		}
-		return true;
+		this._melodicNumber++;
+		return new Object[]{this._note, this._note.get_pitch()};
 	}
 	/**
 	 * Succeeds if the position of _note is equal to the melodic number and the MelodicRR is activated
 	 */
 	public boolean computeSelect() {
-		//System.err.println("Compute select avec activated = "+_activated);
-		//System.err.println("melodicNumber = "+_melodicNumber+" note.getPosition = "+_note.get_position()+" -> "+(_melodicNumber == _note.get_position() && _activated && _melodicNumber<_max));
-		
-		return _melodicNumber == _note.get_position() && _activated && _melodicNumber<_max;
+		return this._melodicNumber == this._note.get_position() && this._activated && this._melodicNumber<this._max;
 	}
-
 	/**
 	 * @return the _max
 	 */
 	public int get_max() {
 		return this._max;
 	}
+
 	/**
 	 * @return the _melodicNumber
 	 */
@@ -222,6 +221,14 @@ public class MelodicRR implements ReactionRule{
 	 */
 	public boolean is_activated() {
 		return this._activated;
+	}
+	private boolean isOnTheChord(int notePitch, int degreeValue) {
+		if(notePitch > degreeValue){
+			return notePitch == degreeValue+2 || notePitch == degreeValue+4;
+		}else if (notePitch < degreeValue){
+			return notePitch == degreeValue-3 || notePitch == degreeValue-5;
+		}
+		return true;
 	}
 
 	/**
