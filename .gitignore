@@ -44,6 +44,6 @@ bin
 .DS_Store
 
 # get rid of javadoc files
-doc
+# doc
 
 *.mid
