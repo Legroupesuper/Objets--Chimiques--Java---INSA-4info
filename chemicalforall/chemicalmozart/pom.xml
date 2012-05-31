@@ -29,9 +29,9 @@
 				<archive>
 					<manifest>
 						<mainClass>org.chemicalmozart.viewV2.MainView</mainClass>
-	<!--
+	
 						<addClasspath>true</addClasspath>
-	-->
+	
       <!--        					
 						<classpathPrefix>../../../..</classpathPrefix>
 	-->
