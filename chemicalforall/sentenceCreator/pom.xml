@@ -29,6 +29,7 @@
 				       <archive>
 						<manifest>
 						       <mainClass>sentence.ChemicalSentenceCreator</mainClass>
+							<addClasspath>true</addClasspath>
 						</manifest>
 					</archive>
 				</configuration>

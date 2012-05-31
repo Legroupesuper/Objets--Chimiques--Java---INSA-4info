@@ -21,8 +21,8 @@
 				<archive>
 					<manifest>
 						<mainClass>foxesnrabbits.Main</mainClass>
-						<!--<addClasspath>true</addClasspath>
-						<classpathLayoutType>repository</classpathLayoutType>-->
+						<addClasspath>true</addClasspath>
+						<!--<classpathLayoutType>repository</classpathLayoutType>-->
 
 					</manifest>
 				</archive>
