@@ -1,21 +1,22 @@
-/* 
+/*
 	Copyright (C) 2012 Andreolli Cédric, Boulanger Chloé, Cléro Olivier, Guellier Antoine, Guilloux Sébastien, Templé Arthur
 
-    This file is part of ChLoe.
+    This file is part of chemicalmozart.
 
-    ChLoe is free software: you can redistribute it and/or modify
+    chemicalmozart is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
 
-    ChLoe is distributed in the hope that it will be useful,
+    chemicalmozart is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU Lesser General Public License for more details.
-	
+
     You should have received a copy of the GNU Lesser General Public License
-    along with ChLoe.  If not, see <http://www.gnu.org/licenses/>
+    along with chemicalmozart.  If not, see <http://www.gnu.org/licenses/>
 */
+
 package org.chemicalmozart.model.implementations.reactionrules;
 
 import java.util.ArrayList;
@@ -35,11 +36,11 @@ import fr.insa.rennes.info.chemical.backend.SubSolution;
 import fr.insa.rennes.info.chemical.backend.SubSolutionElements;
 
 public class HarmonicRR1Test extends TestCase{
-	private boolean _isSolutionPresent = false;
-	private boolean _isSolutionValid = false;
+	private boolean _isBarInCreationPresent = false;
 	private boolean _isPickOneRRPresent = false;
 	private boolean _isRythmeRRPresent = false;
-	private boolean _isBarInCreationPresent = false;
+	private boolean _isSolutionPresent = false;
+	private boolean _isSolutionValid = false;
 
 	private Solution setRR(HarmonicRR1 rr){
 		rr.set_degree(new DegreeImpl(1));
@@ -96,23 +97,6 @@ public class HarmonicRR1Test extends TestCase{
 			}
 		}
 		assertTrue("The RR doesn't return a PickOneRR", this._isPickOneRRPresent);
-	}
-
-	@Test
-	public void testRythmeRRPresent(){
-		HarmonicRR1 rr = new HarmonicRR1();
-		this.setRR(rr);
-
-		Object[] result = rr.computeResult();
-		this._isRythmeRRPresent = false;
-		//Test the returned elements
-		for(Object o : result){
-			if(o instanceof RythmeHRR){
-				this._isRythmeRRPresent = true;
-				break;
-			}
-		}
-		assertTrue("The RR doesn't return a RythmeRR", this._isRythmeRRPresent);
 	}
 
 	@Test

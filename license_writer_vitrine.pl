@@ -3,7 +3,7 @@
 use strict;
 
 if($ARGV[0] eq "") {
-	$ARGV[0] = "ChLOE";
+	$ARGV[0] = "chemicalmozart";
 }
 
 my $license_text = "/* 
@@ -25,7 +25,7 @@ my $license_text = "/*
     along with ".$ARGV[0].".  If not, see <http://www.gnu.org/licenses/>
 */";
 
-my $source_files = `find chemicalforall/chemicalthread -name "*.java"`;
+my $source_files = `find chemicalforall/chemicalmozart -name "*.java"`;
 
 my @file_list = split(/\s/, $source_files);
 
