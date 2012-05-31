@@ -1,4 +1,4 @@
-/* 
+/*
 	Copyright (C) 2012 Andreolli Cédric, Boulanger Chloé, Cléro Olivier, Guellier Antoine, Guilloux Sébastien, Templé Arthur
 
     This file is part of ChemicalLibSuper.
@@ -12,10 +12,10 @@
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU Lesser General Public License for more details.
-	
+
     You should have received a copy of the GNU Lesser General Public License
     along with ChemicalLibSuper.  If not, see <http://www.gnu.org/licenses/>
-*/
+ */
 package org.chemicalmozart.model.implementations.reactionrules;
 
 
@@ -47,15 +47,6 @@ public class GarbageRRTest extends TestCase {
 	public void testComputeResult1(){
 		Object[] res = this._rr1.computeResult();
 		assertTrue("computeResult should return null !", res != null);
-	}
-
-	@Test
-	public void testComputeResult2(){
-		Object[] res = this._rr1.computeResult();
-		if(res == null)
-			fail("computeResult shouldn't return null");
-		else
-			assertTrue("computeResult should an empty array !", res.length != 0);
 	}
 
 	@Test
