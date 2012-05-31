@@ -1,3 +1,4 @@
+
 package nbPremiers;
 
 import fr.insa.rennes.info.chemical.backend.Solution;
@@ -27,4 +28,4 @@ public class Test_NbPremiers {
 		time = System.currentTimeMillis();
 		s.react();
 	}
-}
+}

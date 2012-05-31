@@ -1,3 +1,4 @@
+
 package sentence;
 
 public class Complement extends Word{

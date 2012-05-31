@@ -1,3 +1,4 @@
+
 package foxesnrabbits;
 
 public class Rabbit extends Animal  {

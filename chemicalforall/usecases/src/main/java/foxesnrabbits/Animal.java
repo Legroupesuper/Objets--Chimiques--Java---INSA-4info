@@ -1,3 +1,4 @@
+
 package foxesnrabbits;
 
 import java.util.Random;

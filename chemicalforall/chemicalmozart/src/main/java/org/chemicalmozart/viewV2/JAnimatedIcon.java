@@ -1,3 +1,22 @@
+/* 
+	Copyright (C) 2012 Andreolli Cédric, Boulanger Chloé, Cléro Olivier, Guellier Antoine, Guilloux Sébastien, Templé Arthur
+
+    This file is part of chemicalmozart.
+
+    chemicalmozart is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Lesser General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    chemicalmozart is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Lesser General Public License for more details.
+	
+    You should have received a copy of the GNU Lesser General Public License
+    along with chemicalmozart.  If not, see <http://www.gnu.org/licenses/>
+*/
+
 package org.chemicalmozart.viewV2;
 
 /*
@@ -37,9 +56,10 @@ import  java.util.*;
  *
  * @author Guillaume Bouchon (bouchon_guillaume@yahoo.fr)
  */
-public class JAnimatedIcon extends  JLabel
-{
-    /**
+public class JAnimatedIcon extends  JLabel {
+	private static final long serialVersionUID = 1L;
+
+	/**
      * les images de l'anim
      */
     private ImageIcon   img[];          //les images de l'anim
@@ -628,7 +648,8 @@ public class JAnimatedIcon extends  JLabel
      *<br>
      *EXPERIMENTAL
      */
-    protected   void    finalize() throws Throwable
+    @SuppressWarnings("deprecation")
+	protected   void    finalize() throws Throwable
     {
         if  (refresh!=null)
         {
@@ -757,7 +778,8 @@ public class JAnimatedIcon extends  JLabel
      @param wi largeur des images
      @param hi hauteur des images
      */
-    public  void    reDimension(int wi,int hi)
+    @SuppressWarnings("deprecation")
+	public  void    reDimension(int wi,int hi)
     {
         if  (img==null) return;
         

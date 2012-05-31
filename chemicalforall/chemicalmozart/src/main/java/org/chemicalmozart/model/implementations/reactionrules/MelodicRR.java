@@ -1,3 +1,22 @@
+/* 
+	Copyright (C) 2012 Andreolli Cédric, Boulanger Chloé, Cléro Olivier, Guellier Antoine, Guilloux Sébastien, Templé Arthur
+
+    This file is part of chemicalmozart.
+
+    chemicalmozart is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Lesser General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    chemicalmozart is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Lesser General Public License for more details.
+	
+    You should have received a copy of the GNU Lesser General Public License
+    along with chemicalmozart.  If not, see <http://www.gnu.org/licenses/>
+*/
+
 /*
 	Copyright (C) 2012 Andréolli Cédric, Boulanger Chloé, Cléro Olivier, Guellier Antoine, Guilloux Sébastien, Templé Arthur
 
@@ -80,7 +99,6 @@ public class MelodicRR implements ReactionRule{
 			int degreeValue = this._note.get_chord().get_degrees().get_value();
 			int notePitch;
 			int randNumber = (int) ((Math.random())*3 %3);
-			System.out.println("Rand : "+randNumber);
 			switch(randNumber){
 			case 0:
 				notePitch = degreeValue;
@@ -169,9 +187,6 @@ public class MelodicRR implements ReactionRule{
 	 * Succeeds if the position of _note is equal to the melodic number and the MelodicRR is activated
 	 */
 	public boolean computeSelect() {
-		//System.err.println("Compute select avec activated = "+_activated);
-		//System.err.println("melodicNumber = "+_melodicNumber+" note.getPosition = "+_note.get_position()+" -> "+(_melodicNumber == _note.get_position() && _activated && _melodicNumber<_max));
-
 		return this._melodicNumber == this._note.get_position() && this._activated && this._melodicNumber<this._max;
 	}
 	/**

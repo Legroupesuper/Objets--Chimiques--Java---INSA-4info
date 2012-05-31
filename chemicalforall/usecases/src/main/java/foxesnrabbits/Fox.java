@@ -1,3 +1,4 @@
+
 package foxesnrabbits;
 
 public class Fox extends Animal {

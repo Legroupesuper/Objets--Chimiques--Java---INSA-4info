@@ -1,3 +1,4 @@
+
 package testOperationsSurDesNombres;
 
 import fr.insa.rennes.info.chemical.user.Dontuse;
@@ -31,4 +32,4 @@ public class Affiche implements ReactionRule {
 		this._s = str;
 	}
 
-}
+}

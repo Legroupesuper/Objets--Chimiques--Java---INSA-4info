@@ -1,3 +1,4 @@
+
 package testOperationsSurDesNombres;
 
 import fr.insa.rennes.info.chemical.backend.SubSolution;
@@ -48,4 +49,4 @@ public class Add10_17 implements ReactionRule{
 	public void set_subSolution(SubSolution<SubSolutionElements> s){
 		this._subSolution = s;
 	}
-}
+}

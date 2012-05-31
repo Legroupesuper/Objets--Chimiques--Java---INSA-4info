@@ -1,3 +1,4 @@
+
 package nbPremiers;
 
 import fr.insa.rennes.info.chemical.user.ReactionRule;
@@ -34,4 +35,4 @@ public class calculNbPremierRR implements ReactionRule {
 		this._b = i;
 	}
 
-}
+}
